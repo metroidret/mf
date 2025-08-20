@@ -1,0 +1,674 @@
+[
+  {
+    "path": "Blob_a5224_28fd04.bin",
+    "count": 2009824,
+    "addr": {
+      "us": 676388
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_28fd08_2e4904.bin",
+    "count": 347132,
+    "addr": {
+      "us": 2686216
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_2e5cae_2e6160.bin",
+    "count": 1202,
+    "addr": {
+      "us": 3038382
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_2e6382_2ed2e8.bin",
+    "count": 28518,
+    "addr": {
+      "us": 3040130
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_2f93d0_35dd74.bin",
+    "count": 412068,
+    "addr": {
+      "us": 3118032
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_3787d0_3bdebc.bin",
+    "count": 284396,
+    "addr": {
+      "us": 3639248
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_3be1be_3e392c.bin",
+    "count": 153454,
+    "addr": {
+      "us": 3924414
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_3e40dc_3e7a9c.bin",
+    "count": 14784,
+    "addr": {
+      "us": 4079836
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_3e9940_3ec038.bin",
+    "count": 9976,
+    "addr": {
+      "us": 4102464
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_3ec1a8_590998.bin",
+    "count": 1722352,
+    "addr": {
+      "us": 4112808
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_597708_79a29c.bin",
+    "count": 2108308,
+    "addr": {
+      "us": 5863176
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_79afe0_79ecc8.bin",
+    "count": 15592,
+    "addr": {
+      "us": 7974880
+    },
+    "size": 1
+  },
+  {
+    "path": "escape/palette.pal",
+    "count": 48,
+    "addr": {
+      "us": 4100252
+    },
+    "size": 2
+  },
+  {
+    "path": "escape/graphics.gfx",
+    "count": 2048,
+    "addr": {
+      "us": 4100348
+    },
+    "size": 1
+  },
+  {
+    "path": "hud/ammo_digits.gfx",
+    "count": 1152,
+    "addr": {
+      "us": 4094620
+    },
+    "size": 1
+  },
+  {
+    "path": "hud/energy_digits.gfx",
+    "count": 320,
+    "addr": {
+      "us": 4095772
+    },
+    "size": 1
+  },
+  {
+    "path": "hud/energy_tanks_full.gfx",
+    "count": 1280,
+    "addr": {
+      "us": 4096092
+    },
+    "size": 1
+  },
+  {
+    "path": "hud/energy_tanks_empty.gfx",
+    "count": 2816,
+    "addr": {
+      "us": 4097372
+    },
+    "size": 1
+  },
+  {
+    "path": "hud/energy_tank_one_full.gfx",
+    "count": 32,
+    "addr": {
+      "us": 4100188
+    },
+    "size": 1
+  },
+  {
+    "path": "hud/energy_tank_one_full_one_empty.gfx",
+    "count": 32,
+    "addr": {
+      "us": 4100220
+    },
+    "size": 1
+  },
+  {
+    "path": "menus/title_screen/characters.gfx",
+    "count": 768,
+    "addr": {
+      "us": 5835160
+    },
+    "size": 1
+  },
+  {
+    "path": "menus/title_screen/objects.gfx.lz",
+    "count": 1974,
+    "addr": {
+      "us": 5835932
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/title_screen/objects.pal",
+    "count": 256,
+    "addr": {
+      "us": 5843828
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/title_screen/592d74.pal",
+    "count": 256,
+    "addr": {
+      "us": 5844340
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/title_screen/592f74.pal",
+    "count": 256,
+    "addr": {
+      "us": 5844852
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/title_screen/press_start.pal",
+    "count": 128,
+    "addr": {
+      "us": 5845364
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/title_screen/logo.gfx.lz",
+    "count": 3153,
+    "addr": {
+      "us": 5845620
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/title_screen/logo.tt",
+    "count": 597,
+    "addr": {
+      "us": 5858232
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/title_screen/logo.pal",
+    "count": 128,
+    "addr": {
+      "us": 5860620
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/title_screen/596e0c.pal",
+    "count": 128,
+    "addr": {
+      "us": 5860876
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/hornoad.gfx",
+    "count": 1536,
+    "addr": {
+      "us": 3052140
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/hornoad.pal",
+    "count": 48,
+    "addr": {
+      "us": 3058284
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/movable_platform.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3068648
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/movable_platform.pal",
+    "count": 16,
+    "addr": {
+      "us": 3070696
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/moto.gfx",
+    "count": 1536,
+    "addr": {
+      "us": 3070752
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/moto.pal",
+    "count": 48,
+    "addr": {
+      "us": 3076896
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/save_pad.gfx",
+    "count": 1536,
+    "addr": {
+      "us": 3078776
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/save_pad.pal",
+    "count": 48,
+    "addr": {
+      "us": 3084920
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/gunship.gfx",
+    "count": 3072,
+    "addr": {
+      "us": 3085724
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/gunship.pal",
+    "count": 96,
+    "addr": {
+      "us": 3098012
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/gunship_flashing.pal",
+    "count": 112,
+    "addr": {
+      "us": 3098424
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/yameba.gfx",
+    "count": 1024,
+    "addr": {
+      "us": 3099232
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/yameba.pal",
+    "count": 32,
+    "addr": {
+      "us": 3103328
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/security_pad.gfx",
+    "count": 1536,
+    "addr": {
+      "us": 3103728
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/security_pad.pal",
+    "count": 48,
+    "addr": {
+      "us": 3109872
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/security_pad_2f78cc.pal",
+    "count": 256,
+    "addr": {
+      "us": 3111116
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/area_banner.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3111628
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/area_banner.pal",
+    "count": 16,
+    "addr": {
+      "us": 3113676
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/area_banner_location.pal",
+    "count": 16,
+    "addr": {
+      "us": 3113708
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/skree.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3115156
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/skree.pal",
+    "count": 16,
+    "addr": {
+      "us": 3117204
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/blue_x.gfx",
+    "count": 1024,
+    "addr": {
+      "us": 3530392
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/blue_x.pal",
+    "count": 32,
+    "addr": {
+      "us": 3534488
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/missile_hatch.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3535872
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/missile_hatch.pal",
+    "count": 16,
+    "addr": {
+      "us": 3537920
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/super_missile_barrier.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3538188
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/super_missile_barrier.pal",
+    "count": 16,
+    "addr": {
+      "us": 3540236
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/power_bomb_barrier.gfx",
+    "count": 1024,
+    "addr": {
+      "us": 3540620
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/power_bomb_barrier.pal",
+    "count": 32,
+    "addr": {
+      "us": 3544716
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/ripper.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3545760
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/ripper.pal",
+    "count": 16,
+    "addr": {
+      "us": 3547808
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/zoro_cocoon.gfx",
+    "count": 1024,
+    "addr": {
+      "us": 3547948
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/zoro_cocoon.pal",
+    "count": 32,
+    "addr": {
+      "us": 3552044
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/zoro_husk.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3552496
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/zoro_husk.pal",
+    "count": 16,
+    "addr": {
+      "us": 3554544
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/gadora.gfx",
+    "count": 1024,
+    "addr": {
+      "us": 3554636
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/gadora.pal",
+    "count": 32,
+    "addr": {
+      "us": 3558732
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/destroyed_data_pad.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3559768
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/destroyed_data_pad.pal",
+    "count": 16,
+    "addr": {
+      "us": 3561816
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/nettori.gfx",
+    "count": 4096,
+    "addr": {
+      "us": 3562452
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/nettori.pal",
+    "count": 128,
+    "addr": {
+      "us": 3578836
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/nettori_purple.pal",
+    "count": 16,
+    "addr": {
+      "us": 3581056
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/nettori_red.pal",
+    "count": 16,
+    "addr": {
+      "us": 3581088
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/nettori_glowing_1.pal",
+    "count": 16,
+    "addr": {
+      "us": 3581120
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/nettori_glowing_2.pal",
+    "count": 16,
+    "addr": {
+      "us": 3581152
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/nettori_glowing_3.pal",
+    "count": 16,
+    "addr": {
+      "us": 3581184
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/zazabi.gfx",
+    "count": 4096,
+    "addr": {
+      "us": 3595544
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/zazabi.pal",
+    "count": 128,
+    "addr": {
+      "us": 3611928
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/elevator_pad.gfx",
+    "count": 512,
+    "addr": {
+      "us": 3615952
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/elevator_pad.pal",
+    "count": 16,
+    "addr": {
+      "us": 3618000
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/serris.gfx",
+    "count": 4096,
+    "addr": {
+      "us": 3618552
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/serris.pal",
+    "count": 128,
+    "addr": {
+      "us": 3634936
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/serris_phase_two.pal",
+    "count": 32,
+    "addr": {
+      "us": 3639120
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/serris_phase_three.pal",
+    "count": 32,
+    "addr": {
+      "us": 3639184
+    },
+    "size": 2
+  }
+]

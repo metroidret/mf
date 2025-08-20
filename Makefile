@@ -74,6 +74,11 @@ diff: $(DUMPS)
 	$(MSG) DIFF $^
 	$Q$(DIFF) $^
 
+.PHONY: extract
+extract:
+	$(MSG) Extracting
+	$Q python3 tools/extractor.py -r $(REGION)
+
 .PHONY: clean
 clean:
 	$(MSG) RM roms

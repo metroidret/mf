@@ -1,47 +1,59 @@
-from array import array
+import argparse
 from io import BufferedReader
-import shutil
-import os
+import json
+from pathlib import Path
+
 
 DATA_PATH = "data/"
-subDirs: array = [
-    "sprites",
-    "hud",
-    "escape",
-    "menus",
-    "menus/title_screen"
-]
+DATABASE_PATH = "database.json"
+DATABASE_DEBUG_PATH = "database_debug.json"
 
-try:
-    shutil.rmtree(DATA_PATH, ignore_errors=False, onerror=None)
-except:
-    pass
 
-# Create directories
-os.mkdir(DATA_PATH)
-for dir in subDirs:
-    os.mkdir(DATA_PATH.__add__(dir))
+def extract_data(region: str, debug: bool, quiet: bool = False) -> None:
+    if debug:
+        region = "eu_beta"
+    rom: BufferedReader = open(f"mf_{region}_baserom.gba", "rb")
+    db_path = DATABASE_DEBUG_PATH if debug else DATABASE_PATH
+    with open(db_path, "r") as f:
+        db = json.load(f)
 
-rom: BufferedReader = open("mf_us_baserom.gba", "rb")
-db: BufferedReader = open("database.txt", "r")
+    for entry in db:
+        path: str = entry["path"]
+        if not quiet:
+            print(f"Extracting {path}")
 
-line: str = db.readline()
-while line != '':
-    # Formatted as follows : name;length;address;size
-    # The symbol # can be used as the first character of a line to make the extractor ignore it
-    if line[0] != '\n' and line[0] != '#':
-        info: array = line.split(";")
+        # Create directories if they don't exist
+        path_obj = Path(DATA_PATH + path)
+        path_obj.parent.mkdir(parents=True, exist_ok=True)
 
-        name: str = info[0]
-        print("Extracting", name)
-        rom.seek(int(info[2], 16))
+        addr = entry["addr"].get(region)
+        if addr is not None:
+            count = entry["count"]
+            if isinstance(count, dict):
+                count = count[region]
+            size: int = count * entry["size"]
+            rom.seek(entry["addr"][region])
+            with open(path_obj, "wb") as f:
+                f.write(rom.read(size))
 
-        size: int = int(info[3])
-        output: BufferedReader = open(DATA_PATH.__add__(name), "ab")
-        for x in range(0, int(info[1])):
-            output.write(int.from_bytes(rom.read(size), "little").to_bytes(size, "little"))
+    rom.close()
 
-        output.close()
-    line = db.readline()
 
-rom.close()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group()
+    # TODO: Add "eu", "jp", "cn", "eu_beta"
+    group.add_argument("-r", "--region", type=str, choices=["us"],
+        default="us", help="The region of the rom to extract from")
+    # TODO: Support debug
+    # group.add_argument("-d", "--debug", action="store_true",
+    #     help="Extract debug data from the EU beta rom")
+    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress output")
+    
+    args = parser.parse_args()
+    # TODO: Remove this line
+    args.debug = False
+    if not args.region and not args.debug:
+        args.region = "us"
+
+    extract_data(args.region, args.debug, args.quiet)
