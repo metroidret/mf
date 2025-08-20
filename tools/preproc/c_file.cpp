@@ -196,10 +196,17 @@ void CFile::TryConvertString()
     long oldLineNum = m_lineNum;
     bool noTerminator = false;
 
-    if (m_buffer[m_pos] != '_' || (m_pos > 0 && IsIdentifierChar(m_buffer[m_pos - 1])))
+    // printf("%c", m_buffer[m_pos]);
+    std::string identifier("INCTEXT");
+    std::string shiftJisIdentifier("SHIFT_JIS");
+
+    bool isShiftJis = CheckIdentifier(shiftJisIdentifier);
+    bool isText = CheckIdentifier(identifier);
+
+    if ((!isText && !isShiftJis) || (m_pos > 0 && IsIdentifierChar(m_buffer[m_pos - 1])))
         return;
 
-    m_pos++;
+    m_pos += isText ? identifier.size() : shiftJisIdentifier.size();
 
     if (m_buffer[m_pos] == '_')
     {
@@ -228,21 +235,25 @@ void CFile::TryConvertString()
 
         if (m_buffer[m_pos] == '"')
         {
-            unsigned char s[kMaxStringLength];
+            unsigned short s[kMaxStringLength];
             int length;
             StringParser stringParser(m_buffer, m_size);
 
             try
             {
-                m_pos += stringParser.ParseString(m_pos, s, length);
+                if (isText)
+                    m_pos += stringParser.ParseString(m_pos, s, length);
+                else if (isShiftJis)
+                    m_pos += stringParser.ParseShiftJis(m_pos, s, length);
             }
             catch (std::runtime_error& e)
             {
                 RaiseError(e.what());
             }
 
+            // printf("\n\n%d ; %s\n\n", length, s);
             for (int i = 0; i < length; i++)
-                printf("0x%02X, ", s[i]);
+                printf("0x%04X, ", s[i]);
         }
         else if (m_buffer[m_pos] == ')')
         {
@@ -260,10 +271,10 @@ void CFile::TryConvertString()
         }
     }
 
-    if (noTerminator)
+    if (noTerminator || isShiftJis)
         std::printf(" }");
     else
-        std::printf("0xFF }");
+        std::printf("CHAR_TERMINATOR }");
 }
 
 bool CFile::CheckIdentifier(const std::string& ident)
@@ -282,7 +293,14 @@ std::unique_ptr<unsigned char[]> CFile::ReadWholeFile(const std::string& path, i
     FILE* fp = std::fopen(path.c_str(), "rb");
 
     if (fp == nullptr)
-        RaiseError("Failed to open \"%s\" for reading.\n", path.c_str());
+    {
+        // Some instances of INCBIN can be within #ifdef regions where the condition is not met,
+        // so it's reasonable that the file may not exist. Only raise a warning and return an empty
+        // file to continue parsing.
+        RaiseWarning("Failed to open \"%s\" for reading.\n", path.c_str());
+        size = 0;
+        return {};
+    }
 
     std::fseek(fp, 0, SEEK_END);
 
