@@ -7,9 +7,18 @@
 *.o
 *.map
 *.bin
+*.sav
 
 *.exe
+*.dll
+*.deps.json
+*.runtimeconfig.json
 
+linker.ld.pp
 include/**/*.s
 tools/*.txt
 .vscode
+
+err.log
+
+!/sound/direct_sound_samples/*.bin
