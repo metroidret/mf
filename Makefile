@@ -99,6 +99,13 @@ CSRC = $(wildcard src/**.c) $(wildcard src/**/**.c) $(wildcard src/**/**/**.c)
 ASMSRC = $(CSRC:.c=.s) $(wildcard asm/*.s)
 OBJ = $(ASMSRC:.s=.o) 
 
+# Dynamically find agbcc path and its lib folder
+AGBCC_BIN := $(shell which agbcc)
+AGBCC_DIR := $(dir $(AGBCC_BIN))/
+AGBCC_LIB := $(abspath $(AGBCC_DIR))
+
+LIBS := $(AGBCC_LIB)/libgcc.a $(AGBCC_LIB)/libc.a
+
 # Enable verbose output
 ifeq ($(V),1)
 	Q =
@@ -179,7 +186,7 @@ $(TARGET): $(ELF) $(GBAFIX)
 
 $(ELF) $(MAP): $(OBJ) $(LD_SCRIPT)
 	$(MSG) LD $@
-	$Q$(LD) $(LDFLAGS) -n -T $(LD_SCRIPT) -Map=$(MAP) -o $@
+	$Q$(LD) $(LDFLAGS) -n -T $(LD_SCRIPT) -Map=$(MAP) $(LIBS) -o $@
 
 $(LD_SCRIPT): linker.ld
 	$(MSG) CPP $@
@@ -199,9 +206,6 @@ $(LD_SCRIPT): linker.ld
 
 src/sram/%.s: CFLAGS = -O1 -mthumb-interwork -fhex-asm
 src/sram/%.s: src/sram/%.c
-
-src/libgcc/%.s: CFLAGS = -O2 -fhex-asm
-src/libgcc/%.s: src/libgcc/%.c
 
 src/sprites_AI/%.s: CFLAGS = -O2 -mthumb-interwork -fhex-asm
 src/sprites_AI/%.s: src/sram/%.c
