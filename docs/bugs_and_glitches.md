@@ -65,6 +65,9 @@ These are known bugs and glitches in the game: code that clearly does not work a
 - Landing on closing hatches and "wall ball" ([video](https://www.youtube.com/watch?v=KJHS8bEsmXU))
 - Crash from pausing during BOX explosion sound ([video](https://www.youtube.com/watch?v=z41Vk9o-mqo))
 - Sector 4 nav room music ([video](https://www.youtube.com/watch?v=Crqrie5hKcs))
+- Samus can push away from ledges during the atmospheric stabilizer messages
+- Hornoads can float after jumping into a wall
+- Diagonal aim can get stuck if `L` is released when starting to run
 
 ### Oversights and Design Flaws
 
@@ -73,3 +76,17 @@ These are known bugs and glitches in the game: code that clearly does not work a
 - Geemers hide when any button is pressed
 - X parasites can get stuck moving in a circle
 - The Metroids in the Restricted Lab check Samus's Y position to set their X position
+- Pseudo-screw collision with Nettori spores is inconsistent
+
+### Room Issues
+- An energy tank can be collected after Arachnus spawns, corrupting its graphics
+- Various tiling errors ([video](https://www.youtube.com/watch?v=QKz8VtmCCrE))
+  - Sector 1, Room 0D: clipdata error
+  - Sector 2, Room 00: clipdata error
+  - Sector 3, Room 22: platform on wrong layer
+  - Sector 5, Room 07: two misplaced BG1 blocks
+  - Sector 5, Room 12: misplaced BG1 block
+
+### Graphical Issues
+- The OAM for starting a wall jump while facing left is missing a part
+- Arming missiles with Varia or Gravity suit uses Fusion suit colors for Samus's arm
