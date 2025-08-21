@@ -1,6 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+// Include this here to make sure it's basically included everywhere
+#include "config.h"
+
 #define TRUE 1
 #define FALSE 0
 #define NULL ((void *)0)
