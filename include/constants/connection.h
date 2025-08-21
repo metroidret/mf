@@ -12,9 +12,9 @@ enum Area {
 
     AREA_NORMAL_END = AREA_SECTOR_6,
 
-    AREA_DEBUG_1,
-    AREA_DEBUG_2,
-    AREA_DEBUG_3,
+    AREA_TEST_1,
+    AREA_TEST_2,
+    AREA_TEST_3,
 
     AREA_END,
 };

@@ -96,7 +96,7 @@ void SubEventUpdateMusic(u8 triggerType)
     u8 type;
     u8 updateSubEvent;
 
-    if (gCurrentArea >= AREA_DEBUG_1)
+    if (gCurrentArea >= AREA_TEST_1)
         return;
 
     if (triggerType != SEVENT_TTYPE_128)
