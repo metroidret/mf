@@ -2846,5 +2846,21 @@
       "us": 3639184
     },
     "size": 2
+  },
+  {
+    "path": "sprites/waver.gfx",
+    "count": 1024,
+    "addr": {
+      "us": 316468
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/waver.pal",
+    "count": 32,
+    "addr": {
+      "us": 317468
+    },
+    "size": 2
   }
 ]
