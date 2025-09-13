@@ -11,8 +11,7 @@
 u8 CheckRoomShouldBeDark(void)
 {
     if (gEventCounter > EVENT_MORPH_BALL_ABILITY_RECOVERED)
-    {
         return FALSE;
-    }
-        return TRUE;
+
+    return TRUE;
 }
