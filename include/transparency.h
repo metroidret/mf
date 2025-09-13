@@ -2,7 +2,6 @@
 #define TRANSPARENCY_H
 
 #include "types.h"
-#include "structs/transparency.h"
 
 // Defines
 
