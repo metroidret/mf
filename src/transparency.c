@@ -8,8 +8,9 @@
 /**
  * @brief 62db0 | 28 | Checks if the meltdown effect should be set
  * 
+ * @return bool, meltdown effect should be set
  */
-u8 CheckSetMeltdownEffect(void) {
+boolu8 CheckSetMeltdownEffect(void) {
     u8 SetMeltdownEffect = FALSE;
 
     if ((u32) (u8) (gEventCounter - EVENT_ICE_MISSILE_DATA_DOWNLOADED) <= 2) 
@@ -24,8 +25,9 @@ u8 CheckSetMeltdownEffect(void) {
 /**
  * @brief 62dd8 | 18 | Checks if the room should be dark
  * 
+ * @return bool, room should be dark
  */
-u8 CheckRoomShouldBeDark(void)
+boolu8 CheckRoomShouldBeDark(void)
 {
     return gEventCounter <= EVENT_SA_X_ELEVATOR_CUTSCENE_ENDS;
 }
