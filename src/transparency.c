@@ -10,16 +10,20 @@
  * 
  * @return bool, meltdown effect should be set
  */
-boolu8 CheckSetMeltdownEffect(void) {
-    u8 SetMeltdownEffect = FALSE;
+boolu8 CheckSetMeltdownEffect(void) 
+{
+    u8 setMeltdownEffect;
 
-    if ((u32) (u8) (gEventCounter - EVENT_ICE_MISSILE_DATA_DOWNLOADED) <= 2) 
+    setMeltdownEffect = FALSE;
+    
+    if (gEventCounter >= EVENT_ICE_MISSILE_DATA_DOWNLOADED &&
+       gEventCounter <= EVENT_WIDE_BEAM_ABILITY_RECOVERED) 
     {
-        SetMeltdownEffect = TRUE;
+        setMeltdownEffect = TRUE;
         gCurrentEventBasedEffectCopy = EVENT_EFFECT_MELTDOWN;
     }
-
-    return SetMeltdownEffect;
+    
+    return setMeltdownEffect;
 }
 
 /**
