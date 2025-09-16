@@ -205,7 +205,8 @@ SECTIONS {
 
         asm/disasm_0x08000c28.o(.text);
         asm/syscalls.o(.text);
-        asm/disasm_0x08004bcc.o(.text);
+        src/sram/sram.o(.text);
+        asm/samus.o(.text);
 
         src/demo_input.o(.text);
 
@@ -287,6 +288,9 @@ SECTIONS {
 
     .rodata : ALIGN(2) {
         src/data/generic_data.o(.rodata);
+
+        src/sram/sram.o(.rodata);
+
         src/data/samus_data.o(.rodata);
         src/data/sprite_data.o(.rodata);
         src/data/sprite_debris_data.o(.rodata);
@@ -318,5 +322,9 @@ SECTIONS {
         src/data/particle_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
         src/data/engine_pointers.o(.rodata);
+    } >rom
+
+    .data : ALIGN(2) {
+
     } >rom
 }

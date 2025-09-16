@@ -1,9 +1,17 @@
 [
   {
-    "path": "Blob_a5224_28fd04.bin",
-    "count": 2009824,
+    "path": "Blob_a5224_289970.bin",
+    "count": 1984332,
     "addr": {
       "us": 676388
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_28998c_28fd04.bin",
+    "count": 25464,
+    "addr": {
+      "us": 2660748
     },
     "size": 1
   },
