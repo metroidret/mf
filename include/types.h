@@ -21,6 +21,13 @@ typedef volatile signed short vs16;
 typedef volatile unsigned int vu32;
 typedef volatile signed int vs32;
 
+typedef u8 boolu8;
+typedef u16 boolu16;
+typedef u32 boolu32;
+typedef s8 bools8;
+typedef s16 bools16;
+typedef s32 bools32;
+
 #define SCHAR_MIN (-128)
 #define SCHAR_MAX (127)
 #define UCHAR_MAX (255)
@@ -32,8 +39,6 @@ typedef volatile signed int vs32;
 #define INT_MIN (-2147483648)
 #define INT_MAX (2147483647)
 #define UINT_MAX ((u32)4294967295)
-
-
 
 // The amount of sub pixels a single visible pixel contains
 #define SUB_PIXEL_RATIO 4
