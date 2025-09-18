@@ -4,15 +4,15 @@ const u16 sEscapeDigitsPal[16 * 3] = INCBIN_U16("data/escape/palette.pal");
 const u8 sEscapeDigitsGfx[2048] = INCBIN_U8("data/escape/graphics.gfx");
 
 const u16 sEscapeDigitsOam[OAM_DATA_SIZE(8)] = {
-    0x8,
-    OBJ_SHAPE_VERTICAL | 0x0, 0x0, OBJ_SPRITE_OAM | 0x73c0,
-    OBJ_SHAPE_VERTICAL | 0x0, 0x8, OBJ_SPRITE_OAM | 0x73c0,
-    0x0, 0x10, OBJ_SPRITE_OAM | 0x73ca,
-    OBJ_SHAPE_VERTICAL | 0x0, 0x18, OBJ_SPRITE_OAM | 0x73c0,
-    OBJ_SHAPE_VERTICAL | 0x0, 0x20, OBJ_SPRITE_OAM | 0x73c0,
-    0x0, 0x28, OBJ_SPRITE_OAM | 0x73ea,
-    OBJ_SHAPE_VERTICAL | 0x0, 0x30, OBJ_SPRITE_OAM | 0x73c0,
-    OBJ_SHAPE_VERTICAL | 0x0, 0x38, OBJ_SPRITE_OAM | 0x73c0
+    8,
+    OAM_ENTRY(0, 0, OAM_DIMS_8x16, OAM_NO_FLIP, 960, 15, 0),
+    OAM_ENTRY(8, 0, OAM_DIMS_8x16, OAM_NO_FLIP, 960, 15, 0),
+    OAM_ENTRY(16, 0, OAM_DIMS_8x8, OAM_NO_FLIP, 970, 15, 0),
+    OAM_ENTRY(24, 0, OAM_DIMS_8x16, OAM_NO_FLIP, 960, 15, 0),
+    OAM_ENTRY(32, 0, OAM_DIMS_8x16, OAM_NO_FLIP, 960, 15, 0),
+    OAM_ENTRY(40, 0, OAM_DIMS_8x8, OAM_NO_FLIP, 1002, 15, 0),
+    OAM_ENTRY(48, 0, OAM_DIMS_8x16, OAM_NO_FLIP, 960, 15, 0),
+    OAM_ENTRY(56, 0, OAM_DIMS_8x16, OAM_NO_FLIP, 960, 15, 0),
 };
 
 const struct FrameData sEscapeTimerFrameData[2] = {

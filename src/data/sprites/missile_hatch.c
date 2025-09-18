@@ -13,60 +13,60 @@ const u32 sMissileHatchGfx[512] = INCBIN_U32("data/sprites/missile_hatch.gfx");
 const u16 sMissileHatchPal[1 * 16] = INCBIN_U16("data/sprites/missile_hatch.pal");
 
 static const u16 sMissileHatchOam_Idle_Frame0[OAM_DATA_SIZE(3)] = {
-    0x3,
-    0xf8, OBJ_SIZE_16x16 | 0x1f8, OBJ_SPRITE_OAM | 0x206,
-    0xe8, OBJ_SIZE_16x16 | 0x1f8, OBJ_SPRITE_OAM | 0x202,
-    0x8, OBJ_SIZE_16x16 | 0x1f8, OBJ_SPRITE_OAM | 0x204
+    3,
+    OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 518, 8, 0),
+    OAM_ENTRY(-8, -24, OAM_DIMS_16x16, OAM_NO_FLIP, 514, 8, 0),
+    OAM_ENTRY(-8, 8, OAM_DIMS_16x16, OAM_NO_FLIP, 516, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling0_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1fc, OBJ_SPRITE_OAM | 0x208
+    1,
+    OAM_ENTRY(-4, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 520, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling0_Frame1[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1fc, OBJ_SPRITE_OAM | 0x209
+    1,
+    OAM_ENTRY(-4, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 521, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling0_Frame2[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1fc, OBJ_SPRITE_OAM | 0x20a
+    1,
+    OAM_ENTRY(-4, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 522, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling0_Frame3[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1fc, OBJ_SPRITE_OAM | 0x20b
+    1,
+    OAM_ENTRY(-4, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 523, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Frame_35fc54[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xf8, 0x1fc, OBJ_SPRITE_OAM | 0x21e
+    1,
+    OAM_ENTRY(-4, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 542, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Frame_35fc5c[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xf8, 0x1fc, OBJ_SPRITE_OAM | 0x23e
+    1,
+    OAM_ENTRY(-4, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 574, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Frame_35fc64[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xf8, 0x1fc, OBJ_SPRITE_OAM | 0x21f
+    1,
+    OAM_ENTRY(-4, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 543, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling1_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1fc, OBJ_SPRITE_OAM | 0x200
+    1,
+    OAM_ENTRY(-4, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 512, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling3_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1fc, OBJ_SPRITE_OAM | 0x201
+    1,
+    OAM_ENTRY(-4, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 513, 8, 0),
 };
 
 static const u16 sMissileHatchDebrisOam_Falling2_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xf0, OBJ_SIZE_16x16 | 0x1f8, OBJ_SPRITE_OAM | 0x206
+    1,
+    OAM_ENTRY(-8, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 518, 8, 0),
 };
 
 

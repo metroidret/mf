@@ -5,37 +5,93 @@
 
 // Attribute 0
 
-#define OBJ_ROTATION_SCALING 0x100
-#define OBJ_DOUBLE_SIZE 0x200
-#define OBJ_DISABLE 0x200
-#define OBJ_MODE_SEMI_TRANSPARENT 0x400
-#define OBJ_MODE_OBJ_WINDOW 0x800
-#define OBJ_MOSAIC 0x1000
-#define OBJ_COLOR_256_1 0x2000
-#define OBJ_SHAPE_HORIZONTAL 0x4000
-#define OBJ_SHAPE_VERTICAL 0x8000
+#define OBJ_ROTATION_SCALING      (1 << 8)
+#define OBJ_DOUBLE_SIZE           (1 << 9)
+#define OBJ_DISABLE               (1 << 9)
+#define OBJ_MODE_SEMI_TRANSPARENT (1 << 10)
+#define OBJ_MODE_OBJ_WINDOW       (1 << 11)
+#define OBJ_MOSAIC                (1 << 12)
+#define OBJ_COLOR_256_1           (1 << 13)
 
-#define OAM_OBJ_MODE_NORMAL 0
+#define OAM_AFFINE_MODE_NORMAL            0
+#define OAM_AFFINE_MODE_AFFINE            1
+#define OAM_AFFINE_MODE_DISABLE_RENDERING 2
+#define OAM_AFFINE_MODE_DOUBLE_SIZED      3
+
+#define OAM_OBJ_MODE_NORMAL           0
 #define OAM_OBJ_MODE_SEMI_TRANSPARENT 1
-#define OAM_OBJ_MODE_WINDOW 2
+#define OAM_OBJ_MODE_WINDOW           2
+
+#define OAM_SHAPE_SQUARE     0
+#define OAM_SHAPE_HORIZONTAL 1
+#define OAM_SHAPE_VERTICAL   2
 
 // Attribute 1
 
-#define OBJ_X_FLIP 0x1000
-#define OBJ_Y_FLIP 0x2000
-#define OBJ_SIZE_16x16 0x4000
-#define OBJ_SIZE_32x8 0x4000
-#define OBJ_SIZE_8x32 0x4000
-#define OBJ_SIZE_32x32 0x8000
-#define OBJ_SIZE_32x16 0x8000
-#define OBJ_SIZE_16x32 0x8000
-#define OBJ_SIZE_64x64 0xC000
-#define OBJ_SIZE_64x32 0xC000
-#define OBJ_SIZE_32x64 0xC000
+#define OAM_NO_FLIP 0
+#define OAM_X_FLIP  (1 << 0)
+#define OAM_Y_FLIP  (1 << 1)
+#define OAM_XY_FLIP (OAM_X_FLIP | OAM_Y_FLIP)
 
-// Attribute 2
+#define OAM_SIZE_S_8x8   0
+#define OAM_SIZE_S_16x16 1
+#define OAM_SIZE_S_32x32 2
+#define OAM_SIZE_S_64x64 3
 
-#define OBJ_SPRITE_OAM 0x8000 // Not sure what this is, sprite OAM doesn't work without it
+#define OAM_SIZE_H_16x8  0
+#define OAM_SIZE_H_32x8  1
+#define OAM_SIZE_H_32x16 2
+#define OAM_SIZE_H_64x32 3
+
+#define OAM_SIZE_V_8x16  0
+#define OAM_SIZE_V_8x32  1
+#define OAM_SIZE_V_16x32 2
+#define OAM_SIZE_V_32x64 3
+
+#define OAM_DIMS_8x8   ((OAM_SHAPE_SQUARE << 2)     | OAM_SIZE_S_8x8)
+#define OAM_DIMS_16x16 ((OAM_SHAPE_SQUARE << 2)     | OAM_SIZE_S_16x16)
+#define OAM_DIMS_32x32 ((OAM_SHAPE_SQUARE << 2)     | OAM_SIZE_S_32x32)
+#define OAM_DIMS_64x64 ((OAM_SHAPE_SQUARE << 2)     | OAM_SIZE_S_64x64)
+
+#define OAM_DIMS_16x8  ((OAM_SHAPE_HORIZONTAL << 2) | OAM_SIZE_H_16x8)
+#define OAM_DIMS_32x8  ((OAM_SHAPE_HORIZONTAL << 2) | OAM_SIZE_H_32x8)
+#define OAM_DIMS_32x16 ((OAM_SHAPE_HORIZONTAL << 2) | OAM_SIZE_H_32x16)
+#define OAM_DIMS_64x32 ((OAM_SHAPE_HORIZONTAL << 2) | OAM_SIZE_H_64x32)
+
+#define OAM_DIMS_8x16  ((OAM_SHAPE_VERTICAL << 2)   | OAM_SIZE_V_8x16)
+#define OAM_DIMS_8x32  ((OAM_SHAPE_VERTICAL << 2)   | OAM_SIZE_V_8x32)
+#define OAM_DIMS_16x32 ((OAM_SHAPE_VERTICAL << 2)   | OAM_SIZE_V_16x32)
+#define OAM_DIMS_32x64 ((OAM_SHAPE_VERTICAL << 2)   | OAM_SIZE_V_32x64)
+
+#define OAM_DIMS_SIZE(dims) (dims & 3)
+#define OAM_DIMS_SHAPE(dims) ((dims >> 2) & 3)
+
+/**
+ * @brief A macro for creating OamData entries.
+ * Assumes that:
+ *   Rotation/Scaling = Off,
+ *   Double-Size / Disable = Normal,
+ *   OBJ Mode = Normal
+ *   Mosaic = Off,
+ *   Colors/Palettes = 16/16
+ */
+#define OAM_ENTRY(x, y, dims, flip, tile, palette, priority) \
+    OAM_DIMS_SHAPE(dims) << 14 | ((y) & 0xFF), \
+    OAM_DIMS_SIZE(dims) << 14 | (flip) << 12 | ((x) & 0x1FF), \
+    ((palette) << 12) | ((priority) << 10) | (tile)
+
+/**
+ * @brief A macro for creating OamData entries that allows specifying OBJ Mode.
+ * Assumes that:
+ *   Rotation/Scaling = Off,
+ *   Double-Size / Disable = Normal,
+ *   Mosaic = Off,
+ *   Colors/Palettes = 16/16
+ */
+#define OAM_ENTRY_MODE(x, y, dims, flip, tile, palette, priority, mode) \
+    OAM_DIMS_SHAPE(dims) << 14 | (mode) << 10 | ((y) & 0xFF), \
+    OAM_DIMS_SIZE(dims) << 14 | (flip) << 12 | ((x) & 0x1FF), \
+    ((palette) << 12) | ((priority) << 10) | (tile)
 
 struct FrameData {
     const u16* pFrame;

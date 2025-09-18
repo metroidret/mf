@@ -5,26 +5,26 @@ const u32 sRipperGfx[512] = INCBIN_U32("data/sprites/ripper.gfx");
 const u16 sRipperPal[1 * 16] = INCBIN_U16("data/sprites/ripper.pal");
 
 static const u16 sRipperOam_Idle_Frame0[OAM_DATA_SIZE(2)] = {
-    0x2,
-    0xf5, 0x1f4, OBJ_SPRITE_OAM | 0x220,
-    0xf0, OBJ_SIZE_16x16 | 0x1fc, OBJ_SPRITE_OAM | 0x201
+    2,
+    OAM_ENTRY(-12, -11, OAM_DIMS_8x8, OAM_NO_FLIP, 544, 8, 0),
+    OAM_ENTRY(-4, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 513, 8, 0),
 };
 
 static const u16 sRipperOam_Idle_Frame1[OAM_DATA_SIZE(2)] = {
-    0x2,
-    0xf5, 0x1f4, OBJ_SPRITE_OAM | 0x223,
-    0xf0, OBJ_SIZE_16x16 | 0x1fc, OBJ_SPRITE_OAM | 0x201
+    2,
+    OAM_ENTRY(-12, -11, OAM_DIMS_8x8, OAM_NO_FLIP, 547, 8, 0),
+    OAM_ENTRY(-4, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 513, 8, 0),
 };
 
 static const u16 sRipperOam_Idle_Frame3[OAM_DATA_SIZE(2)] = {
-    0x2,
-    0xf5, 0x1f4, OBJ_SPRITE_OAM | 0x203,
-    0xf0, OBJ_SIZE_16x16 | 0x1fc, OBJ_SPRITE_OAM | 0x201
+    2,
+    OAM_ENTRY(-12, -11, OAM_DIMS_8x8, OAM_NO_FLIP, 515, 8, 0),
+    OAM_ENTRY(-4, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 513, 8, 0),
 };
 
 static const u16 sRipperOam_TurningAround_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xf0, OBJ_SIZE_16x16 | 0x1f8, OBJ_SPRITE_OAM | 0x204
+    1,
+    OAM_ENTRY(-8, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 516, 8, 0),
 };
 
 const struct FrameData sRipperOam_Idle[5] = {

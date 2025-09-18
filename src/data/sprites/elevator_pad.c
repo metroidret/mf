@@ -5,23 +5,23 @@ const u32 sElevatorPadGfx[512] = INCBIN_U32("data/sprites/elevator_pad.gfx");
 const u16 sElevatorPadPal[16 * 1] = INCBIN_U16("data/sprites/elevator_pad.pal");
 
 static const u16 sElevatorPadOam_Idle_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_HORIZONTAL | 0xfc, OBJ_SIZE_32x8 | 0x1f0, OBJ_SPRITE_OAM | 0x200
+    1,
+    OAM_ENTRY(-16, -4, OAM_DIMS_32x8, OAM_NO_FLIP, 512, 8, 0),
 };
 
 static const u16 sElevatorPadOam_Idle_Frame1[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_HORIZONTAL | 0xfc, OBJ_SIZE_32x8 | 0x1f0, OBJ_SPRITE_OAM | 0x204
+    1,
+    OAM_ENTRY(-16, -4, OAM_DIMS_32x8, OAM_NO_FLIP, 516, 8, 0),
 };
 
 static const u16 sElevatorPadOam_Idle_Frame2[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_HORIZONTAL | 0xfc, OBJ_SIZE_32x8 | 0x1f0, OBJ_SPRITE_OAM | 0x208
+    1,
+    OAM_ENTRY(-16, -4, OAM_DIMS_32x8, OAM_NO_FLIP, 520, 8, 0),
 };
 
 static const u16 sElevatorPadOam_Idle_Frame3[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_HORIZONTAL | 0xfc, OBJ_SIZE_32x8 | 0x1f0, OBJ_SPRITE_OAM | 0x20c
+    1,
+    OAM_ENTRY(-16, -4, OAM_DIMS_32x8, OAM_NO_FLIP, 524, 8, 0),
 };
 
 const struct FrameData sElevatorPadOam_Idle[7] = {

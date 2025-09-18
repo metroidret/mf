@@ -5,8 +5,8 @@ const u32 sMovablePlatformGfx[512] = INCBIN_U32("data/sprites/movable_platform.g
 const u16 sMovablePlatformPal[16 * 1] = INCBIN_U16("data/sprites/movable_platform.pal");
 
 static const u16 sMovablePlatformOam_Idle_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    OBJ_SHAPE_HORIZONTAL | 0xf0, OBJ_SIZE_32x16 | 0x1f0, OBJ_SPRITE_OAM | 0x200
+    1,
+    OAM_ENTRY(-16, -16, OAM_DIMS_32x16, OAM_NO_FLIP, 512, 8, 0),
 };
 
 const struct FrameData sMovablePlatformOam_Idle[2] = {

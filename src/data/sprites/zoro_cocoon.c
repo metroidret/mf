@@ -6,72 +6,72 @@ const u16 sZoroCocoonPal[2 * 16] = INCBIN_U16("data/sprites/zoro_cocoon.pal");
 
 
 static const u16 sZoroCocoonOam_TransformedVertical_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xf0, OBJ_SIZE_32x32 | 0x0, OBJ_SPRITE_OAM | 0x200
+    1,
+    OAM_ENTRY(0, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 512, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedVertical_Frame1[OAM_DATA_SIZE(2)] = {
-    0x2,
-    0xf9, OBJ_SIZE_16x16 | 0x0, OBJ_SPRITE_OAM | 0x227,
-    0xf0, OBJ_SIZE_32x32 | 0x1f8, OBJ_SPRITE_OAM | 0x203
+    2,
+    OAM_ENTRY(0, -7, OAM_DIMS_16x16, OAM_NO_FLIP, 551, 8, 0),
+    OAM_ENTRY(-8, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 515, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedVertical_Frame2[OAM_DATA_SIZE(5)] = {
-    0x5,
-    OBJ_SHAPE_HORIZONTAL | 0xf0, 0x2, OBJ_SPRITE_OAM | 0x207,
-    OBJ_SHAPE_HORIZONTAL | 0xf8, 0x0, OBJ_SPRITE_OAM | 0x227,
-    OBJ_SHAPE_HORIZONTAL | 0x0, 0x1, OBJ_SPRITE_OAM | 0x247,
-    0x0, OBJ_SIZE_16x16 | 0x1ff, OBJ_SPRITE_OAM | 0x20b,
-    0xf0, OBJ_SIZE_32x32 | 0x1f8, OBJ_SPRITE_OAM | 0x203
+    5,
+    OAM_ENTRY(2, -16, OAM_DIMS_16x8, OAM_NO_FLIP, 519, 8, 0),
+    OAM_ENTRY(0, -8, OAM_DIMS_16x8, OAM_NO_FLIP, 551, 8, 0),
+    OAM_ENTRY(1, 0, OAM_DIMS_16x8, OAM_NO_FLIP, 583, 8, 0),
+    OAM_ENTRY(-1, 0, OAM_DIMS_16x16, OAM_NO_FLIP, 523, 8, 0),
+    OAM_ENTRY(-8, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 515, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedVertical_Frame3[OAM_DATA_SIZE(4)] = {
-    0x4,
-    OBJ_SHAPE_HORIZONTAL | 0xf8, 0x1ff, OBJ_SPRITE_OAM | 0x227,
-    OBJ_SHAPE_HORIZONTAL | 0xff, 0x0, OBJ_SPRITE_OAM | 0x267,
-    0x0, OBJ_SIZE_16x16 | 0x1ff, OBJ_SPRITE_OAM | 0x20b,
-    0xf0, OBJ_SIZE_32x32 | 0x1f8, OBJ_SPRITE_OAM | 0x203
+    4,
+    OAM_ENTRY(-1, -8, OAM_DIMS_16x8, OAM_NO_FLIP, 551, 8, 0),
+    OAM_ENTRY(0, -1, OAM_DIMS_16x8, OAM_NO_FLIP, 615, 8, 0),
+    OAM_ENTRY(-1, 0, OAM_DIMS_16x16, OAM_NO_FLIP, 523, 8, 0),
+    OAM_ENTRY(-8, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 515, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_UntransformedVertical_Frame0[OAM_DATA_SIZE(2)] = {
-    0x2,
-    OBJ_SHAPE_VERTICAL | 0xef, OBJ_SIZE_16x32 | 0x0, OBJ_SPRITE_OAM | 0x209,
-    OBJ_SHAPE_VERTICAL | 0xf7, 0x10, OBJ_SPRITE_OAM | 0x24b
+    2,
+    OAM_ENTRY(0, -17, OAM_DIMS_16x32, OAM_NO_FLIP, 521, 8, 0),
+    OAM_ENTRY(16, -9, OAM_DIMS_8x16, OAM_NO_FLIP, 587, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedHorizontal_Frame0[OAM_DATA_SIZE(1)] = {
-    0x1,
-    0xe8, OBJ_SIZE_32x32 | 0x1f0, OBJ_SPRITE_OAM | 0x20d
+    1,
+    OAM_ENTRY(-16, -24, OAM_DIMS_32x32, OAM_NO_FLIP, 525, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedHorizontal_Frame1[OAM_DATA_SIZE(2)] = {
-    0x2,
-    0xf0, OBJ_SIZE_16x16 | 0x1f9, OBJ_SPRITE_OAM | 0x256,
-    0xe8, OBJ_SIZE_32x32 | 0x1f0, OBJ_SPRITE_OAM | 0x211
+    2,
+    OAM_ENTRY(-7, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 598, 8, 0),
+    OAM_ENTRY(-16, -24, OAM_DIMS_32x32, OAM_NO_FLIP, 529, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedHorizontal_Frame2[OAM_DATA_SIZE(5)] = {
-    0x5,
-    OBJ_SHAPE_VERTICAL | 0xee, 0x1f0, OBJ_SPRITE_OAM | 0x255,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1f8, OBJ_SPRITE_OAM | 0x256,
-    OBJ_SHAPE_VERTICAL | 0xef, 0x0, OBJ_SPRITE_OAM | 0x257,
-    0xf1, OBJ_SIZE_16x16 | 0x0, OBJ_SPRITE_OAM | 0x259,
-    0xe8, OBJ_SIZE_32x32 | 0x1f0, OBJ_SPRITE_OAM | 0x211
+    5,
+    OAM_ENTRY(-16, -18, OAM_DIMS_8x16, OAM_NO_FLIP, 597, 8, 0),
+    OAM_ENTRY(-8, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 598, 8, 0),
+    OAM_ENTRY(0, -17, OAM_DIMS_8x16, OAM_NO_FLIP, 599, 8, 0),
+    OAM_ENTRY(0, -15, OAM_DIMS_16x16, OAM_NO_FLIP, 601, 8, 0),
+    OAM_ENTRY(-16, -24, OAM_DIMS_32x32, OAM_NO_FLIP, 529, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_TransformedHorizontal_Frame3[OAM_DATA_SIZE(5)] = {
-    0x5,
-    OBJ_SHAPE_VERTICAL | 0xee, 0x1f0, OBJ_SPRITE_OAM | 0x255,
-    OBJ_SHAPE_VERTICAL | 0xf1, 0x1f8, OBJ_SPRITE_OAM | 0x256,
-    OBJ_SHAPE_VERTICAL | 0xf0, 0x1ff, OBJ_SPRITE_OAM | 0x258,
-    0xf1, OBJ_SIZE_16x16 | 0x0, OBJ_SPRITE_OAM | 0x259,
-    0xe8, OBJ_SIZE_32x32 | 0x1f0, OBJ_SPRITE_OAM | 0x211
+    5,
+    OAM_ENTRY(-16, -18, OAM_DIMS_8x16, OAM_NO_FLIP, 597, 8, 0),
+    OAM_ENTRY(-8, -15, OAM_DIMS_8x16, OAM_NO_FLIP, 598, 8, 0),
+    OAM_ENTRY(-1, -16, OAM_DIMS_8x16, OAM_NO_FLIP, 600, 8, 0),
+    OAM_ENTRY(0, -15, OAM_DIMS_16x16, OAM_NO_FLIP, 601, 8, 0),
+    OAM_ENTRY(-16, -24, OAM_DIMS_32x32, OAM_NO_FLIP, 529, 8, 0),
 };
 
 static const u16 sZoroCocoonOam_UntransformedHorizontal_Frame0[OAM_DATA_SIZE(2)] = {
-    0x2,
-    OBJ_SHAPE_HORIZONTAL | 0xf0, OBJ_SIZE_32x16 | 0x1ef, OBJ_SPRITE_OAM | 0x215,
-    OBJ_SHAPE_HORIZONTAL | 0xe8, 0x1f7, OBJ_SPRITE_OAM | 0x219
+    2,
+    OAM_ENTRY(-17, -16, OAM_DIMS_32x16, OAM_NO_FLIP, 533, 8, 0),
+    OAM_ENTRY(-9, -24, OAM_DIMS_16x8, OAM_NO_FLIP, 537, 8, 0),
 };
 
 
@@ -177,15 +177,15 @@ const u16 sZoroHuskPal[1 * 16] = INCBIN_U16("data/sprites/zoro_husk.pal");
 
 
 static const u16 sZoroHuskOam_Vertical_Frame0[OAM_DATA_SIZE(2)] = {
-    0x2,
-    OBJ_SHAPE_HORIZONTAL | 0xf0, OBJ_SIZE_32x16 | 0x0, OBJ_SPRITE_OAM | 0x200,
-    OBJ_SHAPE_HORIZONTAL | 0x0, OBJ_SIZE_32x16 | 0x1f8, OBJ_SPRITE_OAM | 0x203
+    2,
+    OAM_ENTRY(0, -16, OAM_DIMS_32x16, OAM_NO_FLIP, 512, 8, 0),
+    OAM_ENTRY(-8, 0, OAM_DIMS_32x16, OAM_NO_FLIP, 515, 8, 0),
 };
 
 static const u16 sZoroHuskOam_Horizontal_Frame0[OAM_DATA_SIZE(2)] = {
-    0x2,
-    OBJ_SHAPE_HORIZONTAL | 0xe8, OBJ_SIZE_32x16 | 0x1f0, OBJ_SPRITE_OAM | 0x208,
-    OBJ_SHAPE_HORIZONTAL | 0xf8, OBJ_SIZE_32x8 | 0x1f0, OBJ_SPRITE_OAM | 0x20c
+    2,
+    OAM_ENTRY(-16, -24, OAM_DIMS_32x16, OAM_NO_FLIP, 520, 8, 0),
+    OAM_ENTRY(-16, -8, OAM_DIMS_32x8, OAM_NO_FLIP, 524, 8, 0),
 };
 
 const struct FrameData sZoroHuskOam_Vertical[2] = {
