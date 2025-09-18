@@ -7,6 +7,7 @@
 
 // Functions
 
-u8 CheckRoomShouldBeDark(void);
+boolu8 CheckSetMeltdownEffect(void);
+boolu8 CheckRoomShouldBeDark(void);
 
 #endif /* TRANSPARENCY_H */
