@@ -500,7 +500,7 @@ void SerrisWaitingToAppear(void)
         ScreenShakeStartHorizontal(60, 0x80 | 1);
         ScreenShakeStartVertical(60, 0x80 | 1);
 
-        unk_3b1c(0x288);
+        SoundPlay_3b1c(0x288);
     }
 }
 
@@ -2039,7 +2039,7 @@ void Serris(void)
         gCurrentSprite.work0 = 30;
         gCurrentSprite.properties |= SP_IMMUNE_TO_PROJECTILES;
 
-        unk_3b1c(0x290);
+        SoundPlay_3b1c(0x290);
     }
 
     // "Stun" before going into speedbooster mode
@@ -2062,7 +2062,7 @@ void Serris(void)
         if (gCurrentSprite.pose < SERRIS_POSE_DYING_INIT)
         {
             gCurrentSprite.pose = SERRIS_POSE_DYING_INIT;
-            unk_3b1c(0x291);
+            SoundPlay_3b1c(0x291);
         }
     }
     else
@@ -2088,7 +2088,7 @@ void Serris(void)
 
             // Play speedboosting sound
             if (MOD_AND(gFrameCounter8Bit, 16) == 0 && gCurrentSprite.pose != SERRIS_POSE_WAITING_TO_EMERGE)
-                unk_3b1c(0x28F);
+                SoundPlay_3b1c(0x28F);
 
             // Update timer
             gBossWork5--;

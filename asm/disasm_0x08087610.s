@@ -16920,7 +16920,7 @@ _0808FE20:
 	movs r2, #0
 	bl NewFileIntroArrivingAtBslSetupOam
 	ldr r0, _0808FE9C @ =0x00000245
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	movs r0, #0x85
 	lsls r0, r0, #2
 	adds r1, r4, r0
@@ -19398,7 +19398,7 @@ NewFileIntroProcessBslDoor: @ 0x08091178
 	ldr r0, _080911A4 @ =0x085FE370
 	str r0, [r4, #0x1c]
 	ldr r0, _080911A8 @ =0x00000246
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	movs r0, #1
 	strb r0, [r4, #0x14]
 	b _080911FE
@@ -23255,7 +23255,7 @@ _0809304A:
 	movs r0, #6
 	strb r0, [r3, #0x14]
 	ldr r0, _0809308C @ =0x000001F3
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	ldr r1, _08093090 @ =gNonGameplayRam
 	movs r2, #0x84
 	lsls r2, r2, #2
@@ -27620,7 +27620,7 @@ _080953D4:
 	cmp r2, #0x10
 	bne _080953E6
 	ldr r0, _080953F4 @ =0x0000024B
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _080953E6:
 	ldrh r0, [r4]
 	subs r0, #1
@@ -31833,7 +31833,7 @@ DiedOnSr388CollisionInit: @ 0x080974C4
 	movs r0, #0xe
 	strh r0, [r1]
 	ldr r0, _080976A4 @ =0x0000024D
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	movs r0, #2
 	movs r1, #0xa4
 	movs r2, #0x28
@@ -38956,7 +38956,7 @@ _0809AE48:
 	bne _0809AE58
 	movs r0, #0x92
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0809AE58:
 	bl CutsceneFadeIn
 	ldrh r0, [r5]
@@ -41531,7 +41531,7 @@ _0809C1F8:
 	cmp r0, #0x10
 	bne _0809C206
 	ldr r0, _0809C21C @ =0x00000247
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0809C206:
 	bl CutsceneFadeIn
 	ldrh r0, [r5]
@@ -44838,8 +44838,8 @@ unk_9db70: @ 0x0809DB70
 	bx lr
 	.align 2, 0
 
-	thumb_func_start SA_XCloseUpSubroutine
-SA_XCloseUpSubroutine: @ 0x0809DB74
+	thumb_func_start SaXCloseUpSubroutine
+SaXCloseUpSubroutine: @ 0x0809DB74
 	push {r4, r5, lr}
 	ldr r0, _0809DB90 @ =gNextOamSlot
 	movs r2, #0
@@ -44864,7 +44864,7 @@ _0809DB98:
 	beq _0809DBC4
 	b _0809DBDC
 _0809DBA2:
-	bl SA_XCloseUpInit
+	bl SaXCloseUpInit
 	b _0809DBBC
 _0809DBA8:
 	ldr r0, _0809DBB0 @ =gWrittenToBldy
@@ -44873,7 +44873,7 @@ _0809DBA8:
 	.align 2, 0
 _0809DBB0: .4byte gWrittenToBldy
 _0809DBB4:
-	bl SA_XCloseUp
+	bl SaXCloseUp
 	cmp r0, #0
 	beq _0809DBDC
 _0809DBBC:
@@ -44901,8 +44901,8 @@ _0809DBDC:
 	pop {r1}
 	bx r1
 
-	thumb_func_start SA_XCloseUpInit
-SA_XCloseUpInit: @ 0x0809DBE8
+	thumb_func_start SaXCloseUpInit
+SaXCloseUpInit: @ 0x0809DBE8
 	push {r4, r5, r6, r7, lr}
 	sub sp, #4
 	ldr r3, _0809DCE8 @ =0x04000208
@@ -45012,7 +45012,7 @@ _0809DCAE:
 	ldr r2, _0809DD5C @ =0x00001A01
 	adds r0, r2, #0
 	strh r0, [r1]
-	ldr r4, _0809DD60 @ =SA_XCloseUpVblank
+	ldr r4, _0809DD60 @ =SaXCloseUpVblank
 	adds r0, r4, #0
 	bl CallbackSetVBlank
 	bl _call_via_r4
@@ -45056,11 +45056,11 @@ _0809DD50: .4byte gWrittenToBldalpha_R
 _0809DD54: .4byte gWrittenToBldalpha_L
 _0809DD58: .4byte 0x04000008
 _0809DD5C: .4byte 0x00001A01
-_0809DD60: .4byte SA_XCloseUpVblank
+_0809DD60: .4byte SaXCloseUpVblank
 _0809DD64: .4byte gWrittenToDispcnt
 
-	thumb_func_start SA_XCloseUpVblank
-SA_XCloseUpVblank: @ 0x0809DD68
+	thumb_func_start SaXCloseUpVblank
+SaXCloseUpVblank: @ 0x0809DD68
 	push {lr}
 	ldr r1, _0809DD98 @ =0x04000054
 	ldr r0, _0809DD9C @ =gWrittenToBldy
@@ -45102,8 +45102,8 @@ unk_9ddb0: @ 0x0809DDB0
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XCloseUp
-SA_XCloseUp: @ 0x0809DDBC
+	thumb_func_start SaXCloseUp
+SaXCloseUp: @ 0x0809DDBC
 	push {lr}
 	movs r2, #0
 	ldr r0, _0809DDE0 @ =gNonGameplayRam
@@ -45113,7 +45113,7 @@ SA_XCloseUp: @ 0x0809DDBC
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _0809DDD8
-	bl SA_XCloseUpProcess
+	bl SaXCloseUpProcess
 	rsbs r1, r0, #0
 	orrs r1, r0
 	lsrs r2, r1, #0x1f
@@ -45124,8 +45124,8 @@ _0809DDD8:
 	.align 2, 0
 _0809DDE0: .4byte gNonGameplayRam
 
-	thumb_func_start SA_XCloseUpProcess
-SA_XCloseUpProcess: @ 0x0809DDE4
+	thumb_func_start SaXCloseUpProcess
+SaXCloseUpProcess: @ 0x0809DDE4
 	push {r4, r5, r6, lr}
 	movs r5, #0
 	ldr r0, _0809DDFC @ =gNonGameplayRam

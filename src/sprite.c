@@ -273,7 +273,7 @@ void SpriteDrawAll(void)
     drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN;
 
     SpriteDebrisDrawAll();
-    SA_XUpdateGFXAndDraw();
+    SaXUpdateGraphicsAndDraw();
 
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
     {
@@ -561,9 +561,9 @@ void SpriteDraw(s32 slot)
             size = gOamData[prevSlot + i].split.size;
         
             yOffset = sOamYFlipOffsets[shape][size];
-            yOffset = PIXEL_TO_SUBPIXEL(yOffset);
+            yOffset = PIXEL_TO_SUB_PIXEL(yOffset);
             xOffset = sOamXFlipOffsets[shape][size];
-            xOffset = PIXEL_TO_SUBPIXEL(xOffset);
+            xOffset = PIXEL_TO_SUB_PIXEL(xOffset);
         
             // Get current positions
             y = MOD_AND(part1 + yPosition, 256);
@@ -733,14 +733,14 @@ void SpriteCheckOnScreen(void)
 
     bgYRange = bgBaseY + BLOCK_TO_SUB_PIXEL(CEIL(SCREEN_SIZE_X_BLOCKS / 2));
     spriteYRange = spriteY + BLOCK_TO_SUB_PIXEL(CEIL(SCREEN_SIZE_X_BLOCKS / 2));
-    spriteBottom = bgYRange - PIXEL_TO_SUBPIXEL(gCurrentSprite.drawDistanceBottom);
-    drawOffsetY = PIXEL_TO_SUBPIXEL(gCurrentSprite.drawDistanceTop) + SCREEN_SIZE_Y_SUB_PIXEL;
+    spriteBottom = bgYRange - PIXEL_TO_SUB_PIXEL(gCurrentSprite.drawDistanceBottom);
+    drawOffsetY = PIXEL_TO_SUB_PIXEL(gCurrentSprite.drawDistanceTop) + SCREEN_SIZE_Y_SUB_PIXEL;
     spriteTop = bgYRange + drawOffsetY;
 
     bgXRange = bgBaseX + BLOCK_TO_SUB_PIXEL(CEIL(SCREEN_SIZE_X_BLOCKS / 2));
     spriteXRange = spriteX + BLOCK_TO_SUB_PIXEL(CEIL(SCREEN_SIZE_X_BLOCKS / 2));
-    spriteLeft = bgXRange - PIXEL_TO_SUBPIXEL(gCurrentSprite.drawDistanceHorizontal);
-    drawOffsetX = PIXEL_TO_SUBPIXEL(gCurrentSprite.drawDistanceHorizontal) + SCREEN_SIZE_X_SUB_PIXEL;
+    spriteLeft = bgXRange - PIXEL_TO_SUB_PIXEL(gCurrentSprite.drawDistanceHorizontal);
+    drawOffsetX = PIXEL_TO_SUB_PIXEL(gCurrentSprite.drawDistanceHorizontal) + SCREEN_SIZE_X_SUB_PIXEL;
     spriteRight = bgXRange + drawOffsetX;
 
     if (spriteLeft < spriteXRange && spriteXRange < spriteRight && spriteBottom < spriteYRange && spriteYRange < spriteTop)

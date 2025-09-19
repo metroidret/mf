@@ -41,7 +41,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_HOPPING_SLOW_LEFT | DEBRIS_TYPE_FALLING:
             movement = sDebris11Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition -= ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition -= PIXEL_SIZE / 4;
 
             blockTop = SpriteUtilCheckVerticalCollisionAtPositionSlopes(gCurrentSpriteDebris.yPosition, gCurrentSpriteDebris.xPosition);
 
@@ -56,7 +56,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_HOPPING_SLOW_LEFT | DEBRIS_TYPE_BOUNCING:
             movement = sDebris80Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition -= ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition -= PIXEL_SIZE / 4;
             break;
 
         case DEBRIS_TYPE_HOPPING_SLOW_RIGHT:
@@ -66,7 +66,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_HOPPING_SLOW_RIGHT | DEBRIS_TYPE_FALLING:
             movement = sDebris12Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition += ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition += PIXEL_SIZE / 4;
 
             blockTop = SpriteUtilCheckVerticalCollisionAtPositionSlopes(gCurrentSpriteDebris.yPosition, gCurrentSpriteDebris.xPosition);
 
@@ -81,7 +81,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_HOPPING_SLOW_RIGHT | DEBRIS_TYPE_BOUNCING:
             movement = sDebris80Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition += ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition += PIXEL_SIZE / 4;
             break;
 
         case DEBRIS_TYPE_HOPPING_FAST_RIGHT:
@@ -133,7 +133,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_LIGHT_SLOW_LEFT:
             movement = sDebris5Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition -= ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition -= PIXEL_SIZE / 4;
 
             if (gCurrentSpriteDebris.fallingTimer < 20)
                 break;
@@ -151,7 +151,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_HEAVY_SLOW_RIGHT:
             movement = sDebris6Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition += ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition += PIXEL_SIZE / 4;
 
             if (gCurrentSpriteDebris.fallingTimer < 20)
                 break;
@@ -169,7 +169,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_LIGHT_SLOW_RIGHT:
             movement = sDebris7Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition += ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition += PIXEL_SIZE / 4;
 
             if (gCurrentSpriteDebris.fallingTimer < 20)
                 break;
@@ -187,7 +187,7 @@ void SpriteDebrisUpdateCurrent(void)
         case DEBRIS_TYPE_HEAVY_SLOW_LEFT:
             movement = sDebris8Velocity[offset];
             gCurrentSpriteDebris.yPosition += movement;
-            gCurrentSpriteDebris.xPosition -= ONE_SUB_PIXEL;
+            gCurrentSpriteDebris.xPosition -= PIXEL_SIZE / 4;
 
             if (gCurrentSpriteDebris.fallingTimer < 20)
                 break;
@@ -380,22 +380,24 @@ void SpriteDebrisInit(u8 cloudType, u8 debrisType, u16 yPosition, u16 xPosition)
     }
 
     // Set oam
-    if (cloudType == 1)
+    if (cloudType == DEBRIS_CLOUD_TYPE_NORMAL)
     {
         if (debrisType < 3)
-            gSpriteDebris[i].pOam = sSpriteDebrisOam_Cloud1;
+            gSpriteDebris[i].pOam = sSpriteDebrisOam_NormalCloud;
         else
-            gSpriteDebris[i].pOam = sSpriteDebrisOam_Cloud3;
+            gSpriteDebris[i].pOam = sSpriteDebrisOam_NoCloud;
     }
-    else if (cloudType == 2)
+    else if (cloudType == DEBRIS_CLOUD_TYPE_ICE)
     {
         if (debrisType < 3)
-            gSpriteDebris[i].pOam = sSpriteDebrisOam_Cloud2;
+            gSpriteDebris[i].pOam = sSpriteDebrisOam_IceCloud;
         else
-            gSpriteDebris[i].pOam = sSpriteDebrisOam_Cloud3;
+            gSpriteDebris[i].pOam = sSpriteDebrisOam_NoCloud;
     }
     else
-        gSpriteDebris[i].pOam = sSpriteDebrisOam_Cloud3;
+    {
+        gSpriteDebris[i].pOam = sSpriteDebrisOam_NoCloud;
+    }
 
     // Setup data
     gSpriteDebris[i].exists = TRUE;

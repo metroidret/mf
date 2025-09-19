@@ -209,9 +209,7 @@ SECTIONS {
         asm/samus.o(.text);
 
         src/demo_input.o(.text);
-
-        asm/disasm_0x0800cbb8.o(.text);
-
+        src/sa_x.o(.text);
         src/in_game.o(.text);
         src/sprite.o(.text);
 
@@ -292,9 +290,11 @@ SECTIONS {
         src/sram/sram.o(.rodata);
 
         src/data/samus_data.o(.rodata);
+        src/data/sa_x.o(.rodata);
         src/data/sprite_data.o(.rodata);
         src/data/sprite_debris_data.o(.rodata);
         src/data/sprites/target.o(.rodata);
+        src/data/sprites/sa_x.o(.rodata);
         src/data/sprites/movable_platform.o(.rodata);
         src/data/sprites/moto.o(.rodata);
         src/data/sprites/save_pad.o(.rodata);

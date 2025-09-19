@@ -9207,8 +9207,8 @@ _0806CC40:
 	.align 2, 0
 _0806CC48: .4byte 0x0000801E
 
-	thumb_func_start UpdateBg1AndSubEventDuringSA_XElevatorCutscene
-UpdateBg1AndSubEventDuringSA_XElevatorCutscene: @ 0x0806CC4C
+	thumb_func_start UpdateBg1AndSubEventDuringSaXElevatorCutscene
+UpdateBg1AndSubEventDuringSaXElevatorCutscene: @ 0x0806CC4C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -12291,7 +12291,7 @@ _0806E3E4: @ jump table
 	.4byte _0806E418 @ case 11
 	.4byte _0806E460 @ case 12
 _0806E418:
-	bl SA_XUpdateGFXAndDraw
+	bl SaXUpdateGraphicsAndDraw
 _0806E41C:
 	ldr r0, _0806E434 @ =gColorFading
 	ldrb r0, [r0, #1]
@@ -16450,7 +16450,7 @@ _08070652:
 	bl _08071588
 _0807065E:
 	ldr r0, _08070668 @ =0x00000229
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	bl _08071588
 	.align 2, 0
 _08070668: .4byte 0x00000229

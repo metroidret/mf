@@ -106,8 +106,8 @@ _08004E16:
 	.align 2, 0
 _08004E20: .4byte 0x0000FF60
 
-	thumb_func_start SetSuitPalette
-SetSuitPalette: @ 0x08004E24
+	thumb_func_start SamusSetPalette
+SamusSetPalette: @ 0x08004E24
 	push {r4, r5, r6, r7, lr}
 	adds r7, r3, #0
 	adds r3, r0, #0
@@ -14162,7 +14162,7 @@ _0800BCE0:
 	movs r1, #0
 	movs r2, #0x10
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 	ldr r4, _0800BD28 @ =0x0828DEFC
 	ldr r0, _0800BD2C @ =gSamusAnimationInfo
 	ldrb r0, [r0, #2]
@@ -14374,7 +14374,7 @@ _0800BED4:
 	movs r1, #0
 	movs r2, #0x10
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 	ldr r4, _0800BEE8 @ =0x0828DE7C
 	b _0800C0BA
 	.align 2, 0
@@ -14480,7 +14480,7 @@ _0800BF9A:
 	movs r1, #0
 	movs r2, #0x10
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 	ldr r4, _0800BFBC @ =0x0828E61C
 	b _0800C0BA
 	.align 2, 0
@@ -14612,7 +14612,7 @@ _0800C0AE:
 	movs r1, #0
 	movs r2, #0x10
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 _0800C0BA:
 	adds r0, r4, #0
 	movs r1, #0x10
@@ -14620,7 +14620,7 @@ _0800C0BE:
 	movs r2, #0x10
 _0800C0C0:
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 	b _0800C120
 	.align 2, 0
 _0800C0C8: .4byte 0x0828EAFC
@@ -14657,7 +14657,7 @@ _0800C100:
 	movs r1, #0
 	movs r2, #0x10
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 	mov r3, r8
 	cmp r3, #0x34
 	beq _0800C114
@@ -14667,7 +14667,7 @@ _0800C114:
 	movs r1, #0x10
 	movs r2, #0x10
 	movs r3, #0
-	bl SetSuitPalette
+	bl SamusSetPalette
 _0800C120:
 	pop {r3, r4}
 	mov r8, r3

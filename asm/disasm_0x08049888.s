@@ -7673,7 +7673,7 @@ DachoraWaitingToRun: @ 0x0804D768
 	strh r2, [r3, #0x16]
 	movs r0, #0x92
 	lsls r0, r0, #1
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0804D794:
 	pop {r0}
 	bx r0
@@ -10815,8 +10815,8 @@ _0804F054:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start MetroidFloatingNearSA_X
-MetroidFloatingNearSA_X: @ 0x0804F05C
+	thumb_func_start MetroidFloatingNearSaX
+MetroidFloatingNearSaX: @ 0x0804F05C
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -10911,8 +10911,8 @@ _0804F110: .4byte 0x083848FC
 _0804F114: .4byte 0x0000F7FF
 _0804F118: .4byte 0x0000023A
 
-	thumb_func_start MetroidFloatingTowardsSA_X
-MetroidFloatingTowardsSA_X: @ 0x0804F11C
+	thumb_func_start MetroidFloatingTowardsSaX
+MetroidFloatingTowardsSaX: @ 0x0804F11C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -11408,10 +11408,10 @@ _0804F4FE:
 	bl MetroidFloatingInTube
 	b _0804F514
 _0804F504:
-	bl MetroidFloatingNearSA_X
+	bl MetroidFloatingNearSaX
 	b _0804F514
 _0804F50A:
-	bl MetroidFloatingTowardsSA_X
+	bl MetroidFloatingTowardsSaX
 	b _0804F514
 _0804F510:
 	bl MetroidSwaying
@@ -13725,8 +13725,8 @@ _080507EC:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XMonsterSyncSubSprites
-SA_XMonsterSyncSubSprites: @ 0x080507F4
+	thumb_func_start SaXMonsterSyncSubSprites
+SaXMonsterSyncSubSprites: @ 0x080507F4
 	push {r4, lr}
 	ldr r4, _08050850 @ =gSubSpriteData1
 	ldrh r0, [r4, #4]
@@ -13779,8 +13779,8 @@ _08050850: .4byte gSubSpriteData1
 _08050854: .4byte gCurrentSprite
 _08050858: .4byte 0x0879B458
 
-	thumb_func_start SA_XMonsterProjectilesCollision
-SA_XMonsterProjectilesCollision: @ 0x0805085C
+	thumb_func_start SaXMonsterProjectilesCollision
+SaXMonsterProjectilesCollision: @ 0x0805085C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -13892,8 +13892,8 @@ _08050920:
 _08050930: .4byte gCurrentSprite
 _08050934: .4byte gProjectileData
 
-	thumb_func_start SA_XMonsterCheckScreaming
-SA_XMonsterCheckScreaming: @ 0x08050938
+	thumb_func_start SaXMonsterCheckScreaming
+SaXMonsterCheckScreaming: @ 0x08050938
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
@@ -13906,12 +13906,12 @@ SA_XMonsterCheckScreaming: @ 0x08050938
 	bne _08050970
 	cmp r2, #0
 	beq _0805095C
-	bl SA_XMonsterScreamingAirborneInit
+	bl SaXMonsterScreamingAirborneInit
 	b _08050960
 	.align 2, 0
 _08050958: .4byte gCurrentSprite
 _0805095C:
-	bl SA_XMonsterScreamingGroundedInit
+	bl SaXMonsterScreamingGroundedInit
 _08050960:
 	ldr r0, _0805096C @ =0x000001E1
 	bl SoundPlayNotAlreadyPlaying
@@ -13926,8 +13926,8 @@ _08050972:
 	bx r1
 	.align 2, 0
 
-	thumb_func_start SA_XMonsterXMovement
-SA_XMonsterXMovement: @ 0x08050978
+	thumb_func_start SaXMonsterXMovement
+SaXMonsterXMovement: @ 0x08050978
 	push {r4, r5, r6, r7, lr}
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
@@ -14028,8 +14028,8 @@ _08050A3C: .4byte gSamusData
 _08050A40: .4byte gPreviousCollisionCheck
 _08050A44: .4byte 0xFFFFFEE0
 
-	thumb_func_start SA_XMonsterSetSideHitboxes
-SA_XMonsterSetSideHitboxes: @ 0x08050A48
+	thumb_func_start SaXMonsterSetSideHitboxes
+SaXMonsterSetSideHitboxes: @ 0x08050A48
 	push {lr}
 	ldr r2, _08050A60 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -14056,8 +14056,8 @@ _08050A6E:
 	.align 2, 0
 _08050A74: .4byte 0x0000FF80
 
-	thumb_func_start SA_XMonsterFall
-SA_XMonsterFall: @ 0x08050A78
+	thumb_func_start SaXMonsterFall
+SaXMonsterFall: @ 0x08050A78
 	push {r4, r5, r6, lr}
 	ldr r0, _08050AA8 @ =gCurrentSprite
 	adds r5, r0, #0
@@ -14128,8 +14128,8 @@ _08050B00: .4byte 0x0000073E
 _08050B04: .4byte gPreviousVerticalCollisionCheck
 _08050B08: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterSpawningFromX
-SA_XMonsterSpawningFromX: @ 0x08050B0C
+	thumb_func_start SaXMonsterSpawningFromX
+SaXMonsterSpawningFromX: @ 0x08050B0C
 	push {lr}
 	ldr r2, _08050B30 @ =gCurrentSprite
 	adds r0, r2, #0
@@ -14216,8 +14216,8 @@ _08050BB4: .4byte sSpritesPalettePointers
 _08050BB8: .4byte 0x05000300
 _08050BBC: .4byte 0x80000010
 
-	thumb_func_start SA_XMonsterInit
-SA_XMonsterInit: @ 0x08050BC0
+	thumb_func_start SaXMonsterInit
+SaXMonsterInit: @ 0x08050BC0
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0xc
 	ldr r0, _08050C6C @ =gCurrentSprite
@@ -14322,7 +14322,7 @@ _08050C8A:
 	adds r1, #0x25
 	movs r0, #2
 	strb r0, [r1]
-	bl SA_XMonsterSetSideHitboxes
+	bl SaXMonsterSetSideHitboxes
 	ldrb r2, [r6, #0x1f]
 	adds r7, r6, #0
 	adds r7, #0x23
@@ -14426,7 +14426,7 @@ _08050C8A:
 	movs r1, #0xa
 	bl SpriteSpawnSecondary
 	movs r0, #0x9f
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	add sp, #0xc
 	pop {r4, r5, r6, r7}
 	pop {r0}
@@ -14434,8 +14434,8 @@ _08050C8A:
 	.align 2, 0
 _08050D8C: .4byte 0x08388F94
 
-	thumb_func_start SA_XMonsterDroppingInit
-SA_XMonsterDroppingInit: @ 0x08050D90
+	thumb_func_start SaXMonsterDroppingInit
+SaXMonsterDroppingInit: @ 0x08050D90
 	ldr r1, _08050DA4 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -14448,30 +14448,30 @@ SA_XMonsterDroppingInit: @ 0x08050D90
 	.align 2, 0
 _08050DA4: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterDropping
-SA_XMonsterDropping: @ 0x08050DA8
+	thumb_func_start SaXMonsterDropping
+SaXMonsterDropping: @ 0x08050DA8
 	push {lr}
-	bl SA_XMonsterFall
+	bl SaXMonsterFall
 	ldr r0, _08050DC0 @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
 	cmp r0, #0x1d
 	bne _08050DC4
 	movs r0, #0
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	b _08050DCA
 	.align 2, 0
 _08050DC0: .4byte gCurrentSprite
 _08050DC4:
 	movs r0, #1
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 _08050DCA:
 	pop {r0}
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XMonsterIdleInit
-SA_XMonsterIdleInit: @ 0x08050DD0
+	thumb_func_start SaXMonsterIdleInit
+SaXMonsterIdleInit: @ 0x08050DD0
 	push {lr}
 	ldr r2, _08050DE8 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -14510,8 +14510,8 @@ _08050DF8:
 _08050E14: .4byte gSubSpriteData1
 _08050E18: .4byte 0x08388DE4
 
-	thumb_func_start SA_XMonsterIdle
-SA_XMonsterIdle: @ 0x08050E1C
+	thumb_func_start SaXMonsterIdle
+SaXMonsterIdle: @ 0x08050E1C
 	push {r4, lr}
 	movs r4, #0
 	bl SpriteUtilCheckNearEndOfSubSpriteData1Animation
@@ -14558,13 +14558,13 @@ _08050E6E:
 	strb r0, [r1]
 _08050E70:
 	movs r0, #0
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	pop {r4}
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XMonsterJumpWarningInit
-SA_XMonsterJumpWarningInit: @ 0x08050E7C
+	thumb_func_start SaXMonsterJumpWarningInit
+SaXMonsterJumpWarningInit: @ 0x08050E7C
 	push {lr}
 	ldr r2, _08050E94 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -14603,8 +14603,8 @@ _08050EA4:
 _08050EC0: .4byte gSubSpriteData1
 _08050EC4: .4byte 0x08388E0C
 
-	thumb_func_start SA_XMonsterJumpWarning
-SA_XMonsterJumpWarning: @ 0x08050EC8
+	thumb_func_start SaXMonsterJumpWarning
+SaXMonsterJumpWarning: @ 0x08050EC8
 	push {lr}
 	bl CheckEndOfSubSpriteData1Animation
 	cmp r0, #0
@@ -14644,15 +14644,15 @@ _08050EF8:
 	bl SoundPlay
 _08050F18:
 	movs r0, #0
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08050F24: .4byte gSubSpriteData1
 _08050F28: .4byte 0x08388E34
 
-	thumb_func_start SA_XMonsterJumping
-SA_XMonsterJumping: @ 0x08050F2C
+	thumb_func_start SaXMonsterJumping
+SaXMonsterJumping: @ 0x08050F2C
 	push {r4, r5, lr}
 	ldr r4, _08050F54 @ =gCurrentSprite
 	movs r0, #0x31
@@ -14686,18 +14686,18 @@ _08050F60:
 	adds r0, r0, r3
 	strh r0, [r1, #8]
 	movs r0, #0
-	bl SA_XMonsterXMovement
+	bl SaXMonsterXMovement
 _08050F74:
 	movs r0, #1
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	pop {r4, r5}
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08050F80: .4byte gSubSpriteData1
 
-	thumb_func_start SA_XMonsterFallingInit
-SA_XMonsterFallingInit: @ 0x08050F84
+	thumb_func_start SaXMonsterFallingInit
+SaXMonsterFallingInit: @ 0x08050F84
 	ldr r1, _08050F98 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -14710,32 +14710,32 @@ SA_XMonsterFallingInit: @ 0x08050F84
 	.align 2, 0
 _08050F98: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterFalling
-SA_XMonsterFalling: @ 0x08050F9C
+	thumb_func_start SaXMonsterFalling
+SaXMonsterFalling: @ 0x08050F9C
 	push {lr}
 	movs r0, #1
-	bl SA_XMonsterXMovement
-	bl SA_XMonsterFall
+	bl SaXMonsterXMovement
+	bl SaXMonsterFall
 	ldr r0, _08050FBC @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
 	cmp r0, #0x1d
 	bne _08050FC0
 	movs r0, #0
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	b _08050FC6
 	.align 2, 0
 _08050FBC: .4byte gCurrentSprite
 _08050FC0:
 	movs r0, #1
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 _08050FC6:
 	pop {r0}
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XMonsterLandingInit
-SA_XMonsterLandingInit: @ 0x08050FCC
+	thumb_func_start SaXMonsterLandingInit
+SaXMonsterLandingInit: @ 0x08050FCC
 	push {lr}
 	ldr r2, _08050FE4 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -14769,15 +14769,15 @@ _08050FF4:
 	adds r0, #0x35
 	strb r2, [r0]
 	movs r0, #0xa1
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08051018: .4byte gSubSpriteData1
 _0805101C: .4byte 0x08388E5C
 
-	thumb_func_start SA_XMonsterLanding
-SA_XMonsterLanding: @ 0x08051020
+	thumb_func_start SaXMonsterLanding
+SaXMonsterLanding: @ 0x08051020
 	push {r4, lr}
 	movs r4, #0
 	bl SpriteUtilCheckNearEndOfSubSpriteData1Animation
@@ -14824,13 +14824,13 @@ _08051072:
 	strb r0, [r1]
 _08051074:
 	movs r0, #0
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	pop {r4}
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XMonsterTurningAroundInit
-SA_XMonsterTurningAroundInit: @ 0x08051080
+	thumb_func_start SaXMonsterTurningAroundInit
+SaXMonsterTurningAroundInit: @ 0x08051080
 	push {lr}
 	ldr r2, _08051098 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -14869,8 +14869,8 @@ _080510A8:
 _080510C4: .4byte gSubSpriteData1
 _080510C8: .4byte 0x08388F14
 
-	thumb_func_start SA_XMonsterTurningAround
-SA_XMonsterTurningAround: @ 0x080510CC
+	thumb_func_start SaXMonsterTurningAround
+SaXMonsterTurningAround: @ 0x080510CC
 	push {lr}
 	ldr r2, _08051104 @ =gCurrentSprite
 	ldrh r0, [r2, #0x16]
@@ -14885,22 +14885,22 @@ SA_XMonsterTurningAround: @ 0x080510CC
 	adds r1, r3, #0
 	eors r0, r1
 	strh r0, [r2]
-	bl SA_XMonsterSetSideHitboxes
+	bl SaXMonsterSetSideHitboxes
 _080510EC:
 	bl SpriteUtilCheckEndOfCurrentSpriteAnimation
 	cmp r0, #0
 	beq _080510F8
-	bl SA_XMonsterJumpWarningInit
+	bl SaXMonsterJumpWarningInit
 _080510F8:
 	movs r0, #0
-	bl SA_XMonsterCheckScreaming
+	bl SaXMonsterCheckScreaming
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08051104: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterScreamingAirborneInit
-SA_XMonsterScreamingAirborneInit: @ 0x08051108
+	thumb_func_start SaXMonsterScreamingAirborneInit
+SaXMonsterScreamingAirborneInit: @ 0x08051108
 	push {lr}
 	ldr r2, _08051120 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -14942,12 +14942,12 @@ _08051130:
 _08051154: .4byte gSubSpriteData1
 _08051158: .4byte 0x08388F74
 
-	thumb_func_start SA_XMonsterScreamingAirborne
-SA_XMonsterScreamingAirborne: @ 0x0805115C
+	thumb_func_start SaXMonsterScreamingAirborne
+SaXMonsterScreamingAirborne: @ 0x0805115C
 	push {lr}
 	movs r0, #0
-	bl SA_XMonsterXMovement
-	bl SA_XMonsterFall
+	bl SaXMonsterXMovement
+	bl SaXMonsterFall
 	ldr r1, _0805118C @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -15007,8 +15007,8 @@ _080511D8:
 	.align 2, 0
 _080511DC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterScreamingGroundedInit
-SA_XMonsterScreamingGroundedInit: @ 0x080511E0
+	thumb_func_start SaXMonsterScreamingGroundedInit
+SaXMonsterScreamingGroundedInit: @ 0x080511E0
 	push {lr}
 	ldr r2, _080511F8 @ =gCurrentSprite
 	ldrh r1, [r2]
@@ -15045,8 +15045,8 @@ _08051208:
 _08051224: .4byte gSubSpriteData1
 _08051228: .4byte 0x08388F34
 
-	thumb_func_start SA_XMonsterScreamingGrounded
-SA_XMonsterScreamingGrounded: @ 0x0805122C
+	thumb_func_start SaXMonsterScreamingGrounded
+SaXMonsterScreamingGrounded: @ 0x0805122C
 	push {r4, lr}
 	movs r4, #0
 	bl SpriteUtilCheckEndOfCurrentSpriteAnimation
@@ -15091,12 +15091,12 @@ _0805127C:
 	cmp r4, #0
 	beq _0805128C
 _08051280:
-	bl SA_XMonsterTurningAroundInit
+	bl SaXMonsterTurningAroundInit
 	b _080512A6
 	.align 2, 0
 _08051288: .4byte gSamusData
 _0805128C:
-	bl SA_XMonsterJumpWarningInit
+	bl SaXMonsterJumpWarningInit
 	b _080512A6
 _08051292:
 	ldr r1, _080512AC @ =gCurrentSprite
@@ -15115,8 +15115,8 @@ _080512A6:
 	.align 2, 0
 _080512AC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterPanting
-SA_XMonsterPanting: @ 0x080512B0
+	thumb_func_start SaXMonsterPanting
+SaXMonsterPanting: @ 0x080512B0
 	push {r4, lr}
 	ldr r1, _08051304 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -15130,7 +15130,7 @@ SA_XMonsterPanting: @ 0x080512B0
 	cmp r0, #2
 	bne _080512CE
 	movs r0, #0xa8
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _080512CE:
 	ldr r4, _08051304 @ =gCurrentSprite
 	ldrh r0, [r4, #4]
@@ -15180,7 +15180,7 @@ _0805131C:
 	movs r0, #0xa0
 	strb r0, [r1]
 	movs r0, #0xa7
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0805133A:
 	pop {r4}
 	pop {r0}
@@ -15190,8 +15190,8 @@ _08051340: .4byte gSubSpriteData1
 _08051344: .4byte 0x08388F54
 _08051348: .4byte gCurrentSprite
 
-	thumb_func_start SA_XMonsterDying
-SA_XMonsterDying: @ 0x0805134C
+	thumb_func_start SaXMonsterDying
+SaXMonsterDying: @ 0x0805134C
 	push {lr}
 	ldr r3, _08051388 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -15226,8 +15226,8 @@ _08051382:
 _08051388: .4byte gCurrentSprite
 _0805138C: .4byte 0x00008020
 
-	thumb_func_start SA_XMonsterTurningIntoCoreX
-SA_XMonsterTurningIntoCoreX: @ 0x08051390
+	thumb_func_start SaXMonsterTurningIntoCoreX
+SaXMonsterTurningIntoCoreX: @ 0x08051390
 	push {r4, lr}
 	ldr r4, _080513F0 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -15303,8 +15303,8 @@ _0805141E:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XMonsterPartInit
-SA_XMonsterPartInit: @ 0x08051424
+	thumb_func_start SaXMonsterPartInit
+SaXMonsterPartInit: @ 0x08051424
 	push {lr}
 	ldr r3, _08051470 @ =gCurrentSprite
 	ldrh r1, [r3]
@@ -15375,14 +15375,14 @@ _0805149E:
 	movs r0, #0x30
 	strb r0, [r1]
 _080514AC:
-	bl SA_XMonsterSyncSubSprites
+	bl SaXMonsterSyncSubSprites
 	pop {r0}
 	bx r0
 	.align 2, 0
 _080514B4: .4byte gIoRegisters
 
-	thumb_func_start SA_XMonsterPartIdle
-SA_XMonsterPartIdle: @ 0x080514B8
+	thumb_func_start SaXMonsterPartIdle
+SaXMonsterPartIdle: @ 0x080514B8
 	push {lr}
 	ldr r3, _080514E4 @ =gSpriteData
 	ldr r2, _080514E8 @ =gCurrentSprite
@@ -15507,10 +15507,10 @@ _080515A8:
 	.align 2, 0
 _080515AC: .4byte 0x0838FB08
 
-	thumb_func_start SA_XMonster
-SA_XMonster: @ 0x080515B0
+	thumb_func_start SaXMonster
+SaXMonster: @ 0x080515B0
 	push {lr}
-	bl SA_XMonsterProjectilesCollision
+	bl SaXMonsterProjectilesCollision
 	ldr r0, _080515CC @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
@@ -15619,86 +15619,86 @@ _080515D4: @ jump table
 	.4byte _080517B8 @ case 89
 	.4byte _08051746 @ case 90
 _08051740:
-	bl SA_XMonsterInit
+	bl SaXMonsterInit
 	b _080517B8
 _08051746:
-	bl SA_XMonsterSpawningFromX
+	bl SaXMonsterSpawningFromX
 	b _080517B8
 _0805174C:
-	bl SA_XMonsterDroppingInit
+	bl SaXMonsterDroppingInit
 _08051750:
-	bl SA_XMonsterDropping
+	bl SaXMonsterDropping
 	b _080517B8
 _08051756:
-	bl SA_XMonsterIdleInit
+	bl SaXMonsterIdleInit
 _0805175A:
-	bl SA_XMonsterIdle
+	bl SaXMonsterIdle
 	b _080517B8
 _08051760:
-	bl SA_XMonsterJumpWarningInit
+	bl SaXMonsterJumpWarningInit
 _08051764:
-	bl SA_XMonsterJumpWarning
+	bl SaXMonsterJumpWarning
 	b _080517B8
 _0805176A:
-	bl SA_XMonsterJumping
+	bl SaXMonsterJumping
 	b _080517B8
 _08051770:
-	bl SA_XMonsterFallingInit
+	bl SaXMonsterFallingInit
 _08051774:
-	bl SA_XMonsterFalling
+	bl SaXMonsterFalling
 	b _080517B8
 _0805177A:
-	bl SA_XMonsterLandingInit
+	bl SaXMonsterLandingInit
 _0805177E:
-	bl SA_XMonsterLanding
+	bl SaXMonsterLanding
 	b _080517B8
 _08051784:
-	bl SA_XMonsterTurningAroundInit
+	bl SaXMonsterTurningAroundInit
 	b _080517B8
 _0805178A:
-	bl SA_XMonsterTurningAround
+	bl SaXMonsterTurningAround
 	b _080517B8
 _08051790:
-	bl SA_XMonsterScreamingGroundedInit
+	bl SaXMonsterScreamingGroundedInit
 	b _080517B8
 _08051796:
-	bl SA_XMonsterScreamingGrounded
+	bl SaXMonsterScreamingGrounded
 	b _080517B8
 _0805179C:
-	bl SA_XMonsterScreamingAirborneInit
+	bl SaXMonsterScreamingAirborneInit
 	b _080517B8
 _080517A2:
-	bl SA_XMonsterScreamingAirborne
+	bl SaXMonsterScreamingAirborne
 	b _080517B8
 _080517A8:
-	bl SA_XMonsterPanting
+	bl SaXMonsterPanting
 	b _080517B8
 _080517AE:
-	bl SA_XMonsterDying
+	bl SaXMonsterDying
 	b _080517B8
 _080517B4:
-	bl SA_XMonsterTurningIntoCoreX
+	bl SaXMonsterTurningIntoCoreX
 _080517B8:
 	bl SpriteUtilUpdateSubSpriteData1Animation
-	bl SA_XMonsterSyncSubSprites
+	bl SaXMonsterSyncSubSprites
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XMonsterPart
-SA_XMonsterPart: @ 0x080517C4
+	thumb_func_start SaXMonsterPart
+SaXMonsterPart: @ 0x080517C4
 	push {lr}
 	ldr r0, _080517D8 @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _080517DC
-	bl SA_XMonsterPartInit
+	bl SaXMonsterPartInit
 	b _080517E4
 	.align 2, 0
 _080517D8: .4byte gCurrentSprite
 _080517DC:
-	bl SA_XMonsterPartIdle
-	bl SA_XMonsterSyncSubSprites
+	bl SaXMonsterPartIdle
+	bl SaXMonsterSyncSubSprites
 _080517E4:
 	pop {r0}
 	bx r0
@@ -17982,7 +17982,7 @@ _080529F8:
 	movs r2, #0x30
 	bl ParticleSet
 	ldr r0, _08052A40 @ =0x0000026E
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _08052AAC
 	.align 2, 0
 _08052A38: .4byte gCurrentSprite
@@ -20583,8 +20583,8 @@ _08053EC0: .4byte 0x8000000B
 _08053EC4: .4byte 0x050003A0
 _08053EC8: .4byte 0x050003C0
 
-	thumb_func_start OmegaMetroidSA_XIceBeamCollision
-OmegaMetroidSA_XIceBeamCollision: @ 0x08053ECC
+	thumb_func_start OmegaMetroidSaXIceBeamCollision
+OmegaMetroidSaXIceBeamCollision: @ 0x08053ECC
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -22158,8 +22158,8 @@ _08054AF2:
 	pop {r0}
 	bx r0
 
-	thumb_func_start OmegaMetroidWalkingBeforeSA_XInit
-OmegaMetroidWalkingBeforeSA_XInit: @ 0x08054AF8
+	thumb_func_start OmegaMetroidWalkingBeforeSaXInit
+OmegaMetroidWalkingBeforeSaXInit: @ 0x08054AF8
 	ldr r1, _08054B14 @ =gSubSpriteData1
 	ldr r0, _08054B18 @ =0x08396758
 	str r0, [r1]
@@ -22179,8 +22179,8 @@ _08054B14: .4byte gSubSpriteData1
 _08054B18: .4byte 0x08396758
 _08054B1C: .4byte gCurrentSprite
 
-	thumb_func_start OmegaMetroidWalkingBeforeSA_X
-OmegaMetroidWalkingBeforeSA_X: @ 0x08054B20
+	thumb_func_start OmegaMetroidWalkingBeforeSaX
+OmegaMetroidWalkingBeforeSaX: @ 0x08054B20
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -22898,8 +22898,8 @@ _080550C6:
 	pop {r0}
 	bx r0
 
-	thumb_func_start omegaMetroidSpawnSA_X
-omegaMetroidSpawnSA_X: @ 0x080550CC
+	thumb_func_start omegaMetroidSpawnSaX
+omegaMetroidSpawnSaX: @ 0x080550CC
 	push {r4, lr}
 	sub sp, #0x10
 	ldr r4, _08055114 @ =gCurrentSprite
@@ -22940,8 +22940,8 @@ _08055114: .4byte gCurrentSprite
 _08055118: .4byte 0xFFFFFE80
 _0805511C: .4byte 0xFFFFFC80
 
-	thumb_func_start OmegaMetroidWaitingForSA_XInit
-OmegaMetroidWaitingForSA_XInit: @ 0x08055120
+	thumb_func_start OmegaMetroidWaitingForSaXInit
+OmegaMetroidWaitingForSaXInit: @ 0x08055120
 	ldr r1, _08055148 @ =gSubSpriteData1
 	ldr r0, _0805514C @ =0x083965D8
 	str r0, [r1]
@@ -22966,8 +22966,8 @@ _08055148: .4byte gSubSpriteData1
 _0805514C: .4byte 0x083965D8
 _08055150: .4byte gCurrentSprite
 
-	thumb_func_start OmegaMetroidWaitingForSA_X
-OmegaMetroidWaitingForSA_X: @ 0x08055154
+	thumb_func_start OmegaMetroidWaitingForSaX
+OmegaMetroidWaitingForSaX: @ 0x08055154
 	push {r4, r5, lr}
 	ldr r4, _08055194 @ =gSamusData
 	ldrh r0, [r4, #0x18]
@@ -23136,7 +23136,7 @@ _08055298:
 	subs r1, #0xb
 	movs r0, #0xc
 	strb r0, [r1]
-	bl omegaMetroidSpawnSA_X
+	bl omegaMetroidSpawnSaX
 	b _0805534A
 	.align 2, 0
 _080552C0: .4byte gSubSpriteData1
@@ -23208,10 +23208,10 @@ _0805534A:
 _08055350: .4byte gSubSpriteData1
 _08055354: .4byte 0x08396600
 
-	thumb_func_start OmegaMetroidWatchingSA_X
-OmegaMetroidWatchingSA_X: @ 0x08055358
+	thumb_func_start OmegaMetroidWatchingSaX
+OmegaMetroidWatchingSaX: @ 0x08055358
 	push {lr}
-	bl OmegaMetroidSA_XIceBeamCollision
+	bl OmegaMetroidSaXIceBeamCollision
 	ldr r2, _080553A0 @ =gSpriteData
 	ldr r0, _080553A4 @ =gCurrentSprite
 	mov ip, r0
@@ -23251,10 +23251,10 @@ _080553A8: .4byte gSubSpriteData1
 _080553AC: .4byte 0x08396628
 _080553B0: .4byte 0x0000021A
 
-	thumb_func_start OmegaMetroidDamagedBySA_X
-OmegaMetroidDamagedBySA_X: @ 0x080553B4
+	thumb_func_start OmegaMetroidDamagedBySaX
+OmegaMetroidDamagedBySaX: @ 0x080553B4
 	push {r4, lr}
-	bl OmegaMetroidSA_XIceBeamCollision
+	bl OmegaMetroidSaXIceBeamCollision
 	bl OmegaMetroidBodyBlinking
 	bl CheckEndOfSubSpriteData1Animation
 	cmp r0, #0
@@ -23288,10 +23288,10 @@ _080553F4: .4byte gSubSpriteData1
 _080553F8: .4byte 0x083968B0
 _080553FC: .4byte gCurrentSprite
 
-	thumb_func_start OmegaMetroidWalkingBackwardsFromSA_X
-OmegaMetroidWalkingBackwardsFromSA_X: @ 0x08055400
+	thumb_func_start OmegaMetroidWalkingBackwardsFromSaX
+OmegaMetroidWalkingBackwardsFromSaX: @ 0x08055400
 	push {r4, r5, r6, lr}
-	bl OmegaMetroidSA_XIceBeamCollision
+	bl OmegaMetroidSaXIceBeamCollision
 	bl OmegaMetroidBodyBlinking
 	ldr r5, _0805541C @ =gCurrentSprite
 	adds r6, r5, #0
@@ -23364,10 +23364,10 @@ _08055490:
 _08055498: .4byte gSubSpriteData1
 _0805549C: .4byte 0x08396628
 
-	thumb_func_start OmegaMetroidDamagedBySA_X2
-OmegaMetroidDamagedBySA_X2: @ 0x080554A0
+	thumb_func_start OmegaMetroidDamagedBySaX2
+OmegaMetroidDamagedBySaX2: @ 0x080554A0
 	push {r4, r5, r6, lr}
-	bl OmegaMetroidSA_XIceBeamCollision
+	bl OmegaMetroidSaXIceBeamCollision
 	bl OmegaMetroidBodyBlinking
 	ldr r5, _080554D4 @ =gSubSpriteData1
 	ldr r0, [r5, #4]
@@ -23414,10 +23414,10 @@ _080554FC:
 	.align 2, 0
 _08055504: .4byte 0x083965D8
 
-	thumb_func_start OmegaMetroidWaitingToSwipeSA_X
-OmegaMetroidWaitingToSwipeSA_X: @ 0x08055508
+	thumb_func_start OmegaMetroidWaitingToSwipeSaX
+OmegaMetroidWaitingToSwipeSaX: @ 0x08055508
 	push {lr}
-	bl OmegaMetroidSA_XIceBeamCollision
+	bl OmegaMetroidSaXIceBeamCollision
 	bl OmegaMetroidBodyBlinking
 	bl CheckEndOfSubSpriteData1Animation
 	cmp r0, #0
@@ -23443,10 +23443,10 @@ _0805553C: .4byte gSubSpriteData1
 _08055540: .4byte 0x08396918
 _08055544: .4byte gCurrentSprite
 
-	thumb_func_start OmegaMEtroidSwipingSA_X
-OmegaMEtroidSwipingSA_X: @ 0x08055548
+	thumb_func_start OmegaMEtroidSwipingSaX
+OmegaMEtroidSwipingSaX: @ 0x08055548
 	push {lr}
-	bl OmegaMetroidSA_XIceBeamCollision
+	bl OmegaMetroidSaXIceBeamCollision
 	bl OmegaMetroidBodyBlinking
 	bl CheckEndOfSubSpriteData1Animation
 	cmp r0, #0
@@ -23518,8 +23518,8 @@ _080555E0: .4byte gSpriteData
 _080555E4: .4byte gCurrentSprite
 _080555E8: .4byte 0x000002AF
 
-	thumb_func_start OmegaMetroidKilledSA_X
-OmegaMetroidKilledSA_X: @ 0x080555EC
+	thumb_func_start OmegaMetroidKilledSaX
+OmegaMetroidKilledSaX: @ 0x080555EC
 	push {r4, lr}
 	ldr r4, _08055648 @ =gSubSpriteData1
 	ldr r0, [r4, #4]
@@ -23998,7 +23998,7 @@ _08055984:
 	bl ParticleSet
 	movs r0, #0x87
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _08055A80
 _080559B2:
 	adds r0, r4, #0
@@ -24710,9 +24710,9 @@ _08056050:
 	bl OmegaMetroidFinishedScreamingAfterFirstJump
 	b _0805610C
 _08056056:
-	bl OmegaMetroidWalkingBeforeSA_XInit
+	bl OmegaMetroidWalkingBeforeSaXInit
 _0805605A:
-	bl OmegaMetroidWalkingBeforeSA_X
+	bl OmegaMetroidWalkingBeforeSaX
 	b _0805610C
 _08056060:
 	bl OmegaMetroidSlowWalkInit
@@ -24761,30 +24761,30 @@ _080560B6:
 	bl OmegaMetroidVerticalJump
 	b _0805610C
 _080560BC:
-	bl OmegaMetroidWaitingForSA_XInit
+	bl OmegaMetroidWaitingForSaXInit
 _080560C0:
-	bl OmegaMetroidWaitingForSA_X
+	bl OmegaMetroidWaitingForSaX
 	b _0805610C
 _080560C6:
-	bl OmegaMetroidWatchingSA_X
+	bl OmegaMetroidWatchingSaX
 	b _0805610C
 _080560CC:
-	bl OmegaMetroidDamagedBySA_X
+	bl OmegaMetroidDamagedBySaX
 	b _0805610C
 _080560D2:
-	bl OmegaMetroidWalkingBackwardsFromSA_X
+	bl OmegaMetroidWalkingBackwardsFromSaX
 	b _0805610C
 _080560D8:
-	bl OmegaMetroidDamagedBySA_X2
+	bl OmegaMetroidDamagedBySaX2
 	b _0805610C
 _080560DE:
-	bl OmegaMetroidWaitingToSwipeSA_X
+	bl OmegaMetroidWaitingToSwipeSaX
 	b _0805610C
 _080560E4:
-	bl OmegaMEtroidSwipingSA_X
+	bl OmegaMEtroidSwipingSaX
 	b _0805610C
 _080560EA:
-	bl OmegaMetroidKilledSA_X
+	bl OmegaMetroidKilledSaX
 	b _0805610C
 _080560F0:
 	bl OmegaMetroidScreamingAfterIceBeamObtained
@@ -25082,7 +25082,7 @@ GunshipEndMovingUp: @ 0x08056338
 	cmp r0, #0
 	bne _08056356
 	ldr r0, _08056378 @ =0x00000249
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _08056356:
 	movs r4, #0
 	ldr r3, _08056374 @ =gCurrentSprite
@@ -25570,7 +25570,7 @@ GunshipEndStartingEngine1: @ 0x080566A8
 	str r0, [r1, #8]
 	ldr r0, [r1, #8]
 	ldr r0, _08056734 @ =0x0000024A
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _08056712:
 	pop {r4, r5, r6}
 	pop {r0}
@@ -29602,7 +29602,7 @@ OmegaMetroidHuskWaitForOmegaMetroidToSpawn: @ 0x08058690
 	bl SpriteDebrisInit
 	movs r0, #0x86
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _08058784:
 	pop {r4, r5, r6}
 	pop {r0}
@@ -30021,8 +30021,8 @@ _08058AE4:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start IceBeamAbilityFloatingBeforeSA_X
-IceBeamAbilityFloatingBeforeSA_X: @ 0x08058AEC
+	thumb_func_start IceBeamAbilityFloatingBeforeSaX
+IceBeamAbilityFloatingBeforeSaX: @ 0x08058AEC
 	push {r4, r5, r6, r7, lr}
 	ldr r2, _08058B54 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -30098,8 +30098,8 @@ _08058B78:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start IceBeamAbilityTurningIntoSA_X
-IceBeamAbilityTurningIntoSA_X: @ 0x08058B80
+	thumb_func_start IceBeamAbilityTurningIntoSaX
+IceBeamAbilityTurningIntoSaX: @ 0x08058B80
 	push {lr}
 	ldr r1, _08058BB8 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -30156,8 +30156,8 @@ _08058BEA:
 	.align 2, 0
 _08058BF0: .4byte gCurrentSprite
 
-	thumb_func_start IceBeamAbilitySpawningFromSA_XInit
-IceBeamAbilitySpawningFromSA_XInit: @ 0x08058BF4
+	thumb_func_start IceBeamAbilitySpawningFromSaXInit
+IceBeamAbilitySpawningFromSaXInit: @ 0x08058BF4
 	ldr r3, _08058C34 @ =gCurrentSprite
 	adds r1, r3, #0
 	adds r1, #0x24
@@ -30590,10 +30590,10 @@ _0805901C:
 	bl IceBeamAbilityEntering
 	b _0805904E
 _08059022:
-	bl IceBeamAbilityFloatingBeforeSA_X
+	bl IceBeamAbilityFloatingBeforeSaX
 	b _0805904E
 _08059028:
-	bl IceBeamAbilityTurningIntoSA_X
+	bl IceBeamAbilityTurningIntoSaX
 	b _0805904E
 _0805902E:
 	bl IceBeamAbilityInit
@@ -30601,7 +30601,7 @@ _08059032:
 	bl IceBeamAbilitySpawningFromX
 	b _0805904E
 _08059038:
-	bl IceBeamAbilitySpawningFromSA_XInit
+	bl IceBeamAbilitySpawningFromSaXInit
 	b _0805904E
 _0805903E:
 	bl IceBeamAbilityGoingToTarget
@@ -32205,7 +32205,7 @@ _08059C50:
 	strb r0, [r1]
 	movs r0, #0xf0
 	lsls r0, r0, #1
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _08059C64:
 	pop {r4, r5}
 	pop {r0}
@@ -36497,7 +36497,7 @@ YakuzaAboutToAppear: @ 0x0805BEF4
 	movs r0, #1
 	strb r0, [r1]
 	ldr r0, _0805BF44 @ =0x0000012F
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0805BF32:
 	pop {r0}
 	bx r0
@@ -36978,7 +36978,7 @@ _0805C2A0:
 	bl PlayMusic
 	movs r0, #0x98
 	lsls r0, r0, #1
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _0805C468
 	.align 2, 0
 _0805C320: .4byte gSubSpriteData1
@@ -37261,7 +37261,7 @@ YakuzaPhase1DyingInit: @ 0x0805C52C
 	bl ParticleSet
 	movs r0, #0x99
 	lsls r0, r0, #1
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -38092,7 +38092,7 @@ _0805CC20:
 	bl ParticleSet
 	movs r0, #0x9a
 	lsls r0, r0, #1
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _0805CC9C
 _0805CC38:
 	adds r0, r2, #0
@@ -39186,7 +39186,7 @@ _0805D450:
 	movs r1, #0x81
 	bl ScreenShakeStartVertical
 	ldr r0, _0805D48C @ =0x00000133
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _0805D570
 	.align 2, 0
 _0805D488: .4byte 0x083B7320
@@ -40558,7 +40558,7 @@ NightmareWaitingToAppear: @ 0x0805DFC4
 	strb r0, [r4]
 	movs r0, #0xa8
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0805DFFA:
 	pop {r4}
 	pop {r0}
@@ -40592,7 +40592,7 @@ NightmareAppearing: @ 0x0805E004
 	strb r0, [r4]
 	movs r0, #0xa8
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0805E03C:
 	ldr r2, _0805E054 @ =gSubSpriteData1
 	ldrh r1, [r2, #8]
@@ -41388,7 +41388,7 @@ _0805E5EA:
 	strb r0, [r2]
 	movs r0, #0xa9
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _0805E612:
 	pop {r4, r5, r6, r7}
 	pop {r0}
@@ -43679,7 +43679,7 @@ _0805F7D0:
 	movs r2, #0x3a
 	bl ParticleSet
 	ldr r0, _0805F818 @ =0x000002A9
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _0805FACC
 	.align 2, 0
 _0805F808: .4byte gSpriteData
@@ -45028,7 +45028,7 @@ _08060306:
 	strb r0, [r1]
 	movs r0, #0xaa
 	lsls r0, r0, #2
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _08060348
 _0806032A:
 	bl NightmarePartGeneratorUpdateDyingPalette

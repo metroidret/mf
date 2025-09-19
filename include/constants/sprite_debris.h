@@ -17,4 +17,10 @@ enum SpriteDebrisType {
     DEBRIS_TYPE_BOUNCING = (1 << 7),
 };
 
+enum SpriteDebrisCloudType {
+    DEBRIS_CLOUD_TYPE_NONE,
+    DEBRIS_CLOUD_TYPE_NORMAL,
+    DEBRIS_CLOUD_TYPE_ICE
+};
+
 #endif /* SPRITE_DEBRIS_CONSTANTS_H */

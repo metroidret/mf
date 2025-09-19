@@ -1044,8 +1044,8 @@ _080157C6:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XSetDirection
-SA_XSetDirection: @ 0x080157CC
+	thumb_func_start SaXSetDirection
+SaXSetDirection: @ 0x080157CC
 	push {lr}
 	ldr r0, _080157E4 @ =gCurrentSprite
 	ldrh r1, [r0]
@@ -1070,8 +1070,8 @@ _080157F0:
 	.align 2, 0
 _080157F8: .4byte gSaXData
 
-	thumb_func_start SA_XSeeAndLocateSamus
-SA_XSeeAndLocateSamus: @ 0x080157FC
+	thumb_func_start SaXSeeAndLocateSamus
+SaXSeeAndLocateSamus: @ 0x080157FC
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -2418,8 +2418,8 @@ _08016214:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XInit
-SA_XInit: @ 0x0801621C
+	thumb_func_start SaXInit
+SaXInit: @ 0x0801621C
 	push {r4, r5, lr}
 	ldr r5, _08016290 @ =gCurrentSprite
 	ldrh r1, [r5]
@@ -2463,7 +2463,7 @@ SA_XInit: @ 0x0801621C
 	ldrh r0, [r0]
 	strh r0, [r5, #0x14]
 	bl SpriteUtilMakeSpriteFaceSamusDirection
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	ldr r0, _080162A4 @ =gSaXData
 	strb r4, [r0, #0x12]
 	strb r4, [r0, #0x13]
@@ -2484,10 +2484,10 @@ _0801629C: .4byte 0x0000FBFF
 _080162A0: .4byte sPrimarySpriteStats
 _080162A4: .4byte gSaXData
 
-	thumb_func_start SA_XElevatorInit
-SA_XElevatorInit: @ 0x080162A8
+	thumb_func_start SaXElevatorInit
+SaXElevatorInit: @ 0x080162A8
 	push {lr}
-	bl SA_XInit
+	bl SaXInit
 	ldr r0, _080162BC @ =gCurrentSprite
 	adds r0, #0x25
 	movs r1, #2
@@ -2497,8 +2497,8 @@ SA_XElevatorInit: @ 0x080162A8
 	.align 2, 0
 _080162BC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XFallingInit
-SA_XFallingInit: @ 0x080162C0
+	thumb_func_start SaXFallingInit
+SaXFallingInit: @ 0x080162C0
 	push {r4, r5, lr}
 	ldr r5, _080162EC @ =gCurrentSprite
 	adds r1, r5, #0
@@ -2513,7 +2513,7 @@ SA_XFallingInit: @ 0x080162C0
 	ldr r0, _080162F0 @ =0x0000FF88
 	strh r0, [r5, #0xa]
 	movs r0, #7
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r0, r5, #0
 	adds r0, #0x2d
 	strb r4, [r0]
@@ -2524,8 +2524,8 @@ SA_XFallingInit: @ 0x080162C0
 _080162EC: .4byte gCurrentSprite
 _080162F0: .4byte 0x0000FF88
 
-	thumb_func_start SA_XFalling
-SA_XFalling: @ 0x080162F4
+	thumb_func_start SaXFalling
+SaXFalling: @ 0x080162F4
 	push {r4, r5, r6, lr}
 	ldr r4, _08016334 @ =gCurrentSprite
 	adds r5, r4, #0
@@ -2591,7 +2591,7 @@ _0801635E:
 	movs r0, #1
 	strb r0, [r5]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _080163C0
 	.align 2, 0
 _08016380: .4byte gPreviousVerticalCollisionCheck
@@ -2633,8 +2633,8 @@ _080163C0:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XStandingInit
-SA_XStandingInit: @ 0x080163C8
+	thumb_func_start SaXStandingInit
+SaXStandingInit: @ 0x080163C8
 	push {lr}
 	ldr r2, _080163E8 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -2647,15 +2647,15 @@ SA_XStandingInit: @ 0x080163C8
 	ldr r0, _080163EC @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _080163E8: .4byte gCurrentSprite
 _080163EC: .4byte 0x0000FF88
 
-	thumb_func_start SA_XStanding
-SA_XStanding: @ 0x080163F0
+	thumb_func_start SaXStanding
+SaXStanding: @ 0x080163F0
 	push {r4, r5, lr}
 	bl unk_1129c
 	ldr r0, _08016408 @ =gPreviousVerticalCollisionCheck
@@ -2740,8 +2740,8 @@ _0801648A:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XWalkingInit
-SA_XWalkingInit: @ 0x08016490
+	thumb_func_start SaXWalkingInit
+SaXWalkingInit: @ 0x08016490
 	push {lr}
 	ldr r3, _080164B4 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -2755,15 +2755,15 @@ SA_XWalkingInit: @ 0x08016490
 	ldr r0, _080164B8 @ =0x0000FF88
 	strh r0, [r3, #0xa]
 	movs r0, #1
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _080164B4: .4byte gCurrentSprite
 _080164B8: .4byte 0x0000FF88
 
-	thumb_func_start SA_XWalking
-SA_XWalking: @ 0x080164BC
+	thumb_func_start SaXWalking
+SaXWalking: @ 0x080164BC
 	push {r4, lr}
 	bl unk_15f54
 	lsls r0, r0, #0x18
@@ -2799,8 +2799,8 @@ _080164F8:
 _08016500: .4byte gCurrentSprite
 _08016504: .4byte 0x082E6BBC
 
-	thumb_func_start SA_XTurningInit
-SA_XTurningInit: @ 0x08016508
+	thumb_func_start SaXTurningInit
+SaXTurningInit: @ 0x08016508
 	push {lr}
 	ldr r2, _08016524 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -2810,15 +2810,15 @@ SA_XTurningInit: @ 0x08016508
 	ldr r0, _08016528 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #4
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016524: .4byte gCurrentSprite
 _08016528: .4byte 0x0000FF88
 
-	thumb_func_start SA_XTurning
-SA_XTurning: @ 0x0801652C
+	thumb_func_start SaXTurning
+SaXTurning: @ 0x0801652C
 	push {lr}
 	ldr r0, _08016554 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -2835,7 +2835,7 @@ SA_XTurning: @ 0x0801652C
 	adds r1, r3, #0
 	eors r0, r1
 	strh r0, [r2]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 _08016550:
 	pop {r0}
 	bx r0
@@ -2843,8 +2843,8 @@ _08016550:
 _08016554: .4byte gSaXData
 _08016558: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTurningChaseStartInit
-SA_XTurningChaseStartInit: @ 0x0801655C
+	thumb_func_start SaXTurningChaseStartInit
+SaXTurningChaseStartInit: @ 0x0801655C
 	push {lr}
 	ldr r2, _08016578 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -2854,15 +2854,15 @@ SA_XTurningChaseStartInit: @ 0x0801655C
 	ldr r0, _0801657C @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #4
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016578: .4byte gCurrentSprite
 _0801657C: .4byte 0x0000FF88
 
-	thumb_func_start SA_XTurningChaseStart
-SA_XTurningChaseStart: @ 0x08016580
+	thumb_func_start SaXTurningChaseStart
+SaXTurningChaseStart: @ 0x08016580
 	push {r4, lr}
 	ldr r0, _080165B0 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -2875,7 +2875,7 @@ SA_XTurningChaseStart: @ 0x08016580
 	adds r1, r2, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	ldrh r1, [r4]
 	movs r0, #0x80
 	lsls r0, r0, #3
@@ -2901,8 +2901,8 @@ _080165C0:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XRunningStart
-SA_XRunningStart: @ 0x080165C8
+	thumb_func_start SaXRunningStart
+SaXRunningStart: @ 0x080165C8
 	push {lr}
 	ldr r3, _080165F4 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -2920,7 +2920,7 @@ SA_XRunningStart: @ 0x080165C8
 	cmp r0, #0
 	bne _080165F0
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 _080165F0:
 	pop {r0}
 	bx r0
@@ -2928,8 +2928,8 @@ _080165F0:
 _080165F4: .4byte gCurrentSprite
 _080165F8: .4byte 0x0000FF88
 
-	thumb_func_start SA_XRunning
-SA_XRunning: @ 0x080165FC
+	thumb_func_start SaXRunning
+SaXRunning: @ 0x080165FC
 	push {r4, lr}
 	bl unk_15dd4
 	lsls r0, r0, #0x18
@@ -2965,8 +2965,8 @@ _08016638:
 _08016640: .4byte gCurrentSprite
 _08016644: .4byte 0x082E6BCC
 
-	thumb_func_start SA_XMidAirInit
-SA_XMidAirInit: @ 0x08016648
+	thumb_func_start SaXMidAirInit
+SaXMidAirInit: @ 0x08016648
 	push {r4, r5, lr}
 	ldr r5, _0801667C @ =gCurrentSprite
 	adds r1, r5, #0
@@ -2984,7 +2984,7 @@ SA_XMidAirInit: @ 0x08016648
 	subs r0, #0x20
 	strh r0, [r5, #2]
 	movs r0, #5
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r0, r5, #0
 	adds r0, #0x2d
 	strb r4, [r0]
@@ -2995,8 +2995,8 @@ SA_XMidAirInit: @ 0x08016648
 _0801667C: .4byte gCurrentSprite
 _08016680: .4byte 0x0000FFB0
 
-	thumb_func_start SA_XMidAir
-SA_XMidAir: @ 0x08016684
+	thumb_func_start SaXMidAir
+SaXMidAir: @ 0x08016684
 	push {r4, r5, r6, lr}
 	ldr r3, _080166C8 @ =gCurrentSprite
 	adds r0, r3, #0
@@ -3212,7 +3212,7 @@ _080167FC:
 	movs r0, #1
 	strb r0, [r1]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _08016850
 	.align 2, 0
 _08016830: .4byte 0x082E6BDC
@@ -3236,8 +3236,8 @@ _08016850:
 	.align 2, 0
 _08016858: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XDelayBeforeShootingBeamInit
-SA_XDelayBeforeShootingBeamInit: @ 0x0801685C
+	thumb_func_start SaXDelayBeforeShootingBeamInit
+SaXDelayBeforeShootingBeamInit: @ 0x0801685C
 	push {r4, lr}
 	ldr r4, _08016898 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -3248,7 +3248,7 @@ SA_XDelayBeforeShootingBeamInit: @ 0x0801685C
 	movs r0, #0x10
 	strb r0, [r1]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	ldrh r1, [r4]
 	movs r0, #0x80
 	lsls r0, r0, #2
@@ -3273,8 +3273,8 @@ _08016892:
 _08016898: .4byte gCurrentSprite
 _0801689C: .4byte gSaXData
 
-	thumb_func_start SA_XDelayBeforeShootingBeam
-SA_XDelayBeforeShootingBeam: @ 0x080168A0
+	thumb_func_start SaXDelayBeforeShootingBeam
+SaXDelayBeforeShootingBeam: @ 0x080168A0
 	push {r4, lr}
 	bl unk_1129c
 	ldr r0, _080168B8 @ =gPreviousVerticalCollisionCheck
@@ -3374,8 +3374,8 @@ _08016950:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XShootingBeamInit
-SA_XShootingBeamInit: @ 0x08016958
+	thumb_func_start SaXShootingBeamInit
+SaXShootingBeamInit: @ 0x08016958
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _080169A0 @ =gCurrentSprite
@@ -3516,7 +3516,7 @@ _08016A62:
 	movs r0, #0
 	strb r0, [r1, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -3524,8 +3524,8 @@ _08016A62:
 	.align 2, 0
 _08016A78: .4byte gSaXData
 
-	thumb_func_start SA_XShootingBeam
-SA_XShootingBeam: @ 0x08016A7C
+	thumb_func_start SaXShootingBeam
+SaXShootingBeam: @ 0x08016A7C
 	push {r4, lr}
 	bl unk_1129c
 	ldr r0, _08016A94 @ =gPreviousVerticalCollisionCheck
@@ -3613,8 +3613,8 @@ _08016B1E:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XDelayBeforeShootingMissileInit
-SA_XDelayBeforeShootingMissileInit: @ 0x08016B24
+	thumb_func_start SaXDelayBeforeShootingMissileInit
+SaXDelayBeforeShootingMissileInit: @ 0x08016B24
 	push {lr}
 	ldr r2, _08016B54 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -3671,8 +3671,8 @@ _08016B7E:
 	.align 2, 0
 _08016B84: .4byte gSaXData
 
-	thumb_func_start SA_XDelayBeforeShootingMissile
-SA_XDelayBeforeShootingMissile: @ 0x08016B88
+	thumb_func_start SaXDelayBeforeShootingMissile
+SaXDelayBeforeShootingMissile: @ 0x08016B88
 	push {lr}
 	ldr r1, _08016BA8 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -3692,8 +3692,8 @@ _08016BA2:
 	.align 2, 0
 _08016BA8: .4byte gCurrentSprite
 
-	thumb_func_start SA_XShootingMissileInit
-SA_XShootingMissileInit: @ 0x08016BAC
+	thumb_func_start SaXShootingMissileInit
+SaXShootingMissileInit: @ 0x08016BAC
 	push {lr}
 	sub sp, #0xc
 	ldr r2, _08016BF0 @ =gCurrentSprite
@@ -3823,15 +3823,15 @@ _08016C9A:
 	movs r0, #1
 	strb r0, [r1, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 	add sp, #0xc
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016CAC: .4byte gSaXData
 
-	thumb_func_start SA_XShootingMissile
-SA_XShootingMissile: @ 0x08016CB0
+	thumb_func_start SaXShootingMissile
+SaXShootingMissile: @ 0x08016CB0
 	push {lr}
 	bl unk_1129c
 	ldr r0, _08016CC8 @ =gPreviousVerticalCollisionCheck
@@ -3874,8 +3874,8 @@ _08016CFC:
 	.align 2, 0
 _08016D00: .4byte gCurrentSprite
 
-	thumb_func_start SA_XIdleAfterShootingMissileInit
-SA_XIdleAfterShootingMissileInit: @ 0x08016D04
+	thumb_func_start SaXIdleAfterShootingMissileInit
+SaXIdleAfterShootingMissileInit: @ 0x08016D04
 	ldr r1, _08016D18 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -3888,8 +3888,8 @@ SA_XIdleAfterShootingMissileInit: @ 0x08016D04
 	.align 2, 0
 _08016D18: .4byte gCurrentSprite
 
-	thumb_func_start SA_XIdleAfterShootingMissile
-SA_XIdleAfterShootingMissile: @ 0x08016D1C
+	thumb_func_start SaXIdleAfterShootingMissile
+SaXIdleAfterShootingMissile: @ 0x08016D1C
 	push {r4, r5, lr}
 	ldr r4, _08016D34 @ =gCurrentSprite
 	movs r0, #0
@@ -3966,8 +3966,8 @@ _08016DA6:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XMorphingInit
-SA_XMorphingInit: @ 0x08016DAC
+	thumb_func_start SaXMorphingInit
+SaXMorphingInit: @ 0x08016DAC
 	push {lr}
 	ldr r2, _08016DC8 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -3977,15 +3977,15 @@ SA_XMorphingInit: @ 0x08016DAC
 	ldr r0, _08016DCC @ =0x0000FFB0
 	strh r0, [r2, #0xa]
 	movs r0, #0xd
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016DC8: .4byte gCurrentSprite
 _08016DCC: .4byte 0x0000FFB0
 
-	thumb_func_start SA_XMorphing
-SA_XMorphing: @ 0x08016DD0
+	thumb_func_start SaXMorphing
+SaXMorphing: @ 0x08016DD0
 	push {lr}
 	ldr r0, _08016DE8 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -4002,8 +4002,8 @@ _08016DE2:
 _08016DE8: .4byte gSaXData
 _08016DEC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XRollingInit
-SA_XRollingInit: @ 0x08016DF0
+	thumb_func_start SaXRollingInit
+SaXRollingInit: @ 0x08016DF0
 	push {lr}
 	ldr r2, _08016E0C @ =gCurrentSprite
 	adds r1, r2, #0
@@ -4013,15 +4013,15 @@ SA_XRollingInit: @ 0x08016DF0
 	ldr r0, _08016E10 @ =0x0000FFD8
 	strh r0, [r2, #0xa]
 	movs r0, #0x10
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016E0C: .4byte gCurrentSprite
 _08016E10: .4byte 0x0000FFD8
 
-	thumb_func_start SA_XRolling
-SA_XRolling: @ 0x08016E14
+	thumb_func_start SaXRolling
+SaXRolling: @ 0x08016E14
 	push {r4, r5, lr}
 	ldr r4, _08016E4C @ =gCurrentSprite
 	ldrh r1, [r4]
@@ -4066,7 +4066,7 @@ _08016E68:
 	adds r0, r5, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	b _08016E8C
 	.align 2, 0
 _08016E78: .4byte gPreviousCollisionCheck
@@ -4111,8 +4111,8 @@ _08016EBC:
 _08016EC4: .4byte gCurrentSprite
 _08016EC8: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XUnmorphingInit
-SA_XUnmorphingInit: @ 0x08016ECC
+	thumb_func_start SaXUnmorphingInit
+SaXUnmorphingInit: @ 0x08016ECC
 	push {lr}
 	ldr r2, _08016EE8 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -4122,15 +4122,15 @@ SA_XUnmorphingInit: @ 0x08016ECC
 	ldr r0, _08016EEC @ =0x0000FFB0
 	strh r0, [r2, #0xa]
 	movs r0, #0xe
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016EE8: .4byte gCurrentSprite
 _08016EEC: .4byte 0x0000FFB0
 
-	thumb_func_start SA_XUnmorphing
-SA_XUnmorphing: @ 0x08016EF0
+	thumb_func_start SaXUnmorphing
+SaXUnmorphing: @ 0x08016EF0
 	push {lr}
 	ldr r0, _08016F10 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -4160,8 +4160,8 @@ _08016F20:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XIdleBeforeShootingDoorInit
-SA_XIdleBeforeShootingDoorInit: @ 0x08016F24
+	thumb_func_start SaXIdleBeforeShootingDoorInit
+SaXIdleBeforeShootingDoorInit: @ 0x08016F24
 	push {lr}
 	ldr r1, _08016F48 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -4175,15 +4175,15 @@ SA_XIdleBeforeShootingDoorInit: @ 0x08016F24
 	ldr r0, _08016F4C @ =gSaXData
 	strb r3, [r0, #3]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08016F48: .4byte gCurrentSprite
 _08016F4C: .4byte gSaXData
 
-	thumb_func_start SA_XIdleBeforeShootingDoor
-SA_XIdleBeforeShootingDoor: @ 0x08016F50
+	thumb_func_start SaXIdleBeforeShootingDoor
+SaXIdleBeforeShootingDoor: @ 0x08016F50
 	push {lr}
 	ldr r1, _08016F70 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -4203,8 +4203,8 @@ _08016F6A:
 	.align 2, 0
 _08016F70: .4byte gCurrentSprite
 
-	thumb_func_start SA_XShootingDoorInit
-SA_XShootingDoorInit: @ 0x08016F74
+	thumb_func_start SaXShootingDoorInit
+SaXShootingDoorInit: @ 0x08016F74
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _08016FB8 @ =gCurrentSprite
@@ -4232,7 +4232,7 @@ SA_XShootingDoorInit: @ 0x08016F74
 	ldr r0, _08016FBC @ =gSaXData
 	strb r4, [r0, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -4241,8 +4241,8 @@ SA_XShootingDoorInit: @ 0x08016F74
 _08016FB8: .4byte gCurrentSprite
 _08016FBC: .4byte gSaXData
 
-	thumb_func_start SA_XShootingDoor
-SA_XShootingDoor: @ 0x08016FC0
+	thumb_func_start SaXShootingDoor
+SaXShootingDoor: @ 0x08016FC0
 	push {lr}
 	ldr r0, _08016FD8 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -4259,8 +4259,8 @@ _08016FD2:
 _08016FD8: .4byte gSaXData
 _08016FDC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XIdleAfterShootingDoorInit
-SA_XIdleAfterShootingDoorInit: @ 0x08016FE0
+	thumb_func_start SaXIdleAfterShootingDoorInit
+SaXIdleAfterShootingDoorInit: @ 0x08016FE0
 	push {lr}
 	ldr r2, _08017000 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -4273,15 +4273,15 @@ SA_XIdleAfterShootingDoorInit: @ 0x08016FE0
 	ldr r0, _08017004 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08017000: .4byte gCurrentSprite
 _08017004: .4byte 0x0000FF88
 
-	thumb_func_start SA_XIdleAfterShootingDoor
-SA_XIdleAfterShootingDoor: @ 0x08017008
+	thumb_func_start SaXIdleAfterShootingDoor
+SaXIdleAfterShootingDoor: @ 0x08017008
 	push {lr}
 	ldr r1, _08017028 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -4301,8 +4301,8 @@ _08017022:
 	.align 2, 0
 _08017028: .4byte gCurrentSprite
 
-	thumb_func_start SA_XWalkingToDoorInit
-SA_XWalkingToDoorInit: @ 0x0801702C
+	thumb_func_start SaXWalkingToDoorInit
+SaXWalkingToDoorInit: @ 0x0801702C
 	push {lr}
 	ldr r3, _08017050 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -4316,15 +4316,15 @@ SA_XWalkingToDoorInit: @ 0x0801702C
 	ldr r0, _08017054 @ =0x0000FF88
 	strh r0, [r3, #0xa]
 	movs r0, #1
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08017050: .4byte gCurrentSprite
 _08017054: .4byte 0x0000FF88
 
-	thumb_func_start SA_XWalkingToDoor
-SA_XWalkingToDoor: @ 0x08017058
+	thumb_func_start SaXWalkingToDoor
+SaXWalkingToDoor: @ 0x08017058
 	push {r4, r5, r6, lr}
 	ldr r5, _08017080 @ =gSaXVision
 	ldrb r0, [r5, #2]
@@ -4420,8 +4420,8 @@ _08017100:
 _08017108: .4byte 0x082E6BBC
 _0801710C: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XBeamInit
-SA_XBeamInit: @ 0x08017110
+	thumb_func_start SaXBeamInit
+SaXBeamInit: @ 0x08017110
 	push {r4, r5, lr}
 	ldr r2, _08017174 @ =gCurrentSprite
 	ldrh r0, [r2]
@@ -4525,8 +4525,8 @@ _080171D8:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XBeamMove
-SA_XBeamMove: @ 0x080171E0
+	thumb_func_start SaXBeamMove
+SaXBeamMove: @ 0x080171E0
 	push {r4, r5, r6, r7, lr}
 	ldr r0, _08017208 @ =gCurrentSprite
 	adds r1, r0, #0
@@ -4684,8 +4684,8 @@ _08017304: .4byte 0x082E6BA4
 _08017308: .4byte 0x00007FFF
 _0801730C: .4byte gCurrentClipdataAffectingAction
 
-	thumb_func_start SA_XMissileInit
-SA_XMissileInit: @ 0x08017310
+	thumb_func_start SaXMissileInit
+SaXMissileInit: @ 0x08017310
 	push {r4, r5, lr}
 	ldr r2, _08017368 @ =gCurrentSprite
 	ldrh r0, [r2]
@@ -4770,8 +4770,8 @@ _080173AE:
 	.align 2, 0
 _080173B4: .4byte 0x0000025D
 
-	thumb_func_start SA_XMissileExploding
-SA_XMissileExploding: @ 0x080173B8
+	thumb_func_start SaXMissileExploding
+SaXMissileExploding: @ 0x080173B8
 	push {lr}
 	ldr r1, _080173E4 @ =gCurrentSprite
 	movs r0, #0
@@ -4794,8 +4794,8 @@ SA_XMissileExploding: @ 0x080173B8
 _080173E4: .4byte gCurrentSprite
 _080173E8: .4byte 0x0000025E
 
-	thumb_func_start SA_XMissileMoving
-SA_XMissileMoving: @ 0x080173EC
+	thumb_func_start SaXMissileMoving
+SaXMissileMoving: @ 0x080173EC
 	push {r4, lr}
 	ldr r0, _0801740C @ =gCurrentSprite
 	ldrb r2, [r0, #0x1e]
@@ -4862,7 +4862,7 @@ _0801744C:
 	ldrb r0, [r0]
 	cmp r0, #0x11
 	bne _08017474
-	bl SA_XMissileExploding
+	bl SaXMissileExploding
 	b _08017492
 	.align 2, 0
 _0801746C: .4byte gCurrentClipdataAffectingAction
@@ -4888,8 +4888,8 @@ _08017492:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XPowerBombInit
-SA_XPowerBombInit: @ 0x08017498
+	thumb_func_start SaXPowerBombInit
+SaXPowerBombInit: @ 0x08017498
 	push {r4, lr}
 	ldr r0, _080174FC @ =gCurrentSprite
 	mov ip, r0
@@ -4945,8 +4945,8 @@ _08017500: .4byte 0x0000FFFB
 _08017504: .4byte 0x0000FFFC
 _08017508: .4byte 0x082E7FE0
 
-	thumb_func_start SA_XPowerBombSpinningSlowly
-SA_XPowerBombSpinningSlowly: @ 0x0801750C
+	thumb_func_start SaXPowerBombSpinningSlowly
+SaXPowerBombSpinningSlowly: @ 0x0801750C
 	push {lr}
 	ldr r2, _08017544 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -4979,8 +4979,8 @@ _0801753E:
 _08017544: .4byte gCurrentSprite
 _08017548: .4byte 0x082E8000
 
-	thumb_func_start SA_XPowerBombSpinningQuickly
-SA_XPowerBombSpinningQuickly: @ 0x0801754C
+	thumb_func_start SaXPowerBombSpinningQuickly
+SaXPowerBombSpinningQuickly: @ 0x0801754C
 	push {r4, lr}
 	ldr r4, _08017594 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -5019,8 +5019,8 @@ _0801758C:
 _08017594: .4byte gCurrentSprite
 _08017598: .4byte 0x00000261
 
-	thumb_func_start SA_XPowerBombSyncWithProjectile
-SA_XPowerBombSyncWithProjectile: @ 0x0801759C
+	thumb_func_start SaXPowerBombSyncWithProjectile
+SaXPowerBombSyncWithProjectile: @ 0x0801759C
 	push {lr}
 	ldr r2, _080175C0 @ =gCurrentSprite
 	ldr r1, _080175C4 @ =gCurrentPowerBomb
@@ -5414,7 +5414,7 @@ _080178DE:
 	movs r2, #0x2f
 	bl ParticleSet
 	ldr r0, _08017904 @ =0x0000023F
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _08017922
 	.align 2, 0
 _08017904: .4byte 0x0000023F
@@ -5429,7 +5429,7 @@ _08017908:
 	movs r2, #0x2f
 	bl ParticleSet
 	ldr r0, _08017970 @ =0x0000023F
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 _08017922:
 	movs r0, #0x14
 	movs r1, #0x81
@@ -5643,8 +5643,8 @@ _08017ABC: .4byte 0x00000241
 _08017AC0: .4byte gSpriteData
 _08017AC4: .4byte gCurrentSprite
 
-	thumb_func_start SA_XUpdateGraphics
-SA_XUpdateGraphics: @ 0x08017AC8
+	thumb_func_start SaXUpdateGraphics
+SaXUpdateGraphics: @ 0x08017AC8
 	push {r4, r5, lr}
 	bl SpriteCheckOnScreen
 	ldr r5, _08017B1C @ =gSaXData
@@ -5667,7 +5667,7 @@ SA_XUpdateGraphics: @ 0x08017AC8
 	lsrs r0, r0, #0x18
 	cmp r0, #0xff
 	beq _08017AFC
-	bl SetSA_XPose
+	bl SaXSetPose
 _08017AFC:
 	ldrh r1, [r4]
 	movs r0, #1
@@ -5717,8 +5717,8 @@ _08017B50: .4byte gSaXData
 _08017B54: .4byte 0x0000FFFF
 _08017B58: .4byte gSaXSpawnPosition
 
-	thumb_func_start SA_XUpdateFreezeTimer
-SA_XUpdateFreezeTimer: @ 0x08017B5C
+	thumb_func_start SaXUpdateFreezeTimer
+SaXUpdateFreezeTimer: @ 0x08017B5C
 	push {r4, lr}
 	ldr r0, _08017B78 @ =gCurrentSprite
 	adds r3, r0, #0
@@ -5775,7 +5775,7 @@ _08017BC2:
 	adds r0, #0x20
 	strb r1, [r0]
 _08017BC6:
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 	movs r0, #1
 	b _08017BD0
 _08017BCE:
@@ -5786,17 +5786,17 @@ _08017BD0:
 	bx r1
 	.align 2, 0
 
-	thumb_func_start SA_XElevator
-SA_XElevator: @ 0x08017BD8
+	thumb_func_start SaXElevator
+SaXElevator: @ 0x08017BD8
 	push {r4, r5, r6, lr}
-	bl SA_XUpdateFreezeTimer
+	bl SaXUpdateFreezeTimer
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0
 	beq _08017BE8
 	b _08017E8E
 _08017BE8:
-	bl SA_XSeeAndLocateSamus
+	bl SaXSeeAndLocateSamus
 	ldr r3, _08017C08 @ =gCurrentSprite
 	ldrh r2, [r3]
 	movs r0, #0x80
@@ -5919,32 +5919,32 @@ _08017C58: @ jump table
 	.4byte _08017E7C @ case 63
 	.4byte _08017E80 @ case 64
 _08017D5C:
-	bl SA_XElevatorInit
+	bl SaXElevatorInit
 _08017D60:
-	bl SA_XFallingInit
+	bl SaXFallingInit
 _08017D64:
-	bl SA_XFalling
+	bl SaXFalling
 	b _08017E8A
 _08017D6A:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _08017D6E:
-	bl SA_XStanding
+	bl SaXStanding
 	b _08017E8A
 _08017D74:
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	b _08017E8A
 _08017D7A:
-	bl SA_XWalking
+	bl SaXWalking
 	b _08017E8A
 _08017D80:
-	bl SA_XTurningInit
+	bl SaXTurningInit
 _08017D84:
-	bl SA_XTurning
+	bl SaXTurning
 	b _08017E8A
 _08017D8A:
-	bl SA_XRunningStart
+	bl SaXRunningStart
 _08017D8E:
-	bl SA_XRunning
+	bl SaXRunning
 	ldr r4, _08017DD4 @ =gCurrentSprite
 	adds r6, r4, #0
 	adds r6, #0x24
@@ -6016,84 +6016,84 @@ _08017E1C:
 	strb r0, [r6]
 	b _08017E8A
 _08017E22:
-	bl SA_XDelayBeforeShootingBeamInit
+	bl SaXDelayBeforeShootingBeamInit
 _08017E26:
-	bl SA_XDelayBeforeShootingBeam
+	bl SaXDelayBeforeShootingBeam
 	b _08017E8A
 _08017E2C:
-	bl SA_XShootingBeamInit
+	bl SaXShootingBeamInit
 _08017E30:
-	bl SA_XShootingBeam
+	bl SaXShootingBeam
 	b _08017E8A
 _08017E36:
-	bl SA_XDelayBeforeShootingMissileInit
+	bl SaXDelayBeforeShootingMissileInit
 _08017E3A:
-	bl SA_XDelayBeforeShootingMissile
+	bl SaXDelayBeforeShootingMissile
 	b _08017E8A
 _08017E40:
-	bl SA_XShootingMissileInit
+	bl SaXShootingMissileInit
 _08017E44:
-	bl SA_XShootingMissile
+	bl SaXShootingMissile
 	b _08017E8A
 _08017E4A:
-	bl SA_XIdleAfterShootingMissileInit
+	bl SaXIdleAfterShootingMissileInit
 _08017E4E:
-	bl SA_XIdleAfterShootingMissile
+	bl SaXIdleAfterShootingMissile
 	b _08017E8A
 _08017E54:
-	bl SA_XMidAirInit
+	bl SaXMidAirInit
 _08017E58:
-	bl SA_XMidAir
+	bl SaXMidAir
 	b _08017E8A
 _08017E5E:
-	bl SA_XTurningChaseStartInit
+	bl SaXTurningChaseStartInit
 _08017E62:
-	bl SA_XTurningChaseStart
+	bl SaXTurningChaseStart
 	b _08017E8A
 _08017E68:
-	bl SA_XMorphingInit
+	bl SaXMorphingInit
 _08017E6C:
-	bl SA_XMorphing
+	bl SaXMorphing
 	b _08017E8A
 _08017E72:
-	bl SA_XRollingInit
+	bl SaXRollingInit
 _08017E76:
-	bl SA_XRolling
+	bl SaXRolling
 	b _08017E8A
 _08017E7C:
-	bl SA_XUnmorphingInit
+	bl SaXUnmorphingInit
 _08017E80:
-	bl SA_XUnmorphing
+	bl SaXUnmorphing
 	b _08017E8A
 _08017E86:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _08017E8A:
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 _08017E8E:
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XBeam
-SA_XBeam: @ 0x08017E94
+	thumb_func_start SaXBeam
+SaXBeam: @ 0x08017E94
 	push {lr}
 	ldr r0, _08017EA8 @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _08017EAC
-	bl SA_XBeamInit
+	bl SaXBeamInit
 	b _08017EB0
 	.align 2, 0
 _08017EA8: .4byte gCurrentSprite
 _08017EAC:
-	bl SA_XBeamMove
+	bl SaXBeamMove
 _08017EB0:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XMissile
-SA_XMissile: @ 0x08017EB4
+	thumb_func_start SaXMissile
+SaXMissile: @ 0x08017EB4
 	push {lr}
 	ldr r0, _08017ECC @ =gCurrentSprite
 	adds r0, #0x24
@@ -6102,22 +6102,22 @@ SA_XMissile: @ 0x08017EB4
 	beq _08017ED0
 	cmp r0, #0x37
 	beq _08017ED6
-	bl SA_XMissileMoving
+	bl SaXMissileMoving
 	b _08017EDA
 	.align 2, 0
 _08017ECC: .4byte gCurrentSprite
 _08017ED0:
-	bl SA_XMissileInit
+	bl SaXMissileInit
 	b _08017EDA
 _08017ED6:
-	bl SA_XMissileExploding
+	bl SaXMissileExploding
 _08017EDA:
 	pop {r0}
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XPowerBomb
-SA_XPowerBomb: @ 0x08017EE0
+	thumb_func_start SaXPowerBomb
+SaXPowerBomb: @ 0x08017EE0
 	push {lr}
 	ldr r0, _08017EF8 @ =gCurrentSprite
 	adds r0, #0x24
@@ -6138,16 +6138,16 @@ _08017EFC:
 	beq _08017F18
 	b _08017F1C
 _08017F06:
-	bl SA_XPowerBombInit
+	bl SaXPowerBombInit
 	b _08017F1C
 _08017F0C:
-	bl SA_XPowerBombSpinningSlowly
+	bl SaXPowerBombSpinningSlowly
 	b _08017F1C
 _08017F12:
-	bl SA_XPowerBombSpinningQuickly
+	bl SaXPowerBombSpinningQuickly
 	b _08017F1C
 _08017F18:
-	bl SA_XPowerBombSyncWithProjectile
+	bl SaXPowerBombSyncWithProjectile
 _08017F1C:
 	pop {r0}
 	bx r0
@@ -6179,8 +6179,8 @@ _08017F4A:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XTro1CheckTurning
-SA_XTro1CheckTurning: @ 0x08017F50
+	thumb_func_start SaXTro1CheckTurning
+SaXTro1CheckTurning: @ 0x08017F50
 	push {r4, lr}
 	ldr r4, _08017F84 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -6233,8 +6233,8 @@ _08017FAA:
 _08017FB0: .4byte 0xFFFFFF00
 _08017FB4: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XTro1CheckStartChase
-SA_XTro1CheckStartChase: @ 0x08017FB8
+	thumb_func_start SaXTro1CheckStartChase
+SaXTro1CheckStartChase: @ 0x08017FB8
 	push {r4, lr}
 	ldr r4, _08017FDC @ =gCurrentSprite
 	adds r1, r4, #0
@@ -6276,8 +6276,8 @@ _08017FFC:
 	.align 2, 0
 _08018004: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XTro1Init
-SA_XTro1Init: @ 0x08018008
+	thumb_func_start SaXTro1Init
+SaXTro1Init: @ 0x08018008
 	push {lr}
 	bl EventCheckOn_HighJumpRecovered
 	adds r1, r0, #0
@@ -6289,7 +6289,7 @@ SA_XTro1Init: @ 0x08018008
 	.align 2, 0
 _0801801C: .4byte gCurrentSprite
 _08018020:
-	bl SA_XInit
+	bl SaXInit
 	ldr r0, _08018034 @ =gCurrentSprite
 	adds r0, #0x25
 	movs r1, #2
@@ -6301,8 +6301,8 @@ _08018030:
 	.align 2, 0
 _08018034: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro1Walking
-SA_XTro1Walking: @ 0x08018038
+	thumb_func_start SaXTro1Walking
+SaXTro1Walking: @ 0x08018038
 	push {r4, r5, lr}
 	ldr r2, _0801806C @ =gCurrentSprite
 	ldrh r4, [r2]
@@ -6397,7 +6397,7 @@ _080180E2:
 	strb r0, [r1]
 	b _0801811C
 _080180EC:
-	bl SA_XTro1CheckTurning
+	bl SaXTro1CheckTurning
 	ldr r1, _08018124 @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -6427,8 +6427,8 @@ _0801811C:
 _08018124: .4byte gCurrentSprite
 _08018128: .4byte 0x082E6BBC
 
-	thumb_func_start SA_XTro1Running
-SA_XTro1Running: @ 0x0801812C
+	thumb_func_start SaXTro1Running
+SaXTro1Running: @ 0x0801812C
 	push {r4, lr}
 	ldr r4, _08018158 @ =gSaXVision
 	ldrb r0, [r4, #2]
@@ -6518,7 +6518,7 @@ _080181C8:
 	strb r0, [r1]
 	b _08018202
 _080181D2:
-	bl SA_XTro1CheckStartChase
+	bl SaXTro1CheckStartChase
 	ldr r1, _08018208 @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -6548,8 +6548,8 @@ _08018202:
 _08018208: .4byte gCurrentSprite
 _0801820C: .4byte 0x082E6BCC
 
-	thumb_func_start SA_XTro1TurningDuringChase
-SA_XTro1TurningDuringChase: @ 0x08018210
+	thumb_func_start SaXTro1TurningDuringChase
+SaXTro1TurningDuringChase: @ 0x08018210
 	push {r4, lr}
 	ldr r0, _0801823C @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -6562,7 +6562,7 @@ SA_XTro1TurningDuringChase: @ 0x08018210
 	adds r1, r2, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	ldr r0, _08018244 @ =gSaXVision
 	ldrb r0, [r0, #2]
 	cmp r0, #1
@@ -6592,17 +6592,17 @@ _08018258:
 	.align 2, 0
 _08018260: .4byte 0x0000FBFF
 
-	thumb_func_start SA_XTro1
-SA_XTro1: @ 0x08018264
+	thumb_func_start SaXTro1
+SaXTro1: @ 0x08018264
 	push {r4, lr}
-	bl SA_XUpdateFreezeTimer
+	bl SaXUpdateFreezeTimer
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0
 	beq _08018274
 	b _080184D4
 _08018274:
-	bl SA_XSeeAndLocateSamus
+	bl SaXSeeAndLocateSamus
 	ldr r3, _08018294 @ =gCurrentSprite
 	ldrh r2, [r3]
 	movs r0, #0x80
@@ -6733,42 +6733,42 @@ _080182E4: @ jump table
 	.4byte _0801844A @ case 71
 	.4byte _0801844E @ case 72
 _08018408:
-	bl SA_XTro1Init
+	bl SaXTro1Init
 _0801840C:
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	b _080184BA
 _08018412:
-	bl SA_XTro1Walking
+	bl SaXTro1Walking
 	b _080184BA
 _08018418:
-	bl SA_XRunningStart
+	bl SaXRunningStart
 _0801841C:
-	bl SA_XTro1Running
+	bl SaXTro1Running
 	b _080184BA
 _08018422:
-	bl SA_XTurningChaseStartInit
+	bl SaXTurningChaseStartInit
 _08018426:
-	bl SA_XTro1TurningDuringChase
+	bl SaXTro1TurningDuringChase
 	b _080184BA
 _0801842C:
-	bl SA_XIdleBeforeShootingDoorInit
+	bl SaXIdleBeforeShootingDoorInit
 _08018430:
-	bl SA_XIdleBeforeShootingDoor
+	bl SaXIdleBeforeShootingDoor
 	b _080184BA
 _08018436:
-	bl SA_XShootingDoorInit
+	bl SaXShootingDoorInit
 _0801843A:
-	bl SA_XShootingDoor
+	bl SaXShootingDoor
 	b _080184BA
 _08018440:
-	bl SA_XIdleAfterShootingDoorInit
+	bl SaXIdleAfterShootingDoorInit
 _08018444:
-	bl SA_XIdleAfterShootingDoor
+	bl SaXIdleAfterShootingDoor
 	b _080184BA
 _0801844A:
-	bl SA_XWalkingToDoorInit
+	bl SaXWalkingToDoorInit
 _0801844E:
-	bl SA_XWalkingToDoor
+	bl SaXWalkingToDoor
 	ldr r0, _08018468 @ =gCurrentSprite
 	ldrh r0, [r0]
 	cmp r0, #0
@@ -6781,46 +6781,46 @@ _0801844E:
 	.align 2, 0
 _08018468: .4byte gCurrentSprite
 _0801846C:
-	bl SA_XTurningInit
+	bl SaXTurningInit
 _08018470:
-	bl SA_XTurning
+	bl SaXTurning
 	b _080184BA
 _08018476:
-	bl SA_XFallingInit
+	bl SaXFallingInit
 _0801847A:
-	bl SA_XFalling
+	bl SaXFalling
 	b _080184BA
 _08018480:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _08018484:
-	bl SA_XStanding
+	bl SaXStanding
 	b _080184BA
 _0801848A:
-	bl SA_XDelayBeforeShootingBeamInit
+	bl SaXDelayBeforeShootingBeamInit
 _0801848E:
-	bl SA_XDelayBeforeShootingBeam
+	bl SaXDelayBeforeShootingBeam
 	b _080184BA
 _08018494:
-	bl SA_XShootingBeamInit
+	bl SaXShootingBeamInit
 _08018498:
-	bl SA_XShootingBeam
+	bl SaXShootingBeam
 	b _080184BA
 _0801849E:
-	bl SA_XDelayBeforeShootingMissileInit
+	bl SaXDelayBeforeShootingMissileInit
 _080184A2:
-	bl SA_XDelayBeforeShootingMissile
+	bl SaXDelayBeforeShootingMissile
 	b _080184BA
 _080184A8:
-	bl SA_XShootingMissileInit
+	bl SaXShootingMissileInit
 _080184AC:
-	bl SA_XShootingMissile
+	bl SaXShootingMissile
 	b _080184BA
 _080184B2:
-	bl SA_XIdleAfterShootingMissileInit
+	bl SaXIdleAfterShootingMissileInit
 _080184B6:
-	bl SA_XIdleAfterShootingMissile
+	bl SaXIdleAfterShootingMissile
 _080184BA:
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 	ldr r0, _080184DC @ =gCurrentSprite
 	ldrh r1, [r0]
 	movs r0, #0x80
@@ -6838,8 +6838,8 @@ _080184D4:
 	.align 2, 0
 _080184DC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XNocWalkingCheckCollisions
-SA_XNocWalkingCheckCollisions: @ 0x080184E0
+	thumb_func_start SaXNocWalkingCheckCollisions
+SaXNocWalkingCheckCollisions: @ 0x080184E0
 	push {r4, r5, r6, lr}
 	ldr r4, _0801851C @ =gCurrentSprite
 	adds r6, r4, #0
@@ -7018,8 +7018,8 @@ _08018636:
 _0801863C: .4byte 0xFFFFFF00
 _08018640: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XNocRunningCheckCollisions
-SA_XNocRunningCheckCollisions: @ 0x08018644
+	thumb_func_start SaXNocRunningCheckCollisions
+SaXNocRunningCheckCollisions: @ 0x08018644
 	push {r4, r5, r6, lr}
 	ldr r4, _08018688 @ =gCurrentSprite
 	adds r6, r4, #0
@@ -7278,8 +7278,8 @@ _0801883C:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XNocWalkingToLayPowerBombCheckCollisions
-SA_XNocWalkingToLayPowerBombCheckCollisions: @ 0x08018844
+	thumb_func_start SaXNocWalkingToLayPowerBombCheckCollisions
+SaXNocWalkingToLayPowerBombCheckCollisions: @ 0x08018844
 	push {r4, lr}
 	ldr r4, _08018860 @ =gCurrentSprite
 	ldrh r1, [r4]
@@ -7320,8 +7320,8 @@ _08018882:
 _08018888: .4byte 0xFFFFFEC0
 _0801888C: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XNocInit
-SA_XNocInit: @ 0x08018890
+	thumb_func_start SaXNocInit
+SaXNocInit: @ 0x08018890
 	push {r4, lr}
 	ldr r4, _080188B4 @ =gCurrentSprite
 	ldr r1, _080188B8 @ =gSaXSpawnPosition
@@ -7329,7 +7329,7 @@ SA_XNocInit: @ 0x08018890
 	strh r0, [r4, #2]
 	ldrh r0, [r1]
 	strh r0, [r4, #4]
-	bl SA_XInit
+	bl SaXInit
 	ldrh r1, [r4]
 	movs r0, #0x80
 	lsls r0, r0, #2
@@ -7366,7 +7366,7 @@ _080188C0:
 	movs r0, #0x19
 	strb r0, [r1]
 	movs r0, #1
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _08018920
 	.align 2, 0
 _080188F0: .4byte gCurrentSprite
@@ -7388,7 +7388,7 @@ _080188F4:
 	movs r0, #0x3c
 	strb r0, [r1]
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _08018920
 _0801891E:
 	strh r0, [r4]
@@ -7398,8 +7398,8 @@ _08018920:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XNocWaitingInDoorDuringChase
-SA_XNocWaitingInDoorDuringChase: @ 0x08018928
+	thumb_func_start SaXNocWaitingInDoorDuringChase
+SaXNocWaitingInDoorDuringChase: @ 0x08018928
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _08018980 @ =gCurrentSprite
@@ -7466,8 +7466,8 @@ _080189A2:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XNocOpeningDoorDuringChase
-SA_XNocOpeningDoorDuringChase: @ 0x080189AC
+	thumb_func_start SaXNocOpeningDoorDuringChase
+SaXNocOpeningDoorDuringChase: @ 0x080189AC
 	push {r4, lr}
 	ldr r4, _080189E4 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -7478,7 +7478,7 @@ SA_XNocOpeningDoorDuringChase: @ 0x080189AC
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080189DC
-	bl SA_XRunningStart
+	bl SaXRunningStart
 	adds r1, r4, #0
 	adds r1, #0x25
 	movs r0, #2
@@ -7499,14 +7499,14 @@ _080189DC:
 _080189E4: .4byte gCurrentSprite
 _080189E8: .4byte 0x0000DFFF
 
-	thumb_func_start SA_XNocWaitingInDoorToLayPowerBomb
-SA_XNocWaitingInDoorToLayPowerBomb: @ 0x080189EC
+	thumb_func_start SaXNocWaitingInDoorToLayPowerBomb
+SaXNocWaitingInDoorToLayPowerBomb: @ 0x080189EC
 	push {r4, lr}
 	sub sp, #0xc
 	bl EventCheckOn_EngagedSaXNoc
 	cmp r0, #0
 	beq _08018A76
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	ldr r0, _08018A48 @ =gCurrentSprite
 	mov ip, r0
 	mov r1, ip
@@ -7575,8 +7575,8 @@ _08018A76:
 	.align 2, 0
 _08018A80: .4byte gCurrentSprite
 
-	thumb_func_start SA_XNocWalkingToLayPowerBomb
-SA_XNocWalkingToLayPowerBomb: @ 0x08018A84
+	thumb_func_start SaXNocWalkingToLayPowerBomb
+SaXNocWalkingToLayPowerBomb: @ 0x08018A84
 	push {r4, lr}
 	ldr r4, _08018AA4 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -7598,7 +7598,7 @@ _08018AA8:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08018ADE
-	bl SA_XNocWalkingToLayPowerBombCheckCollisions
+	bl SaXNocWalkingToLayPowerBombCheckCollisions
 	adds r0, r4, #0
 	adds r0, #0x24
 	ldrb r0, [r0]
@@ -7625,8 +7625,8 @@ _08018ADE:
 	.align 2, 0
 _08018AE4: .4byte 0x082E6BBC
 
-	thumb_func_start SA_XNocIdleBeforeLayingPowerBombInit
-SA_XNocIdleBeforeLayingPowerBombInit: @ 0x08018AE8
+	thumb_func_start SaXNocIdleBeforeLayingPowerBombInit
+SaXNocIdleBeforeLayingPowerBombInit: @ 0x08018AE8
 	push {lr}
 	ldr r2, _08018B08 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -7639,15 +7639,15 @@ SA_XNocIdleBeforeLayingPowerBombInit: @ 0x08018AE8
 	ldr r0, _08018B0C @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08018B08: .4byte gCurrentSprite
 _08018B0C: .4byte 0x0000FF88
 
-	thumb_func_start SA_XNocIdleBeforeLayingPowerBomb
-SA_XNocIdleBeforeLayingPowerBomb: @ 0x08018B10
+	thumb_func_start SaXNocIdleBeforeLayingPowerBomb
+SaXNocIdleBeforeLayingPowerBomb: @ 0x08018B10
 	push {lr}
 	ldr r1, _08018B30 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -7667,8 +7667,8 @@ _08018B2A:
 	.align 2, 0
 _08018B30: .4byte gCurrentSprite
 
-	thumb_func_start SA_XNocMorphingToLayPowerBombInit
-SA_XNocMorphingToLayPowerBombInit: @ 0x08018B34
+	thumb_func_start SaXNocMorphingToLayPowerBombInit
+SaXNocMorphingToLayPowerBombInit: @ 0x08018B34
 	push {lr}
 	ldr r2, _08018B50 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -7678,15 +7678,15 @@ SA_XNocMorphingToLayPowerBombInit: @ 0x08018B34
 	ldr r0, _08018B54 @ =0x0000FFB0
 	strh r0, [r2, #0xa]
 	movs r0, #0xd
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08018B50: .4byte gCurrentSprite
 _08018B54: .4byte 0x0000FFB0
 
-	thumb_func_start SA_XNocMorphingToLayPowerBomb
-SA_XNocMorphingToLayPowerBomb: @ 0x08018B58
+	thumb_func_start SaXNocMorphingToLayPowerBomb
+SaXNocMorphingToLayPowerBomb: @ 0x08018B58
 	push {lr}
 	ldr r0, _08018B70 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -7703,8 +7703,8 @@ _08018B6A:
 _08018B70: .4byte gSaXData
 _08018B74: .4byte gCurrentSprite
 
-	thumb_func_start SA_XNocMorphedToLayPowerBombInit
-SA_XNocMorphedToLayPowerBombInit: @ 0x08018B78
+	thumb_func_start SaXNocMorphedToLayPowerBombInit
+SaXNocMorphedToLayPowerBombInit: @ 0x08018B78
 	ldr r1, _08018B90 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -7720,8 +7720,8 @@ SA_XNocMorphedToLayPowerBombInit: @ 0x08018B78
 _08018B90: .4byte gCurrentSprite
 _08018B94: .4byte 0x0000FFD8
 
-	thumb_func_start SA_XNocMorphedToLayPowerBomb
-SA_XNocMorphedToLayPowerBomb: @ 0x08018B98
+	thumb_func_start SaXNocMorphedToLayPowerBomb
+SaXNocMorphedToLayPowerBomb: @ 0x08018B98
 	push {lr}
 	sub sp, #0xc
 	ldr r1, _08018BB8 @ =gCurrentSprite
@@ -7762,14 +7762,14 @@ _08018BDC:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XNocWalking
-SA_XNocWalking: @ 0x08018BE4
+	thumb_func_start SaXNocWalking
+SaXNocWalking: @ 0x08018BE4
 	push {r4, lr}
 	bl unk_15e88
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08018C20
-	bl SA_XNocWalkingCheckCollisions
+	bl SaXNocWalkingCheckCollisions
 	ldr r1, _08018C28 @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -7799,14 +7799,14 @@ _08018C20:
 _08018C28: .4byte gCurrentSprite
 _08018C2C: .4byte 0x082E6BBC
 
-	thumb_func_start SA_XNocRunning
-SA_XNocRunning: @ 0x08018C30
+	thumb_func_start SaXNocRunning
+SaXNocRunning: @ 0x08018C30
 	push {r4, lr}
 	bl unk_15dd4
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08018C6C
-	bl SA_XNocRunningCheckCollisions
+	bl SaXNocRunningCheckCollisions
 	ldr r1, _08018C74 @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -7836,8 +7836,8 @@ _08018C6C:
 _08018C74: .4byte gCurrentSprite
 _08018C78: .4byte 0x082E6BCC
 
-	thumb_func_start SA_XNocTurningDuringChase
-SA_XNocTurningDuringChase: @ 0x08018C7C
+	thumb_func_start SaXNocTurningDuringChase
+SaXNocTurningDuringChase: @ 0x08018C7C
 	push {r4, lr}
 	ldr r0, _08018CA4 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -7850,7 +7850,7 @@ SA_XNocTurningDuringChase: @ 0x08018C7C
 	adds r1, r2, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	adds r4, #0x24
 	movs r0, #0x17
 	strb r0, [r4]
@@ -7862,16 +7862,16 @@ _08018C9E:
 _08018CA4: .4byte gSaXData
 _08018CA8: .4byte gCurrentSprite
 
-	thumb_func_start SA_XNoc
-SA_XNoc: @ 0x08018CAC
+	thumb_func_start SaXNoc
+SaXNoc: @ 0x08018CAC
 	push {lr}
-	bl SA_XUpdateFreezeTimer
+	bl SaXUpdateFreezeTimer
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08018CBA
 	b _08018F48
 _08018CBA:
-	bl SA_XSeeAndLocateSamus
+	bl SaXSeeAndLocateSamus
 	ldr r0, _08018CD4 @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
@@ -7968,54 +7968,54 @@ _08018CDC: @ jump table
 	.4byte _08018E3E @ case 77
 	.4byte _08018E42 @ case 78
 _08018E18:
-	bl SA_XNocInit
+	bl SaXNocInit
 	b _08018F2E
 _08018E1E:
-	bl SA_XNocWaitingInDoorToLayPowerBomb
+	bl SaXNocWaitingInDoorToLayPowerBomb
 	b _08018F2E
 _08018E24:
-	bl SA_XNocWalkingToLayPowerBomb
+	bl SaXNocWalkingToLayPowerBomb
 	b _08018F2E
 _08018E2A:
-	bl SA_XNocIdleBeforeLayingPowerBombInit
+	bl SaXNocIdleBeforeLayingPowerBombInit
 _08018E2E:
-	bl SA_XNocIdleBeforeLayingPowerBomb
+	bl SaXNocIdleBeforeLayingPowerBomb
 	b _08018F2E
 _08018E34:
-	bl SA_XNocMorphingToLayPowerBombInit
+	bl SaXNocMorphingToLayPowerBombInit
 _08018E38:
-	bl SA_XNocMorphingToLayPowerBomb
+	bl SaXNocMorphingToLayPowerBomb
 	b _08018F2E
 _08018E3E:
-	bl SA_XNocMorphedToLayPowerBombInit
+	bl SaXNocMorphedToLayPowerBombInit
 _08018E42:
-	bl SA_XNocMorphedToLayPowerBomb
+	bl SaXNocMorphedToLayPowerBomb
 	b _08018F2E
 _08018E48:
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	b _08018F2E
 _08018E4E:
-	bl SA_XNocWalking
+	bl SaXNocWalking
 	b _08018F2E
 _08018E54:
-	bl SA_XIdleBeforeShootingDoorInit
+	bl SaXIdleBeforeShootingDoorInit
 _08018E58:
-	bl SA_XIdleBeforeShootingDoor
+	bl SaXIdleBeforeShootingDoor
 	b _08018F2E
 _08018E5E:
-	bl SA_XShootingDoorInit
+	bl SaXShootingDoorInit
 _08018E62:
-	bl SA_XShootingDoor
+	bl SaXShootingDoor
 	b _08018F2E
 _08018E68:
-	bl SA_XIdleAfterShootingDoorInit
+	bl SaXIdleAfterShootingDoorInit
 _08018E6C:
-	bl SA_XIdleAfterShootingDoor
+	bl SaXIdleAfterShootingDoor
 	b _08018F2E
 _08018E72:
-	bl SA_XWalkingToDoorInit
+	bl SaXWalkingToDoorInit
 _08018E76:
-	bl SA_XWalkingToDoor
+	bl SaXWalkingToDoor
 	ldr r0, _08018E94 @ =gCurrentSprite
 	ldrh r0, [r0]
 	cmp r0, #0
@@ -8030,82 +8030,82 @@ _08018E76:
 	.align 2, 0
 _08018E94: .4byte gCurrentSprite
 _08018E98:
-	bl SA_XNocWaitingInDoorDuringChase
+	bl SaXNocWaitingInDoorDuringChase
 	b _08018F2E
 _08018E9E:
-	bl SA_XNocOpeningDoorDuringChase
+	bl SaXNocOpeningDoorDuringChase
 	b _08018F2E
 _08018EA4:
-	bl SA_XRunningStart
+	bl SaXRunningStart
 _08018EA8:
-	bl SA_XNocRunning
+	bl SaXNocRunning
 	b _08018F2E
 _08018EAE:
-	bl SA_XTurningChaseStartInit
+	bl SaXTurningChaseStartInit
 _08018EB2:
-	bl SA_XNocTurningDuringChase
+	bl SaXNocTurningDuringChase
 	b _08018F2E
 _08018EB8:
-	bl SA_XTurningInit
+	bl SaXTurningInit
 _08018EBC:
-	bl SA_XTurning
+	bl SaXTurning
 	b _08018F2E
 _08018EC2:
-	bl SA_XFallingInit
+	bl SaXFallingInit
 _08018EC6:
-	bl SA_XFalling
+	bl SaXFalling
 	b _08018F2E
 _08018ECC:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _08018ED0:
-	bl SA_XStanding
+	bl SaXStanding
 	b _08018F2E
 _08018ED6:
-	bl SA_XDelayBeforeShootingBeamInit
+	bl SaXDelayBeforeShootingBeamInit
 _08018EDA:
-	bl SA_XDelayBeforeShootingBeam
+	bl SaXDelayBeforeShootingBeam
 	b _08018F2E
 _08018EE0:
-	bl SA_XShootingBeamInit
+	bl SaXShootingBeamInit
 _08018EE4:
-	bl SA_XShootingBeam
+	bl SaXShootingBeam
 	b _08018F2E
 _08018EEA:
-	bl SA_XDelayBeforeShootingMissileInit
+	bl SaXDelayBeforeShootingMissileInit
 _08018EEE:
-	bl SA_XDelayBeforeShootingMissile
+	bl SaXDelayBeforeShootingMissile
 	b _08018F2E
 _08018EF4:
-	bl SA_XShootingMissileInit
+	bl SaXShootingMissileInit
 _08018EF8:
-	bl SA_XShootingMissile
+	bl SaXShootingMissile
 	b _08018F2E
 _08018EFE:
-	bl SA_XIdleAfterShootingMissileInit
+	bl SaXIdleAfterShootingMissileInit
 _08018F02:
-	bl SA_XIdleAfterShootingMissile
+	bl SaXIdleAfterShootingMissile
 	b _08018F2E
 _08018F08:
-	bl SA_XMidAirInit
+	bl SaXMidAirInit
 _08018F0C:
-	bl SA_XMidAir
+	bl SaXMidAir
 	b _08018F2E
 _08018F12:
-	bl SA_XMorphingInit
+	bl SaXMorphingInit
 _08018F16:
-	bl SA_XMorphing
+	bl SaXMorphing
 	b _08018F2E
 _08018F1C:
-	bl SA_XRollingInit
+	bl SaXRollingInit
 _08018F20:
-	bl SA_XRolling
+	bl SaXRolling
 	b _08018F2E
 _08018F26:
-	bl SA_XUnmorphingInit
+	bl SaXUnmorphingInit
 _08018F2A:
-	bl SA_XUnmorphing
+	bl SaXUnmorphing
 _08018F2E:
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 	ldr r0, _08018F4C @ =gCurrentSprite
 	ldrh r1, [r0]
 	movs r0, #0x80
@@ -8122,8 +8122,8 @@ _08018F48:
 	.align 2, 0
 _08018F4C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArcWalkingCheckCollisions
-SA_XArcWalkingCheckCollisions: @ 0x08018F50
+	thumb_func_start SaXArcWalkingCheckCollisions
+SaXArcWalkingCheckCollisions: @ 0x08018F50
 	push {r4, r5, r6, lr}
 	ldr r4, _08018F94 @ =gCurrentSprite
 	adds r6, r4, #0
@@ -8292,8 +8292,8 @@ _08019092:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XArcRunningCheckCollisions
-SA_XArcRunningCheckCollisions: @ 0x08019098
+	thumb_func_start SaXArcRunningCheckCollisions
+SaXArcRunningCheckCollisions: @ 0x08019098
 	push {r4, r5, r6, lr}
 	ldr r4, _080190D4 @ =gCurrentSprite
 	adds r6, r4, #0
@@ -8700,8 +8700,8 @@ _080193BE:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XArcInit
-SA_XArcInit: @ 0x080193C4
+	thumb_func_start SaXArcInit
+SaXArcInit: @ 0x080193C4
 	push {r4, lr}
 	ldr r4, _080193E8 @ =gCurrentSprite
 	ldr r1, _080193EC @ =gSaXSpawnPosition
@@ -8709,7 +8709,7 @@ SA_XArcInit: @ 0x080193C4
 	strh r0, [r4, #2]
 	ldrh r0, [r1]
 	strh r0, [r4, #4]
-	bl SA_XInit
+	bl SaXInit
 	ldrh r1, [r4]
 	movs r0, #0x80
 	lsls r0, r0, #2
@@ -8746,7 +8746,7 @@ _080193F4:
 	movs r0, #0x19
 	strb r0, [r1]
 	movs r0, #1
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _08019454
 	.align 2, 0
 _08019424: .4byte gCurrentSprite
@@ -8768,7 +8768,7 @@ _08019428:
 	movs r0, #0x3c
 	strb r0, [r1]
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _08019454
 _08019452:
 	strh r0, [r4]
@@ -8778,8 +8778,8 @@ _08019454:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XArcWaitingInDoorDuringChase
-SA_XArcWaitingInDoorDuringChase: @ 0x0801945C
+	thumb_func_start SaXArcWaitingInDoorDuringChase
+SaXArcWaitingInDoorDuringChase: @ 0x0801945C
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _080194B4 @ =gCurrentSprite
@@ -8846,8 +8846,8 @@ _080194D6:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XArcOpeningDoorDuringChase
-SA_XArcOpeningDoorDuringChase: @ 0x080194E0
+	thumb_func_start SaXArcOpeningDoorDuringChase
+SaXArcOpeningDoorDuringChase: @ 0x080194E0
 	push {r4, lr}
 	ldr r4, _08019518 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -8858,7 +8858,7 @@ SA_XArcOpeningDoorDuringChase: @ 0x080194E0
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08019510
-	bl SA_XRunningStart
+	bl SaXRunningStart
 	adds r1, r4, #0
 	adds r1, #0x25
 	movs r0, #2
@@ -8879,8 +8879,8 @@ _08019510:
 _08019518: .4byte gCurrentSprite
 _0801951C: .4byte 0x0000DFFF
 
-	thumb_func_start SA_XArcWaitingInDoor
-SA_XArcWaitingInDoor: @ 0x08019520
+	thumb_func_start SaXArcWaitingInDoor
+SaXArcWaitingInDoor: @ 0x08019520
 	push {r4, lr}
 	sub sp, #0xc
 	bl EventCheckOn_EngagedSaXArc
@@ -8943,8 +8943,8 @@ _08019592:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XArcOpeningDoor
-SA_XArcOpeningDoor: @ 0x0801959C
+	thumb_func_start SaXArcOpeningDoor
+SaXArcOpeningDoor: @ 0x0801959C
 	push {r4, lr}
 	ldr r4, _080195D0 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -8955,7 +8955,7 @@ SA_XArcOpeningDoor: @ 0x0801959C
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080195C8
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	adds r1, r4, #0
 	adds r1, #0x25
 	movs r0, #2
@@ -8973,14 +8973,14 @@ _080195C8:
 _080195D0: .4byte gCurrentSprite
 _080195D4: .4byte 0x0000DFFF
 
-	thumb_func_start SA_XArcWalking
-SA_XArcWalking: @ 0x080195D8
+	thumb_func_start SaXArcWalking
+SaXArcWalking: @ 0x080195D8
 	push {r4, lr}
 	bl unk_15e88
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801964E
-	bl SA_XArcWalkingCheckCollisions
+	bl SaXArcWalkingCheckCollisions
 	ldr r1, _08019614 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -9040,8 +9040,8 @@ _08019654: .4byte gSaXVision
 _08019658: .4byte 0x082E6BBC
 _0801965C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArcStoppedAtPillarInit
-SA_XArcStoppedAtPillarInit: @ 0x08019660
+	thumb_func_start SaXArcStoppedAtPillarInit
+SaXArcStoppedAtPillarInit: @ 0x08019660
 	push {lr}
 	ldr r2, _08019680 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -9054,15 +9054,15 @@ SA_XArcStoppedAtPillarInit: @ 0x08019660
 	ldr r0, _08019684 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08019680: .4byte gCurrentSprite
 _08019684: .4byte 0x0000FF88
 
-	thumb_func_start SA_XArcStoppedAtPillar
-SA_XArcStoppedAtPillar: @ 0x08019688
+	thumb_func_start SaXArcStoppedAtPillar
+SaXArcStoppedAtPillar: @ 0x08019688
 	push {lr}
 	ldr r1, _080196A8 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -9082,8 +9082,8 @@ _080196A2:
 	.align 2, 0
 _080196A8: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArcIdleAfterHearingWeaponInit
-SA_XArcIdleAfterHearingWeaponInit: @ 0x080196AC
+	thumb_func_start SaXArcIdleAfterHearingWeaponInit
+SaXArcIdleAfterHearingWeaponInit: @ 0x080196AC
 	push {lr}
 	ldr r2, _080196CC @ =gCurrentSprite
 	adds r1, r2, #0
@@ -9096,15 +9096,15 @@ SA_XArcIdleAfterHearingWeaponInit: @ 0x080196AC
 	ldr r0, _080196D0 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _080196CC: .4byte gCurrentSprite
 _080196D0: .4byte 0x0000FF88
 
-	thumb_func_start SA_XArcIdleAfterHearingWeapon
-SA_XArcIdleAfterHearingWeapon: @ 0x080196D4
+	thumb_func_start SaXArcIdleAfterHearingWeapon
+SaXArcIdleAfterHearingWeapon: @ 0x080196D4
 	push {lr}
 	ldr r1, _080196F4 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -9124,8 +9124,8 @@ _080196EE:
 	.align 2, 0
 _080196F4: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArcTurningAroundAfterHearingWeaponStart
-SA_XArcTurningAroundAfterHearingWeaponStart: @ 0x080196F8
+	thumb_func_start SaXArcTurningAroundAfterHearingWeaponStart
+SaXArcTurningAroundAfterHearingWeaponStart: @ 0x080196F8
 	push {lr}
 	ldr r2, _08019714 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -9135,15 +9135,15 @@ SA_XArcTurningAroundAfterHearingWeaponStart: @ 0x080196F8
 	ldr r0, _08019718 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #4
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08019714: .4byte gCurrentSprite
 _08019718: .4byte 0x0000FF88
 
-	thumb_func_start SA_XArcTurningAround
-SA_XArcTurningAround: @ 0x0801971C
+	thumb_func_start SaXArcTurningAround
+SaXArcTurningAround: @ 0x0801971C
 	push {lr}
 	bl unk_1129c
 	ldr r0, _08019734 @ =gPreviousVerticalCollisionCheck
@@ -9174,7 +9174,7 @@ _0801973C:
 	adds r1, r3, #0
 	eors r0, r1
 	strh r0, [r2]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 _0801975E:
 	pop {r0}
 	bx r0
@@ -9182,14 +9182,14 @@ _0801975E:
 _08019764: .4byte gSaXData
 _08019768: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArcRunning
-SA_XArcRunning: @ 0x0801976C
+	thumb_func_start SaXArcRunning
+SaXArcRunning: @ 0x0801976C
 	push {r4, lr}
 	bl unk_15dd4
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080197A8
-	bl SA_XArcRunningCheckCollisions
+	bl SaXArcRunningCheckCollisions
 	ldr r1, _080197B0 @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -9219,8 +9219,8 @@ _080197A8:
 _080197B0: .4byte gCurrentSprite
 _080197B4: .4byte 0x082E6BCC
 
-	thumb_func_start SA_XArcTurningAroundDuringChase
-SA_XArcTurningAroundDuringChase: @ 0x080197B8
+	thumb_func_start SaXArcTurningAroundDuringChase
+SaXArcTurningAroundDuringChase: @ 0x080197B8
 	push {r4, lr}
 	bl unk_1129c
 	ldr r0, _080197D0 @ =gPreviousVerticalCollisionCheck
@@ -9247,7 +9247,7 @@ _080197D8:
 	adds r1, r2, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	adds r4, #0x24
 	movs r0, #0x17
 	strb r0, [r4]
@@ -9259,8 +9259,8 @@ _080197F8:
 _08019800: .4byte gSaXData
 _08019804: .4byte gCurrentSprite
 
-	thumb_func_start SA_XIdleBeforeShootingMissileInit
-SA_XIdleBeforeShootingMissileInit: @ 0x08019808
+	thumb_func_start SaXIdleBeforeShootingMissileInit
+SaXIdleBeforeShootingMissileInit: @ 0x08019808
 	push {lr}
 	ldr r2, _08019848 @ =gCurrentSprite
 	adds r0, r2, #0
@@ -9288,9 +9288,9 @@ _08019832:
 	ldr r0, _08019850 @ =0x0000FDFF
 	ands r0, r1
 	strh r0, [r2]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -9298,8 +9298,8 @@ _08019848: .4byte gCurrentSprite
 _0801984C: .4byte gSaXData
 _08019850: .4byte 0x0000FDFF
 
-	thumb_func_start SA_XArcIdleBeforeShootingMissile
-SA_XArcIdleBeforeShootingMissile: @ 0x08019854
+	thumb_func_start SaXArcIdleBeforeShootingMissile
+SaXArcIdleBeforeShootingMissile: @ 0x08019854
 	push {lr}
 	bl unk_1129c
 	ldr r0, _0801986C @ =gPreviousVerticalCollisionCheck
@@ -9333,8 +9333,8 @@ _0801988C:
 	.align 2, 0
 _08019890: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArcShootingMissileInit
-SA_XArcShootingMissileInit: @ 0x08019894
+	thumb_func_start SaXArcShootingMissileInit
+SaXArcShootingMissileInit: @ 0x08019894
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _080198D4 @ =gCurrentSprite
@@ -9409,7 +9409,7 @@ _08019922:
 	movs r0, #0
 	strb r0, [r1, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -9417,8 +9417,8 @@ _08019922:
 	.align 2, 0
 _08019938: .4byte gSaXData
 
-	thumb_func_start SA_XArcShootingMissile
-SA_XArcShootingMissile: @ 0x0801993C
+	thumb_func_start SaXArcShootingMissile
+SaXArcShootingMissile: @ 0x0801993C
 	push {lr}
 	bl unk_1129c
 	ldr r0, _08019954 @ =gPreviousVerticalCollisionCheck
@@ -9471,16 +9471,16 @@ _080199A0:
 	.align 2, 0
 _080199A4: .4byte gCurrentSprite
 
-	thumb_func_start SA_XArc
-SA_XArc: @ 0x080199A8
+	thumb_func_start SaXArc
+SaXArc: @ 0x080199A8
 	push {lr}
-	bl SA_XUpdateFreezeTimer
+	bl SaXUpdateFreezeTimer
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080199B6
 	b _08019C1E
 _080199B6:
-	bl SA_XSeeAndLocateSamus
+	bl SaXSeeAndLocateSamus
 	ldr r0, _080199D0 @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
@@ -9577,105 +9577,105 @@ _080199D8: @ jump table
 	.4byte _08019B46 @ case 77
 	.4byte _08019B4A @ case 78
 _08019B14:
-	bl SA_XArcInit
+	bl SaXArcInit
 	b _08019BDC
 _08019B1A:
-	bl SA_XArcWaitingInDoor
+	bl SaXArcWaitingInDoor
 	b _08019BDC
 _08019B20:
-	bl SA_XArcOpeningDoor
+	bl SaXArcOpeningDoor
 	b _08019BDC
 _08019B26:
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	b _08019BDC
 _08019B2C:
-	bl SA_XArcWalking
+	bl SaXArcWalking
 	b _08019BDC
 _08019B32:
-	bl SA_XArcStoppedAtPillarInit
+	bl SaXArcStoppedAtPillarInit
 _08019B36:
-	bl SA_XArcStoppedAtPillar
+	bl SaXArcStoppedAtPillar
 	b _08019BDC
 _08019B3C:
-	bl SA_XArcIdleAfterHearingWeaponInit
+	bl SaXArcIdleAfterHearingWeaponInit
 _08019B40:
-	bl SA_XArcIdleAfterHearingWeapon
+	bl SaXArcIdleAfterHearingWeapon
 	b _08019BDC
 _08019B46:
-	bl SA_XArcTurningAroundAfterHearingWeaponStart
+	bl SaXArcTurningAroundAfterHearingWeaponStart
 _08019B4A:
-	bl SA_XArcTurningAround
+	bl SaXArcTurningAround
 	b _08019BDC
 _08019B50:
-	bl SA_XArcWaitingInDoorDuringChase
+	bl SaXArcWaitingInDoorDuringChase
 	b _08019BDC
 _08019B56:
-	bl SA_XArcOpeningDoorDuringChase
+	bl SaXArcOpeningDoorDuringChase
 	b _08019BDC
 _08019B5C:
-	bl SA_XRunningStart
+	bl SaXRunningStart
 _08019B60:
-	bl SA_XArcRunning
+	bl SaXArcRunning
 	b _08019BDC
 _08019B66:
-	bl SA_XTurningChaseStartInit
+	bl SaXTurningChaseStartInit
 _08019B6A:
-	bl SA_XArcTurningAroundDuringChase
+	bl SaXArcTurningAroundDuringChase
 	b _08019BDC
 _08019B70:
-	bl SA_XIdleBeforeShootingMissileInit
+	bl SaXIdleBeforeShootingMissileInit
 _08019B74:
-	bl SA_XArcIdleBeforeShootingMissile
+	bl SaXArcIdleBeforeShootingMissile
 	b _08019BDC
 _08019B7A:
-	bl SA_XArcShootingMissileInit
+	bl SaXArcShootingMissileInit
 _08019B7E:
-	bl SA_XArcShootingMissile
+	bl SaXArcShootingMissile
 	b _08019BDC
 _08019B84:
-	bl SA_XTurningInit
+	bl SaXTurningInit
 _08019B88:
-	bl SA_XTurning
+	bl SaXTurning
 	b _08019BDC
 _08019B8E:
-	bl SA_XFallingInit
+	bl SaXFallingInit
 _08019B92:
-	bl SA_XFalling
+	bl SaXFalling
 	b _08019BDC
 _08019B98:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _08019B9C:
-	bl SA_XStanding
+	bl SaXStanding
 	b _08019BDC
 _08019BA2:
-	bl SA_XDelayBeforeShootingBeamInit
+	bl SaXDelayBeforeShootingBeamInit
 _08019BA6:
-	bl SA_XDelayBeforeShootingBeam
+	bl SaXDelayBeforeShootingBeam
 	b _08019BDC
 _08019BAC:
-	bl SA_XShootingBeamInit
+	bl SaXShootingBeamInit
 _08019BB0:
-	bl SA_XShootingBeam
+	bl SaXShootingBeam
 	b _08019BDC
 _08019BB6:
-	bl SA_XMidAirInit
+	bl SaXMidAirInit
 _08019BBA:
-	bl SA_XMidAir
+	bl SaXMidAir
 	b _08019BDC
 _08019BC0:
-	bl SA_XMorphingInit
+	bl SaXMorphingInit
 _08019BC4:
-	bl SA_XMorphing
+	bl SaXMorphing
 	b _08019BDC
 _08019BCA:
-	bl SA_XRollingInit
+	bl SaXRollingInit
 _08019BCE:
-	bl SA_XRolling
+	bl SaXRolling
 	b _08019BDC
 _08019BD4:
-	bl SA_XUnmorphingInit
+	bl SaXUnmorphingInit
 _08019BD8:
-	bl SA_XUnmorphing
+	bl SaXUnmorphing
 _08019BDC:
 	ldr r0, _08019BF0 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -9698,7 +9698,7 @@ _08019BF8:
 	ands r1, r2
 _08019C02:
 	strb r1, [r0]
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 	ldr r0, _08019C24 @ =gCurrentSprite
 	ldrh r1, [r0]
 	movs r0, #0x80
@@ -9715,11 +9715,11 @@ _08019C1E:
 	.align 2, 0
 _08019C24: .4byte gCurrentSprite
 
-	thumb_func_start SA_XLabInit
-SA_XLabInit: @ 0x08019C28
+	thumb_func_start SaXLabInit
+SaXLabInit: @ 0x08019C28
 	push {r4, lr}
 	sub sp, #0xc
-	bl SA_XInit
+	bl SaXInit
 	ldr r0, _08019C5C @ =gCurrentSprite
 	mov ip, r0
 	adds r0, #0x25
@@ -9744,8 +9744,8 @@ SA_XLabInit: @ 0x08019C28
 	.align 2, 0
 _08019C5C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XLabShootingLabInit
-SA_XLabShootingLabInit: @ 0x08019C60
+	thumb_func_start SaXLabShootingLabInit
+SaXLabShootingLabInit: @ 0x08019C60
 	push {lr}
 	ldr r1, _08019C7C @ =gCurrentSprite
 	adds r2, r1, #0
@@ -9756,14 +9756,14 @@ SA_XLabShootingLabInit: @ 0x08019C60
 	movs r0, #0x64
 	strb r0, [r1]
 	movs r0, #9
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08019C7C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XLabSetTarget
-SA_XLabSetTarget: @ 0x08019C80
+	thumb_func_start SaXLabSetTarget
+SaXLabSetTarget: @ 0x08019C80
 	ldr r1, _08019C90 @ =gXParasiteTargetYPosition
 	ldr r2, _08019C94 @ =gCurrentSprite
 	ldrh r0, [r2, #2]
@@ -9777,8 +9777,8 @@ _08019C90: .4byte gXParasiteTargetYPosition
 _08019C94: .4byte gCurrentSprite
 _08019C98: .4byte gXParasiteTargetXPosition
 
-	thumb_func_start SA_XLabGettingCoveredByMetroids
-SA_XLabGettingCoveredByMetroids: @ 0x08019C9C
+	thumb_func_start SaXLabGettingCoveredByMetroids
+SaXLabGettingCoveredByMetroids: @ 0x08019C9C
 	push {r4, lr}
 	ldr r1, _08019CC8 @ =gCurrentSprite
 	adds r4, r1, #0
@@ -9794,7 +9794,7 @@ SA_XLabGettingCoveredByMetroids: @ 0x08019C9C
 	movs r1, #0x1a
 	strb r1, [r0]
 	movs r0, #0xa
-	bl SetSA_XPose
+	bl SaXSetPose
 	movs r0, #0x64
 	strb r0, [r4]
 _08019CC2:
@@ -9804,8 +9804,8 @@ _08019CC2:
 	.align 2, 0
 _08019CC8: .4byte gCurrentSprite
 
-	thumb_func_start SA_XLabCoveredByMetroids
-SA_XLabCoveredByMetroids: @ 0x08019CCC
+	thumb_func_start SaXLabCoveredByMetroids
+SaXLabCoveredByMetroids: @ 0x08019CCC
 	push {lr}
 	ldr r1, _08019CFC @ =gCurrentSprite
 	adds r2, r1, #0
@@ -9851,8 +9851,8 @@ _08019D22:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XLabCoveredByMetroidsAfterDetachment
-SA_XLabCoveredByMetroidsAfterDetachment: @ 0x08019D28
+	thumb_func_start SaXLabCoveredByMetroidsAfterDetachment
+SaXLabCoveredByMetroidsAfterDetachment: @ 0x08019D28
 	push {lr}
 	ldr r1, _08019D58 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -9879,8 +9879,8 @@ _08019D52:
 	.align 2, 0
 _08019D58: .4byte gCurrentSprite
 
-	thumb_func_start SA_XLab
-SA_XLab: @ 0x08019D5C
+	thumb_func_start SaXLab
+SaXLab: @ 0x08019D5C
 	push {lr}
 	ldr r0, _08019D74 @ =gCurrentSprite
 	adds r0, #0x24
@@ -9926,23 +9926,23 @@ _08019D7C: @ jump table
 	.4byte _08019E10 @ case 27
 	.4byte _08019E0C @ case 28
 _08019DF0:
-	bl SA_XLabInit
+	bl SaXLabInit
 _08019DF4:
-	bl SA_XLabShootingLabInit
+	bl SaXLabShootingLabInit
 	b _08019E10
 _08019DFA:
-	bl SA_XLabSetTarget
+	bl SaXLabSetTarget
 	b _08019E10
 _08019E00:
-	bl SA_XLabGettingCoveredByMetroids
+	bl SaXLabGettingCoveredByMetroids
 	b _08019E10
 _08019E06:
-	bl SA_XLabCoveredByMetroids
+	bl SaXLabCoveredByMetroids
 	b _08019E10
 _08019E0C:
-	bl SA_XLabCoveredByMetroidsAfterDetachment
+	bl SaXLabCoveredByMetroidsAfterDetachment
 _08019E10:
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 	ldr r1, _08019E30 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x26
@@ -9959,8 +9959,8 @@ _08019E10:
 	.align 2, 0
 _08019E30: .4byte gCurrentSprite
 
-	thumb_func_start SA_XBossRunniingCheckCollisions
-SA_XBossRunniingCheckCollisions: @ 0x08019E34
+	thumb_func_start SaXBossRunniingCheckCollisions
+SaXBossRunniingCheckCollisions: @ 0x08019E34
 	push {r4, r5, r6, r7, lr}
 	movs r7, #0
 	movs r6, #0
@@ -10503,8 +10503,8 @@ _0801A288: .4byte 0xFFFFFEFC
 _0801A28C: .4byte gSamusData
 _0801A290: .4byte 0xFFFFFE70
 
-	thumb_func_start SA_XBossTrackSamus
-SA_XBossTrackSamus: @ 0x0801A294
+	thumb_func_start SaXBossTrackSamus
+SaXBossTrackSamus: @ 0x0801A294
 	push {r4, r5, r6, r7, lr}
 	ldr r0, _0801A2B8 @ =gSaXVision
 	ldrb r1, [r0, #2]
@@ -10867,7 +10867,7 @@ _0801A536:
 	adds r0, #0x2f
 	strb r1, [r0]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	movs r0, #1
 	b _0801A55E
 	.align 2, 0
@@ -10879,8 +10879,8 @@ _0801A55E:
 	pop {r1}
 	bx r1
 
-	thumb_func_start SA_XBossRunningInit
-SA_XBossRunningInit: @ 0x0801A564
+	thumb_func_start SaXBossRunningInit
+SaXBossRunningInit: @ 0x0801A564
 	push {lr}
 	ldr r3, _0801A590 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -10898,7 +10898,7 @@ SA_XBossRunningInit: @ 0x0801A564
 	cmp r0, #0
 	bne _0801A58C
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 _0801A58C:
 	pop {r0}
 	bx r0
@@ -10906,14 +10906,14 @@ _0801A58C:
 _0801A590: .4byte gCurrentSprite
 _0801A594: .4byte 0x0000FF88
 
-	thumb_func_start SA_XBossRunning
-SA_XBossRunning: @ 0x0801A598
+	thumb_func_start SaXBossRunning
+SaXBossRunning: @ 0x0801A598
 	push {r4, lr}
-	bl SA_XBossTrackSamus
+	bl SaXBossTrackSamus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801A5D4
-	bl SA_XBossRunniingCheckCollisions
+	bl SaXBossRunniingCheckCollisions
 	ldr r1, _0801A5DC @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -10943,8 +10943,8 @@ _0801A5D4:
 _0801A5DC: .4byte gCurrentSprite
 _0801A5E0: .4byte 0x082E6BCC
 
-	thumb_func_start SA_XBossSpinJumpingInit
-SA_XBossSpinJumpingInit: @ 0x0801A5E4
+	thumb_func_start SaXBossSpinJumpingInit
+SaXBossSpinJumpingInit: @ 0x0801A5E4
 	push {r4, r5, lr}
 	ldr r5, _0801A618 @ =gCurrentSprite
 	adds r1, r5, #0
@@ -10962,7 +10962,7 @@ SA_XBossSpinJumpingInit: @ 0x0801A5E4
 	subs r0, #0x20
 	strh r0, [r5, #2]
 	movs r0, #5
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r0, r5, #0
 	adds r0, #0x2d
 	strb r4, [r0]
@@ -10973,8 +10973,8 @@ SA_XBossSpinJumpingInit: @ 0x0801A5E4
 _0801A618: .4byte gCurrentSprite
 _0801A61C: .4byte 0x0000FFB0
 
-	thumb_func_start SA_XBossSpinJumping
-SA_XBossSpinJumping: @ 0x0801A620
+	thumb_func_start SaXBossSpinJumping
+SaXBossSpinJumping: @ 0x0801A620
 	push {r4, r5, r6, lr}
 	ldr r4, _0801A674 @ =gSaXVision
 	ldr r2, _0801A678 @ =gCurrentSprite
@@ -11232,7 +11232,7 @@ _0801A7E8:
 	movs r0, #1
 	strb r0, [r1]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801A83C
 	.align 2, 0
 _0801A81C: .4byte 0x082E6BDC
@@ -11256,8 +11256,8 @@ _0801A83C:
 	.align 2, 0
 _0801A844: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XBossWaitingToAppearInit
-SA_XBossWaitingToAppearInit: @ 0x0801A848
+	thumb_func_start SaXBossWaitingToAppearInit
+SaXBossWaitingToAppearInit: @ 0x0801A848
 	push {r4, r5, lr}
 	ldr r4, _0801A874 @ =gCurrentSprite
 	ldrh r1, [r4]
@@ -11272,7 +11272,7 @@ SA_XBossWaitingToAppearInit: @ 0x0801A848
 	movs r0, #0x42
 	strb r0, [r1]
 	movs r0, #7
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r4, #0x2e
 	strb r5, [r4]
 	pop {r4, r5}
@@ -11281,8 +11281,8 @@ SA_XBossWaitingToAppearInit: @ 0x0801A848
 	.align 2, 0
 _0801A874: .4byte gCurrentSprite
 
-	thumb_func_start SA_XBossWaitingToAppear
-SA_XBossWaitingToAppear: @ 0x0801A878
+	thumb_func_start SaXBossWaitingToAppear
+SaXBossWaitingToAppear: @ 0x0801A878
 	push {r4, r5, lr}
 	ldr r2, _0801A8CC @ =gCurrentSprite
 	adds r1, r2, #0
@@ -11319,7 +11319,7 @@ SA_XBossWaitingToAppear: @ 0x0801A878
 	movs r0, #0
 	bl FadeMusic
 	movs r0, #0x9b
-	bl unk_3b1c
+	bl SoundPlay_3b1c
 	b _0801A908
 	.align 2, 0
 _0801A8CC: .4byte gCurrentSprite
@@ -11354,8 +11354,8 @@ _0801A908:
 	.align 2, 0
 _0801A910: .4byte 0x0000DFFF
 
-	thumb_func_start SA_XBossInit
-SA_XBossInit: @ 0x0801A914
+	thumb_func_start SaXBossInit
+SaXBossInit: @ 0x0801A914
 	push {r4, r5, lr}
 	bl EventCheckOn_EnteredOperationsDeck
 	adds r1, r0, #0
@@ -11367,7 +11367,7 @@ SA_XBossInit: @ 0x0801A914
 	.align 2, 0
 _0801A928: .4byte gCurrentSprite
 _0801A92C:
-	bl SA_XInit
+	bl SaXInit
 	ldr r4, _0801A970 @ =gCurrentSprite
 	ldrh r0, [r4]
 	movs r2, #0x80
@@ -11384,11 +11384,11 @@ _0801A92C:
 	ldr r0, _0801A974 @ =0x0000FDFF
 	ands r1, r0
 	strh r1, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	adds r4, #0x30
 	movs r0, #8
 	strb r0, [r4]
-	bl SA_XBossWaitingToAppearInit
+	bl SaXBossWaitingToAppearInit
 	ldr r0, _0801A978 @ =gBossWork2
 	strb r5, [r0]
 	ldr r0, _0801A97C @ =gBossWork3
@@ -11406,8 +11406,8 @@ _0801A978: .4byte gBossWork2
 _0801A97C: .4byte gBossWork3
 _0801A980: .4byte gSaXData
 
-	thumb_func_start SA_XBossFallingInit
-SA_XBossFallingInit: @ 0x0801A984
+	thumb_func_start SaXBossFallingInit
+SaXBossFallingInit: @ 0x0801A984
 	push {r4, r5, lr}
 	ldr r5, _0801A9B0 @ =gCurrentSprite
 	adds r1, r5, #0
@@ -11422,7 +11422,7 @@ SA_XBossFallingInit: @ 0x0801A984
 	ldr r0, _0801A9B4 @ =0x0000FF88
 	strh r0, [r5, #0xa]
 	movs r0, #7
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r0, r5, #0
 	adds r0, #0x2d
 	strb r4, [r0]
@@ -11433,8 +11433,8 @@ SA_XBossFallingInit: @ 0x0801A984
 _0801A9B0: .4byte gCurrentSprite
 _0801A9B4: .4byte 0x0000FF88
 
-	thumb_func_start SA_XBossFalling
-SA_XBossFalling: @ 0x0801A9B8
+	thumb_func_start SaXBossFalling
+SaXBossFalling: @ 0x0801A9B8
 	push {r4, r5, r6, lr}
 	ldr r4, _0801A9EC @ =gCurrentSprite
 	adds r5, r4, #0
@@ -11489,7 +11489,7 @@ _0801AA0C:
 	movs r0, #1
 	strb r0, [r5]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801AA6C
 	.align 2, 0
 _0801AA2C: .4byte gPreviousVerticalCollisionCheck
@@ -11531,8 +11531,8 @@ _0801AA6C:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XBossTurningAroundDuringChaseInit
-SA_XBossTurningAroundDuringChaseInit: @ 0x0801AA74
+	thumb_func_start SaXBossTurningAroundDuringChaseInit
+SaXBossTurningAroundDuringChaseInit: @ 0x0801AA74
 	push {lr}
 	ldr r2, _0801AA90 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -11542,15 +11542,15 @@ SA_XBossTurningAroundDuringChaseInit: @ 0x0801AA74
 	ldr r0, _0801AA94 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #4
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801AA90: .4byte gCurrentSprite
 _0801AA94: .4byte 0x0000FF88
 
-	thumb_func_start SA_XBossTurningAroundDuringChase
-SA_XBossTurningAroundDuringChase: @ 0x0801AA98
+	thumb_func_start SaXBossTurningAroundDuringChase
+SaXBossTurningAroundDuringChase: @ 0x0801AA98
 	push {r4, lr}
 	ldr r0, _0801AACC @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -11563,7 +11563,7 @@ SA_XBossTurningAroundDuringChase: @ 0x0801AA98
 	adds r1, r2, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	ldr r0, _0801AAD4 @ =gSamusData
 	ldrb r0, [r0, #1]
 	cmp r0, #0x1e
@@ -11591,8 +11591,8 @@ _0801AAE0:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XBossFallingFromKnockbackInit
-SA_XBossFallingFromKnockbackInit: @ 0x0801AAE8
+	thumb_func_start SaXBossFallingFromKnockbackInit
+SaXBossFallingFromKnockbackInit: @ 0x0801AAE8
 	push {r4, r5, lr}
 	ldr r5, _0801AB14 @ =gCurrentSprite
 	adds r1, r5, #0
@@ -11607,7 +11607,7 @@ SA_XBossFallingFromKnockbackInit: @ 0x0801AAE8
 	ldr r0, _0801AB18 @ =0x0000FF88
 	strh r0, [r5, #0xa]
 	movs r0, #7
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r0, r5, #0
 	adds r0, #0x2d
 	strb r4, [r0]
@@ -11618,8 +11618,8 @@ SA_XBossFallingFromKnockbackInit: @ 0x0801AAE8
 _0801AB14: .4byte gCurrentSprite
 _0801AB18: .4byte 0x0000FF88
 
-	thumb_func_start SA_XBossFallingFromKnockback
-SA_XBossFallingFromKnockback: @ 0x0801AB1C
+	thumb_func_start SaXBossFallingFromKnockback
+SaXBossFallingFromKnockback: @ 0x0801AB1C
 	push {r4, r5, r6, lr}
 	ldr r4, _0801AB44 @ =gCurrentSprite
 	adds r5, r4, #0
@@ -11692,7 +11692,7 @@ _0801AB94:
 	movs r0, #1
 	strb r0, [r5]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801ABF4
 	.align 2, 0
 _0801ABB4: .4byte gPreviousVerticalCollisionCheck
@@ -11734,8 +11734,8 @@ _0801ABF4:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XBossVariableJumpHeightInit
-SA_XBossVariableJumpHeightInit: @ 0x0801ABFC
+	thumb_func_start SaXBossVariableJumpHeightInit
+SaXBossVariableJumpHeightInit: @ 0x0801ABFC
 	push {r4, lr}
 	ldr r0, _0801AC10 @ =gCurrentSprite
 	adds r1, r0, #0
@@ -11767,7 +11767,7 @@ _0801AC1E:
 	subs r0, #0x20
 	strh r0, [r4, #2]
 	movs r0, #5
-	bl SetSA_XPose
+	bl SaXSetPose
 	ldr r0, _0801AC5C @ =gSamusData
 	ldrh r0, [r0, #0x16]
 	ldrh r1, [r4, #4]
@@ -11808,8 +11808,8 @@ _0801AC78:
 _0801AC88: .4byte gSaXData
 _0801AC8C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XBossVariableJumpHeight
-SA_XBossVariableJumpHeight: @ 0x0801AC90
+	thumb_func_start SaXBossVariableJumpHeight
+SaXBossVariableJumpHeight: @ 0x0801AC90
 	push {r4, r5, r6, r7, lr}
 	ldr r4, _0801ACD0 @ =gCurrentSprite
 	adds r0, r4, #0
@@ -11994,7 +11994,7 @@ _0801ADD4:
 	movs r0, #1
 	strb r0, [r1]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801AEE6
 	.align 2, 0
 _0801AE04: .4byte 0x082E6C8A
@@ -12113,8 +12113,8 @@ _0801AEE6:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XBossUpdateMosaic
-SA_XBossUpdateMosaic: @ 0x0801AEEC
+	thumb_func_start SaXBossUpdateMosaic
+SaXBossUpdateMosaic: @ 0x0801AEEC
 	push {lr}
 	ldr r2, _0801AF04 @ =gSaXData
 	ldrb r0, [r2, #6]
@@ -12171,8 +12171,8 @@ _0801AF4E:
 _0801AF54: .4byte gWrittenToMosaic_H
 _0801AF58: .4byte 0x082E6D22
 
-	thumb_func_start SA_XBossKnockbackInit
-SA_XBossKnockbackInit: @ 0x0801AF5C
+	thumb_func_start SaXBossKnockbackInit
+SaXBossKnockbackInit: @ 0x0801AF5C
 	push {r4, r5, r6, r7, lr}
 	ldr r4, _0801AFA4 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -12192,7 +12192,7 @@ SA_XBossKnockbackInit: @ 0x0801AF5C
 	orrs r0, r1
 	strh r0, [r4]
 	movs r0, #8
-	bl SetSA_XPose
+	bl SaXSetPose
 	ldr r0, _0801AFAC @ =gSamusData
 	ldrh r0, [r0, #0x16]
 	ldrh r1, [r4, #4]
@@ -12281,8 +12281,8 @@ _0801B034:
 _0801B03C: .4byte gBossWork3
 _0801B040: .4byte gBossWork2
 
-	thumb_func_start SA_XBossKnockback
-SA_XBossKnockback: @ 0x0801B044
+	thumb_func_start SaXBossKnockback
+SaXBossKnockback: @ 0x0801B044
 	push {r4, r5, lr}
 	ldr r2, _0801B070 @ =gCurrentSprite
 	movs r0, #0x31
@@ -12358,8 +12358,8 @@ _0801B0D2:
 	.align 2, 0
 _0801B0D8: .4byte gPreviousCollisionCheck
 
-	thumb_func_start SA_XBossKneelingInit
-SA_XBossKneelingInit: @ 0x0801B0DC
+	thumb_func_start SaXBossKneelingInit
+SaXBossKneelingInit: @ 0x0801B0DC
 	push {r4, lr}
 	ldr r0, _0801B124 @ =gSaXData
 	movs r2, #0
@@ -12381,7 +12381,7 @@ SA_XBossKneelingInit: @ 0x0801B0DC
 	orrs r0, r1
 	strh r0, [r4]
 	movs r0, #0xb
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r1, r4, #0
 	adds r1, #0x2e
 	movs r0, #0x78
@@ -12399,8 +12399,8 @@ _0801B124: .4byte gSaXData
 _0801B128: .4byte gCurrentSprite
 _0801B12C: .4byte 0x0000FF88
 
-	thumb_func_start SA_XBossKneeling
-SA_XBossKneeling: @ 0x0801B130
+	thumb_func_start SaXBossKneeling
+SaXBossKneeling: @ 0x0801B130
 	push {lr}
 	ldr r1, _0801B150 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -12414,7 +12414,7 @@ SA_XBossKneeling: @ 0x0801B130
 	cmp r0, #0
 	bne _0801B16A
 	movs r0, #0xc
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801B16A
 	.align 2, 0
 _0801B150: .4byte gCurrentSprite
@@ -12435,8 +12435,8 @@ _0801B16A:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XBossTransformingIntoMonsterInit
-SA_XBossTransformingIntoMonsterInit: @ 0x0801B170
+	thumb_func_start SaXBossTransformingIntoMonsterInit
+SaXBossTransformingIntoMonsterInit: @ 0x0801B170
 	ldr r1, _0801B184 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -12449,8 +12449,8 @@ SA_XBossTransformingIntoMonsterInit: @ 0x0801B170
 	.align 2, 0
 _0801B184: .4byte gCurrentSprite
 
-	thumb_func_start SA_XBossTransformingIntoMonster
-SA_XBossTransformingIntoMonster: @ 0x0801B188
+	thumb_func_start SaXBossTransformingIntoMonster
+SaXBossTransformingIntoMonster: @ 0x0801B188
 	push {r4, r5, r6, lr}
 	sub sp, #0xc
 	ldr r5, _0801B1F8 @ =gCurrentSprite
@@ -12539,8 +12539,8 @@ _0801B238: .4byte sSpritesPalettePointers
 _0801B23C: .4byte 0x05000320
 _0801B240: .4byte 0x80000070
 
-	thumb_func_start SA_XBossAfterTransformation
-SA_XBossAfterTransformation: @ 0x0801B244
+	thumb_func_start SaXBossAfterTransformation
+SaXBossAfterTransformation: @ 0x0801B244
 	ldr r1, _0801B24C @ =gCurrentSprite
 	movs r0, #0
 	strh r0, [r1]
@@ -12548,8 +12548,8 @@ SA_XBossAfterTransformation: @ 0x0801B244
 	.align 2, 0
 _0801B24C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XBoss
-SA_XBoss: @ 0x0801B250
+	thumb_func_start SaXBoss
+SaXBoss: @ 0x0801B250
 	push {r4, r5, lr}
 	ldr r4, _0801B29C @ =gCurrentSprite
 	adds r5, r4, #0
@@ -12557,13 +12557,13 @@ SA_XBoss: @ 0x0801B250
 	ldrb r0, [r5]
 	cmp r0, #0x50
 	bhi _0801B286
-	bl SA_XUpdateFreezeTimer
+	bl SaXUpdateFreezeTimer
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801B26A
 	b _0801B50C
 _0801B26A:
-	bl SA_XSeeAndLocateSamus
+	bl SaXSeeAndLocateSamus
 	adds r0, r4, #0
 	adds r0, #0x2c
 	ldrb r1, [r0]
@@ -12679,116 +12679,116 @@ _0801B2A4: @ jump table
 	.4byte _0801B4D0 @ case 84
 	.4byte _0801B4D6 @ case 85
 _0801B3FC:
-	bl SA_XBossInit
+	bl SaXBossInit
 	b _0801B4DA
 _0801B402:
-	bl SA_XBossFallingInit
+	bl SaXBossFallingInit
 _0801B406:
-	bl SA_XBossFalling
+	bl SaXBossFalling
 	b _0801B4DA
 _0801B40C:
-	bl SA_XBossRunningInit
+	bl SaXBossRunningInit
 _0801B410:
-	bl SA_XBossRunning
+	bl SaXBossRunning
 	b _0801B4DA
 _0801B416:
-	bl SA_XBossSpinJumpingInit
+	bl SaXBossSpinJumpingInit
 _0801B41A:
-	bl SA_XBossSpinJumping
+	bl SaXBossSpinJumping
 	b _0801B4DA
 _0801B420:
-	bl SA_XBossTurningAroundDuringChaseInit
+	bl SaXBossTurningAroundDuringChaseInit
 _0801B424:
-	bl SA_XBossTurningAroundDuringChase
+	bl SaXBossTurningAroundDuringChase
 	b _0801B4DA
 _0801B42A:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _0801B42E:
-	bl SA_XStanding
+	bl SaXStanding
 	b _0801B4DA
 _0801B434:
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	b _0801B4DA
 _0801B43A:
-	bl SA_XWalking
+	bl SaXWalking
 	b _0801B4DA
 _0801B440:
-	bl SA_XTurningInit
+	bl SaXTurningInit
 _0801B444:
-	bl SA_XTurning
+	bl SaXTurning
 	b _0801B4DA
 _0801B44A:
-	bl SA_XDelayBeforeShootingBeamInit
+	bl SaXDelayBeforeShootingBeamInit
 _0801B44E:
-	bl SA_XDelayBeforeShootingBeam
+	bl SaXDelayBeforeShootingBeam
 	b _0801B4DA
 _0801B454:
-	bl SA_XShootingBeamInit
+	bl SaXShootingBeamInit
 _0801B458:
-	bl SA_XShootingBeam
+	bl SaXShootingBeam
 	b _0801B4DA
 _0801B45E:
-	bl SA_XDelayBeforeShootingMissileInit
+	bl SaXDelayBeforeShootingMissileInit
 _0801B462:
-	bl SA_XDelayBeforeShootingMissile
+	bl SaXDelayBeforeShootingMissile
 	b _0801B4DA
 _0801B468:
-	bl SA_XShootingMissileInit
+	bl SaXShootingMissileInit
 _0801B46C:
-	bl SA_XShootingMissile
+	bl SaXShootingMissile
 	b _0801B4DA
 _0801B472:
-	bl SA_XIdleAfterShootingMissileInit
+	bl SaXIdleAfterShootingMissileInit
 _0801B476:
-	bl SA_XIdleAfterShootingMissile
+	bl SaXIdleAfterShootingMissile
 	b _0801B4DA
 _0801B47C:
-	bl SA_XMorphingInit
+	bl SaXMorphingInit
 _0801B480:
-	bl SA_XMorphing
+	bl SaXMorphing
 	b _0801B4DA
 _0801B486:
-	bl SA_XRollingInit
+	bl SaXRollingInit
 _0801B48A:
-	bl SA_XRolling
+	bl SaXRolling
 	b _0801B4DA
 _0801B490:
-	bl SA_XUnmorphingInit
+	bl SaXUnmorphingInit
 _0801B494:
-	bl SA_XUnmorphing
+	bl SaXUnmorphing
 	b _0801B4DA
 _0801B49A:
-	bl SA_XBossWaitingToAppearInit
+	bl SaXBossWaitingToAppearInit
 _0801B49E:
-	bl SA_XBossWaitingToAppear
+	bl SaXBossWaitingToAppear
 	b _0801B4DA
 _0801B4A4:
-	bl SA_XBossFallingFromKnockbackInit
+	bl SaXBossFallingFromKnockbackInit
 _0801B4A8:
-	bl SA_XBossFallingFromKnockback
+	bl SaXBossFallingFromKnockback
 	b _0801B4DA
 _0801B4AE:
-	bl SA_XBossVariableJumpHeightInit
+	bl SaXBossVariableJumpHeightInit
 _0801B4B2:
-	bl SA_XBossVariableJumpHeight
+	bl SaXBossVariableJumpHeight
 	b _0801B4DA
 _0801B4B8:
-	bl SA_XBossKnockbackInit
+	bl SaXBossKnockbackInit
 _0801B4BC:
-	bl SA_XBossKnockback
+	bl SaXBossKnockback
 	b _0801B4DA
 _0801B4C2:
-	bl SA_XBossKneelingInit
+	bl SaXBossKneelingInit
 _0801B4C6:
-	bl SA_XBossKneeling
+	bl SaXBossKneeling
 	b _0801B4DA
 _0801B4CC:
-	bl SA_XBossTransformingIntoMonsterInit
+	bl SaXBossTransformingIntoMonsterInit
 _0801B4D0:
-	bl SA_XBossTransformingIntoMonster
+	bl SaXBossTransformingIntoMonster
 	b _0801B4DA
 _0801B4D6:
-	bl SA_XBossAfterTransformation
+	bl SaXBossAfterTransformation
 _0801B4DA:
 	ldr r0, _0801B4F0 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -12811,8 +12811,8 @@ _0801B4F8:
 	ands r1, r2
 _0801B502:
 	strb r1, [r0]
-	bl SA_XBossUpdateMosaic
-	bl SA_XUpdateGraphics
+	bl SaXBossUpdateMosaic
+	bl SaXUpdateGraphics
 _0801B50C:
 	pop {r4, r5}
 	pop {r0}
@@ -12820,12 +12820,12 @@ _0801B50C:
 	.align 2, 0
 _0801B514: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaInit
-SA_XOmegaInit: @ 0x0801B518
+	thumb_func_start SaXOmegaInit
+SaXOmegaInit: @ 0x0801B518
 	push {lr}
-	bl SA_XInit
+	bl SaXInit
 	bl MakeSpriteFaceAwayFromSamusDirection
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	ldr r2, _0801B55C @ =gCurrentSprite
 	movs r1, #0
 	movs r0, #0
@@ -12846,7 +12846,7 @@ SA_XOmegaInit: @ 0x0801B518
 	adds r0, #0x48
 	strh r0, [r2, #2]
 	movs r0, #7
-	bl SetSA_XPose
+	bl SaXSetPose
 	ldr r1, _0801B560 @ =gSaXData
 	movs r0, #1
 	strb r0, [r1, #6]
@@ -12856,8 +12856,8 @@ SA_XOmegaInit: @ 0x0801B518
 _0801B55C: .4byte gCurrentSprite
 _0801B560: .4byte gSaXData
 
-	thumb_func_start SA_XOmegaForming
-SA_XOmegaForming: @ 0x0801B564
+	thumb_func_start SaXOmegaForming
+SaXOmegaForming: @ 0x0801B564
 	push {lr}
 	ldr r3, _0801B590 @ =gCurrentSprite
 	movs r0, #0x2e
@@ -12900,8 +12900,8 @@ _0801B5AE:
 	.align 2, 0
 _0801B5B4: .4byte gSaXData
 
-	thumb_func_start SA_XOmegaFalling
-SA_XOmegaFalling: @ 0x0801B5B8
+	thumb_func_start SaXOmegaFalling
+SaXOmegaFalling: @ 0x0801B5B8
 	push {r4, r5, r6, lr}
 	ldr r4, _0801B5D8 @ =gCurrentSprite
 	adds r5, r4, #0
@@ -12934,7 +12934,7 @@ _0801B5E0:
 	movs r0, #1
 	strb r0, [r5]
 	movs r0, #6
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801B640
 	.align 2, 0
 _0801B600: .4byte gPreviousVerticalCollisionCheck
@@ -12976,8 +12976,8 @@ _0801B640:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XOmegaStandingInit
-SA_XOmegaStandingInit: @ 0x0801B648
+	thumb_func_start SaXOmegaStandingInit
+SaXOmegaStandingInit: @ 0x0801B648
 	ldr r1, _0801B65C @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -12990,8 +12990,8 @@ SA_XOmegaStandingInit: @ 0x0801B648
 	.align 2, 0
 _0801B65C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaStanding
-SA_XOmegaStanding: @ 0x0801B660
+	thumb_func_start SaXOmegaStanding
+SaXOmegaStanding: @ 0x0801B660
 	push {lr}
 	ldr r1, _0801B680 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -13011,8 +13011,8 @@ _0801B67A:
 	.align 2, 0
 _0801B680: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaRunningInit
-SA_XOmegaRunningInit: @ 0x0801B684
+	thumb_func_start SaXOmegaRunningInit
+SaXOmegaRunningInit: @ 0x0801B684
 	push {r4, lr}
 	ldr r4, _0801B6AC @ =gCurrentSprite
 	adds r1, r4, #0
@@ -13024,7 +13024,7 @@ SA_XOmegaRunningInit: @ 0x0801B684
 	adds r0, #0x30
 	strb r2, [r0]
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r1, r4, #0
 	adds r1, #0x2e
 	movs r0, #0x1e
@@ -13035,8 +13035,8 @@ SA_XOmegaRunningInit: @ 0x0801B684
 	.align 2, 0
 _0801B6AC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaRunning
-SA_XOmegaRunning: @ 0x0801B6B0
+	thumb_func_start SaXOmegaRunning
+SaXOmegaRunning: @ 0x0801B6B0
 	push {r4, r5, lr}
 	ldr r0, _0801B6F0 @ =0x082E6BCC
 	ldr r4, _0801B6F4 @ =gCurrentSprite
@@ -13074,8 +13074,8 @@ _0801B6EA:
 _0801B6F0: .4byte 0x082E6BCC
 _0801B6F4: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaIdleBeforeShootingOmegaInit
-SA_XOmegaIdleBeforeShootingOmegaInit: @ 0x0801B6F8
+	thumb_func_start SaXOmegaIdleBeforeShootingOmegaInit
+SaXOmegaIdleBeforeShootingOmegaInit: @ 0x0801B6F8
 	push {lr}
 	ldr r1, _0801B71C @ =gCurrentSprite
 	adds r2, r1, #0
@@ -13089,15 +13089,15 @@ SA_XOmegaIdleBeforeShootingOmegaInit: @ 0x0801B6F8
 	movs r0, #1
 	strb r0, [r1, #3]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801B71C: .4byte gCurrentSprite
 _0801B720: .4byte gSaXData
 
-	thumb_func_start SA_XOmegaIdleBeforeShootingOmega
-SA_XOmegaIdleBeforeShootingOmega: @ 0x0801B724
+	thumb_func_start SaXOmegaIdleBeforeShootingOmega
+SaXOmegaIdleBeforeShootingOmega: @ 0x0801B724
 	push {lr}
 	ldr r1, _0801B744 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -13117,8 +13117,8 @@ _0801B73E:
 	.align 2, 0
 _0801B744: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaShootingOmegaInit
-SA_XOmegaShootingOmegaInit: @ 0x0801B748
+	thumb_func_start SaXOmegaShootingOmegaInit
+SaXOmegaShootingOmegaInit: @ 0x0801B748
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _0801B790 @ =gCurrentSprite
@@ -13147,7 +13147,7 @@ SA_XOmegaShootingOmegaInit: @ 0x0801B748
 	ldr r0, _0801B794 @ =gSaXData
 	strb r4, [r0, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -13156,8 +13156,8 @@ SA_XOmegaShootingOmegaInit: @ 0x0801B748
 _0801B790: .4byte gCurrentSprite
 _0801B794: .4byte gSaXData
 
-	thumb_func_start SA_XOmegaShootingOmega
-SA_XOmegaShootingOmega: @ 0x0801B798
+	thumb_func_start SaXOmegaShootingOmega
+SaXOmegaShootingOmega: @ 0x0801B798
 	push {lr}
 	ldr r0, _0801B7B0 @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -13174,8 +13174,8 @@ _0801B7AA:
 _0801B7B0: .4byte gSaXData
 _0801B7B4: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaAfterShootingOmegaInit
-SA_XOmegaAfterShootingOmegaInit: @ 0x0801B7B8
+	thumb_func_start SaXOmegaAfterShootingOmegaInit
+SaXOmegaAfterShootingOmegaInit: @ 0x0801B7B8
 	push {lr}
 	ldr r3, _0801B7E0 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -13192,15 +13192,15 @@ SA_XOmegaAfterShootingOmegaInit: @ 0x0801B7B8
 	ldr r0, _0801B7E4 @ =0x0000FF88
 	strh r0, [r3, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801B7E0: .4byte gCurrentSprite
 _0801B7E4: .4byte 0x0000FF88
 
-	thumb_func_start SA_XOmegaAfterShootingOmega
-SA_XOmegaAfterShootingOmega: @ 0x0801B7E8
+	thumb_func_start SaXOmegaAfterShootingOmega
+SaXOmegaAfterShootingOmega: @ 0x0801B7E8
 	push {r4, r5, r6, lr}
 	sub sp, #0xc
 	ldr r5, _0801B81C @ =gCurrentSprite
@@ -13218,7 +13218,7 @@ SA_XOmegaAfterShootingOmega: @ 0x0801B7E8
 	movs r4, #0
 	strb r4, [r1, #3]
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 	adds r0, r5, #0
 	adds r0, #0x30
 	strb r4, [r0]
@@ -13260,7 +13260,7 @@ _0801B844:
 	movs r0, #1
 	strb r0, [r1, #3]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801B8B0
 	.align 2, 0
 _0801B868: .4byte 0x082E6BCC
@@ -13295,7 +13295,7 @@ _0801B870:
 	ldr r0, _0801B8B8 @ =gSaXData
 	strb r4, [r0, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 _0801B8B0:
 	add sp, #0xc
 	pop {r4, r5, r6}
@@ -13304,8 +13304,8 @@ _0801B8B0:
 	.align 2, 0
 _0801B8B8: .4byte gSaXData
 
-	thumb_func_start SA_XOmegaHitByOmegaInit
-SA_XOmegaHitByOmegaInit: @ 0x0801B8BC
+	thumb_func_start SaXOmegaHitByOmegaInit
+SaXOmegaHitByOmegaInit: @ 0x0801B8BC
 	push {lr}
 	ldr r3, _0801B8E0 @ =gCurrentSprite
 	adds r1, r3, #0
@@ -13319,14 +13319,14 @@ SA_XOmegaHitByOmegaInit: @ 0x0801B8BC
 	adds r0, #3
 	strb r2, [r0]
 	movs r0, #8
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801B8E0: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmegaHitByOmega
-SA_XOmegaHitByOmega: @ 0x0801B8E4
+	thumb_func_start SaXOmegaHitByOmega
+SaXOmegaHitByOmega: @ 0x0801B8E4
 	push {r4, r5, lr}
 	ldr r2, _0801B90C @ =gCurrentSprite
 	movs r0, #0x31
@@ -13366,8 +13366,8 @@ _0801B924:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XOmegaRevertingToXInit
-SA_XOmegaRevertingToXInit: @ 0x0801B930
+	thumb_func_start SaXOmegaRevertingToXInit
+SaXOmegaRevertingToXInit: @ 0x0801B930
 	push {lr}
 	ldr r1, _0801B954 @ =gCurrentSprite
 	adds r2, r1, #0
@@ -13388,8 +13388,8 @@ SA_XOmegaRevertingToXInit: @ 0x0801B930
 _0801B954: .4byte gCurrentSprite
 _0801B958: .4byte gSaXData
 
-	thumb_func_start SA_XOmegaRevertingToX
-SA_XOmegaRevertingToX: @ 0x0801B95C
+	thumb_func_start SaXOmegaRevertingToX
+SaXOmegaRevertingToX: @ 0x0801B95C
 	push {lr}
 	ldr r2, _0801B994 @ =gWrittenToMosaic_H
 	ldr r1, _0801B998 @ =sXParasiteMosaicValues
@@ -13423,8 +13423,8 @@ _0801B994: .4byte gWrittenToMosaic_H
 _0801B998: .4byte sXParasiteMosaicValues
 _0801B99C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XOmega
-SA_XOmega: @ 0x0801B9A0
+	thumb_func_start SaXOmega
+SaXOmega: @ 0x0801B9A0
 	push {lr}
 	ldr r0, _0801B9C4 @ =gCurrentSprite
 	adds r2, r0, #0
@@ -13532,50 +13532,50 @@ _0801B9CC: @ jump table
 	.4byte _0801BB1C @ case 82
 	.4byte _0801BB22 @ case 83
 _0801BB1C:
-	bl SA_XOmegaInit
+	bl SaXOmegaInit
 	b _0801BB76
 _0801BB22:
-	bl SA_XOmegaForming
+	bl SaXOmegaForming
 	b _0801BB76
 _0801BB28:
-	bl SA_XFallingInit
+	bl SaXFallingInit
 _0801BB2C:
-	bl SA_XOmegaFalling
+	bl SaXOmegaFalling
 	b _0801BB76
 _0801BB32:
-	bl SA_XOmegaStandingInit
+	bl SaXOmegaStandingInit
 _0801BB36:
-	bl SA_XOmegaStanding
+	bl SaXOmegaStanding
 	b _0801BB76
 _0801BB3C:
-	bl SA_XOmegaRunningInit
+	bl SaXOmegaRunningInit
 _0801BB40:
-	bl SA_XOmegaRunning
+	bl SaXOmegaRunning
 	b _0801BB76
 _0801BB46:
-	bl SA_XOmegaIdleBeforeShootingOmegaInit
+	bl SaXOmegaIdleBeforeShootingOmegaInit
 _0801BB4A:
-	bl SA_XOmegaIdleBeforeShootingOmega
+	bl SaXOmegaIdleBeforeShootingOmega
 	b _0801BB76
 _0801BB50:
-	bl SA_XOmegaShootingOmegaInit
+	bl SaXOmegaShootingOmegaInit
 _0801BB54:
-	bl SA_XOmegaShootingOmega
+	bl SaXOmegaShootingOmega
 	b _0801BB76
 _0801BB5A:
-	bl SA_XOmegaAfterShootingOmegaInit
+	bl SaXOmegaAfterShootingOmegaInit
 _0801BB5E:
-	bl SA_XOmegaAfterShootingOmega
+	bl SaXOmegaAfterShootingOmega
 	b _0801BB76
 _0801BB64:
-	bl SA_XOmegaHitByOmegaInit
+	bl SaXOmegaHitByOmegaInit
 _0801BB68:
-	bl SA_XOmegaHitByOmega
+	bl SaXOmegaHitByOmega
 	b _0801BB76
 _0801BB6E:
-	bl SA_XOmegaRevertingToXInit
+	bl SaXOmegaRevertingToXInit
 _0801BB72:
-	bl SA_XOmegaRevertingToX
+	bl SaXOmegaRevertingToX
 _0801BB76:
 	ldr r0, _0801BB88 @ =gCurrentSprite
 	ldrb r0, [r0, #0x1d]
@@ -13590,13 +13590,13 @@ _0801BB76:
 _0801BB88: .4byte gCurrentSprite
 _0801BB8C: .4byte gSaXData
 _0801BB90:
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 _0801BB94:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XTro2WalkingCheckCollisions
-SA_XTro2WalkingCheckCollisions: @ 0x0801BB98
+	thumb_func_start SaXTro2WalkingCheckCollisions
+SaXTro2WalkingCheckCollisions: @ 0x0801BB98
 	push {r4, r5, r6, r7, lr}
 	ldr r4, _0801BBD4 @ =gCurrentSprite
 	adds r6, r4, #0
@@ -13868,8 +13868,8 @@ _0801BDAC:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start SA_XTro2RunningCheckCollisions
-SA_XTro2RunningCheckCollisions: @ 0x0801BDB4
+	thumb_func_start SaXTro2RunningCheckCollisions
+SaXTro2RunningCheckCollisions: @ 0x0801BDB4
 	push {r4, r5, r6, lr}
 	ldr r4, _0801BDF0 @ =gCurrentSprite
 	adds r6, r4, #0
@@ -14279,19 +14279,19 @@ _0801C0E2:
 	pop {r0}
 	bx r0
 
-	thumb_func_start SA_XTro2Init
-SA_XTro2Init: @ 0x0801C0E8
+	thumb_func_start SaXTro2Init
+SaXTro2Init: @ 0x0801C0E8
 	push {r4, lr}
 	bl EventCheckOn_NavAfterYakuza
 	cmp r0, #0
 	beq _0801C120
-	bl SA_XInit
+	bl SaXInit
 	ldr r4, _0801C118 @ =gCurrentSprite
 	ldrh r1, [r4]
 	ldr r0, _0801C11C @ =0x0000FDFF
 	ands r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	adds r1, r4, #0
 	adds r1, #0x25
 	movs r0, #2
@@ -14299,7 +14299,7 @@ SA_XTro2Init: @ 0x0801C0E8
 	adds r4, #0x24
 	movs r0, #1
 	strb r0, [r4]
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801C1B2
 	.align 2, 0
 _0801C118: .4byte gCurrentSprite
@@ -14315,7 +14315,7 @@ _0801C120:
 	strh r0, [r4, #2]
 	ldrh r0, [r1]
 	strh r0, [r4, #4]
-	bl SA_XInit
+	bl SaXInit
 	ldrh r1, [r4]
 	movs r0, #0x80
 	lsls r0, r0, #2
@@ -14356,7 +14356,7 @@ _0801C158:
 	movs r0, #0xc8
 	strb r0, [r1]
 	movs r0, #1
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801C1B2
 	.align 2, 0
 _0801C190: .4byte gCurrentSprite
@@ -14370,7 +14370,7 @@ _0801C198:
 	movs r0, #0x5a
 	strb r0, [r1]
 	movs r0, #0
-	bl SetSA_XPose
+	bl SaXSetPose
 	b _0801C1B2
 _0801C1AE:
 	ldr r0, _0801C1B8 @ =gCurrentSprite
@@ -14382,8 +14382,8 @@ _0801C1B2:
 	.align 2, 0
 _0801C1B8: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2WaitingInDoorDuringChase
-SA_XTro2WaitingInDoorDuringChase: @ 0x0801C1BC
+	thumb_func_start SaXTro2WaitingInDoorDuringChase
+SaXTro2WaitingInDoorDuringChase: @ 0x0801C1BC
 	push {r4, lr}
 	ldr r4, _0801C1F4 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -14394,7 +14394,7 @@ SA_XTro2WaitingInDoorDuringChase: @ 0x0801C1BC
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801C1EC
-	bl SA_XRunningStart
+	bl SaXRunningStart
 	adds r1, r4, #0
 	adds r1, #0x25
 	movs r0, #2
@@ -14415,8 +14415,8 @@ _0801C1EC:
 _0801C1F4: .4byte gCurrentSprite
 _0801C1F8: .4byte 0x0000DFFF
 
-	thumb_func_start SA_XTro2WaitingInDoorAtEnd
-SA_XTro2WaitingInDoorAtEnd: @ 0x0801C1FC
+	thumb_func_start SaXTro2WaitingInDoorAtEnd
+SaXTro2WaitingInDoorAtEnd: @ 0x0801C1FC
 	push {r4, lr}
 	ldr r4, _0801C230 @ =gCurrentSprite
 	adds r1, r4, #0
@@ -14427,7 +14427,7 @@ SA_XTro2WaitingInDoorAtEnd: @ 0x0801C1FC
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801C228
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	adds r1, r4, #0
 	adds r1, #0x25
 	movs r0, #2
@@ -14447,14 +14447,14 @@ _0801C230: .4byte gCurrentSprite
 _0801C234: .4byte 0x0000DFFF
 _0801C238: .4byte 0x0000FBFF
 
-	thumb_func_start SA_XTro2Walking
-SA_XTro2Walking: @ 0x0801C23C
+	thumb_func_start SaXTro2Walking
+SaXTro2Walking: @ 0x0801C23C
 	push {r4, lr}
 	bl unk_15e88
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801C2B2
-	bl SA_XTro2WalkingCheckCollisions
+	bl SaXTro2WalkingCheckCollisions
 	ldr r1, _0801C278 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -14514,8 +14514,8 @@ _0801C2B8: .4byte gSaXVision
 _0801C2BC: .4byte 0x082E6BBC
 _0801C2C0: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2StoppedAtDoorInit
-SA_XTro2StoppedAtDoorInit: @ 0x0801C2C4
+	thumb_func_start SaXTro2StoppedAtDoorInit
+SaXTro2StoppedAtDoorInit: @ 0x0801C2C4
 	push {lr}
 	ldr r2, _0801C2E4 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -14528,15 +14528,15 @@ SA_XTro2StoppedAtDoorInit: @ 0x0801C2C4
 	ldr r0, _0801C2E8 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801C2E4: .4byte gCurrentSprite
 _0801C2E8: .4byte 0x0000FF88
 
-	thumb_func_start SA_XTro2StoppedAtDoor
-SA_XTro2StoppedAtDoor: @ 0x0801C2EC
+	thumb_func_start SaXTro2StoppedAtDoor
+SaXTro2StoppedAtDoor: @ 0x0801C2EC
 	push {r4, r5, lr}
 	bl unk_15e88
 	lsls r0, r0, #0x18
@@ -14596,8 +14596,8 @@ _0801C354:
 _0801C35C: .4byte gCurrentRoom
 _0801C360: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2IdleAfterHearingWeaponInit
-SA_XTro2IdleAfterHearingWeaponInit: @ 0x0801C364
+	thumb_func_start SaXTro2IdleAfterHearingWeaponInit
+SaXTro2IdleAfterHearingWeaponInit: @ 0x0801C364
 	push {lr}
 	ldr r2, _0801C384 @ =gCurrentSprite
 	adds r1, r2, #0
@@ -14610,15 +14610,15 @@ SA_XTro2IdleAfterHearingWeaponInit: @ 0x0801C364
 	ldr r0, _0801C388 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801C384: .4byte gCurrentSprite
 _0801C388: .4byte 0x0000FF88
 
-	thumb_func_start SA_XTro2IdleAfterHearingWeapon
-SA_XTro2IdleAfterHearingWeapon: @ 0x0801C38C
+	thumb_func_start SaXTro2IdleAfterHearingWeapon
+SaXTro2IdleAfterHearingWeapon: @ 0x0801C38C
 	push {lr}
 	ldr r1, _0801C3AC @ =gCurrentSprite
 	adds r2, r1, #0
@@ -14638,8 +14638,8 @@ _0801C3A6:
 	.align 2, 0
 _0801C3AC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2TurningAfterHearingWeaponInit
-SA_XTro2TurningAfterHearingWeaponInit: @ 0x0801C3B0
+	thumb_func_start SaXTro2TurningAfterHearingWeaponInit
+SaXTro2TurningAfterHearingWeaponInit: @ 0x0801C3B0
 	push {lr}
 	ldr r2, _0801C3CC @ =gCurrentSprite
 	adds r1, r2, #0
@@ -14649,15 +14649,15 @@ SA_XTro2TurningAfterHearingWeaponInit: @ 0x0801C3B0
 	ldr r0, _0801C3D0 @ =0x0000FF88
 	strh r0, [r2, #0xa]
 	movs r0, #4
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
 _0801C3CC: .4byte gCurrentSprite
 _0801C3D0: .4byte 0x0000FF88
 
-	thumb_func_start SA_XTro2TurningAfterHearingWeapon
-SA_XTro2TurningAfterHearingWeapon: @ 0x0801C3D4
+	thumb_func_start SaXTro2TurningAfterHearingWeapon
+SaXTro2TurningAfterHearingWeapon: @ 0x0801C3D4
 	push {lr}
 	bl unk_1129c
 	ldr r0, _0801C3EC @ =gPreviousVerticalCollisionCheck
@@ -14688,7 +14688,7 @@ _0801C3F4:
 	adds r1, r3, #0
 	eors r0, r1
 	strh r0, [r2]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 _0801C416:
 	pop {r0}
 	bx r0
@@ -14696,14 +14696,14 @@ _0801C416:
 _0801C41C: .4byte gSaXData
 _0801C420: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2Running
-SA_XTro2Running: @ 0x0801C424
+	thumb_func_start SaXTro2Running
+SaXTro2Running: @ 0x0801C424
 	push {r4, lr}
 	bl unk_15dd4
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801C460
-	bl SA_XTro2RunningCheckCollisions
+	bl SaXTro2RunningCheckCollisions
 	ldr r1, _0801C468 @ =gCurrentSprite
 	adds r0, r1, #0
 	adds r0, #0x24
@@ -14733,8 +14733,8 @@ _0801C460:
 _0801C468: .4byte gCurrentSprite
 _0801C46C: .4byte 0x082E6BCC
 
-	thumb_func_start SA_XTro2TurningDuringChase
-SA_XTro2TurningDuringChase: @ 0x0801C470
+	thumb_func_start SaXTro2TurningDuringChase
+SaXTro2TurningDuringChase: @ 0x0801C470
 	push {r4, lr}
 	bl unk_1129c
 	ldr r0, _0801C488 @ =gPreviousVerticalCollisionCheck
@@ -14761,7 +14761,7 @@ _0801C490:
 	adds r1, r2, #0
 	eors r0, r1
 	strh r0, [r4]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	adds r4, #0x24
 	movs r0, #0x17
 	strb r0, [r4]
@@ -14773,8 +14773,8 @@ _0801C4B0:
 _0801C4B8: .4byte gSaXData
 _0801C4BC: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2IdleBeforeShootingBeamInit
-SA_XTro2IdleBeforeShootingBeamInit: @ 0x0801C4C0
+	thumb_func_start SaXTro2IdleBeforeShootingBeamInit
+SaXTro2IdleBeforeShootingBeamInit: @ 0x0801C4C0
 	push {lr}
 	ldr r2, _0801C500 @ =gCurrentSprite
 	adds r0, r2, #0
@@ -14802,9 +14802,9 @@ _0801C4EA:
 	ldr r0, _0801C508 @ =0x0000FDFF
 	ands r0, r1
 	strh r0, [r2]
-	bl SA_XSetDirection
+	bl SaXSetDirection
 	movs r0, #2
-	bl SetSA_XPose
+	bl SaXSetPose
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -14812,8 +14812,8 @@ _0801C500: .4byte gCurrentSprite
 _0801C504: .4byte gSaXData
 _0801C508: .4byte 0x0000FDFF
 
-	thumb_func_start SA_XTro2IdleBeforeShootingBeam
-SA_XTro2IdleBeforeShootingBeam: @ 0x0801C50C
+	thumb_func_start SaXTro2IdleBeforeShootingBeam
+SaXTro2IdleBeforeShootingBeam: @ 0x0801C50C
 	push {lr}
 	bl unk_1129c
 	ldr r0, _0801C524 @ =gPreviousVerticalCollisionCheck
@@ -14847,8 +14847,8 @@ _0801C544:
 	.align 2, 0
 _0801C548: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2ShootingBeamInit
-SA_XTro2ShootingBeamInit: @ 0x0801C54C
+	thumb_func_start SaXTro2ShootingBeamInit
+SaXTro2ShootingBeamInit: @ 0x0801C54C
 	push {r4, lr}
 	sub sp, #0xc
 	ldr r0, _0801C58C @ =gCurrentSprite
@@ -14923,7 +14923,7 @@ _0801C5DA:
 	movs r0, #0
 	strb r0, [r1, #4]
 	movs r0, #3
-	bl SetSA_XPose
+	bl SaXSetPose
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -14931,8 +14931,8 @@ _0801C5DA:
 	.align 2, 0
 _0801C5F0: .4byte gSaXData
 
-	thumb_func_start SA_XTro2ShootingBeam
-SA_XTro2ShootingBeam: @ 0x0801C5F4
+	thumb_func_start SaXTro2ShootingBeam
+SaXTro2ShootingBeam: @ 0x0801C5F4
 	push {lr}
 	bl unk_1129c
 	ldr r0, _0801C60C @ =gPreviousVerticalCollisionCheck
@@ -14985,16 +14985,16 @@ _0801C658:
 	.align 2, 0
 _0801C65C: .4byte gCurrentSprite
 
-	thumb_func_start SA_XTro2
-SA_XTro2: @ 0x0801C660
+	thumb_func_start SaXTro2
+SaXTro2: @ 0x0801C660
 	push {lr}
-	bl SA_XUpdateFreezeTimer
+	bl SaXUpdateFreezeTimer
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801C66E
 	b _0801C8CA
 _0801C66E:
-	bl SA_XSeeAndLocateSamus
+	bl SaXSeeAndLocateSamus
 	ldr r0, _0801C688 @ =gCurrentSprite
 	adds r0, #0x24
 	ldrb r0, [r0]
@@ -15091,99 +15091,99 @@ _0801C690: @ jump table
 	.4byte _0801C7F2 @ case 77
 	.4byte _0801C7F6 @ case 78
 _0801C7CC:
-	bl SA_XTro2Init
+	bl SaXTro2Init
 	b _0801C888
 _0801C7D2:
-	bl SA_XWalkingInit
+	bl SaXWalkingInit
 	b _0801C888
 _0801C7D8:
-	bl SA_XTro2Walking
+	bl SaXTro2Walking
 	b _0801C888
 _0801C7DE:
-	bl SA_XTro2StoppedAtDoorInit
+	bl SaXTro2StoppedAtDoorInit
 _0801C7E2:
-	bl SA_XTro2StoppedAtDoor
+	bl SaXTro2StoppedAtDoor
 	b _0801C888
 _0801C7E8:
-	bl SA_XTro2IdleAfterHearingWeaponInit
+	bl SaXTro2IdleAfterHearingWeaponInit
 _0801C7EC:
-	bl SA_XTro2IdleAfterHearingWeapon
+	bl SaXTro2IdleAfterHearingWeapon
 	b _0801C888
 _0801C7F2:
-	bl SA_XTro2TurningAfterHearingWeaponInit
+	bl SaXTro2TurningAfterHearingWeaponInit
 _0801C7F6:
-	bl SA_XTro2TurningAfterHearingWeapon
+	bl SaXTro2TurningAfterHearingWeapon
 	b _0801C888
 _0801C7FC:
-	bl SA_XTro2WaitingInDoorDuringChase
+	bl SaXTro2WaitingInDoorDuringChase
 	b _0801C888
 _0801C802:
-	bl SA_XTro2WaitingInDoorAtEnd
+	bl SaXTro2WaitingInDoorAtEnd
 	b _0801C888
 _0801C808:
-	bl SA_XRunningStart
+	bl SaXRunningStart
 _0801C80C:
-	bl SA_XTro2Running
+	bl SaXTro2Running
 	b _0801C888
 _0801C812:
-	bl SA_XTurningChaseStartInit
+	bl SaXTurningChaseStartInit
 _0801C816:
-	bl SA_XTro2TurningDuringChase
+	bl SaXTro2TurningDuringChase
 	b _0801C888
 _0801C81C:
-	bl SA_XTro2IdleBeforeShootingBeamInit
+	bl SaXTro2IdleBeforeShootingBeamInit
 _0801C820:
-	bl SA_XTro2IdleBeforeShootingBeam
+	bl SaXTro2IdleBeforeShootingBeam
 	b _0801C888
 _0801C826:
-	bl SA_XTro2ShootingBeamInit
+	bl SaXTro2ShootingBeamInit
 _0801C82A:
-	bl SA_XTro2ShootingBeam
+	bl SaXTro2ShootingBeam
 	b _0801C888
 _0801C830:
-	bl SA_XTurningInit
+	bl SaXTurningInit
 _0801C834:
-	bl SA_XTurning
+	bl SaXTurning
 	b _0801C888
 _0801C83A:
-	bl SA_XFallingInit
+	bl SaXFallingInit
 _0801C83E:
-	bl SA_XFalling
+	bl SaXFalling
 	b _0801C888
 _0801C844:
-	bl SA_XStandingInit
+	bl SaXStandingInit
 _0801C848:
-	bl SA_XStanding
+	bl SaXStanding
 	b _0801C888
 _0801C84E:
-	bl SA_XDelayBeforeShootingBeamInit
+	bl SaXDelayBeforeShootingBeamInit
 _0801C852:
-	bl SA_XDelayBeforeShootingBeam
+	bl SaXDelayBeforeShootingBeam
 	b _0801C888
 _0801C858:
-	bl SA_XShootingBeamInit
+	bl SaXShootingBeamInit
 _0801C85C:
-	bl SA_XShootingBeam
+	bl SaXShootingBeam
 	b _0801C888
 _0801C862:
-	bl SA_XMidAirInit
+	bl SaXMidAirInit
 _0801C866:
-	bl SA_XMidAir
+	bl SaXMidAir
 	b _0801C888
 _0801C86C:
-	bl SA_XMorphingInit
+	bl SaXMorphingInit
 _0801C870:
-	bl SA_XMorphing
+	bl SaXMorphing
 	b _0801C888
 _0801C876:
-	bl SA_XRollingInit
+	bl SaXRollingInit
 _0801C87A:
-	bl SA_XRolling
+	bl SaXRolling
 	b _0801C888
 _0801C880:
-	bl SA_XUnmorphingInit
+	bl SaXUnmorphingInit
 _0801C884:
-	bl SA_XUnmorphing
+	bl SaXUnmorphing
 _0801C888:
 	ldr r0, _0801C89C @ =gSaXData
 	ldrb r0, [r0, #1]
@@ -15206,7 +15206,7 @@ _0801C8A4:
 	ands r1, r2
 _0801C8AE:
 	strb r1, [r0]
-	bl SA_XUpdateGraphics
+	bl SaXUpdateGraphics
 	ldr r0, _0801C8D0 @ =gCurrentSprite
 	ldrh r1, [r0]
 	movs r0, #0x80
