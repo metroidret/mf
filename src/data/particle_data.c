@@ -3299,13 +3299,13 @@ static const u16 sOam_3ebd40[OAM_DATA_SIZE(3)] = {
     OAM_ENTRY(-38, 22, OAM_DIMS_16x16, OAM_NO_FLIP, 398, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame0[OAM_DATA_SIZE(2)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame0[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-12, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 400, 3, 0),
     OAM_ENTRY(-4, -8, OAM_DIMS_16x16, OAM_X_FLIP, 400, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame1[OAM_DATA_SIZE(8)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame1[OAM_DATA_SIZE(8)] = {
     8,
     OAM_ENTRY(-12, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 402, 3, 0),
     OAM_ENTRY(-24, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 400, 3, 0),
@@ -3317,7 +3317,7 @@ static const u16 sParticleOam_SudoScrewKilled_Frame1[OAM_DATA_SIZE(8)] = {
     OAM_ENTRY(0, 0, OAM_DIMS_16x16, OAM_XY_FLIP, 262, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame2[OAM_DATA_SIZE(10)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame2[OAM_DATA_SIZE(10)] = {
     10,
     OAM_ENTRY(-12, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 404, 3, 0),
     OAM_ENTRY(-24, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 402, 3, 0),
@@ -3331,7 +3331,7 @@ static const u16 sParticleOam_SudoScrewKilled_Frame2[OAM_DATA_SIZE(10)] = {
     OAM_ENTRY(0, 0, OAM_DIMS_16x16, OAM_XY_FLIP, 264, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame3[OAM_DATA_SIZE(10)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame3[OAM_DATA_SIZE(10)] = {
     10,
     OAM_ENTRY(-12, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 406, 3, 0),
     OAM_ENTRY(-24, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 404, 3, 0),
@@ -3345,7 +3345,7 @@ static const u16 sParticleOam_SudoScrewKilled_Frame3[OAM_DATA_SIZE(10)] = {
     OAM_ENTRY(-16, 0, OAM_DIMS_16x16, OAM_Y_FLIP, 266, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame4[OAM_DATA_SIZE(14)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame4[OAM_DATA_SIZE(14)] = {
     14,
     OAM_ENTRY(-20, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 406, 3, 0),
     OAM_ENTRY(-44, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 404, 3, 0),
@@ -3363,7 +3363,7 @@ static const u16 sParticleOam_SudoScrewKilled_Frame4[OAM_DATA_SIZE(14)] = {
     OAM_ENTRY(0, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 392, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame5[OAM_DATA_SIZE(4)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame5[OAM_DATA_SIZE(4)] = {
     4,
     OAM_ENTRY(-45, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 406, 3, 0),
     OAM_ENTRY(29, -8, OAM_DIMS_16x16, OAM_X_FLIP, 406, 3, 0),
@@ -3371,13 +3371,13 @@ static const u16 sParticleOam_SudoScrewKilled_Frame5[OAM_DATA_SIZE(4)] = {
     OAM_ENTRY(4, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 394, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame6[OAM_DATA_SIZE(2)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame6[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 396, 3, 0),
     OAM_ENTRY(-24, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 396, 3, 0),
 };
 
-static const u16 sParticleOam_SudoScrewKilled_Frame7[OAM_DATA_SIZE(2)] = {
+static const u16 sParticleOam_PseudoScrewKilled_Frame7[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-28, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 398, 3, 0),
     OAM_ENTRY(12, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 398, 3, 0),
@@ -4043,37 +4043,37 @@ const struct FrameData sParticleOam_SpeedboosterKilled[9] = {
     [8] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sParticleOam_SudoScrewKilled[9] = {
+const struct FrameData sParticleOam_PseudoScrewKilled[9] = {
     [0] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame0,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame0,
         .timer = 1
     },
     [1] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame1,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame1,
         .timer = 1
     },
     [2] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame2,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame2,
         .timer = 2
     },
     [3] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame3,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame3,
         .timer = 2
     },
     [4] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame4,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame4,
         .timer = 3
     },
     [5] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame5,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame5,
         .timer = 3
     },
     [6] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame6,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame6,
         .timer = 4
     },
     [7] = {
-        .pFrame = sParticleOam_SudoScrewKilled_Frame7,
+        .pFrame = sParticleOam_PseudoScrewKilled_Frame7,
         .timer = 4
     },
     [8] = FRAME_DATA_TERMINATOR
@@ -8184,4 +8184,4 @@ const struct FrameData sParticleOam_ChargingMissileCharged[4] = {
     [3] = FRAME_DATA_TERMINATOR
 };
 
-static const u8 sBlob_3eed78_590998[] = INCBIN_U8("data/Blob_3eed78_590998.bin");
+static const u8 sBlob_3eed78_58b3cc[] = INCBIN_U8("data/Blob_3eed78_58b3cc.bin");

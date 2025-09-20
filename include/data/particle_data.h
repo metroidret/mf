@@ -51,7 +51,7 @@ extern const struct FrameData sParticleOam_EnterOrExitWaterBig[9];
 extern const struct FrameData sParticleOam_SpriteEnterOrExitWater[11];
 extern const struct FrameData sParticleOam_OutwardIceExplosion[9];
 extern const struct FrameData sParticleOam_SpeedboosterKilled[9];
-extern const struct FrameData sParticleOam_SudoScrewKilled[9];
+extern const struct FrameData sParticleOam_PseudoScrewKilled[9];
 extern const struct FrameData sParticleOam_OutwardSmoke[9];
 
 extern const struct FrameData sSamusEnvironmentalEffectOam_3ecba4[6];

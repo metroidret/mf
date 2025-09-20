@@ -34,7 +34,7 @@ void ProjectileBringSpriteToPowerBombCenter(u8 spriteSlot);
 void ProjectilePowerBombHitSprite(u8 spriteSlot);
 void ProjectileContactDamageHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition);
 u8 ProjecileDealDamage(u8 spriteSlot, u16 damage);
-void ProjectileSudoScrewHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition);
+void ProjectilePseudoScrewHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition);
 u8 ProjectileIceMissileDealDamage(u8 spriteSlot, u8 projectileSlot, u16 damage);
 u8 ProjectileDiffusionFlakeDealDamage(u8 spriteSlot, u8 projectileSlot);
 u8 ProjectileIceBeamDealDamage(u8 spriteSlot, u8 projectileSlot, u16 damage);

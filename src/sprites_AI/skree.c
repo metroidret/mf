@@ -34,7 +34,7 @@ void SkreeInit(void)
 {
     SpriteUtilTrySetAbsorbXFlag();
 
-    if (gCurrentSprite.properties & SP_CAN_ABSORB_X && !(gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_2000))
+    if (gCurrentSprite.properties & SP_CAN_ABSORB_X && !(gCurrentSprite.status & SPRITE_STATUS_HIDDEN))
     {
         gCurrentSprite.status = 0;
         return;
@@ -88,7 +88,7 @@ void SkreeIdleInit(void)
  */
 void SkreeDetectSamus(void)
 {
-    if (gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_2000)
+    if (gCurrentSprite.status & SPRITE_STATUS_HIDDEN)
         return;
 
     if (gSamusData.yPosition <= gCurrentSprite.yPosition + SKREE_Y_RANGE)
@@ -116,7 +116,7 @@ void SkreeWarningInit(void)
  */
 void SkreeWarning(void)
 {
-    if (SpriteUtilCheckNearEndOfCurrentSpriteAnimation())
+    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
         gCurrentSprite.pose = SKREE_GOING_DOWN_INIT;
 }
 

@@ -39,13 +39,13 @@ void HalzynInit(void)
 
     if (gCurrentSprite.properties & SP_CAN_ABSORB_X)
     {
-        if (!(gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_2000))
+        if (!(gCurrentSprite.status & SPRITE_STATUS_HIDDEN))
         {
             gCurrentSprite.status = 0;
             return;
         }
 
-        gCurrentSprite.work5 = 0x2;
+        gCurrentSprite.numberOfXToForm = 2;
 
         gCurrentSprite.hitboxTop = -BLOCK_SIZE;
         gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE;
@@ -108,7 +108,7 @@ void HalzynSpawningFromX(void)
     {
         gCurrentSprite.pose = SPRITE_POSE_IDLE;
 
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
         gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
     }
 }
@@ -232,7 +232,7 @@ void HalzynSwinging(void)
             gCurrentSprite.work4 = 0;
     }
 
-    if (gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_2000)
+    if (gCurrentSprite.status & SPRITE_STATUS_HIDDEN)
         return;
 
     if (gSamusData.yPosition > gCurrentSprite.yPosition + (BLOCK_SIZE * 3 + QUARTER_BLOCK_SIZE / 2))
@@ -368,7 +368,7 @@ void HalzynFlyingUp(void)
     {
         gCurrentSprite.yPosition -= PIXEL_SIZE / 2;
     }
-    else if (SpriteUtilCheckNearEndOfCurrentSpriteAnimation())
+    else if (SpriteUtilCheckNearEndCurrentSpriteAnim())
     {
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
     }
@@ -437,11 +437,11 @@ void HalzynWingInit(void)
 
     ramSlot = gCurrentSprite.primarySpriteRamSlot;
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_UNKNOWN_2000)
-        gCurrentSprite.status |= SPRITE_STATUS_UNKNOWN_2000;
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_HIDDEN)
+        gCurrentSprite.status |= SPRITE_STATUS_HIDDEN;
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_ENABLE_MOSAIC)
-        gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_MOSAIC)
+        gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
 
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
 
@@ -469,10 +469,10 @@ void HalzynWingIdle(void)
 
     ramSlot = gCurrentSprite.primarySpriteRamSlot;
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_UNKNOWN_2000)
-        gCurrentSprite.status |= SPRITE_STATUS_UNKNOWN_2000;
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_HIDDEN)
+        gCurrentSprite.status |= SPRITE_STATUS_HIDDEN;
     else
-        gCurrentSprite.status &= ~SPRITE_STATUS_UNKNOWN_2000;
+        gCurrentSprite.status &= ~SPRITE_STATUS_HIDDEN;
 
     if (gCurrentSprite.health == 0 && gSpriteData[ramSlot].pose < SPRITE_POSE_DYING_INIT)
     {
@@ -485,7 +485,7 @@ void HalzynWingIdle(void)
 
         gCurrentSprite.pose = 0x38;
 
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
         gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
         gCurrentSprite.samusCollision = SSC_NONE;
 
@@ -543,15 +543,15 @@ void HalzynWingIdle(void)
             break;
 
         default:
-            if (gSpriteData[ramSlot].status & SPRITE_STATUS_ENABLE_MOSAIC)
+            if (gSpriteData[ramSlot].status & SPRITE_STATUS_MOSAIC)
             {
                 gCurrentSprite.ignoreSamusCollisionTimer = 1;
-                gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+                gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
                 gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
             }
             else
             {
-                gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+                gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
                 gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
             }
     }

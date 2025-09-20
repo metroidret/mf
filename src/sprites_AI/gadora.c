@@ -265,7 +265,7 @@ void GadoraIdle(void)
     if (gCurrentSprite.work1 == 0)
     {
         // Timer ended, check samus is in front
-        nsfb = SpriteUtilCheckSamusNearSpriteFrontBehindX(BLOCK_SIZE * 2, BLOCK_SIZE * 7, 0);
+        nsfb = SpriteUtilCheckSamusNearSpriteFrontBehind(BLOCK_SIZE * 2, BLOCK_SIZE * 7, 0);
 
         if (nsfb == NSFB_IN_FRONT)
         {
@@ -301,7 +301,7 @@ void GadoraOpeningEyeInit(void)
  */
 void GadoraOpeningEye(void)
 {
-    if (!SpriteUtilCheckEndOfCurrentSpriteAnimation())
+    if (!SpriteUtilCheckEndCurrentSpriteAnim())
         return;
 
     // Determine whether or not to shoot, ~50% chance and didn't already shoot more than 3 beams
@@ -408,7 +408,7 @@ void GadoraShooting(void)
  */
 void GadoraClosingEye(void)
 {
-    if (SpriteUtilCheckNearEndOfCurrentSpriteAnimation())
+    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
@@ -509,13 +509,13 @@ void GadoraEye(void)
         gCurrentSprite.pose = SPRITE_POSE_IDLE;
     }
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_UNKNOWN_2000)
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_HIDDEN)
     {
-        gCurrentSprite.status |= SPRITE_STATUS_UNKNOWN_2000;
+        gCurrentSprite.status |= SPRITE_STATUS_HIDDEN;
         return;
     }
 
-    gCurrentSprite.status &= ~SPRITE_STATUS_UNKNOWN_2000;
+    gCurrentSprite.status &= ~SPRITE_STATUS_HIDDEN;
     gSpriteData[ramSlot].paletteRow = gCurrentSprite.paletteRow;
 
     // Check eye is dead
@@ -596,13 +596,13 @@ void GadoraRoots(void)
         gCurrentSprite.pOam = sGadoraRootsOam_Idle;
     }
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_UNKNOWN_2000)
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_HIDDEN)
     {
-        gCurrentSprite.status |= SPRITE_STATUS_UNKNOWN_2000;
+        gCurrentSprite.status |= SPRITE_STATUS_HIDDEN;
         return;
     }
 
-    gCurrentSprite.status &= ~SPRITE_STATUS_UNKNOWN_2000;
+    gCurrentSprite.status &= ~SPRITE_STATUS_HIDDEN;
     gSpriteData[ramSlot].paletteRow = gCurrentSprite.paletteRow;
 
     // Sync oam with main gadora sprite

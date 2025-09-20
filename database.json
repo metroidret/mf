@@ -88,8 +88,8 @@
     "size": 1
   },
   {
-    "path": "Blob_3eed78_590998.bin",
-    "count": 1711136,
+    "path": "Blob_3eed78_58b3cc.bin",
+    "count": 1689172,
     "addr": {
       "us": 4124024
     },
@@ -254,6 +254,262 @@
       "us": 5860876
     },
     "size": 2
+  },
+  {
+    "path": "projectiles/normal_beam.pal",
+    "count": 32,
+    "addr": {
+      "us": 5813348
+    },
+    "size": 1
+  },
+  {
+    "path": "projectiles/charge_beam.pal",
+    "count": 32,
+    "addr": {
+      "us": 5813380
+    },
+    "size": 1
+  },
+  {
+    "path": "projectiles/wide_beam.pal",
+    "count": 32,
+    "addr": {
+      "us": 5813412
+    },
+    "size": 1
+  },
+  {
+    "path": "projectiles/plasma_beam.pal",
+    "count": 32,
+    "addr": {
+      "us": 5813444
+    },
+    "size": 1
+  },
+  {
+    "path": "projectiles/wave_beam.pal",
+    "count": 32,
+    "addr": {
+      "us": 5813476
+    },
+    "size": 1
+  },
+  {
+    "path": "projectiles/ice_beam.pal",
+    "count": 32,
+    "addr": {
+      "us": 5813508
+    },
+    "size": 1
+  },
+  {
+    "path": "projectiles/normal_beam_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5813540
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/normal_beam_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5814180
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/charge_beam_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5814820
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/charge_beam_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5815460
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/wide_beam_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5816100
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/wide_beam_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5816740
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/plasma_beam_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5817380
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/plasma_beam_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5818020
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/wave_beam_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5818660
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/wave_beam_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5819300
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/ice_beam_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5819940
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/ice_beam_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5820580
+    },
+    "size": 20
+  },
+  {
+    "path": "projectiles/normal_missile_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821220
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/normal_missile_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821348
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/super_missile_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821476
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/super_missile_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821604
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/ice_missile_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821732
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/ice_missile_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821860
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/diffusion_missile_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5821988
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/diffusion_missile_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5822116
+    },
+    "size": 4
+  },
+  {
+    "path": "projectiles/flare_horizontal_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5827448
+    },
+    "size": 40
+  },
+  {
+    "path": "projectiles/flare_horizontal_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5828728
+    },
+    "size": 40
+  },
+  {
+    "path": "projectiles/flare_diagonal_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5830008
+    },
+    "size": 40
+  },
+  {
+    "path": "projectiles/flare_diagonal_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5831288
+    },
+    "size": 40
+  },
+  {
+    "path": "projectiles/flare_vertical_top.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5832568
+    },
+    "size": 40
+  },
+  {
+    "path": "projectiles/flare_vertical_bottom.gfx",
+    "count": 32,
+    "addr": {
+      "us": 5833848
+    },
+    "size": 40
   },
   {
     "path": "sa_x/28ff60.gfx",

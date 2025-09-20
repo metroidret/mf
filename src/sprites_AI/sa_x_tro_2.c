@@ -29,7 +29,7 @@ void SaXTro2CheckCollisionWalking(void)
 {
     gCurrentSprite.work2 = DIAG_AIM_NONE;
 
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -211,7 +211,7 @@ void SaXTro2CheckCollisionRunning(void)
 {
     gCurrentSprite.work2 = DIAG_AIM_NONE;
 
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -486,7 +486,7 @@ void SaXTro2Init(void)
             gCurrentSprite.xPosition += (BLOCK_SIZE + QUARTER_BLOCK_SIZE / 2);
 
         gCurrentSprite.samusCollision = SSC_NONE;
-        gCurrentSprite.status |= SPRITE_STATUS_UNKNOWN_2000;
+        gCurrentSprite.status |= SPRITE_STATUS_HIDDEN;
 
         if (gCurrentRoom == 59)
         {
@@ -519,7 +519,7 @@ void SaXTro2WaitingInDoorDuringChase(void)
         SaXRunningInit();
         gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
 
-        gCurrentSprite.status &= ~SPRITE_STATUS_UNKNOWN_2000;
+        gCurrentSprite.status &= ~SPRITE_STATUS_HIDDEN;
         gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
     }
 }
@@ -536,7 +536,7 @@ void SaXTro2WaitingInDoorEnd(void)
         SaXWalkingInit();
         gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
 
-        gCurrentSprite.status &= ~SPRITE_STATUS_UNKNOWN_2000;
+        gCurrentSprite.status &= ~SPRITE_STATUS_HIDDEN;
         gCurrentSprite.status &= ~SPRITE_STATUS_SAMUS_DETECTED;
     }
 }
@@ -665,7 +665,7 @@ void SaXTro2TurningAfterHearingWeaponInit(void)
  */
 void SaXTro2TurningAfterHearingWeapon(void)
 {
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -707,7 +707,7 @@ void SaXTro2Running(void)
  */
 void SaXTro2TurningAroundChase(void)
 {
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -751,7 +751,7 @@ void SaXTro2DelayBeforeShootingBeamInit(void)
  */
 void SaXTro2DelayBeforeShootingBeam(void)
 {
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -798,7 +798,7 @@ void SaXTro2ShootingBeamInit(void)
  */
 void SaXTro2ShootingBeam(void)
 {
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {

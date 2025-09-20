@@ -3887,8 +3887,8 @@ _08002886:
 _0800288C: .4byte 0x080A8CDC
 _08002890: .4byte 0x080A8D3C
 
-	thumb_func_start unk_2894
-unk_2894: @ 0x08002894
+	thumb_func_start SoundPlay_2894
+SoundPlay_2894: @ 0x08002894
 	push {lr}
 	lsls r0, r0, #0x10
 	ldr r3, _080028D0 @ =0x080A8CDC

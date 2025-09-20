@@ -619,7 +619,7 @@ u8 unk_15f54(void)
 void unk_1605c(void)
 {
     gCurrentSprite.work2 = 0;
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -927,7 +927,7 @@ void SaXStanding(void)
 {
     u32 nslr;
 
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1289,7 +1289,7 @@ void SaXDelayBeforeShootingBeam(void)
 {
     u32 nslr;
 
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1403,7 +1403,7 @@ void SaXShootingBeam(void)
 {
     u32 nslr;
 
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1557,7 +1557,7 @@ void SaXShootingMissileInit(void)
  */
 void SaXShootingMissile(void)
 {
-    unk_1129c();
+    SpriteUtilAlignYPosOnSlope();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -2525,7 +2525,7 @@ void SaXUpdateGraphics(void)
     if (newPose != SA_X_POSE_NONE)
         SaXSetPose(newPose);
 
-    if (gCurrentSprite.status & SPRITE_STATUS_EXISTS && !(gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_2000))
+    if (gCurrentSprite.status & SPRITE_STATUS_EXISTS && !(gCurrentSprite.status & SPRITE_STATUS_HIDDEN))
     {
         if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
             gSaXData.screenFlag = SA_X_SCREEN_FLAG_ON_SCREEN;

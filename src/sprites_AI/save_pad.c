@@ -197,7 +197,7 @@ void SavePlatformSinking(void)
     {
         if (gCurrentSprite.yPosition == gSpriteData[ramSlot].yPosition - HALF_BLOCK_SIZE)
         {
-            if (!SpriteUtilCheckMorphed())
+            if (!SpriteUtilCheckSamusMorphed())
             {
                 if (gSamusData.invincibilityTimer != 0)
                     gSamusData.invincibilityTimer = 0;
@@ -420,7 +420,7 @@ void SavePadHologramInit(void)
  */
 void SavePadHologramOpening(void)
 {
-    if (SpriteUtilCheckEndOfCurrentSpriteAnimation())
+    if (SpriteUtilCheckEndCurrentSpriteAnim())
     {
         gCurrentSprite.pOam = sSavePadHologramOam_Flashing;
         gCurrentSprite.animationDurationCounter = 0;
@@ -452,7 +452,7 @@ void SavePadHologramFlashing(void)
  */
 void SavePadHologramClosing(void)
 {
-    if (SpriteUtilCheckEndOfCurrentSpriteAnimation())
+    if (SpriteUtilCheckEndCurrentSpriteAnim())
         gCurrentSprite.status = 0;
 }
 

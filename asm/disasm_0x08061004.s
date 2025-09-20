@@ -871,7 +871,7 @@ _0806164E:
 	adds r0, r6, #0
 	adds r1, r5, #0
 	adds r2, r4, #0
-	bl RefillSamus
+	bl SpriteUtilRefillSamus
 	ldr r1, _08061670 @ =0x030012F0
 	movs r0, #0x30
 	strb r0, [r1, #3]
@@ -1096,7 +1096,7 @@ _080617F8:
 	ldrb r0, [r0]
 	cmp r0, #4
 	bls _0806180E
-	bl CheckEnergyFullAndMissilesNotFull
+	bl SpriteUtilCheckEnergyFullAndMissilesNotFull
 	cmp r0, #0
 	bne _0806180E
 	b _08061904
@@ -1178,7 +1178,7 @@ _08061898:
 	blo _080618B6
 	cmp r4, r3
 	bls _080618B6
-	bl CheckMissilesFullAndEnergyNotFull
+	bl SpriteUtilCheckMissilesFullAndEnergyNotFull
 	cmp r0, #0
 	bne _080618E0
 	b _080618CA
@@ -1191,7 +1191,7 @@ _080618B6:
 	blo _0806192C
 	cmp r4, #0
 	beq _0806192C
-	bl CheckEnergyFullAndMissilesNotFull
+	bl SpriteUtilCheckEnergyFullAndMissilesNotFull
 	cmp r0, #0
 	beq _080618E0
 _080618CA:
@@ -2860,7 +2860,7 @@ _08062510:
 	adds r0, r0, r2
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
-	bl SpriteUtilCheckMorphed
+	bl SpriteUtilCheckSamusMorphed
 	cmp r0, #0
 	beq _08062534
 	ldr r1, _08062530 @ =gSamusData

@@ -67,7 +67,7 @@ void XParasiteBossFormationGrowingStart(void)
     gCurrentSprite.pose = 0x5D;
 
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
-    gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+    gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
     gCurrentSprite.scaling = Q_8_8(.06f);
 }
@@ -120,10 +120,10 @@ void XParasiteBossFormationTransforming(void)
 
     ramSlot =gCurrentSprite.primarySpriteRamSlot;
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_ENABLE_MOSAIC)
-        gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_MOSAIC)
+        gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
     else
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
 
     if (gSpriteData[ramSlot].pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
@@ -301,7 +301,7 @@ void XParasiteCoreXOrStabilizerForming(void)
     }
     else
     {
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
         gCurrentSprite.pose = 0x5D;
         gCurrentSprite.xParasiteTimer = 300;
     }
@@ -384,7 +384,7 @@ void XParasiteAquaZebesianWaitingToMove(void)
         gCurrentSprite.xPosition += movement;
     }
 
-    if (gCurrentSprite.status & SPRITE_STATUS_ENABLE_MOSAIC)
+    if (gCurrentSprite.status & SPRITE_STATUS_MOSAIC)
     {
         if (--gCurrentSprite.xParasiteTimer != 0)
         {
@@ -402,7 +402,7 @@ void XParasiteAquaZebesianWaitingToMove(void)
         }
         else
         {
-            gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+            gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
             gCurrentSprite.xParasiteTimer = 60;
         }
     }

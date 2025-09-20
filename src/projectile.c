@@ -191,7 +191,7 @@ void ProjectileDrawAll_True(void)
 
     for (i = 0; i < MAX_AMOUNT_OF_PROJECTILES; i++)
     {
-        if ((gProjectileData[i].status & PROJ_STATUS_DRAW_CHECK) != (PROJ_STATUS_DRAW_COND | PROJ_STATUS_UNKNOWN_80))
+        if ((gProjectileData[i].status & PROJ_STATUS_DRAW_CHECK) != (PROJ_STATUS_DRAW_COND | PROJ_STATUS_LOW_OAM_PRIORITY))
             continue;
 
         gCurrentProjectile = gProjectileData[i];
@@ -243,7 +243,7 @@ void ProjectileDraw(s32 projectileSlot)
         palette = gCurrentProjectile.palette;
 
         bgPriority = (gIoRegisters.bg1Cnt & 3);
-        if (!(gCurrentProjectile.status & PROJ_STATUS_HIGH_PRIORITY))
+        if (!(gCurrentProjectile.status & PROJ_STATUS_ABOVE_BG1))
             bgPriority++;
 
         for (i = 0; i < partCount; i++)
@@ -490,8 +490,8 @@ void ProjectileCheckHittingSprite(void)
         o1Left = o1X + gCurrentPowerBomb.hitboxLeft;
         o1Right = o1X + gCurrentPowerBomb.hitboxRight;
 
-        spriteCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_UNKNOWN_2000 | SPRITE_STATUS_IGNORE_PROJECTILES;
-        xCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_UNKNOWN_2000;
+        spriteCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_HIDDEN | SPRITE_STATUS_IGNORE_PROJECTILES;
+        xCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_HIDDEN;
 
         for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
         {
@@ -551,7 +551,7 @@ void ProjectileCheckHittingSprite(void)
 
     if (SpriteUtilCheckDamagingPose())
         contactDamage = 0x1;
-    else if (SpriteUtilCheckSudoScrew(0x80))
+    else if (SpriteUtilCheckPseudoScrew(0x80))
         contactDamage = 0x2;
 
     if (contactDamage != 0x0)
@@ -564,7 +564,7 @@ void ProjectileCheckHittingSprite(void)
         o1Left = o1X + gSamusData.drawDistanceLeft;
         o1Right = o1X + gSamusData.drawDistanceRight;
 
-        spriteCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_UNKNOWN_2000 | SPRITE_STATUS_IGNORE_PROJECTILES;
+        spriteCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_HIDDEN | SPRITE_STATUS_IGNORE_PROJECTILES;
 
         for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
         {
@@ -587,12 +587,12 @@ void ProjectileCheckHittingSprite(void)
                 if (contactDamage == 0x1)
                     ProjectileContactDamageHitSprite(i, o2Top + (o2Bottom - o2Top) / 2, o2Left + (o2Right - o2Left) / 2);
                 else if (contactDamage == 0x2)
-                    ProjectileSudoScrewHitSprite(i, o2Top + (o2Bottom - o2Top) / 2, o2Left + (o2Right - o2Left) / 2);
+                    ProjectilePseudoScrewHitSprite(i, o2Top + (o2Bottom - o2Top) / 2, o2Left + (o2Right - o2Left) / 2);
             }
         }
     }
 
-    spriteCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_UNKNOWN_2000 | SPRITE_STATUS_IGNORE_PROJECTILES;
+    spriteCheck = SPRITE_STATUS_EXISTS | SPRITE_STATUS_HIDDEN | SPRITE_STATUS_IGNORE_PROJECTILES;
 
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
     {
@@ -1168,13 +1168,13 @@ u8 ProjecileDealDamage(u8 spriteSlot, u16 damage)
 }
 
 /**
- * @brief 836c4 | c4 | Handles a sprite getting hit by a sudo screw
+ * @brief 836c4 | c4 | Handles a sprite getting hit by a pseudo screw
  * 
  * @param spriteSlot Sprite slot
  * @param yPosition Y position
  * @param xPosition X position
  */
-void ProjectileSudoScrewHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition)
+void ProjectilePseudoScrewHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition)
 {
     u16 damage;
     u8 flags;
@@ -1182,7 +1182,7 @@ void ProjectileSudoScrewHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition)
     if (gSpriteData[spriteSlot].properties & (SP_SOLID_FOR_PROJECTILES | SP_IMMUNE_TO_PROJECTILES))
         return;
 
-    if (!(ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS)))
+    if (!(ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS)))
         return;
 
     gSamusData.chargeBeamCounter = 0;
@@ -1400,7 +1400,7 @@ u8 ProjectileIceBeamDealDamage(u8 spriteSlot, u8 projectileSlot, u16 damage)
 
     weakness = ProjectileGetSpriteWeakness(spriteSlot);
 
-    if (weakness & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    if (weakness & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         if (gSpriteData[spriteSlot].health > damage)
         {
@@ -1496,7 +1496,7 @@ void ProjectileNormalBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yPositi
     {
         ParticleSet(yPosition, xPosition, 0x7);
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_AND_BOMBS)
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_BOMBS)
     {
         isft = ProjecileDealDamage(spriteSlot, 2);
 
@@ -1537,7 +1537,7 @@ void ProjectileChargedNormalBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 
     {
         ParticleSet(yPosition, xPosition, 0x7);
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         isft = ProjecileDealDamage(spriteSlot, 10);
 
@@ -1578,7 +1578,7 @@ void ProjectileChargeBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yPositi
     {
         ParticleSet(yPosition, xPosition, 0x7);
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_AND_BOMBS)
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_BOMBS)
     {
         isft = ProjecileDealDamage(spriteSlot, 2);
 
@@ -1625,7 +1625,7 @@ void ProjectileChargedChargeBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 
     {
         ParticleSet(yPosition, xPosition, 0x7);
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         isft = ProjecileDealDamage(spriteSlot, 10);
 
@@ -1672,7 +1672,7 @@ void ProjectileWideBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yPosition
     {
         ParticleSet(yPosition, xPosition, 0x7);
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_AND_BOMBS)
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_BOMBS)
     {
         isft = ProjecileDealDamage(spriteSlot, 3);
 
@@ -1713,7 +1713,7 @@ void ProjectileChargedWideBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yP
     {
         ParticleSet(yPosition, xPosition, 0x7);
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         isft = ProjecileDealDamage(spriteSlot, 15);
 
@@ -1756,7 +1756,7 @@ void ProjectilePlasmaBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yPositi
         ParticleSet(yPosition, xPosition, 0x7);
         gProjectileData[projectileSlot].status = 0;
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_AND_BOMBS)
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_BOMBS)
     {
         isft = ProjecileDealDamage(spriteSlot, 3);
 
@@ -1795,7 +1795,7 @@ void ProjectileChargedPlasmaBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 
         ParticleSet(yPosition, xPosition, 0x7);
         gProjectileData[projectileSlot].status = 0;
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         isft = ProjecileDealDamage(spriteSlot, 9);
 
@@ -1841,7 +1841,7 @@ void ProjectileWaveBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yPosition
     }
     else if (gEquipment.beamStatus & BF_ICE_BEAM)
     {
-        if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_BEAM_AND_BOMBS | SPRITE_WEAKNESS_CAN_BE_FROZEN))
+        if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_BEAM_BOMBS | SPRITE_WEAKNESS_CAN_BE_FROZEN))
         {
             isft = ProjectileIceBeamDealDamage(spriteSlot, projectileSlot, 6);
 
@@ -1856,7 +1856,7 @@ void ProjectileWaveBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yPosition
             ParticleSet(yPosition, xPosition, 0x7);
         }
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_AND_BOMBS)
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_BOMBS)
     {
         isft = ProjecileDealDamage(spriteSlot, 3);
 
@@ -1902,7 +1902,7 @@ void ProjectileChargedWaveBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yP
     }
     else if (gEquipment.beamStatus & BF_ICE_BEAM)
     {
-        if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS | SPRITE_WEAKNESS_CAN_BE_FROZEN))
+        if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS | SPRITE_WEAKNESS_CAN_BE_FROZEN))
         {
             isft = ProjectileIceBeamDealDamage(spriteSlot, projectileSlot, 12);
 
@@ -1917,7 +1917,7 @@ void ProjectileChargedWaveBeamHitSprite(u8 spriteSlot, u8 projectileSlot, u16 yP
             ParticleSet(yPosition, xPosition, 0x7);
         }
     }
-    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    else if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         isft = ProjecileDealDamage(spriteSlot, 9);
 
@@ -1971,7 +1971,7 @@ void ProjectileFlareHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition, u16 s
         return;
     }
 
-    if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_AND_BOMBS))
+    if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
     {
         flags = gEquipment.beamStatus;
         if (flags & BF_WAVE_BEAM)
@@ -2316,7 +2316,7 @@ void ProjectileBombHitSprite(u8 spriteSlot, u16 yPosition, u16 xPosition)
         return;
     }
 
-    if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_AND_BOMBS)
+    if (ProjectileGetSpriteWeakness(spriteSlot) & SPRITE_WEAKNESS_BEAM_BOMBS)
     {
         isft = ProjecileDealDamage(spriteSlot, 8);
 

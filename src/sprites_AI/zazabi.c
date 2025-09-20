@@ -246,7 +246,7 @@ void ZazabiEnableProjectilesToPassThrough(void)
         else if (gProjectileData[i].yPosition < spriteY)
         {
             if (!(gProjectileData[i].status & PROJ_STATUS_CAN_AFFECT_ENVIRONMENT))
-                gProjectileData[i].status |= PROJ_STATUS_UNKNOWN_80;
+                gProjectileData[i].status |= PROJ_STATUS_LOW_OAM_PRIORITY;
         }
     }
 }
@@ -310,7 +310,7 @@ void ZazabiSpawningFromX(void)
     else
     {
         gCurrentSprite.pose = ZAZABI_POSE_IDLE_INIT;
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
     }
 }
 
@@ -511,7 +511,7 @@ void ZazabiIdleInit(void)
  */
 void ZazabiIdle(void)
 {
-    if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+    if (SpriteUtilCheckNearEndSubSprite1Anim())
     {
         gCurrentSprite.work1--;
 
@@ -636,7 +636,7 @@ void ZazabiJumpWarningInit(void)
  */
 void ZazabiJumpWarning(void)
 {
-    if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+    if (SpriteUtilCheckNearEndSubSprite1Anim())
     {
         gCurrentSprite.pose = ZAZABI_POSE_JUMPING_INIT;
 
@@ -1075,7 +1075,7 @@ void ZazabiLandingMouthOpen(void)
     if (gSubSpriteData1.currentAnimationFrame == 1 && gSubSpriteData1.animationDurationCounter == 1 && gSubSpriteData1.health != 40)
         SoundPlay(0x27F);
 
-    if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+    if (SpriteUtilCheckNearEndSubSprite1Anim())
     {
         if (gSamusData.pose == SPOSE_GRABBED_BY_ZAZABI)
         {
@@ -1120,7 +1120,7 @@ void ZazabiLandingInit(void)
  */
 void ZazabiLanding(void)
 {
-    if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+    if (SpriteUtilCheckNearEndSubSprite1Anim())
         gCurrentSprite.pose = ZAZABI_POSE_JUMPING_INIT;
 }
 
@@ -1144,7 +1144,7 @@ void ZazabiEatingSamus1Init(void)
  */
 void ZazabiEatingSamus1(void)
 {
-    SpriteUtilTakeConstantDamage();
+    SpriteUtilTakeConstantDamageFromZazabi();
 
     if (gBossWork0)
     {
@@ -1183,7 +1183,7 @@ void ZazabiEatingSamus2Init(void)
  */
 void ZazabiEatingSamus2(void)
 {
-    SpriteUtilTakeConstantDamage();
+    SpriteUtilTakeConstantDamageFromZazabi();
 
     if (gBossWork0)
     {
@@ -1193,7 +1193,7 @@ void ZazabiEatingSamus2(void)
     }
     else
     {
-        if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+        if (SpriteUtilCheckNearEndSubSprite1Anim())
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_3_INIT;
             SoundPlay(0x281);
@@ -1225,7 +1225,7 @@ void ZazabiEatingSamus3Init(void)
  */
 void ZazabiEatingSamus3(void)
 {
-    SpriteUtilTakeConstantDamage();
+    SpriteUtilTakeConstantDamageFromZazabi();
 
     if (gBossWork0)
     {
@@ -1272,7 +1272,7 @@ void ZazabiEatingSamus4Init(void)
  */
 void ZazabiEatingSamus4(void)
 {
-    SpriteUtilTakeConstantDamage();
+    SpriteUtilTakeConstantDamageFromZazabi();
 
     if (gBossWork0)
     {
@@ -1282,7 +1282,7 @@ void ZazabiEatingSamus4(void)
     }
     else
     {
-        if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+        if (SpriteUtilCheckNearEndSubSprite1Anim())
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_5_INIT;
             SoundPlay(0x281);
@@ -1315,7 +1315,7 @@ void ZazabiEatingSamus5Init(void)
  */
 void ZazabiEatingSamus5(void)
 {
-    SpriteUtilTakeConstantDamage();
+    SpriteUtilTakeConstantDamageFromZazabi();
 
     if (gBossWork0)
     {
@@ -1368,7 +1368,7 @@ void ZazabiSpittingSamus(void)
         gBossWork0 = FALSE;
     }
 
-    if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+    if (SpriteUtilCheckNearEndSubSprite1Anim())
         gCurrentSprite.pose = ZAZABI_POSE_LANDING_AFTER_SPITTING_INIT;
 }
 
@@ -1397,7 +1397,7 @@ void ZazabiLandingAfterSpittingInit(void)
  */
 void ZazabiLandingAfterSpitting(void)
 {
-    if (SpriteUtilCheckNearEndOfSubSpriteData1Animation())
+    if (SpriteUtilCheckNearEndSubSprite1Anim())
         gCurrentSprite.pose = ZAZABI_POSE_IDLE_INIT;
 }
 
@@ -1408,7 +1408,7 @@ void ZazabiLandingAfterSpitting(void)
 void ZazabiDyingInit(void)
 {
     gCurrentSprite.pose = ZAZABI_POSE_DYING;
-    gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+    gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
     gCurrentSprite.health = 1;
     gCurrentSprite.invincibilityStunFlashTimer = 0;
     gCurrentSprite.paletteRow = 0;
@@ -1511,7 +1511,7 @@ void ZazabiPartInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.properties |= SP_IMMUNE_TO_PROJECTILES;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+    gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
 
     gCurrentSprite.pose = 0x2;
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
@@ -1646,19 +1646,19 @@ void ZazabiPartDefault(void)
         case ZAZABI_POSE_DYING:
             gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-            if (gSpriteData[ramSlot].status & SPRITE_STATUS_ENABLE_MOSAIC)
+            if (gSpriteData[ramSlot].status & SPRITE_STATUS_MOSAIC)
             {
-                gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+                gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
             }
             else
             {
-                gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+                gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
             }
             break;
 
         case ZAZABI_POSE_IDLE_INIT:
         case ZAZABI_POSE_IDLE:
-            gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+            gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
 
             if (!(gCurrentSprite.status & SPRITE_STATUS_NOT_DRAWN))
                 gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
@@ -1686,7 +1686,7 @@ void ZazabiPartDefault(void)
             {
                 if (gCurrentSprite.pOam == sZazabiPartOam_MouthOpened)
                 {
-                    gCurrentSprite.samusCollision = SSC_14;
+                    gCurrentSprite.samusCollision = SSC_ZAZABI_CAN_GRAB;
 
                     gCurrentSprite.hitboxTop = -BLOCK_SIZE;
                     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -1846,10 +1846,10 @@ void ZazabiPartMouth(void)
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
     ramSlot = gCurrentSprite.primarySpriteRamSlot;
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_ENABLE_MOSAIC)
-        gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_MOSAIC)
+        gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
     else
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
 
     if (gSpriteData[ramSlot].pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
@@ -1891,7 +1891,7 @@ void ZazabiPartPupil(void)
         case ZAZABI_POSE_IDLE:
             if (gCurrentSprite.pOam == sZazabiPartOam_PupilBlinking)
             {
-                if (SpriteUtilCheckEndOfCurrentSpriteAnimation())
+                if (SpriteUtilCheckEndCurrentSpriteAnim())
                 {
                     gCurrentSprite.pOam = sZazabiPartOam_PupilClosed;
                     gCurrentSprite.animationDurationCounter = 0;

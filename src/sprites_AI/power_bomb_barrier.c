@@ -64,7 +64,7 @@ void PowerBombBarrierInit(void)
 
     if (gCurrentSprite.properties & SP_CAN_ABSORB_X)
     {
-        if (!(gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_2000))
+        if (!(gCurrentSprite.status & SPRITE_STATUS_HIDDEN))
         {
             gCurrentSprite.status = 0;
             return;
@@ -249,17 +249,17 @@ void PowerBombBarrierStem(void)
         case 0x18:
             gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-            if (SpriteUtilCheckEndOfCurrentSpriteAnimation())
+            if (SpriteUtilCheckEndCurrentSpriteAnim())
                 gCurrentSprite.status = 0;
     }
 
-    if (gSpriteData[ramSlot].status & SPRITE_STATUS_ENABLE_MOSAIC)
+    if (gSpriteData[ramSlot].status & SPRITE_STATUS_MOSAIC)
     {
         gCurrentSprite.ignoreSamusCollisionTimer = 1;
-        gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
     }
     else
     {
-        gCurrentSprite.status &= ~SPRITE_STATUS_ENABLE_MOSAIC;
+        gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
     }
 }

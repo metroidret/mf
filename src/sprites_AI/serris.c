@@ -385,7 +385,7 @@ void SerrisInit(void)
     gSerrisSpawnYPosition = gCurrentSprite.yPosition;
     gSerrisSpawnXPosition = gCurrentSprite.xPosition;
 
-    gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_UNKNOWN_8 | SPRITE_STATUS_SAMUS_COLLIDING | SPRITE_STATUS_IGNORE_PROJECTILES;
+    gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_ROTATION_SCALING_WHOLE | SPRITE_STATUS_SAMUS_COLLIDING | SPRITE_STATUS_IGNORE_PROJECTILES;
     
     gCurrentSprite.rotation = 0;
     gCurrentSprite.scaling = Q_8_8(1.f);
@@ -635,7 +635,7 @@ void SerrisTurningIntoXInit(void)
     gCurrentSprite.pose = SERRIS_POSE_TURNING_INTO_X;
 
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.status |= SPRITE_STATUS_ENABLE_MOSAIC;
+    gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
 
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.health = 1;
@@ -691,7 +691,7 @@ void SerrisTurningIntoX(void)
 
         case 0:
             // Turn into speedbooster ability
-            gCurrentSprite.status &= ~SPRITE_STATUS_UNKNOWN_8;
+            gCurrentSprite.status &= ~SPRITE_STATUS_ROTATION_SCALING_WHOLE;
             gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X_INIT;
 
             gCurrentSprite.spriteId = PSPRITE_SPEEDBOOSTER_ABILITY;
@@ -732,7 +732,7 @@ void SerrisPartInit(void)
     switch (gCurrentSprite.roomSlot)
     {
         case SERRIS_PART_HEAD_JOINT:
-            gCurrentSprite.status |= SPRITE_STATUS_UNKNOWN_8 | SPRITE_STATUS_ENABLE_MOSAIC;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_WHOLE | SPRITE_STATUS_MOSAIC;
 
             gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
             gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
@@ -752,7 +752,7 @@ void SerrisPartInit(void)
         case SERRIS_PART_SECTION_4:
         case SERRIS_PART_SECTION_5:
         case SERRIS_PART_SECTION_6:
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
             gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
@@ -768,7 +768,7 @@ void SerrisPartInit(void)
 
         case SERRIS_PART_MIDDLE_END:
             gCurrentSprite.work4 = (SERRIS_PART_MIDDLE_END + 1) * 5;
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
             gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
@@ -784,7 +784,7 @@ void SerrisPartInit(void)
 
         case SERRIS_PART_TAIL_JOINT:
             gCurrentSprite.work4 = (SERRIS_PART_TAIL_JOINT + 1) * 5 - 2;
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
             gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
@@ -800,7 +800,7 @@ void SerrisPartInit(void)
 
         case SERRIS_PART_TAIL:
             gCurrentSprite.work4 = (SERRIS_PART_TAIL + 1) * 5 - 4;
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
             gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
@@ -1935,7 +1935,7 @@ void SerrisBlockCrumbling(void)
             gCurrentSprite.currentAnimationFrame = 0;
         }
     }
-    else if (SpriteUtilCheckEndOfCurrentSpriteAnimation())
+    else if (SpriteUtilCheckEndCurrentSpriteAnim())
     {
         // Finished crumbling, set falling
         if (gCurrentSprite.roomSlot != 0)

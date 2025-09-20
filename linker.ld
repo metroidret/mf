@@ -212,9 +212,7 @@ SECTIONS {
         src/sa_x.o(.text);
         src/in_game.o(.text);
         src/sprite.o(.text);
-
-        asm/disasm_0x0800fd90.o(.text);
-
+        src/sprite_util.o(.text);
         src/sprite_debris.o(.text);
         src/location_text.o(.text);
         src/sprites_AI/target.o(.text);
@@ -320,6 +318,7 @@ SECTIONS {
         src/data/hud_data.o(.rodata);
         src/data/escape_data.o(.rodata);
         src/data/particle_data.o(.rodata);
+        src/data/projectile_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
         src/data/engine_pointers.o(.rodata);
     } >rom

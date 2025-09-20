@@ -21,8 +21,8 @@
  */
 void YamebaTurningIntoX(void)
 {
-    if (gCurrentSprite.status & SPRITE_STATUS_ROTATION_SCALING)
-        gCurrentSprite.status &= ~SPRITE_STATUS_ROTATION_SCALING;
+    if (gCurrentSprite.status & SPRITE_STATUS_ROTATION_SCALING_SINGLE)
+        gCurrentSprite.status &= ~SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
     switch (gCurrentSprite.work0)
     {
@@ -87,7 +87,7 @@ void YamebaInit(void)
     {
         case 0:
             gCurrentSprite.properties |= SP_CAN_ABSORB_X;
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.scaling = Q_8_8(.625f);
 
@@ -103,7 +103,7 @@ void YamebaInit(void)
 
         case 1:
             gCurrentSprite.properties |= SP_CAN_ABSORB_X;
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.scaling = Q_8_8(.5f);
 
@@ -119,7 +119,7 @@ void YamebaInit(void)
 
         case 2:
             gCurrentSprite.properties |= SP_CAN_ABSORB_X;
-            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+            gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
             gCurrentSprite.scaling = Q_8_8(1.f);
 
@@ -137,7 +137,7 @@ void YamebaInit(void)
 
         default:
             gCurrentSprite.properties &= ~SP_CAN_ABSORB_X;
-            gCurrentSprite.status |= (SPRITE_STATUS_ROTATION_SCALING | SPRITE_STATUS_DOUBLE_SIZE);
+            gCurrentSprite.status |= (SPRITE_STATUS_ROTATION_SCALING_SINGLE | SPRITE_STATUS_DOUBLE_SIZE);
 
             gCurrentSprite.scaling = Q_8_8(1.999f);
 
@@ -159,7 +159,7 @@ void YamebaInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
 
     if (gCurrentSprite.properties & SP_CAN_ABSORB_X)
-        gCurrentSprite.work5 = TRUE;
+        gCurrentSprite.numberOfXToForm = 1;
 }
 
 /**

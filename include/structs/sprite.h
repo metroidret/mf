@@ -48,7 +48,7 @@ struct SpriteData {
     u8 standingOnSprite;
     u8 properties;
     u8 frozenPaletteRowOffset;
-    u8 work5;
+    u8 numberOfXToForm;
 };
 
 struct SubSpriteData {

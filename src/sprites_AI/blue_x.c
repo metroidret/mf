@@ -97,7 +97,7 @@ void BlueXAbsorbedInit(void)
     gCurrentSprite.work1 = 0;
     gCurrentSprite.work4 = 1;
 
-    gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING;
+    gCurrentSprite.status |= SPRITE_STATUS_ROTATION_SCALING_SINGLE;
 
     gCurrentSprite.rotation = 0;
     gCurrentSprite.scaling = Q_8_8(1.f);
@@ -578,7 +578,7 @@ void BlueXAbsorbtionAbsorbing(void)
  */
 void BlueXAbsorbtionFadingAway(void)
 {
-    if (SpriteUtilCheckEndOfCurrentSpriteAnimation())
+    if (SpriteUtilCheckEndCurrentSpriteAnim())
         gCurrentSprite.status = 0;
 }
 

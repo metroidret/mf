@@ -2838,8 +2838,8 @@ _0807422A:
 _08074230: .4byte 0x030008B8
 _08074234: .4byte 0x083EC108
 
-	thumb_func_start ParticleSudoScrewKilled
-ParticleSudoScrewKilled: @ 0x08074238
+	thumb_func_start ParticlePseudoScrewKilled
+ParticlePseudoScrewKilled: @ 0x08074238
 	push {r4, lr}
 	ldr r4, _08074270 @ =0x030008B8
 	ldrb r0, [r4, #4]
@@ -31878,7 +31878,7 @@ _080828E6:
 	mov r1, sb
 	mov r2, sl
 	adds r3, r7, #0
-	bl CheckObjectsTouching
+	bl SpriteUtilCheckObjectsTouching
 	cmp r0, #0
 	beq _080829E6
 	mov r0, r8
@@ -31931,7 +31931,7 @@ _08082980:
 	mov r1, sb
 	mov r2, sl
 	adds r3, r7, #0
-	bl CheckObjectsTouching
+	bl SpriteUtilCheckObjectsTouching
 	cmp r0, #0
 	beq _080829E0
 	mov r0, r8
@@ -31952,7 +31952,7 @@ _080829E6:
 _080829F6:
 	movs r2, #0
 	str r2, [sp, #0x18]
-	bl SamusCheckDamagingPose
+	bl SpriteUtilCheckSamusDamagingPose
 	cmp r0, #0
 	beq _08082A08
 	movs r3, #1
@@ -31960,7 +31960,7 @@ _080829F6:
 	b _08082A1E
 _08082A08:
 	movs r0, #0x80
-	bl SamusCheckSudoScrew
+	bl SpriteUtilCheckSamusPseudoScrew
 	cmp r0, #0
 	beq _08082A16
 	movs r4, #2
@@ -32046,7 +32046,7 @@ _08082A54:
 	mov r1, sb
 	mov r2, sl
 	adds r3, r7, #0
-	bl CheckObjectsTouching
+	bl SpriteUtilCheckObjectsTouching
 	cmp r0, #0
 	beq _08082B2E
 	adds r0, r4, #0
@@ -32103,7 +32103,7 @@ _08082B00:
 	lsls r2, r2, #0x10
 	lsrs r2, r2, #0x10
 	mov r0, r8
-	bl ProjectileSudoScrewHitSprite
+	bl ProjectilePseudoScrewHitSprite
 _08082B2E:
 	mov r0, r8
 	adds r0, #1
@@ -32256,7 +32256,7 @@ _08082C10:
 	ldr r1, [sp, #0x2c]
 	ldr r2, [sp, #0x30]
 	ldr r3, [sp, #0x34]
-	bl CheckObjectsTouching
+	bl SpriteUtilCheckObjectsTouching
 	cmp r0, #0
 	bne _08082C5A
 	b _08082FB0
@@ -33465,7 +33465,7 @@ _080835B6:
 	movs r0, #1
 	adds r1, r5, #0
 	movs r2, #1
-	bl TakeDamageFromSprite
+	bl SpriteUtilTakeDamageFromSprite
 	b _080835E6
 _080835C4:
 	movs r1, #2
@@ -33607,8 +33607,8 @@ _080836BA:
 	bx r1
 	.align 2, 0
 
-	thumb_func_start ProjectileSudoScrewHitSprite
-ProjectileSudoScrewHitSprite: @ 0x080836C4
+	thumb_func_start ProjectilePseudoScrewHitSprite
+ProjectilePseudoScrewHitSprite: @ 0x080836C4
 	push {r4, r5, r6, r7, lr}
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18
@@ -37677,7 +37677,7 @@ _0808560C:
 	str r5, [sp, #4]
 	str r7, [sp, #8]
 	str r4, [sp, #0xc]
-	bl CheckObjectsTouching
+	bl SpriteUtilCheckObjectsTouching
 	cmp r0, #0
 	beq _080856FA
 	mov r1, sl
@@ -37705,7 +37705,7 @@ _0808569C:
 	ldrb r0, [r2, #5]
 	cmp r0, #0
 	bne _080856FA
-	bl SamusCheckDamagingPose
+	bl SpriteUtilCheckSamusDamagingPose
 	cmp r0, #0
 	bne _080856FA
 	ldr r0, [sp, #0x10]

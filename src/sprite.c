@@ -40,7 +40,7 @@ void SpriteUpdate(void)
         // Update the debris
         SpriteDebrisUpdateAll();
 
-        if (!SpriteUtilCheckStopSpritesPose())
+        if (!SpriteUtilCheckSamusStopSpritesPose())
         {
             // Handle collision
             SpriteUtilSamusAndSpriteCollision();
@@ -228,8 +228,8 @@ void unk_eb04(void)
     if (gSubGameMode1 != SUB_GAME_MODE_PLAYING)
         return;
 
-    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_UNKNOWN_10 | SPRITE_STATUS_UNKNOWN_2000;
-    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_UNKNOWN_10;
+    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
+    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_HIGH_PRIORITY;
 
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
     {
@@ -269,7 +269,7 @@ void SpriteDrawAll(void)
     u16 drawStatus;
     u16 checkStatus;
 
-    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_UNKNOWN_10 | SPRITE_STATUS_UNKNOWN_2000;
+    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
     drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN;
 
     SpriteDebrisDrawAll();
@@ -313,7 +313,7 @@ void unk_ec38(void)
     u16 drawStatus;
     u16 checkStatus;
 
-    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_UNKNOWN_10 | SPRITE_STATUS_UNKNOWN_2000;
+    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
     drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN;
 
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
@@ -409,9 +409,9 @@ void SpriteDraw(s32 slot)
 
     // Shortcuts for status
     xFlip = gCurrentSprite.status & SPRITE_STATUS_X_FLIP;
-    status_unk3 = gCurrentSprite.status & SPRITE_STATUS_ROTATION_SCALING;
+    status_unk3 = gCurrentSprite.status & SPRITE_STATUS_ROTATION_SCALING_SINGLE;
     doubleSize = gCurrentSprite.status & SPRITE_STATUS_DOUBLE_SIZE;
-    mosaic = gCurrentSprite.status & SPRITE_STATUS_ENABLE_MOSAIC;
+    mosaic = gCurrentSprite.status & SPRITE_STATUS_MOSAIC;
     yFlip = gCurrentSprite.status & SPRITE_STATUS_Y_FLIP;
 
     // Get graphical data
@@ -430,7 +430,7 @@ void SpriteDraw(s32 slot)
         xPosition = gCurrentSprite.xPosition;
     }
 
-    if (!(gCurrentSprite.status & SPRITE_STATUS_UNKNOWN_8))
+    if (!(gCurrentSprite.status & SPRITE_STATUS_ROTATION_SCALING_WHOLE))
     {
         for (i = 0; i < partCount; i++)
         {
@@ -994,7 +994,7 @@ void SpriteInitPrimary(u8 spritesetSlot, u16 yPosition, u16 xPosition, u8 roomSl
 
         // Set initial status
         if (spritesetSlot & 0x80)
-            gSpriteData[i].status = SPRITE_STATUS_EXISTS | SPRITE_STATUS_UNKNOWN_2000;
+            gSpriteData[i].status = SPRITE_STATUS_EXISTS | SPRITE_STATUS_HIDDEN;
         else
             gSpriteData[i].status = SPRITE_STATUS_EXISTS;
 
@@ -1038,7 +1038,7 @@ void SpriteInitPrimary(u8 spritesetSlot, u16 yPosition, u16 xPosition, u8 roomSl
         gSpriteData[i].primarySpriteRamSlot = i;
 
         gSpriteData[i].freezeTimer = 0;
-        gSpriteData[i].work5 = 1;
+        gSpriteData[i].numberOfXToForm = 1;
         break;
     }
 }
@@ -1101,7 +1101,7 @@ u8 SpriteSpawnSecondary(u8 spriteId, u8 partNumber, u8 gfxRow, u8 ramSlot, u16 y
         // Clear slot and properties
         gSpriteData[i].spritesetSlotAndProperties = UCHAR_MAX;
         gSpriteData[i].freezeTimer = 0;
-        gSpriteData[i].work5 = 1;
+        gSpriteData[i].numberOfXToForm = 1;
 
         slot = i;
         break;
@@ -1168,7 +1168,7 @@ u8 SpriteSpawnPrimary(u8 spriteId, u8 partNumber, u8 gfxRow, u8 spritesetSlot, u
         // Set slot and properties
         gSpriteData[i].spritesetSlotAndProperties = spritesetSlot;
         gSpriteData[i].freezeTimer = 0;
-        gSpriteData[i].work5 = 1;
+        gSpriteData[i].numberOfXToForm = 1;
 
         slot = i;
         break;
@@ -1236,7 +1236,7 @@ u8 SpriteSpawnNewXParasite(u8 spriteId, u8 partNumber, u8 gfxRow, u8 ramSlot, u8
         // Set slot and properties
         gSpriteData[i].spritesetSlotAndProperties = spritesetSlot;
         gSpriteData[i].freezeTimer = 0;
-        gSpriteData[i].work5 = 1;
+        gSpriteData[i].numberOfXToForm = 1;
 
         slot = i;
         break;
