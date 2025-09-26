@@ -112,6 +112,8 @@
 #define SIN(angle) (sSineTable[angle])
 #define COS(angle) (sSineTable[angle + PI / 2])
 
+#define EMPTY_DO_WHILE {do {} while(0);}
+
 #define COLOR_MASK 0x1F
 #define RED(c) ((c) & COLOR_MASK)
 #define GREEN(c) (((c) & (COLOR_MASK << 5)) >> 5)
