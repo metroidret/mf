@@ -255,6 +255,10 @@ SECTIONS {
 
         asm/disasm_0x08061004.o(.text);
 
+        src/screen_shake.o(.text);
+
+        asm/disasm_0x080626F4.o(.text);
+
         src/power_bomb_explosion.o(.text);
 
         asm/disasm_0x080685b4.o(.text);
