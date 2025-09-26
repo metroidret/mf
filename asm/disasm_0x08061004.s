@@ -2930,7 +2930,7 @@ ScreenShakeStartVertical: @ 0x0806258C
 	lsrs r2, r0, #0x18
 	lsls r1, r1, #0x18
 	lsrs r4, r1, #0x18
-	ldr r3, _080625B8 @ =0x030000F0
+	ldr r3, _080625B8 @ =gScreenShakeY
 	cmp r2, #0
 	beq _080625B0
 	ldrb r0, [r3]
@@ -2941,7 +2941,7 @@ ScreenShakeStartVertical: @ 0x0806258C
 	strb r1, [r3, #1]
 	strb r4, [r3, #2]
 	strb r1, [r3, #3]
-	ldr r0, _080625BC @ =0x0300004F
+	ldr r0, _080625BC @ =gScreenShakeYOffset
 	strb r1, [r0]
 _080625B0:
 	ldrb r0, [r3]
@@ -2949,8 +2949,8 @@ _080625B0:
 	pop {r1}
 	bx r1
 	.align 2, 0
-_080625B8: .4byte 0x030000F0
-_080625BC: .4byte 0x0300004F
+_080625B8: .4byte gScreenShakeY
+_080625BC: .4byte gScreenShakeYOffset
 
 	thumb_func_start ScreenShakeStartHorizontal
 ScreenShakeStartHorizontal: @ 0x080625C0
@@ -2959,7 +2959,7 @@ ScreenShakeStartHorizontal: @ 0x080625C0
 	lsrs r2, r0, #0x18
 	lsls r1, r1, #0x18
 	lsrs r4, r1, #0x18
-	ldr r3, _080625EC @ =0x030000F4
+	ldr r3, _080625EC @ =gScreenShakeX
 	cmp r2, #0
 	beq _080625E4
 	ldrb r0, [r3]
@@ -2970,7 +2970,7 @@ ScreenShakeStartHorizontal: @ 0x080625C0
 	strb r1, [r3, #1]
 	strb r4, [r3, #2]
 	strb r1, [r3, #3]
-	ldr r0, _080625F0 @ =0x0300004E
+	ldr r0, _080625F0 @ =gScreenShakeXOffset
 	strb r1, [r0]
 _080625E4:
 	ldrb r0, [r3]
@@ -2978,15 +2978,15 @@ _080625E4:
 	pop {r1}
 	bx r1
 	.align 2, 0
-_080625EC: .4byte 0x030000F4
-_080625F0: .4byte 0x0300004E
+_080625EC: .4byte gScreenShakeX
+_080625F0: .4byte gScreenShakeXOffset
 
 	thumb_func_start ScreenShakeStartHorizontal_Unused
 ScreenShakeStartHorizontal_Unused: @ 0x080625F4
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
-	ldr r3, _0806261C @ =0x030000F4
+	ldr r3, _0806261C @ =gScreenShakeX
 	cmp r2, #0
 	beq _08062614
 	ldrb r0, [r3]
@@ -2997,23 +2997,23 @@ ScreenShakeStartHorizontal_Unused: @ 0x080625F4
 	strb r1, [r3, #1]
 	strb r1, [r3, #2]
 	strb r1, [r3, #3]
-	ldr r0, _08062620 @ =0x0300004E
+	ldr r0, _08062620 @ =gScreenShakeXOffset
 	strb r1, [r0]
 _08062614:
 	ldrb r0, [r3]
 	pop {r1}
 	bx r1
 	.align 2, 0
-_0806261C: .4byte 0x030000F4
-_08062620: .4byte 0x0300004E
+_0806261C: .4byte gScreenShakeX
+_08062620: .4byte gScreenShakeXOffset
 
 	thumb_func_start ScreenShakeUpdateVertical
 ScreenShakeUpdateVertical: @ 0x08062624
 	push {r4, r5, r6, lr}
 	movs r2, #0
-	ldr r6, _0806263C @ =0x0300004F
+	ldr r6, _0806263C @ =gScreenShakeYOffset
 	strb r2, [r6]
-	ldr r4, _08062640 @ =0x030000F0
+	ldr r4, _08062640 @ =gScreenShakeY
 	ldrb r0, [r4]
 	adds r3, r4, #0
 	cmp r0, #0
@@ -3021,8 +3021,8 @@ ScreenShakeUpdateVertical: @ 0x08062624
 	movs r0, #0
 	b _08062686
 	.align 2, 0
-_0806263C: .4byte 0x0300004F
-_08062640: .4byte 0x030000F0
+_0806263C: .4byte gScreenShakeYOffset
+_08062640: .4byte gScreenShakeY
 _08062644:
 	subs r5, r0, #1
 	strb r5, [r3]
@@ -3069,9 +3069,9 @@ _08062686:
 ScreenShakeUpdateHorizontal: @ 0x0806268C
 	push {r4, r5, r6, lr}
 	movs r2, #0
-	ldr r6, _080626A4 @ =0x0300004E
+	ldr r6, _080626A4 @ =gScreenShakeXOffset
 	strb r2, [r6]
-	ldr r4, _080626A8 @ =0x030000F4
+	ldr r4, _080626A8 @ =gScreenShakeX
 	ldrb r0, [r4]
 	adds r3, r4, #0
 	cmp r0, #0
@@ -3079,8 +3079,8 @@ ScreenShakeUpdateHorizontal: @ 0x0806268C
 	movs r0, #0
 	b _080626EE
 	.align 2, 0
-_080626A4: .4byte 0x0300004E
-_080626A8: .4byte 0x030000F4
+_080626A4: .4byte gScreenShakeXOffset
+_080626A8: .4byte gScreenShakeX
 _080626AC:
 	subs r5, r0, #1
 	strb r5, [r3]
@@ -5422,7 +5422,7 @@ _08063956:
 	strh r0, [r5, #8]
 	movs r6, #2
 _0806397E:
-	ldr r0, _080639A4 @ =0x030000F0
+	ldr r0, _080639A4 @ =gScreenShakeY
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08063988
@@ -5437,7 +5437,7 @@ _08063994: .4byte 0x03004E4C
 _08063998: .4byte 0x027F0000
 _0806399C: .4byte gWaterLowered
 _080639A0: .4byte 0x03004E3A
-_080639A4: .4byte 0x030000F0
+_080639A4: .4byte gScreenShakeY
 _080639A8:
 	ldrh r0, [r2]
 	cmp r0, #0
@@ -7640,7 +7640,7 @@ RoomResetInfo: @ 0x08064AEC
 	ldrb r0, [r2]
 	cmp r0, #0
 	beq _08064B1C
-	ldr r0, _08064BCC @ =0x030000F4
+	ldr r0, _08064BCC @ =gScreenShakeX
 	ldr r1, _08064BD0 @ =0x083C88C8
 	ldr r1, [r1]
 	str r1, [r0]
@@ -7734,7 +7734,7 @@ _08064BBE:
 	.align 2, 0
 _08064BC4: .4byte gColorFading
 _08064BC8: .4byte gCurrentPowerBomb
-_08064BCC: .4byte 0x030000F4
+_08064BCC: .4byte gScreenShakeX
 _08064BD0: .4byte 0x083C88C8
 _08064BD4: .4byte 0x083C88B4
 _08064BD8: .4byte gWrittenToBldcnt
@@ -7854,7 +7854,7 @@ _08064CDC:
 	subs r1, #4
 	cmp r1, r2
 	bge _08064CDC
-	ldr r6, _08064DF0 @ =0x030000F4
+	ldr r6, _08064DF0 @ =gScreenShakeX
 	mov sb, r6
 	ldr r0, _08064DF4 @ =0x083C88C8
 	mov r8, r0
@@ -7862,9 +7862,9 @@ _08064CDC:
 	mov sl, r1
 	ldr r3, _08064DFC @ =0x03004FB8
 	ldr r5, _08064E00 @ =0x03000027
-	ldr r6, _08064E04 @ =0x030000F0
-	ldr r7, _08064E08 @ =0x0300004E
-	ldr r2, _08064E0C @ =0x0300004F
+	ldr r6, _08064E04 @ =gScreenShakeY
+	ldr r7, _08064E08 @ =gScreenShakeXOffset
+	ldr r2, _08064E0C @ =gScreenShakeYOffset
 	mov ip, r2
 	ldr r2, _08064E10 @ =0x03004EE0
 	ldr r0, _08064DEC @ =0x083C88A8
@@ -7964,14 +7964,14 @@ _08064DE0: .4byte 0x03004E30
 _08064DE4: .4byte 0x083C88DC
 _08064DE8: .4byte 0x03004E60
 _08064DEC: .4byte 0x083C88A8
-_08064DF0: .4byte 0x030000F4
+_08064DF0: .4byte gScreenShakeX
 _08064DF4: .4byte 0x083C88C8
 _08064DF8: .4byte gIsLoadingFile
 _08064DFC: .4byte 0x03004FB8
 _08064E00: .4byte 0x03000027
-_08064E04: .4byte 0x030000F0
-_08064E08: .4byte 0x0300004E
-_08064E0C: .4byte 0x0300004F
+_08064E04: .4byte gScreenShakeY
+_08064E08: .4byte gScreenShakeXOffset
+_08064E0C: .4byte gScreenShakeYOffset
 _08064E10: .4byte 0x03004EE0
 _08064E14: .4byte 0x03004FA8
 _08064E18: .4byte 0x083C88AC
