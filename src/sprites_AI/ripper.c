@@ -58,7 +58,7 @@ void RipperInit(void)
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
     }
     else
     {
@@ -126,7 +126,7 @@ void RipperTurningAroundInit(void)
  */
 void RipperTurningAround(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
         gCurrentSprite.pose = 0x5;
@@ -141,7 +141,7 @@ void RipperTurningAround(void)
  */
 void RipperTurningAroundSecondPart(void)
 {
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
@@ -151,7 +151,7 @@ void RipperTurningAroundSecondPart(void)
  */
 void Ripper(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 4)
         SoundPlayNotAlreadyPlaying(0x1D3);
 
     if (gCurrentSprite.freezeTimer != 0)

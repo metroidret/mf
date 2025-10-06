@@ -4,6 +4,18 @@
 #include "types.h"
 #include "constants/sprite.h"
 
+#define GET_PSPRITE_HEALTH(id) sPrimarySpriteStats[(id)][0]
+#define GET_SSPRITE_HEALTH(id) sSecondarySpriteStats[(id)][0]
+
+#define GET_PSPRITE_DAMAGE(id) sPrimarySpriteStats[(id)][1]
+#define GET_SSPRITE_DAMAGE(id) sSecondarySpriteStats[(id)][1]
+
+#define GET_PSPRITE_SUIT_REDUCTION(id) sPrimarySpriteStats[(id)][2]
+#define GET_SSPRITE_SUIT_REDUCTION(id) sSecondarySpriteStats[(id)][2]
+
+#define GET_PSPRITE_WEAKNESS(id) sPrimarySpriteStats[(id)][3]
+#define GET_SSPRITE_WEAKNESS(id) sSecondarySpriteStats[(id)][3]
+
 #define SPRITE_GFX_SIZE(nbrRows) ((nbrRows) * 32 * 256 / 4)
 
 extern const u8 sOamXFlipOffsets[3][4];

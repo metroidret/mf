@@ -228,8 +228,8 @@ void unk_eb04(void)
     if (gSubGameMode1 != SUB_GAME_MODE_PLAYING)
         return;
 
-    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
-    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_HIGH_PRIORITY;
+    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
+    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_HIGH_PRIORITY;
 
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
     {
@@ -269,8 +269,8 @@ void SpriteDrawAll(void)
     u16 drawStatus;
     u16 checkStatus;
 
-    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
-    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN;
+    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
+    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN;
 
     SpriteDebrisDrawAll();
     SaXUpdateGraphicsAndDraw();
@@ -313,8 +313,8 @@ void unk_ec38(void)
     u16 drawStatus;
     u16 checkStatus;
 
-    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
-    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN;
+    checkStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN | SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_HIDDEN;
+    drawStatus = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN;
 
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
     {
@@ -745,11 +745,11 @@ void SpriteCheckOnScreen(void)
 
     if (spriteLeft < spriteXRange && spriteXRange < spriteRight && spriteBottom < spriteYRange && spriteYRange < spriteTop)
     {
-        gCurrentSprite.status |= SPRITE_STATUS_ON_SCREEN;
+        gCurrentSprite.status |= SPRITE_STATUS_ONSCREEN;
         return;
     }
 
-    gCurrentSprite.status &= ~SPRITE_STATUS_ON_SCREEN;
+    gCurrentSprite.status &= ~SPRITE_STATUS_ONSCREEN;
 
     if (gCurrentSprite.properties & SP_KILL_OFF_SCREEN)
     {
@@ -1072,7 +1072,7 @@ u8 SpriteSpawnSecondary(u8 spriteId, u8 partNumber, u8 gfxRow, u8 ramSlot, u16 y
         // Found a free slot, initialize data
 
         // Set initial status
-        gSpriteData[i].status = (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN) | statusToAdd;
+        gSpriteData[i].status = (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN) | statusToAdd;
 
         // Flag as secondary sprite
         gSpriteData[i].properties = SP_SECONDARY_SPRITE;
@@ -1139,7 +1139,7 @@ u8 SpriteSpawnPrimary(u8 spriteId, u8 partNumber, u8 gfxRow, u8 spritesetSlot, u
         // Found a free slot, initialize data
 
         // Set initial status
-        gSpriteData[i].status = (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN) | statusToAdd;
+        gSpriteData[i].status = (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN) | statusToAdd;
 
         // No properties
         gSpriteData[i].properties = 0;
@@ -1207,7 +1207,7 @@ u8 SpriteSpawnNewXParasite(u8 spriteId, u8 partNumber, u8 gfxRow, u8 ramSlot, u8
         // Found a free slot, initialize data
 
         // Set initial status
-        gSpriteData[i].status = (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN) | statusToAdd;
+        gSpriteData[i].status = (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN) | statusToAdd;
 
         // No properties
         gSpriteData[i].properties = 0;

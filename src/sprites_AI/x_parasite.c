@@ -84,7 +84,7 @@ void XParasiteBossFormationGrowing(void)
     if (gCurrentSprite.scaling > Q_8_8(.98f))
     {
         gCurrentSprite.pose = 0x5E;
-        gCurrentSprite.unk_8 = 0;
+        gCurrentSprite.workX = 0;
     }
 }
 
@@ -99,8 +99,8 @@ void XParasiteBossFormationFloating(void)
     XParasiteMoveWithSound(gXParasiteTargetYPosition, gXParasiteTargetXPosition, HALF_BLOCK_SIZE + QUARTER_BLOCK_SIZE / 2,
         BLOCK_SIZE - PIXEL_SIZE, 0, 0x141);
 
-    gCurrentSprite.xParasiteTimer--;
-    if (gCurrentSprite.xParasiteTimer == 0)
+    gCurrentSprite.workY--;
+    if (gCurrentSprite.workY == 0)
     {
         gCurrentSprite.pose = 0x5F;
     }
@@ -293,17 +293,17 @@ void XParasiteBossFormationTransforming(void)
 void XParasiteCoreXOrStabilizerForming(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
-    gCurrentSprite.xParasiteTimer--;
+    gCurrentSprite.workY--;
 
-    if (gCurrentSprite.xParasiteTimer != 0)
+    if (gCurrentSprite.workY != 0)
     {
-        gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
+        gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
     }
     else
     {
         gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
         gCurrentSprite.pose = 0x5D;
-        gCurrentSprite.xParasiteTimer = 300;
+        gCurrentSprite.workY = 300;
     }
 
     XParasiteFlyingMovement();
@@ -323,7 +323,7 @@ void XParasiteAquaZebesianMoveToTarget(void)
 
     if (gCurrentSprite.pose == 0x5D)
     {
-        switch (gCurrentSprite.unk_8)
+        switch (gCurrentSprite.workX)
         {
             case 1:
                 targetY -= BLOCK_SIZE;
@@ -357,7 +357,7 @@ void XParasiteAquaZebesianWaitingToMove(void)
     u8 offset;
     s16 movement;
 
-    if (!(gCurrentSprite.invincibilityStunFlashTimer & 0x80))
+    if (!(gCurrentSprite.invincibilityStunFlashTimer & SPRITE_ISFT_POWER_BOMB_STUNNED))
     {
         offset = gCurrentSprite.work4;
         movement = sXParasiteIdleFloatingYMovement[offset];
@@ -386,11 +386,11 @@ void XParasiteAquaZebesianWaitingToMove(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_MOSAIC)
     {
-        if (--gCurrentSprite.xParasiteTimer != 0)
+        if (--gCurrentSprite.workY != 0)
         {
-            gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
+            gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
 
-            if (gCurrentSprite.xParasiteTimer > 22)
+            if (gCurrentSprite.workY > 22)
             {
                 gCurrentSprite.ignoreSamusCollisionTimer = 1;
             }
@@ -403,18 +403,18 @@ void XParasiteAquaZebesianWaitingToMove(void)
         else
         {
             gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
-            gCurrentSprite.xParasiteTimer = 60;
+            gCurrentSprite.workY = 60;
         }
     }
     else
     {
-        gCurrentSprite.xParasiteTimer--;
+        gCurrentSprite.workY--;
 
-        if (gCurrentSprite.xParasiteTimer == 0)
+        if (gCurrentSprite.workY == 0)
         {
             gCurrentSprite.pose = 0x5D;
-            gCurrentSprite.xParasiteTimer = 300;
-            gCurrentSprite.unk_8 = 0;
+            gCurrentSprite.workY = 300;
+            gCurrentSprite.workX = 0;
             
             gCurrentSprite.work2 = 0;
             gCurrentSprite.work3 = 1;
@@ -439,7 +439,7 @@ void XParasiteAquaZebesianFloating(void)
         return;
     }
 
-    if (gCurrentSprite.invincibilityStunFlashTimer & 0x80)
+    if (gCurrentSprite.invincibilityStunFlashTimer & SPRITE_ISFT_POWER_BOMB_STUNNED)
     {
         if (gCurrentPowerBomb.animationState == 0)
             gCurrentSprite.invincibilityStunFlashTimer &= 0x7F;
@@ -447,13 +447,13 @@ void XParasiteAquaZebesianFloating(void)
         return;
     }
 
-    if (gCurrentSprite.xParasiteTimer == 0)
+    if (gCurrentSprite.workY == 0)
     {
         gCurrentSprite.pose = 0x61;
     }
     else
     {
-        gCurrentSprite.xParasiteTimer--;
+        gCurrentSprite.workY--;
         XParasiteAquaZebesianMoveToTarget();
     }
 }

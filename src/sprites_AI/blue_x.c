@@ -39,7 +39,7 @@ void BlueXSetTrail(void)
  */
 u8 BlueXCheckStun(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite))
+    if (SPRITE_GET_ISFT(gCurrentSprite))
     {
         gCurrentSprite.pose = BLUE_X_POSE_STUNNED;
     
@@ -117,7 +117,7 @@ void BlueXInit(void)
 
     SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition);
 
-    if (gPreviousCollisionCheck & COLLISION_FLAGS_UNKNOWN)
+    if (gPreviousCollisionCheck & COLLISION_FLAGS_UNKNOWN_F0)
     {
         gCurrentSprite.bgPriority++;
         gCurrentSprite.pose = BLUE_X_POSE_HIDING;
@@ -161,7 +161,7 @@ void BlueXHiding(void)
 {
     SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition);
 
-    if (!(gPreviousCollisionCheck & COLLISION_FLAGS_UNKNOWN))
+    if (!(gPreviousCollisionCheck & COLLISION_FLAGS_UNKNOWN_F0))
     {
         gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
@@ -244,7 +244,7 @@ void BlueXMovingInit(void)
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
-    gCurrentSprite.xParasiteTimer = 0x96;
+    gCurrentSprite.workY = 0x96;
 
     SpriteUtilMakeSpriteFaceSamusDirection();
 
@@ -278,13 +278,13 @@ void BlueXMoving(void)
 
     if (EventCheckAfter_ReachedTopOfRoomAfterVaria())
     {
-        if (gCurrentSprite.xParasiteTimer == 0)
+        if (gCurrentSprite.workY == 0)
         {
             gCurrentSprite.pose = BLUE_X_POSE_FLEEING;
             return;
         }
 
-        gCurrentSprite.xParasiteTimer--;
+        gCurrentSprite.workY--;
 
         targetY = gXParasiteTargetYPosition;
         targetX = gXParasiteTargetXPosition;
@@ -352,7 +352,7 @@ void BlueXMoving(void)
         gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
         gCurrentSprite.work3 = 1;
 
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
         {
             SoundPlayNotAlreadyPlaying(0x1B9);
         }
@@ -414,7 +414,7 @@ void BlueXMoving(void)
         gCurrentSprite.status ^= SPRITE_STATUS_SAMUS_DETECTED;
         gCurrentSprite.work4 = 1;
 
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
         {
             SoundPlayNotAlreadyPlaying(0x1B9);
         }
@@ -520,7 +520,7 @@ void BlueXFleeing(void)
     else
         gCurrentSprite.yPosition -= speed;
 
-    if (!(gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN))
+    if (!(gCurrentSprite.status & SPRITE_STATUS_ONSCREEN))
         gCurrentSprite.status = 0;
 }
 
@@ -578,7 +578,7 @@ void BlueXAbsorbtionAbsorbing(void)
  */
 void BlueXAbsorbtionFadingAway(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         gCurrentSprite.status = 0;
 }
 

@@ -125,29 +125,6 @@
 
 #define SET_BACKDROP_COLOR(color) (write16(PALRAM_BASE, (color)))
 
-#define GET_PSPRITE_HEALTH(id) sPrimarySpriteStats[(id)][0]
-#define GET_SSPRITE_HEALTH(id) sSecondarySpriteStats[(id)][0]
-
-#define GET_PSPRITE_DAMAGE(id) sPrimarySpriteStats[(id)][1]
-#define GET_SSPRITE_DAMAGE(id) sSecondarySpriteStats[(id)][1]
-
-#define GET_PSPRITE_SUIT_REDUCTION(id) sPrimarySpriteStats[(id)][2]
-#define GET_SSPRITE_SUIT_REDUCTION(id) sSecondarySpriteStats[(id)][2]
-
-#define GET_PSPRITE_WEAKNESS(id) sPrimarySpriteStats[(id)][3]
-#define GET_SSPRITE_WEAKNESS(id) sSecondarySpriteStats[(id)][3]
-
-#define SPRITE_HAS_ISFT(sprite) ((sprite).invincibilityStunFlashTimer & 0x7F)
-#define SPRITE_CLEAR_ISFT(sprite) ((sprite).invincibilityStunFlashTimer &= 0x80)
-#define SPRITE_SET_ISFT(sprite, value) ((sprite).invincibilityStunFlashTimer |= (value))
-#define SPRITE_CLEAR_AND_SET_ISFT(sprite, value)\
-{                                               \
-    SPRITE_CLEAR_ISFT(sprite);                  \
-    SPRITE_SET_ISFT(sprite, value);             \
-}
-#define SPRITE_SET_ABSOLUTE_PALETTE_ROW(sprite, row) ((sprite).paletteRow = (row) + 8 - ((sprite).spritesetGfxSlot + (sprite).frozenPaletteRowOffset))
-#define SPRITE_IS_INFECTED(sprite) ((sprite).spritesetSlotAndProperties >= SSP_X_ABSORBABLE_BY_SAMUS && (sprite).spritesetSlotAndProperties < SSP_UNKNOWN_40 + 0x10)
-
 #define SUB_PIXEL_TO_PIXEL(pixel) ((pixel) / SUB_PIXEL_RATIO)
 #define SUB_PIXEL_TO_PIXEL_(pixel) (DIV_SHIFT(pixel, SUB_PIXEL_RATIO))
 #define PIXEL_TO_SUB_PIXEL(pixel) ((s32)((pixel) * SUB_PIXEL_RATIO))

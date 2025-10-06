@@ -92,7 +92,7 @@ void SaXTro1Walking(void)
         if (gSaXVision.inYRange == TRUE)
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.unk_1 == TRUE)
                 gCurrentSprite.pose = 0x17;
@@ -102,10 +102,10 @@ void SaXTro1Walking(void)
             return;
         }
         
-        if (SPRITE_HAS_ISFT(gCurrentSprite))
+        if (SPRITE_GET_ISFT(gCurrentSprite))
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.samusOnRight == FALSE)
                 gCurrentSprite.pose = 0x39;
@@ -120,7 +120,7 @@ void SaXTro1Walking(void)
         if (gSaXVision.inYRange == TRUE)
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.unk_1 == FALSE)
                 gCurrentSprite.pose = 0x17;
@@ -130,10 +130,10 @@ void SaXTro1Walking(void)
             return;
         }
         
-        if (SPRITE_HAS_ISFT(gCurrentSprite))
+        if (SPRITE_GET_ISFT(gCurrentSprite))
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.samusOnRight == TRUE)
                 gCurrentSprite.pose = 0x39;
@@ -275,20 +275,20 @@ void SaXTro1(void)
     {
         if (gSaXVision.inYRange == TRUE)
         {
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
         }
         else
         {
-            if (gCurrentSprite.xParasiteTimer >= 60 * 20)
+            if (gCurrentSprite.workY >= 60 * 20)
             {
                 gCurrentSprite.status &= ~SPRITE_STATUS_SAMUS_DETECTED;
             }
             else
             {
-                if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
-                    gCurrentSprite.xParasiteTimer += 4;
+                if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
+                    gCurrentSprite.workY += 4;
                 else
-                    gCurrentSprite.xParasiteTimer += 1;
+                    gCurrentSprite.workY += 1;
             }
         }
     }

@@ -104,8 +104,8 @@ enum SecurityLevel {
 enum ArmCannonDirection {
     ACD_NONE,
     ACD_FORWARD,
-    ACD_DIAGONAL_UP,
-    ACD_DIAGONAL_DOWN,
+    ACD_DIAGONALLY_UP,
+    ACD_DIAGONALLY_DOWN,
     ACD_UP,
     ACD_DOWN,
 

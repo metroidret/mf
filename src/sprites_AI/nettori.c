@@ -348,7 +348,7 @@ void NettoriDyingInit(void)
 
     gCurrentSprite.status |= SPRITE_STATUS_MOSAIC | SPRITE_STATUS_IGNORE_PROJECTILES;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+    gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
 
     NettoriRemoveCollision();
     PlayMusic(0x43, 7);
@@ -360,14 +360,14 @@ void NettoriDyingInit(void)
  */
 void NettoriTransformingIntoCoreX(void)
 {
-    gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
-    gCurrentSprite.xParasiteTimer--;
+    gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
+    gCurrentSprite.workY--;
 
-    if (gCurrentSprite.xParasiteTimer < 20)
+    if (gCurrentSprite.workY < 20)
     {
-        SpriteLoadGfx(PSPRITE_PLASMA_BEAM_CORE_X, 0, gCurrentSprite.xParasiteTimer);
+        SpriteLoadGfx(PSPRITE_PLASMA_BEAM_CORE_X, 0, gCurrentSprite.workY);
 
-        if (gCurrentSprite.xParasiteTimer == 0)
+        if (gCurrentSprite.workY == 0)
         {
             gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X_INIT;
             gCurrentSprite.spriteId = PSPRITE_PLASMA_BEAM_CORE_X;
@@ -378,7 +378,7 @@ void NettoriTransformingIntoCoreX(void)
             gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
         }
     }
-    else if (gCurrentSprite.xParasiteTimer == 20)
+    else if (gCurrentSprite.workY == 20)
     {
         SpriteLoadPal(PSPRITE_PLASMA_BEAM_CORE_X, 0, 5);
     }
@@ -839,7 +839,7 @@ void NettoriPlasmaBeamInit(void)
  */
 void NettoriPlasmaBeamEmerging(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.pOam = sNettoriPlasmaBeamOam_Charging;
         gCurrentSprite.animationDurationCounter = 0;
@@ -1140,7 +1140,7 @@ void SamusEaterBudIdle(void)
         }
     }
 
-    if (canShoot && SpriteUtilCountSecondarySpritesWithRamSlot(SSPRITE_SAMUS_EATER_SPORE, gCurrentSprite.primarySpriteRamSlot) < 2)
+    if (canShoot && SpriteUtilFindSecondaryWithRamSlot(SSPRITE_SAMUS_EATER_SPORE, gCurrentSprite.primarySpriteRamSlot) < 2)
     {
         // Set shooting
         gCurrentSprite.pose = SAMUS_EATER_BUD_POSE_SHOOTING;
@@ -1175,7 +1175,7 @@ void SamusEaterBudTurningAroundInit(void)
  */
 void SamusEaterBudTurningAround(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
         gCurrentSprite.pose = SAMUS_EATER_BUD_POSE_TURNING_AROUND_SECOND_PART;
@@ -1188,7 +1188,7 @@ void SamusEaterBudTurningAround(void)
  */
 void SamusEaterBudTurningAroundSecondPart(void)
 {
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
@@ -1214,7 +1214,7 @@ void SamusEaterBudShooting(void)
         }
     }
 
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
@@ -1430,7 +1430,7 @@ void SamusEaterSporeExploding(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         gCurrentSprite.status = 0;
 }
 
