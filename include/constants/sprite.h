@@ -2,7 +2,7 @@
 #define SPRITE_CONSTANTS_H
 
 #define SPRITE_STATUS_EXISTS (1 << 0)
-#define SPRITE_STATUS_ON_SCREEN (1 << 1)
+#define SPRITE_STATUS_ONSCREEN (1 << 1)
 #define SPRITE_STATUS_NOT_DRAWN (1 << 2)
 #define SPRITE_STATUS_ROTATION_SCALING_WHOLE (1 << 3)
 #define SPRITE_STATUS_HIGH_PRIORITY (1 << 4)
@@ -36,14 +36,14 @@
 #define SSP_PROPERTY_MASK 0xF0
 #define SSP_SLOT_MASK 0xF
 
-#define SPRITE_WEAKNESS_NONE (0 << 0)
-#define SPRITE_WEAKNESS_CHARGE_BEAM (1 << 0)
-#define SPRITE_WEAKNESS_BEAM_BOMBS (1 << 1)
-#define SPRITE_WEAKNESS_SUPER_MISSILES (1 << 2)
-#define SPRITE_WEAKNESS_MISSILES (1 << 3)
-#define SPRITE_WEAKNESS_POWER_BOMBS (1 << 4)
-#define SPRITE_WEAKNESS_SPEED_BOOSTER_SCREW_ATTACK (1 << 5)
-#define SPRITE_WEAKNESS_CAN_BE_FROZEN (1 << 6)
+#define WEAKNESS_NONE (0 << 0)
+#define WEAKNESS_CHARGE_BEAM (1 << 0)
+#define WEAKNESS_BEAM_BOMBS (1 << 1)
+#define WEAKNESS_SUPER_MISSILES (1 << 2)
+#define WEAKNESS_MISSILES (1 << 3)
+#define WEAKNESS_POWER_BOMB (1 << 4)
+#define WEAKNESS_SPEEDBOOSTER_SCREW_ATTACK (1 << 5)
+#define WEAKNESS_CAN_BE_FROZEN (1 << 6)
 
 #define SPRITE_COLLISION_FLAG_NONE (0 << 0)
 #define SPRITE_COLLISION_FLAG_ON_TOP (1 << 0)
@@ -493,5 +493,23 @@ enum SuitDamageReduction {
 
 #define SPRITE_FLASHING_PALETTE_ROW 5
 #define SPRITE_FROZEN_PALETTE_ROW 7
+
+// Represents a 100% drop change for a sprite
+#define SPRITE_DROP_MAX_PROB (1024)
+
+#define SPRITE_ISFT_POWER_BOMB_STUNNED (1 << 7)
+
+#define SPRITE_GET_ISFT(sprite) ((sprite).invincibilityStunFlashTimer & 0x7F)
+#define SPRITE_CLEAR_ISFT(sprite) ((sprite).invincibilityStunFlashTimer &= 0x80)
+#define SPRITE_SET_ISFT(sprite, value) ((sprite).invincibilityStunFlashTimer |= (value))
+#define SPRITE_CLEAR_AND_SET_ISFT(sprite, value)\
+{                                               \
+    SPRITE_CLEAR_ISFT(sprite);                  \
+    SPRITE_SET_ISFT(sprite, value);             \
+}
+
+#define SPRITE_SET_ABSOLUTE_PALETTE_ROW(sprite, row) ((sprite).paletteRow = (row) + 8 - ((sprite).spritesetGfxSlot + (sprite).frozenPaletteRowOffset))
+
+#define SPRITE_IS_INFECTED(sprite) ((sprite).spritesetSlotAndProperties >= SSP_X_ABSORBABLE_BY_SAMUS && (sprite).spritesetSlotAndProperties < SSP_UNKNOWN_40 + 0x10)
 
 #endif /* SPRITE_CONSTANTS_H */

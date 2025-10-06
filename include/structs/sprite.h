@@ -12,8 +12,8 @@ struct SpriteData {
     u16 status;
     u16 yPosition;
     u16 xPosition;
-    u16 xParasiteTimer;
-    u16 unk_8;
+    u16 workY;
+    u16 workX;
     s16 hitboxTop;
     s16 hitboxBottom;
     s16 hitboxLeft;

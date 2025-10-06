@@ -2197,7 +2197,7 @@ unk_1605c: @ 0x0801605C
 	adds r6, #0x2f
 	movs r0, #0
 	strb r0, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _080160A4 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -2657,7 +2657,7 @@ _080163EC: .4byte 0x0000FF88
 	thumb_func_start SaXStanding
 SaXStanding: @ 0x080163F0
 	push {r4, r5, lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _08016408 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -3276,7 +3276,7 @@ _0801689C: .4byte gSaXData
 	thumb_func_start SaXDelayBeforeShootingBeam
 SaXDelayBeforeShootingBeam: @ 0x080168A0
 	push {r4, lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _080168B8 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -3527,7 +3527,7 @@ _08016A78: .4byte gSaXData
 	thumb_func_start SaXShootingBeam
 SaXShootingBeam: @ 0x08016A7C
 	push {r4, lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _08016A94 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -3833,7 +3833,7 @@ _08016CAC: .4byte gSaXData
 	thumb_func_start SaXShootingMissile
 SaXShootingMissile: @ 0x08016CB0
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _08016CC8 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -6846,7 +6846,7 @@ SaXNocWalkingCheckCollisions: @ 0x080184E0
 	adds r6, #0x2f
 	movs r0, #0
 	strb r0, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _08018520 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -7026,7 +7026,7 @@ SaXNocRunningCheckCollisions: @ 0x08018644
 	adds r6, #0x2f
 	movs r0, #0
 	strb r0, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _0801868C @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -8130,7 +8130,7 @@ SaXArcWalkingCheckCollisions: @ 0x08018F50
 	adds r6, #0x2f
 	movs r0, #0
 	strb r0, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _08018F98 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -8300,7 +8300,7 @@ SaXArcRunningCheckCollisions: @ 0x08019098
 	adds r6, #0x2f
 	movs r0, #0
 	strb r0, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _080190D8 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -9145,7 +9145,7 @@ _08019718: .4byte 0x0000FF88
 	thumb_func_start SaXArcTurningAround
 SaXArcTurningAround: @ 0x0801971C
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _08019734 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -9222,7 +9222,7 @@ _080197B4: .4byte 0x082E6BCC
 	thumb_func_start SaXArcTurningAroundDuringChase
 SaXArcTurningAroundDuringChase: @ 0x080197B8
 	push {r4, lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _080197D0 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -9301,7 +9301,7 @@ _08019850: .4byte 0x0000FDFF
 	thumb_func_start SaXArcIdleBeforeShootingMissile
 SaXArcIdleBeforeShootingMissile: @ 0x08019854
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _0801986C @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -9420,7 +9420,7 @@ _08019938: .4byte gSaXData
 	thumb_func_start SaXArcShootingMissile
 SaXArcShootingMissile: @ 0x0801993C
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _08019954 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -9968,7 +9968,7 @@ SaXBossRunniingCheckCollisions: @ 0x08019E34
 	adds r0, r4, #0
 	adds r0, #0x2f
 	strb r6, [r0]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _08019E74 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -13603,7 +13603,7 @@ SaXTro2WalkingCheckCollisions: @ 0x0801BB98
 	adds r6, #0x2f
 	movs r7, #0
 	strb r7, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _0801BBD8 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -13876,7 +13876,7 @@ SaXTro2RunningCheckCollisions: @ 0x0801BDB4
 	adds r6, #0x2f
 	movs r0, #0
 	strb r0, [r6]
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r5, _0801BDF4 @ =gPreviousVerticalCollisionCheck
 	ldrb r2, [r5]
 	cmp r2, #0
@@ -14659,7 +14659,7 @@ _0801C3D0: .4byte 0x0000FF88
 	thumb_func_start SaXTro2TurningAfterHearingWeapon
 SaXTro2TurningAfterHearingWeapon: @ 0x0801C3D4
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _0801C3EC @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -14736,7 +14736,7 @@ _0801C46C: .4byte 0x082E6BCC
 	thumb_func_start SaXTro2TurningDuringChase
 SaXTro2TurningDuringChase: @ 0x0801C470
 	push {r4, lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _0801C488 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -14815,7 +14815,7 @@ _0801C508: .4byte 0x0000FDFF
 	thumb_func_start SaXTro2IdleBeforeShootingBeam
 SaXTro2IdleBeforeShootingBeam: @ 0x0801C50C
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _0801C524 @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -14934,7 +14934,7 @@ _0801C5F0: .4byte gSaXData
 	thumb_func_start SaXTro2ShootingBeam
 SaXTro2ShootingBeam: @ 0x0801C5F4
 	push {lr}
-	bl SpriteUtilAlignYPosOnSlope
+	bl SpriteUtilAlignYPositionOnSlopeAtOrigin
 	ldr r0, _0801C60C @ =gPreviousVerticalCollisionCheck
 	ldrb r0, [r0]
 	cmp r0, #0
@@ -15941,7 +15941,7 @@ HornoadIdle: @ 0x0801CDF0
 _0801CE24: .4byte gCurrentSprite
 _0801CE28: .4byte gPreviousCollisionCheck
 _0801CE2C:
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801CE38
 	bl HornoadJumpingInit
@@ -16248,7 +16248,7 @@ _0801D072:
 	thumb_func_start HornoadLanding
 HornoadLanding: @ 0x0801D078
 	push {r4, lr}
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D112
 	ldr r4, _0801D0C0 @ =gCurrentSprite
@@ -16437,7 +16437,7 @@ HornoadTurningIdle: @ 0x0801D1BC
 _0801D1F0: .4byte gCurrentSprite
 _0801D1F4: .4byte gPreviousCollisionCheck
 _0801D1F8:
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D230
 	bl HornoadCheckSamusInJumpingRange
@@ -16497,7 +16497,7 @@ HornoadWaitingForX: @ 0x0801D238
 _0801D26C: .4byte gCurrentSprite
 _0801D270: .4byte gPreviousCollisionCheck
 _0801D274:
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D29E
 	ldr r0, _0801D2A4 @ =gCurrentSprite
@@ -16535,7 +16535,7 @@ HornoadTurning: @ 0x0801D2AC
 	subs r0, #4
 	strh r0, [r4, #2]
 _0801D2BC:
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D300
 	ldrh r1, [r4]
@@ -16626,7 +16626,7 @@ _0801D350:
 _0801D36E:
 	strh r0, [r4, #4]
 _0801D370:
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D37C
 	bl HornoadSetRandomIdleAnimation
@@ -16696,7 +16696,7 @@ _0801D3F4:
 	ldr r0, _0801D420 @ =0x0000014B
 	bl SoundPlayNotAlreadyPlaying
 _0801D3FA:
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D416
 	ldr r1, _0801D424 @ =gCurrentSprite
@@ -16876,7 +16876,7 @@ HornoadSpitExploding: @ 0x0801D54C
 	adds r1, #0x26
 	movs r0, #1
 	strb r0, [r1]
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D564
 	movs r0, #0
@@ -17135,7 +17135,7 @@ _0801D72C:
 HornoadSpawnerSpawnHornoad: @ 0x0801D734
 	push {lr}
 	sub sp, #0xc
-	bl SpriteUtilCheckEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationEnded
 	cmp r0, #0
 	beq _0801D768
 	ldr r3, _0801D770 @ =gCurrentSprite
@@ -18153,7 +18153,7 @@ HalzynFlyingUp: @ 0x0801DFE4
 _0801E008: .4byte gCurrentSprite
 _0801E00C: .4byte gPreviousCollisionCheck
 _0801E010:
-	bl SpriteUtilCheckNearEndCurrentSpriteAnim
+	bl SpriteUtilHasCurrentAnimationNearlyEnded
 	cmp r0, #0
 	beq _0801E020
 _0801E018:
@@ -18694,7 +18694,7 @@ _0801E41A:
 	adds r0, #0x23
 	ldrb r1, [r0]
 	movs r0, #3
-	bl SpriteUtilUpdateSecondarySpritesFreezeTimer
+	bl SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent
 	b _0801E622
 	.align 2, 0
 _0801E438: .4byte gCurrentSprite
@@ -18864,7 +18864,7 @@ HalzynWing: @ 0x0801E628
 	cmp r0, #0
 	beq _0801E644
 	bl SpriteUtilUpdateFreezeTimer
-	bl SpriteUtilUpdatePrimarySpriteFreezeTimer
+	bl SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent
 	b _0801E6AC
 	.align 2, 0
 _0801E640: .4byte gCurrentSprite

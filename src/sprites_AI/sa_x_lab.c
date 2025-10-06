@@ -103,7 +103,7 @@ void SaXLabCoveredByMetroidsAfterDetachment(void)
     {
         gCurrentSprite.work1 = 60;
 
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
             SoundPlay(0x23C);
     }
 }

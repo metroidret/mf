@@ -60,7 +60,7 @@ void Bubbles1(void)
             break;
 
         case 1:
-            if (SpriteUtilCheckEndCurrentSpriteAnim())
+            if (SpriteUtilHasCurrentAnimationEnded())
             {
                 gCurrentSprite.pose++;
                 gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
@@ -115,7 +115,7 @@ void Bubbles2(void)
             break;
 
         case 1:
-            if (SpriteUtilCheckEndCurrentSpriteAnim())
+            if (SpriteUtilHasCurrentAnimationEnded())
             {
                 gCurrentSprite.pose++;
                 gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
@@ -163,8 +163,8 @@ void WaterDrop(void)
             // gCurrentSprite.pOam = sWaterDropOam_Spawning;
             gCurrentSprite.pOam = (const struct FrameData*)0x83ec240;
 
-            gCurrentSprite.xParasiteTimer = gCurrentSprite.yPosition;
-            gCurrentSprite.unk_8 = gCurrentSprite.xPosition;
+            gCurrentSprite.workY = gCurrentSprite.yPosition;
+            gCurrentSprite.workX = gCurrentSprite.xPosition;
 
             gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
             gCurrentSprite.pose = 10;
@@ -173,7 +173,7 @@ void WaterDrop(void)
             break;
 
         case 2:
-            if (SpriteUtilCheckEndCurrentSpriteAnim())
+            if (SpriteUtilHasCurrentAnimationEnded())
             {
                 // gCurrentSprite.pOam = sWaterDropOam_Falling;
                 gCurrentSprite.pOam = (const struct FrameData*)0x83ec270;
@@ -239,7 +239,7 @@ void WaterDrop(void)
             if (gCurrentSprite.work2)
                 gCurrentSprite.yPosition = gEffectYPosition;
 
-            if (SpriteUtilCheckEndCurrentSpriteAnim())
+            if (SpriteUtilHasCurrentAnimationEnded())
             {
                 gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
                 gCurrentSprite.pose = 10;
@@ -261,13 +261,13 @@ void WaterDrop(void)
 
                 gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
 
-                gCurrentSprite.yPosition = gCurrentSprite.xParasiteTimer;
-                gCurrentSprite.xPosition = gCurrentSprite.unk_8;
+                gCurrentSprite.yPosition = gCurrentSprite.workY;
+                gCurrentSprite.xPosition = gCurrentSprite.workX;
 
                 if (MOD_AND(gSpriteRandomNumber, 2))
-                    gCurrentSprite.xPosition = gCurrentSprite.unk_8 + DIV_SHIFT(gSpriteRandomNumber + 1, 2);
+                    gCurrentSprite.xPosition = gCurrentSprite.workX + DIV_SHIFT(gSpriteRandomNumber + 1, 2);
                 else
-                    gCurrentSprite.xPosition = gCurrentSprite.unk_8 - DIV_SHIFT(gSpriteRandomNumber + 1, 2);
+                    gCurrentSprite.xPosition = gCurrentSprite.workX - DIV_SHIFT(gSpriteRandomNumber + 1, 2);
             }
     }
 }

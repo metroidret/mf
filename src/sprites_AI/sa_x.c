@@ -476,7 +476,7 @@ u8 unk_15e88(void)
         if (gSaXVision.inYRange == TRUE)
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.unk_1 != TRUE)
                 gCurrentSprite.pose = 0x39;
@@ -485,10 +485,10 @@ u8 unk_15e88(void)
         }
         else
         {
-            if (SPRITE_HAS_ISFT(gCurrentSprite))
+            if (SPRITE_GET_ISFT(gCurrentSprite))
             {
                 gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-                gCurrentSprite.xParasiteTimer = 0;
+                gCurrentSprite.workY = 0;
 
                 if (gSaXVision.samusOnRight == FALSE)
                     gCurrentSprite.pose = 0x39;
@@ -502,7 +502,7 @@ u8 unk_15e88(void)
         if (gSaXVision.inYRange == TRUE)
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.unk_1 != FALSE)
                 gCurrentSprite.pose = 0x39;
@@ -511,10 +511,10 @@ u8 unk_15e88(void)
         }
         else
         {
-            if (SPRITE_HAS_ISFT(gCurrentSprite))
+            if (SPRITE_GET_ISFT(gCurrentSprite))
             {
                 gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-                gCurrentSprite.xParasiteTimer = 0;
+                gCurrentSprite.workY = 0;
 
                 if (gSaXVision.samusOnRight == TRUE)
                     gCurrentSprite.pose = 0x39;
@@ -546,7 +546,7 @@ u8 unk_15f54(void)
         if (gSaXVision.inYRange == TRUE)
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.unk_1 == TRUE)
                 gCurrentSprite.pose = 0x17;
@@ -561,10 +561,10 @@ u8 unk_15f54(void)
                     gCurrentSprite.pose = 0x3;
             }
 
-            if (SPRITE_HAS_ISFT(gCurrentSprite))
+            if (SPRITE_GET_ISFT(gCurrentSprite))
             {
                 gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-                gCurrentSprite.xParasiteTimer = 0;
+                gCurrentSprite.workY = 0;
 
                 if (gSaXVision.samusOnRight == FALSE)
                     gCurrentSprite.pose = 0x39;
@@ -578,7 +578,7 @@ u8 unk_15f54(void)
         if (gSaXVision.inYRange == TRUE)
         {
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
 
             if (gSaXVision.unk_1 == FALSE)
                 gCurrentSprite.pose = 0x17;
@@ -593,10 +593,10 @@ u8 unk_15f54(void)
                     gCurrentSprite.pose = 0x3;
             }
 
-            if (SPRITE_HAS_ISFT(gCurrentSprite))
+            if (SPRITE_GET_ISFT(gCurrentSprite))
             {
                 gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-                gCurrentSprite.xParasiteTimer = 0;
+                gCurrentSprite.workY = 0;
 
                 if (gSaXVision.samusOnRight == TRUE)
                     gCurrentSprite.pose = 0x39;
@@ -619,7 +619,7 @@ u8 unk_15f54(void)
 void unk_1605c(void)
 {
     gCurrentSprite.work2 = 0;
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -801,7 +801,7 @@ void SaXInit(void)
 
     gCurrentSprite.status &= ~SPRITE_STATUS_SAMUS_DETECTED;
 
-    gCurrentSprite.xParasiteTimer = 0;
+    gCurrentSprite.workY = 0;
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
 
     SpriteUtilMakeSpriteFaceSamusDirection();
@@ -927,7 +927,7 @@ void SaXStanding(void)
 {
     u32 nslr;
 
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1289,7 +1289,7 @@ void SaXDelayBeforeShootingBeam(void)
 {
     u32 nslr;
 
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1403,7 +1403,7 @@ void SaXShootingBeam(void)
 {
     u32 nslr;
 
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1557,7 +1557,7 @@ void SaXShootingMissileInit(void)
  */
 void SaXShootingMissile(void)
 {
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -1852,7 +1852,7 @@ void SaXWalkingToDoor(void)
     if (gSaXVision.inYRange == TRUE)
     {
         gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-        gCurrentSprite.xParasiteTimer = 0;
+        gCurrentSprite.workY = 0;
 
         if (gSaXVision.unk_1 == FALSE)
             gCurrentSprite.pose = 0x17;
@@ -1862,10 +1862,10 @@ void SaXWalkingToDoor(void)
         return;
     }
 
-    if (SPRITE_HAS_ISFT(gCurrentSprite))
+    if (SPRITE_GET_ISFT(gCurrentSprite))
     {
         gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
-        gCurrentSprite.xParasiteTimer = 0;
+        gCurrentSprite.workY = 0;
 
         if (gSaXVision.samusOnRight == TRUE)
             gCurrentSprite.pose = 0x39;
@@ -2045,7 +2045,7 @@ void SaXBeamMove(void)
     gCurrentClipdataAffectingAction = 0x6;
     SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition);
 
-    if (!(gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN))
+    if (!(gCurrentSprite.status & SPRITE_STATUS_ONSCREEN))
     {
         gCurrentSprite.work1--;
         if (gCurrentSprite.work1 == 0)
@@ -2156,7 +2156,7 @@ void SaXMissileMoving(void)
         return;
     }
 
-    if (!(gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN))
+    if (!(gCurrentSprite.status & SPRITE_STATUS_ONSCREEN))
     {
         gCurrentSprite.work1--;
         if (gCurrentSprite.work1 == 0)
@@ -2527,7 +2527,7 @@ void SaXUpdateGraphics(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_EXISTS && !(gCurrentSprite.status & SPRITE_STATUS_HIDDEN))
     {
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
             gSaXData.screenFlag = SA_X_SCREEN_FLAG_ON_SCREEN;
         else
             gSaXData.screenFlag = SA_X_SCREEN_FLAG_OFF_SCREEN;
@@ -2598,20 +2598,20 @@ void SaXElevator(void)
     {
         if (gSaXVision.inYRange == TRUE)
         {
-            gCurrentSprite.xParasiteTimer = 0;
+            gCurrentSprite.workY = 0;
         }
         else
         {
-            if (gCurrentSprite.xParasiteTimer >= 60 * 20)
+            if (gCurrentSprite.workY >= 60 * 20)
             {
                 gCurrentSprite.status &= ~SPRITE_STATUS_SAMUS_DETECTED;
             }
             else
             {
-                if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
-                    gCurrentSprite.xParasiteTimer += 4;
+                if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
+                    gCurrentSprite.workY += 4;
                 else
-                    gCurrentSprite.xParasiteTimer += 1;
+                    gCurrentSprite.workY += 1;
             }
         }
     }
@@ -2672,13 +2672,13 @@ void SaXElevator(void)
                         if (gPreviousCollisionCheck == COLLISION_SOLID)
                         {
                             gCurrentSprite.pose = 0x3;
-                            gCurrentSprite.xParasiteTimer = 60 * 20;
+                            gCurrentSprite.workY = 60 * 20;
                         }
                     }
                     else
                     {
                         gCurrentSprite.pose = 0x3;
-                        gCurrentSprite.xParasiteTimer = 60 * 20;
+                        gCurrentSprite.workY = 60 * 20;
                     }
                 }
                 else
@@ -2692,13 +2692,13 @@ void SaXElevator(void)
                         if (gPreviousCollisionCheck == COLLISION_SOLID)
                         {
                             gCurrentSprite.pose = 0x3;
-                            gCurrentSprite.xParasiteTimer = 60 * 20;
+                            gCurrentSprite.workY = 60 * 20;
                         }
                     }
                     else
                     {
                         gCurrentSprite.pose = 0x3;
-                        gCurrentSprite.xParasiteTimer = 60 * 20;
+                        gCurrentSprite.workY = 60 * 20;
                     }
                 }
             }

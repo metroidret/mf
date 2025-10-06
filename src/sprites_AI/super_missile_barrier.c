@@ -28,7 +28,7 @@ void SuperMissileBarrierInit(void)
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
     }
     else
     {
@@ -142,13 +142,13 @@ void SuperMissileBarrierDying(void)
  */
 void SuperMissileBarrier(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 0x4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 0x4)
         SoundPlayNotAlreadyPlaying(0x160);
 
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpritesFreezeTimer(SSPRITE_X_BARRIER_CORE_SUPER_STEM, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_X_BARRIER_CORE_SUPER_STEM, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
@@ -197,7 +197,7 @@ void SuperMissileBarrierStem(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdatePrimarySpriteFreezeTimer();
+        SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent();
         return;
     }
 
@@ -246,7 +246,7 @@ void SuperMissileBarrierStem(void)
         case 0x18:
             gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-            if (SpriteUtilCheckEndCurrentSpriteAnim())
+            if (SpriteUtilHasCurrentAnimationEnded())
             {
                 gCurrentSprite.status = 0;
             }
