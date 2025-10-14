@@ -56,10 +56,10 @@
     "size": 1
   },
   {
-    "path": "Blob_2f93d0_35dd74.bin",
-    "count": 412068,
+    "path": "Blob_2fb610_35dd74.bin",
+    "count": 403300,
     "addr": {
-      "us": 3118032
+      "us": 3126800
     },
     "size": 1
   },
@@ -2580,6 +2580,22 @@
     "count": 16,
     "addr": {
       "us": 3117204
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/zombie_researcher.gfx",
+    "count": 1536,
+    "addr": {
+      "us": 3118040
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/zombie_researcher.pal",
+    "count": 48,
+    "addr": {
+      "us": 3124184
     },
     "size": 2
   },
