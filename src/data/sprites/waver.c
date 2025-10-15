@@ -23,78 +23,78 @@ const u16 sWaverPal[2 * 16] = INCBIN_U16("data/sprites/waver.pal");
 
 static const u16 sWaverDebrisOam_Frame0[OAM_DATA_SIZE(5)] = {
     5,
-    OAM_ENTRY(-4, -3, OAM_DIMS_8x16, OAM_NO_FLIP, 516, 0,), //0xfc, 0x1fd, OBJ_PALETTE_8 | 0x204,
-    0xf3, 0x5, OBJ_PALETTE_8 | 0x220,
-    0xf8, 0x1f2, OBJ_PALETTE_8 | 0x200,
-    0xf0, 0x1f0, OBJ_PALETTE_8 | 0x242,
-    0xed, 0x1ff, OBJ_PALETTE_8 | 0x241
+    OAM_ENTRY(-3, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 0x204, 8, 0),
+    OAM_ENTRY(5, -13, OAM_DIMS_8x8, OAM_NO_FLIP, 0x220, 8, 0),
+    OAM_ENTRY(-14, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 0x200, 8, 0),
+    OAM_ENTRY(-16, -16, OAM_DIMS_8x8, OAM_NO_FLIP, 0x242, 8, 0),
+    OAM_ENTRY(-1, -19, OAM_DIMS_8x8, OAM_NO_FLIP, 0x241, 8, 0),
 };
 
 static const u16 sWaverDebrisOam_Frame1[OAM_DATA_SIZE(6)] = {
     6,
-    0xfc, 0x1fd, OBJ_PALETTE_8 | 0x205,
-    0xf7, 0x1fb, OBJ_PALETTE_8 | 0x260,
-    0xf2, 0x5, OBJ_PALETTE_8 | 0x221,
-    0xf8, 0x1f2, OBJ_PALETTE_8 | 0x201,
-    0xec, 0x1f3, OBJ_PALETTE_8 | 0x240,
-    0xe8, 0x1ff, OBJ_PALETTE_8 | 0x241
+    OAM_ENTRY(-3, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 0x205, 8, 0),
+    OAM_ENTRY(-5, -9, OAM_DIMS_8x8, OAM_NO_FLIP, 0x260, 8, 0),
+    OAM_ENTRY(5, -14, OAM_DIMS_8x8, OAM_NO_FLIP, 0x221, 8, 0),
+    OAM_ENTRY(-14, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 0x201, 8, 0),
+    OAM_ENTRY(-13, -20, OAM_DIMS_8x8, OAM_NO_FLIP, 0x240, 8, 0),
+    OAM_ENTRY(-1, -24, OAM_DIMS_8x8, OAM_NO_FLIP, 0x241, 8, 0),
 };
 
 static const u16 sWaverDebrisOam_Frame2[OAM_DATA_SIZE(5)] = {
     5,
-    0xfb, 0x1fe, OBJ_PALETTE_8 | 0x206,
-    0xf3, 0x1fc, OBJ_PALETTE_8 | 0x242,
-    0xf2, 0x5, OBJ_PALETTE_8 | 0x222,
-    0xf9, 0x1f2, OBJ_PALETTE_8 | 0x202,
-    0xea, 0x1f3, OBJ_PALETTE_8 | 0x241
+    OAM_ENTRY(-2, -5, OAM_DIMS_8x8, OAM_NO_FLIP, 0x206, 8, 0),
+    OAM_ENTRY(-4, -13, OAM_DIMS_8x8, OAM_NO_FLIP, 0x242, 8, 0),
+    OAM_ENTRY(5, -14, OAM_DIMS_8x8, OAM_NO_FLIP, 0x222, 8, 0),
+    OAM_ENTRY(-14, -7, OAM_DIMS_8x8, OAM_NO_FLIP, 0x202, 8, 0),
+    OAM_ENTRY(-13, -22, OAM_DIMS_8x8, OAM_NO_FLIP, 0x241, 8, 0),
 };
 
 static const u16 sWaverDebrisOam_Frame3[OAM_DATA_SIZE(5)] = {
     5,
-    0xfa, 0x1fc, OBJ_PALETTE_8 | 0x207,
-    0xf2, 0x6, OBJ_PALETTE_8 | 0x223,
-    0xf9, 0x1f2, OBJ_PALETTE_8 | 0x203,
-    0xf3, OBJ_X_FLIP | 0x1f6, OBJ_PALETTE_8 | 0x260,
-    0xee, 0x1fe, OBJ_PALETTE_8 | 0x240
+    OAM_ENTRY(-4, -6, OAM_DIMS_8x8, OAM_NO_FLIP, 0x207, 8, 0),
+    OAM_ENTRY(6, -14, OAM_DIMS_8x8, OAM_NO_FLIP, 0x223, 8, 0),
+    OAM_ENTRY(-14, -7, OAM_DIMS_8x8, OAM_NO_FLIP, 0x203, 8, 0),
+    OAM_ENTRY(-10, -13, OAM_DIMS_8x8, OAM_X_FLIP, 0x260, 8, 0),
+    OAM_ENTRY(-2, -18, OAM_DIMS_8x8, OAM_NO_FLIP, 0x240, 8, 0),
 };
 
 static const u16 sOam_31752e[OAM_DATA_SIZE(4)] = {
     4,
-    0x8, 0x0, OBJ_PALETTE_8 | 0x263,
-    0x8, 0x1f8, OBJ_PALETTE_8 | 0x262,
-    0xf8, OBJ_SIZE_16x16 | 0x0, OBJ_PALETTE_8 | 0x20e,
-    0xf8, OBJ_SIZE_16x16 | 0x1f0, OBJ_PALETTE_8 | 0x20c
+    OAM_ENTRY(0, 8, OAM_DIMS_8x8, OAM_NO_FLIP, 0x263, 8, 0),
+    OAM_ENTRY(-8, 8, OAM_DIMS_8x8, OAM_NO_FLIP, 0x262, 8, 0),
+    OAM_ENTRY(0, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x20E, 8, 0),
+    OAM_ENTRY(-16, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x20C, 8, 0),
 };
 
 static const u16 sWaverOam_BackingOut_Frame1[OAM_DATA_SIZE(1)] = {
     1,
-    0xf0, OBJ_SIZE_32x32 | 0x1f0, OBJ_PALETTE_9 | 0x210
+    OAM_ENTRY(-16, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 0x210, 9, 0),
 };
 
 static const u16 sWaverOam_FlyingDown_Frame0[OAM_DATA_SIZE(1)] = {
     1,
-    0xf0, OBJ_SIZE_32x32 | 0x1f0, OBJ_PALETTE_9 | 0x214
+    OAM_ENTRY(-16, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 0x214, 9, 0),
 };
 
 static const u16 sWaverOam_FlyingDown_Frame1[OAM_DATA_SIZE(2)] = {
     2,
-    OBJ_SHAPE_HORIZONTAL | 0xf5, OBJ_SIZE_32x16 | 0x1f0, OBJ_PALETTE_9 | 0x248,
-    OBJ_SHAPE_HORIZONTAL | 0x5, OBJ_SIZE_32x8 | 0x1f0, OBJ_PALETTE_9 | 0x244
+    OAM_ENTRY(-16, -11, OAM_DIMS_32x16, OAM_NO_FLIP, 0x248, 9, 0),
+    OAM_ENTRY(-16, 5, OAM_DIMS_32x8, OAM_NO_FLIP, 0x244, 9, 0),
 };
 
 static const u16 sWaverOam_FlyingDown_Frame2[OAM_DATA_SIZE(1)] = {
     1,
-    OBJ_SHAPE_HORIZONTAL | 0xf9, OBJ_SIZE_32x16 | 0x1f0, OBJ_PALETTE_9 | 0x24c
+    OAM_ENTRY(-16, -7, OAM_DIMS_32x16, OAM_NO_FLIP, 0x24C, 9, 0),
 };
 
 static const u16 sWaverOam_FlyingDown_Frame3[OAM_DATA_SIZE(1)] = {
     1,
-    0xf0, OBJ_SIZE_32x32 | 0x1f0, OBJ_PALETTE_9 | 0x218
+    OAM_ENTRY(-16, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 0x218, 9, 0),
 };
 
 static const u16 sWaverOam_FlyingDown_Frame4[OAM_DATA_SIZE(1)] = {
     1,
-    0xf0, OBJ_SIZE_32x32 | 0x1f0, OBJ_PALETTE_9 | 0x21c
+    OAM_ENTRY(-16, -16, OAM_DIMS_32x32, OAM_NO_FLIP, 0x21C, 9, 0),
 };
 
 const struct FrameData sWaverOam_FlyingUp[2] = {
