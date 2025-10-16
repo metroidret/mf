@@ -63,7 +63,7 @@ void HalzynInit(void)
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.work1 = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.work1 = X_PARASITE_MOSAIC_MAX_INDEX;
         return;
     }
 

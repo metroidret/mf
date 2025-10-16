@@ -642,7 +642,7 @@ void SerrisTurningIntoXInit(void)
     gCurrentSprite.invincibilityStunFlashTimer = 0;
     gCurrentSprite.paletteRow = 0;
 
-    gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
+    gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
 }
 
 /**

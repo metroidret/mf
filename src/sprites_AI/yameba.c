@@ -63,7 +63,7 @@ void YamebaInit(void)
     {
         gCurrentSprite.work0++;
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
     }
 
     if (gCurrentSprite.work0 == 0)

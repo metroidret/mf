@@ -348,7 +348,7 @@ void NettoriDyingInit(void)
 
     gCurrentSprite.status |= SPRITE_STATUS_MOSAIC | SPRITE_STATUS_IGNORE_PROJECTILES;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
+    gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
 
     NettoriRemoveCollision();
     PlayMusic(0x43, 7);
