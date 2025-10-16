@@ -118,7 +118,7 @@ void SavePlatformInit(void)
     gCurrentSprite.work4 = 0;
     gCurrentSprite.standingOnSprite = FALSE;
 
-    gCurrentSprite.xParasiteTimer = gCurrentSprite.yPosition;
+    gCurrentSprite.workY = gCurrentSprite.yPosition;
 
     gCurrentSprite.drawOrder = 5;
     gCurrentSprite.bgPriority = 1;
@@ -331,14 +331,14 @@ void SavePlatformRising(void)
         return;
     }
 
-    if (gCurrentSprite.yPosition == gCurrentSprite.xParasiteTimer)
+    if (gCurrentSprite.yPosition == gCurrentSprite.workY)
     {
         gCurrentSprite.pose = SPRITE_POSE_IDLE;
         gCurrentSprite.work4 = 0;
         return;
     }
 
-    if (gCurrentSprite.yPosition > gCurrentSprite.xParasiteTimer)
+    if (gCurrentSprite.yPosition > gCurrentSprite.workY)
     {
         gCurrentSprite.yPosition -= ONE_SUB_PIXEL;
 
@@ -363,7 +363,7 @@ void SavePlatformRising(void)
  */
 void SavePlatformRisingAfterPrompt(void)
 {
-    if (gCurrentSprite.yPosition == gCurrentSprite.xParasiteTimer)
+    if (gCurrentSprite.yPosition == gCurrentSprite.workY)
     {
         gCurrentSprite.pose = SPRITE_POSE_IDLE;
         gCurrentSprite.work4 = 0;
@@ -420,7 +420,7 @@ void SavePadHologramInit(void)
  */
 void SavePadHologramOpening(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.pOam = sSavePadHologramOam_Flashing;
         gCurrentSprite.animationDurationCounter = 0;
@@ -452,7 +452,7 @@ void SavePadHologramFlashing(void)
  */
 void SavePadHologramClosing(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         gCurrentSprite.status = 0;
 }
 

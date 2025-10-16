@@ -113,13 +113,13 @@ void SamusAimCannonStanding(void)
         if (gButtonInput & KEY_DOWN)
         {
             // Aim diagonally down
-            gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
             gSamusData.diagonalAim = DIAG_AIM_DOWN;
         }
         else if (gSamusData.diagonalAim == DIAG_AIM_NONE || gButtonInput & KEY_UP)
         {
             // Aim diagonally up
-            gSamusData.armCannonDirection = ACD_DIAGONAL_UP;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_UP;
             gSamusData.diagonalAim = DIAG_AIM_UP;
         }
 
@@ -151,13 +151,13 @@ void SamusAimCannonMidAir(void)
         if (gButtonInput & KEY_DOWN)
         {
             // Aim diagonally down
-            gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
             gSamusData.diagonalAim = DIAG_AIM_DOWN;
         }
         else if (gSamusData.diagonalAim == DIAG_AIM_NONE || gButtonInput & KEY_UP)
         {
             // Aim diagonally up
-            gSamusData.armCannonDirection = ACD_DIAGONAL_UP;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_UP;
             gSamusData.diagonalAim = DIAG_AIM_UP;
         }
 
@@ -169,7 +169,7 @@ void SamusAimCannonMidAir(void)
         if (gButtonInput & gSamusData.direction)
         {
             // Aim diagonally up
-            gSamusData.armCannonDirection = ACD_DIAGONAL_UP;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_UP;
         }
         else
         {
@@ -186,7 +186,7 @@ void SamusAimCannonMidAir(void)
         if (gButtonInput & gSamusData.direction)
         {
             // Aim diagonally down
-            gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
         }
         else
         {
@@ -218,13 +218,13 @@ void SamusAimCannonRunning(void)
         if (gButtonInput & KEY_DOWN)
         {
             // Aim diagonally down
-            gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
             gSamusData.diagonalAim = DIAG_AIM_DOWN;
         }
         else if (gSamusData.diagonalAim == DIAG_AIM_NONE || gButtonInput & KEY_UP)
         {
             // Aim diagonally up
-            gSamusData.armCannonDirection = ACD_DIAGONAL_UP;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_UP;
             gSamusData.diagonalAim = DIAG_AIM_UP;
         }
 
@@ -237,7 +237,7 @@ void SamusAimCannonRunning(void)
     if (gButtonInput & KEY_UP)
     {
         // Aim diagonally up
-        gSamusData.armCannonDirection = ACD_DIAGONAL_UP;
+        gSamusData.armCannonDirection = ACD_DIAGONALLY_UP;
         gSamusData.armRunningFlag = FALSE;
         return;
     }
@@ -245,7 +245,7 @@ void SamusAimCannonRunning(void)
     if (gButtonInput & KEY_DOWN)
     {
         // Aim diagonally up
-        gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+        gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
         gSamusData.armRunningFlag = FALSE;
         return;
     }
@@ -263,7 +263,7 @@ void SamusAimCannonHorizontalLadder(void)
     if (gButtonInput & gButtonAssignments.diagonalAim)
     {
         // Can only aim diagonally down
-        gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+        gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
         gSamusData.diagonalAim = DIAG_AIM_DOWN;
         return;
     }
@@ -274,7 +274,7 @@ void SamusAimCannonHorizontalLadder(void)
         if (gSamusData.direction & gButtonInput)
         {
             // Holding down and the facing direction, so diagonally down
-            gSamusData.armCannonDirection = ACD_DIAGONAL_DOWN;
+            gSamusData.armCannonDirection = ACD_DIAGONALLY_DOWN;
         }
         else
         {

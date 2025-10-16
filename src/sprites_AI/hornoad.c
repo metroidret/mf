@@ -36,7 +36,7 @@ u8 HornoadCheckSamusInSpittingRange(void)
         return FALSE;
 
     // Check on screen and alive
-    if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN && gCurrentSprite.health != 0)
+    if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN && gCurrentSprite.health != 0)
     {
         nslr = SpriteUtilCheckSamusNearSpriteLeftRight(BLOCK_SIZE * 2 - QUARTER_BLOCK_SIZE / 2,
             BLOCK_SIZE * 5 - QUARTER_BLOCK_SIZE - PIXEL_SIZE);
@@ -222,7 +222,7 @@ void HornoadInit(void)
         if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
         {
             gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-            gCurrentSprite.xParasiteTimer = 44;
+            gCurrentSprite.workY = 44;
         }
         else
         {
@@ -440,7 +440,7 @@ void HornoadIdle(void)
         }
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         HornoadJumpingInit();
 }
 
@@ -605,7 +605,7 @@ void HornoadLanding(void)
     u8 rangeAction;
     u32 rng;
 
-    if (!SpriteUtilCheckEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationEnded())
         return;
 
     if (gCurrentSprite.properties & SP_CAN_ABSORB_X)
@@ -736,7 +736,7 @@ void HornoadIdleAnimation(void)
         }
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         rangeAction = HornoadCheckSamusInJumpingRange();
 
@@ -778,7 +778,7 @@ void HornoadWaitingForX(void)
         }
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.work1++;
 
@@ -796,7 +796,7 @@ void HornoadTurningAround(void)
     if (gCurrentSprite.currentAnimationFrame != 0)
         gCurrentSprite.yPosition -= PIXEL_SIZE;
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
 
@@ -840,7 +840,7 @@ void HornoadTurningAroundSecondPart(void)
             gCurrentSprite.xPosition += PIXEL_SIZE;
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         HornoadIdleAnimationInit();
 }
 
@@ -868,7 +868,7 @@ void HornoadSpitting(void)
         SoundPlayNotAlreadyPlaying(0x14B);
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.work3--;
 
@@ -965,7 +965,7 @@ void HornoadSpitExploding(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         gCurrentSprite.status = 0;
 }
 
@@ -1099,7 +1099,7 @@ void HornoadSpwanerDelayBeforeSpawning(void)
  */
 void HornoadSpwanerSpawnHornoad(void)
 {
-    if (!SpriteUtilCheckEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationEnded())
         return;
 
     SpriteSpawnPrimary(PSPRITE_HORNOAD, gCurrentSprite.roomSlot, gCurrentSprite.spritesetGfxSlot, 0x10,
@@ -1114,7 +1114,7 @@ void HornoadSpwanerSpawnHornoad(void)
  */
 void Hornoad(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 0x4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 0x4)
         SoundPlayNotAlreadyPlaying(0x14A);
 
     if (gCurrentSprite.freezeTimer != 0)
@@ -1123,7 +1123,7 @@ void Hornoad(void)
         return;
     }
 
-    if (gCurrentSprite.pose < SPRITE_POSE_TURNING_INTO_X && SPRITE_HAS_ISFT(gCurrentSprite) && gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+    if (gCurrentSprite.pose < SPRITE_POSE_TURNING_INTO_X && SPRITE_GET_ISFT(gCurrentSprite) && gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
         gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
 
     switch (gCurrentSprite.pose)

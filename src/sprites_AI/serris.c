@@ -268,7 +268,7 @@ void SerrisHandleRotationMovement(void)
     }
 
     // Rotate sprite
-    SerrisRotateAroundPoint(gCurrentSprite.xParasiteTimer, gCurrentSprite.unk_8, gCurrentSprite.work3 * BLOCK_SIZE * 3, gCurrentSprite.work2);
+    SerrisRotateAroundPoint(gCurrentSprite.workY, gCurrentSprite.workX, gCurrentSprite.work3 * BLOCK_SIZE * 3, gCurrentSprite.work2);
 }
 
 /**
@@ -282,20 +282,20 @@ void SerrisStartRotationXAligned(u16 centerY, u16 centerX, u16 radius)
 {
     if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
     {
-        gCurrentSprite.unk_8 = centerX + radius * BLOCK_SIZE * 3;
+        gCurrentSprite.workX = centerX + radius * BLOCK_SIZE * 3;
 
         // Start rotation points right ->
         gCurrentSprite.work2 = PI;
     }
     else
     {
-        gCurrentSprite.unk_8 = centerX - radius * BLOCK_SIZE * 3;
+        gCurrentSprite.workX = centerX - radius * BLOCK_SIZE * 3;
 
         // Start rotation points left <-
         gCurrentSprite.work2 = 0;
     }
 
-    gCurrentSprite.xParasiteTimer = centerY;
+    gCurrentSprite.workY = centerY;
     gCurrentSprite.work3 = radius;
 }
 
@@ -312,16 +312,16 @@ void SerrisStartRotationYAligned(u16 centerY, u16 centerX, u16 radius)
     {
         // Start rotation points down v
         gCurrentSprite.work2 = 3 * PI / 2;
-        gCurrentSprite.xParasiteTimer = centerY + radius * BLOCK_SIZE * 3;
+        gCurrentSprite.workY = centerY + radius * BLOCK_SIZE * 3;
     }
     else
     {
         // Start rotation points up ^
         gCurrentSprite.work2 = PI / 2;
-        gCurrentSprite.xParasiteTimer = centerY - radius * BLOCK_SIZE * 3;
+        gCurrentSprite.workY = centerY - radius * BLOCK_SIZE * 3;
     }
 
-    gCurrentSprite.unk_8 = centerX;
+    gCurrentSprite.workX = centerX;
     gCurrentSprite.work3 = radius;
 }
 
@@ -642,7 +642,7 @@ void SerrisTurningIntoXInit(void)
     gCurrentSprite.invincibilityStunFlashTimer = 0;
     gCurrentSprite.paletteRow = 0;
 
-    gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+    gCurrentSprite.workY = ARRAY_SIZE(sXParasiteMosaicValues);
 }
 
 /**
@@ -657,13 +657,13 @@ void SerrisTurningIntoX(void)
     // Spin
     gCurrentSprite.rotation += gCurrentSprite.work2 / 4;
 
-    gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
-    gCurrentSprite.xParasiteTimer--;
+    gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
+    gCurrentSprite.workY--;
 
     yPosition = gCurrentSprite.yPosition;
     xPosition = gCurrentSprite.xPosition;
 
-    switch (gCurrentSprite.xParasiteTimer)
+    switch (gCurrentSprite.workY)
     {
         case 40:
             ParticleSet(yPosition + QUARTER_BLOCK_SIZE - PIXEL_SIZE, xPosition + QUARTER_BLOCK_SIZE + PIXEL_SIZE, PE_0x2F);
@@ -699,11 +699,11 @@ void SerrisTurningIntoX(void)
     }
 
     // Load speedbooster ability graphics and palette
-    if (gCurrentSprite.xParasiteTimer < 20)
+    if (gCurrentSprite.workY < 20)
     {
-        SpriteLoadGfx(PSPRITE_SPEEDBOOSTER_ABILITY, 0, gCurrentSprite.xParasiteTimer);
+        SpriteLoadGfx(PSPRITE_SPEEDBOOSTER_ABILITY, 0, gCurrentSprite.workY);
     }
-    else if (gCurrentSprite.xParasiteTimer == 20)
+    else if (gCurrentSprite.workY == 20)
     {
         SpriteLoadPal(PSPRITE_SPEEDBOOSTER_ABILITY, 0, 5);
     }
@@ -1769,7 +1769,7 @@ void SerrisPartDying(void)
     {
         gCurrentSprite.work1--;
 
-        if (gCurrentSprite.work1 == 0 && gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.work1 == 0 && gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
         {
             ParticleSet(gCurrentSprite.yPosition, gCurrentSprite.xPosition, PE_0x2F);
             SoundPlay(0x294);
@@ -1785,7 +1785,7 @@ void SerrisPartDying(void)
             gCurrentSprite.pose = SERRIS_POSE_TURNING_INTO_X;
             gCurrentSprite.work1 = 4;
             gCurrentSprite.work4 = 0;
-            gCurrentSprite.xParasiteTimer = gCurrentSprite.yPosition;
+            gCurrentSprite.workY = gCurrentSprite.yPosition;
         }
         else
         {
@@ -1828,8 +1828,8 @@ void SerrisPartFalling(void)
         gCurrentSprite.yPosition += velocity;
     }
 
-    // Check is in water, xParasiteTimer temporarly holds the Y position of the previous frame
-    if (gCurrentSprite.xParasiteTimer < SERRIS_ROOM_WATER_Y && gCurrentSprite.yPosition >= SERRIS_ROOM_WATER_Y)
+    // Check is in water, workY temporarly holds the Y position of the previous frame
+    if (gCurrentSprite.workY < SERRIS_ROOM_WATER_Y && gCurrentSprite.yPosition >= SERRIS_ROOM_WATER_Y)
     {
         if (gCurrentSprite.roomSlot >= SERRIS_PART_MIDDLE_END)
         {
@@ -1845,9 +1845,9 @@ void SerrisPartFalling(void)
         SoundPlay(0x295);
     }
 
-    gCurrentSprite.xParasiteTimer = gCurrentSprite.yPosition;
+    gCurrentSprite.workY = gCurrentSprite.yPosition;
 
-    if (gCurrentSprite.yPosition > SERRIS_ROOM_WATER_Y && !(gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN))
+    if (gCurrentSprite.yPosition > SERRIS_ROOM_WATER_Y && !(gCurrentSprite.status & SPRITE_STATUS_ONSCREEN))
     {
         // Kill if in the water and off screen
         gCurrentSprite.status = 0;
@@ -1935,7 +1935,7 @@ void SerrisBlockCrumbling(void)
             gCurrentSprite.currentAnimationFrame = 0;
         }
     }
-    else if (SpriteUtilCheckEndCurrentSpriteAnim())
+    else if (SpriteUtilHasCurrentAnimationEnded())
     {
         // Finished crumbling, set falling
         if (gCurrentSprite.roomSlot != 0)
@@ -1975,7 +1975,7 @@ void SerrisBlockFalling(void)
     gCurrentSprite.yPosition += ONE_SUB_PIXEL;
 
     // Wait for the sprite to exit the room and be off screen
-    if (gCurrentSprite.yPosition >= BLOCK_SIZE * 20 && !(gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN))
+    if (gCurrentSprite.yPosition >= BLOCK_SIZE * 20 && !(gCurrentSprite.status & SPRITE_STATUS_ONSCREEN))
     {
         // Destroy sprite
         gCurrentSprite.status = 0;
@@ -2033,7 +2033,7 @@ void SerrisCheckInWater(void)
 void Serris(void)
 {
     // Check was damaged
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 0x10 && gCurrentSprite.health != 0)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 0x10 && gCurrentSprite.health != 0)
     {
         // "Stun" timer before serris goes into speedbooster mode
         gCurrentSprite.work0 = 30;
