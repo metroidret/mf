@@ -3,6 +3,7 @@
 #include "types.h"
 
 #include "constants/samus.h"
+#include "constants/status_screen.h"
 
 #include "gba/keys.h"
 
@@ -30,17 +31,17 @@ void StatusScreenSubroutine(void)
  */
 void StatusScreenDrawEverything(void)
 {
-    StatusScreenDrawBeamOrSuit(0, gEquipment.beamStatus); // draws the beam box
-    StatusScreenDrawMissileOrBomb(1, gEquipment.weaponsStatus); // draws the missile box
-    StatusScreenDrawBeamOrSuit(3, gEquipment.suitMiscStatus); // draws the suit box
-    StatusScreenDrawMissileOrBomb(2, gEquipment.weaponsStatus); // draws the bomb box
-    StatusScreenDrawMisc(4, gEquipment.suitMiscStatus); // draws the misc box
-    StatusScreenDrawNumber(5, gEquipment.currentEnergy, 6, FALSE);
-    StatusScreenDrawNumber(6, gEquipment.maxEnergy, 3, TRUE);
+    StatusScreenDrawBeamOrSuit(BEAM_UPGRADES, gEquipment.beamStatus); // draws the beam box
+    StatusScreenDrawMissileOrBomb(MISSILE_UPGRADES, gEquipment.weaponsStatus); // draws the missile box
+    StatusScreenDrawBeamOrSuit(SUIT_UPGRADES, gEquipment.suitMiscStatus); // draws the suit box
+    StatusScreenDrawMissileOrBomb(BOMB_UPGRADES, gEquipment.weaponsStatus); // draws the bomb box
+    StatusScreenDrawMisc(MISC_UPGRADES, gEquipment.suitMiscStatus); // draws the misc box
+    StatusScreenDrawNumber(ENERGY_CURRENT, gEquipment.currentEnergy, 6, FALSE);
+    StatusScreenDrawNumber(ENERGY_MAX, gEquipment.maxEnergy, 3, TRUE);
     if (gEquipment.weaponsStatus & MBF_MISSILES)
     {
-        StatusScreenDrawNumber(7, gEquipment.currentMissiles, 6, FALSE);
-        StatusScreenDrawNumber(8, gEquipment.maxMissiles, 3, TRUE);
+        StatusScreenDrawNumber(MISSILES_CURRENT, gEquipment.currentMissiles, 6, FALSE);
+        StatusScreenDrawNumber(MISSILES_MAX, gEquipment.maxMissiles, 3, TRUE);
     } 
     else
     {
@@ -48,8 +49,8 @@ void StatusScreenDrawEverything(void)
     }
     if ((gEquipment.weaponsStatus & (MBF_BOMBS | MBF_POWER_BOMBS)) == (MBF_BOMBS | MBF_POWER_BOMBS))
     {
-        StatusScreenDrawNumber(9, gEquipment.currentPowerBombs, 6, FALSE);
-        StatusScreenDrawNumber(10, gEquipment.maxPowerBombs, 3, TRUE);
+        StatusScreenDrawNumber(POWERBOMBS_CURRENT, gEquipment.currentPowerBombs, 6, FALSE);
+        StatusScreenDrawNumber(POWERBOMBS_MAX, gEquipment.maxPowerBombs, 3, TRUE);
         return;
     }
     StatusScreenRemoveAmmoHeader(2);
