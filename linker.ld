@@ -222,8 +222,9 @@ SECTIONS {
         src/sprites_AI/target.o(.text);
         src/sprites_AI/unused_sprites.o(.text);
         src/sprites_AI/bubbles.o(.text);
+        src/sprites_AI/x_parasite.o(.text);
 
-        asm/disasm_0x0801503C.o(.text);
+        asm/disasm_0x080157cc.o(.text);
 
         src/sprites_AI/movable_platform.o(.text);
         src/sprites_AI/moto.o(.text);
@@ -253,9 +254,7 @@ SECTIONS {
         asm/disasm_0x08049888.o(.text);
 
         src/event_checks.o(.text);
-
-        asm/disasm_0x08061004.o(.text);
-
+        src/x_parasite_util.o(.text);
         src/screen_shake.o(.text);
 
         asm/disasm_0x080626F4.o(.text);

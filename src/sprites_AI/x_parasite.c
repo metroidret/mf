@@ -1,6 +1,7 @@
 #include "sprites_AI/x_parasite.h"
-#include "macros.h"
 #include "globals.h"
+#include "macros.h"
+#include "x_parasite_util.h"
 
 #include "data/sprites/x_parasite.h"
 

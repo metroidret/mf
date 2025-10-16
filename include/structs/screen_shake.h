@@ -22,4 +22,4 @@ extern u16 gScreenShakeRelated; // set to 0 but never updated
 extern struct ScreenShake gScreenShakeY;
 extern struct ScreenShake gScreenShakeX;
 
-#endif
+#endif /* SCREEN_SHAKE_STRUCT_H */
