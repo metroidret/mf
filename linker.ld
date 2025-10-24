@@ -239,8 +239,9 @@ SECTIONS {
         src/sprites_AI/zombie_researcher.o(.text);
         src/sprites_AI/geemer.o(.text);
         src/sprites_AI/arachnus.o(.text);
+        src/sprites_AI/core_x.o(.text);
 
-        asm/disasm_0x08025270.o(.text);
+        asm/disasm_0x08026648.o(.text);
 
         src/sprites_AI/blue_x.o(.text);
         src/sprites_AI/missile_hatch.o(.text);
@@ -318,6 +319,7 @@ SECTIONS {
         src/data/sprites/zombie_researcher.o(.rodata);
         src/data/sprites/geemer.o(.rodata);
         src/data/sprites/arachnus.o(.rodata);
+        src/data/sprites/core_x.o(.rodata);
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);
         src/data/sprites/super_missile_barrier.o(.rodata);

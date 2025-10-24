@@ -50,6 +50,13 @@
 #define MOD_AND(value, mod) ((value) & ((mod) - 1))
 
 /**
+ * @brief Gets the binary logarithm of a value (WARNING only use a value that is a power of 2 and <= 1024)
+ *
+ * @param value Value
+ */
+#define LOG2(value) ((value) == 2 ? 1 : ((value) == 4 ? 2 : ((value) == 8 ? 3 : ((value) == 16 ? 4 : ((value) == 32 ? 5 : ((value) == 64 ? 6 : ((value) == 128 ? 7 : ((value) == 256 ? 8 : ((value) == 512 ? 9 : ((value) == 1024 ? 10 : 0))))))))))
+
+/**
  * @brief Performs a division (value / div) operation on a value using the right shift operation (WARNING only use a value for div that is a power of 2 and <= 1024)
  * 
  * @param value Value

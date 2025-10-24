@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_3031e0_35dd74.bin",
-    "count": "0x5AB94",
+    "path": "Blob_312fe8_35dd74.bin",
+    "count": "0x4AD8C",
     "addr": {
-      "us": "0x3031E0"
+      "us": "0x312FE8"
     },
     "size": 1
   },
@@ -2636,6 +2636,102 @@
     "count": "0x80",
     "addr": {
       "us": "0x301118"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/morph_ball_core_x.gfx",
+    "count": "0xA00",
+    "addr": {
+      "us": "0x303304"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/morph_ball_core_x.pal",
+    "count": "0x50",
+    "addr": {
+      "us": "0x305B04"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/hi_jump_core_x.gfx",
+    "count": "0xA00",
+    "addr": {
+      "us": "0x3064C8"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/hi_jump_core_x.pal",
+    "count": "0x50",
+    "addr": {
+      "us": "0x308CC8"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/speed_booster_core_x.gfx",
+    "count": "0xA00",
+    "addr": {
+      "us": "0x308D68"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/speed_booster_core_x.pal",
+    "count": "0x50",
+    "addr": {
+      "us": "0x30B568"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/space_jump_core_x.gfx",
+    "count": "0xA00",
+    "addr": {
+      "us": "0x30B608"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/space_jump_core_x.pal",
+    "count": "0x50",
+    "addr": {
+      "us": "0x30DE08"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/gravity_core_x.gfx",
+    "count": "0xA00",
+    "addr": {
+      "us": "0x30DEA8"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/gravity_core_x.pal",
+    "count": "0x50",
+    "addr": {
+      "us": "0x3106A8"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/screw_attack_core_x.gfx",
+    "count": "0xA00",
+    "addr": {
+      "us": "0x310748"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/screw_attack_core_x.pal",
+    "count": "0x50",
+    "addr": {
+      "us": "0x312F48"
     },
     "size": 2
   },
