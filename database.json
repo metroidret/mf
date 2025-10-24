@@ -48,14 +48,6 @@
     "size": 1
   },
   {
-    "path": "Blob_2eb8ac_2ed2e8.bin",
-    "count": "0x1A3C",
-    "addr": {
-      "us": "0x2EB8AC"
-    },
-    "size": 1
-  },
-  {
     "path": "Blob_2fb610_35dd74.bin",
     "count": "0x62764",
     "addr": {
@@ -2428,6 +2420,22 @@
     "count": "0x30",
     "addr": {
       "us": "0x2EAA6C"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/halzyn.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x2EB924"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/halzyn.pal",
+    "count": "0x20",
+    "addr": {
+      "us": "0x2EC924"
     },
     "size": 2
   },

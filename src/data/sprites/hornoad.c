@@ -1297,5 +1297,3 @@ const struct FrameData sHornoadOam_HalfAsleepHidden[13] = {
     },
     [12] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_2eb8ac_2ed2e8[] = INCBIN_U8("data/Blob_2eb8ac_2ed2e8.bin");
