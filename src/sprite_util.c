@@ -981,6 +981,7 @@ void SpriteUtilSamusAndSpriteCollision(void)
                 default:
                     gSpriteData[i].ignoreSamusCollisionTimer = 15;
                     gIgnoreSamusAndSpriteCollision = TRUE;
+                    break;
             }
         }
 
@@ -1054,6 +1055,7 @@ u32 SpriteUtilCheckVerticalCollisionAtPosition(u16 yPosition, u16 xPosition)
 
         default:
             blockTop = yPosition & BLOCK_POSITION_FLAG;
+            break;
     }
 
     return blockTop;
@@ -1118,6 +1120,7 @@ u32 SpriteUtilCheckVerticalCollisionAtPositionSlopes(u16 yPosition, u16 xPositio
             
         default:
             blockTop = yPosition & BLOCK_POSITION_FLAG;
+            break;
     }
 
     if (clipdata == CLIPDATA_TYPE_PASS_THROUGH_BOTTOM)
@@ -1269,6 +1272,7 @@ void SpriteUtilCheckCollisionAtPosition(u32 yPosition, u32 xPosition)
 
         case CLIPDATA_TYPE_PASS_THROUGH_BOTTOM:
             gPreviousCollisionCheck = COLLISION_PASS_THROUGH_BOTTOM;
+            break;
     }
 }
 
@@ -2378,6 +2382,7 @@ void unk_12008(u16 yPosition, u16 xPosition)
 
         case 26:
             ParticleSet(yPosition, xPosition, PE_0x25);
+            break;
     }
 }
 
@@ -2424,6 +2429,7 @@ void unk_120ac(u16 yPosition, u16 xPosition)
 
         case 26:
             ParticleSet(yPosition, xPosition, PE_0x24);
+            break;
     }
 }
 
@@ -2779,6 +2785,7 @@ u32 SpriteUtilCheckSamusPassThroughSprite(u8 spriteSlot)
         case SPOSE_SCREW_ATTACKING:
         case SPOSE_SHINESPARKING:
             passThrough++;
+            break;
     }
 
     return passThrough;
@@ -2880,6 +2887,7 @@ u32 SpriteUtilCheckSamusDamagingPose(void)
         default:
             if (gSamusData.speedboostingCounter != 0)
                 damaging = TRUE;
+            break;
     }
 
     return damaging;
@@ -2914,6 +2922,7 @@ u32 SpriteUtilCheckSamusPseudoScrew(u8 spriteSlot)
                 if (ProjectileGetSpriteWeakness(spriteSlot) & (WEAKNESS_CHARGE_BEAM | WEAKNESS_BEAM_BOMBS))
                     pseudoScrew++;
             }
+            break;
     }
 
     return pseudoScrew;
@@ -3178,6 +3187,7 @@ void SpriteUtilMoveEyeCoreXBeam(u8 movement)
                 gCurrentSprite.xPosition += movement;
             else
                 gCurrentSprite.xPosition -= movement;
+            break;
     }
 }
 

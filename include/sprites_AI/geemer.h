@@ -5,8 +5,8 @@
 
 void GeemerCheckCollisions(void);
 void GeemerSetHitbox(void);
-void GeemerSetCrawlingGFX(void);
-void GeemerSetIdleGFX(void);
+void GeemerSetCrawlingGraphics(void);
+void GeemerSetIdleGraphics(void);
 void GeemerCheckShouldHide(void);
 void GeemerDelayBeforeHiding(void);
 void GeemerHiding(void);

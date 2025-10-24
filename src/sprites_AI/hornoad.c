@@ -1197,6 +1197,7 @@ void Hornoad(void)
 
             XParasiteInit();
             gCurrentSprite.yPosition -= HALF_BLOCK_SIZE;
+            break;
     }
 }
 
@@ -1221,6 +1222,7 @@ void HornoadSpit(void)
 
         default:
             HornoadSpitExplodingInit();
+            break;
     }
 }
 
@@ -1250,5 +1252,6 @@ void HornoadSpawner(void)
 
         case 0x2C:
             HornoadSpwanerSpawnHornoad();
+            break;
     }
 }

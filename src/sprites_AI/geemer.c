@@ -76,7 +76,7 @@ void GeemerSetHitbox(void)
     gCurrentSprite.drawDistanceHorizontal = 16;
 }
 
-void GeemerSetCrawlingGFX(void)
+void GeemerSetCrawlingGraphics(void)
 {
     if (gCurrentSprite.work0)
         gCurrentSprite.pOam = sGeemerOam_CrawlingVertical;
@@ -87,7 +87,7 @@ void GeemerSetCrawlingGFX(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
-void GeemerSetIdleGFX(void)
+void GeemerSetIdleGraphics(void)
 {
     if (gCurrentSprite.work0)
         gCurrentSprite.pOam = sGeemerOam_IdleVertical;
@@ -178,7 +178,7 @@ void GeemerUncovering(void)
     if (SpriteUtilCheckNearEndCurrentSpriteAnim())
     {
         GeemerSetHitbox();
-        GeemerSetIdleGFX();
+        GeemerSetIdleGraphics();
         gCurrentSprite.pose = 8;
     }
 }
@@ -316,7 +316,7 @@ void GeemerInit(void)
             gCurrentSprite.work2 = flashingLightSlot;
         }
 
-        GeemerSetCrawlingGFX();
+        GeemerSetCrawlingGraphics();
         GeemerSetHitbox();
         gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
         gCurrentSprite.work1 = 0;
@@ -326,7 +326,7 @@ void GeemerInit(void)
 
 void GeemerCrawlingInit(void)
 {
-    GeemerSetCrawlingGFX();
+    GeemerSetCrawlingGraphics();
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
 }
 
@@ -576,7 +576,7 @@ void GeemerCrawling(void)
 void GeemerIdleInit(void)
 {
     gCurrentSprite.pose = 8;
-    GeemerSetIdleGFX();
+    GeemerSetIdleGraphics();
 }
 
 void GeemerIdle(void)
@@ -601,7 +601,7 @@ void GeemerFallingInit(void)
     gCurrentSprite.pose = SPRITE_POSE_FALLING;
     gCurrentSprite.work4 = 0;
     GeemerSetHitbox();
-    GeemerSetIdleGFX();
+    GeemerSetIdleGraphics();
 }
 
 void GeemerFalling(void)
@@ -655,12 +655,12 @@ void GeemerFalling(void)
         if (gCurrentSprite.properties & SP_CAN_ABSORB_X)
         {
             gCurrentSprite.pose = SPRITE_POSE_IDLE;
-            GeemerSetCrawlingGFX();
+            GeemerSetCrawlingGraphics();
         }
         else
         {
             gCurrentSprite.pose = 8;
-            GeemerSetIdleGFX();
+            GeemerSetIdleGraphics();
             flashingLightSlot = gCurrentSprite.work2;
             gSpriteData[flashingLightSlot].yPosition = gCurrentSprite.yPosition - PIXEL_TO_SUB_PIXEL(9);
             gSpriteData[flashingLightSlot].xPosition = gCurrentSprite.xPosition;
@@ -758,6 +758,7 @@ void Geemer(void)
         case SPRITE_POSE_TURNING_INTO_X:
             GeemerTurningIntoX();
             XParasiteInit();
+            break;
     }
 }
 
@@ -858,6 +859,7 @@ void GeemerFlashingLight(void)
                 case SPRITE_POSE_DYING_INIT:
                 case SPRITE_POSE_DYING:
                     gCurrentSprite.status = 0;
+                    break;
             }
         }
     }

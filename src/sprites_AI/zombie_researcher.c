@@ -647,5 +647,6 @@ void Zombie(void)
 
         case SPRITE_POSE_SPAWNING_FROM_X_INIT:
             ZombieInit();
+            break;
     }
 }

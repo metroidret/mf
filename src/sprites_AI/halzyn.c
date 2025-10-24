@@ -542,6 +542,7 @@ void HalzynWingIdle(void)
                 gCurrentSprite.status &= ~SPRITE_STATUS_MOSAIC;
                 gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
             }
+            break;
     }
 }
 
@@ -668,6 +669,7 @@ void Halzyn(void)
         case SPRITE_POSE_TURNING_INTO_X:
             HalzynTurningIntoX();
             XParasiteInit();
+            break;
     }
 }
 
@@ -702,6 +704,7 @@ void HalzynWing(void)
 
         default:
             HalzynWingIdle();
+            break;
     }
 
     if (gCurrentSprite.health == 0 && gCurrentSprite.status & SPRITE_STATUS_EXISTS)
