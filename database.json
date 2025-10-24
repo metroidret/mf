@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_2fb610_35dd74.bin",
-    "count": "0x62764",
+    "path": "Blob_2fd0b8_35dd74.bin",
+    "count": "0x60CBC",
     "addr": {
-      "us": "0x2FB610"
+      "us": "0x2FD0B8"
     },
     "size": 1
   },
@@ -2604,6 +2604,22 @@
     "count": "0x30",
     "addr": {
       "us": "0x2FABD8"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/geemer.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x2FB610"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/geemer.pal",
+    "count": "0x20",
+    "addr": {
+      "us": "0x2FC610"
     },
     "size": 2
   },
