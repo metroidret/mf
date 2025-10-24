@@ -301,6 +301,7 @@ SECTIONS {
         src/data/sprite_debris_data.o(.rodata);
         src/data/sprites/target.o(.rodata);
         src/data/sprites/sa_x.o(.rodata);
+        src/data/sprites/hornoad.o(.rodata);
         src/data/sprites/movable_platform.o(.rodata);
         src/data/sprites/moto.o(.rodata);
         src/data/sprites/save_pad.o(.rodata);

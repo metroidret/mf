@@ -12,7 +12,7 @@ void HornoadJumpingInit(void);
 void HornoadLandingInit(void);
 void HornoadIdleAnimationInit(void);
 void HornoadFallingInit(void);
-void unk_1ccec(void);
+void HornoadTouchedSamusInit(void);
 void HornoadTurningAroundInit(void);
 void HornoadSpittingInit(void);
 void HornoadIdle(void);
