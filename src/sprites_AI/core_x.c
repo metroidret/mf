@@ -1,9 +1,9 @@
-#include "data/sprites/core_x.h"
-
+#include "sprites_AI/core_x.h"
 #include "globals.h"
 #include "macros.h"
 
 #include "data/sprite_data.h"
+#include "data/sprites/core_x.h"
 #include "data/sprites/message_box.h"
 #include "data/sprites/x_parasite.h"
 

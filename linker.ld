@@ -240,8 +240,9 @@ SECTIONS {
         src/sprites_AI/geemer.o(.text);
         src/sprites_AI/arachnus.o(.text);
         src/sprites_AI/core_x.o(.text);
+        src/sprites_AI/core_x_downloading_varia.o(.text);
 
-        asm/disasm_0x08026648.o(.text);
+        asm/disasm_0x08026C7C.o(.text);
 
         src/sprites_AI/blue_x.o(.text);
         src/sprites_AI/missile_hatch.o(.text);
@@ -320,6 +321,7 @@ SECTIONS {
         src/data/sprites/geemer.o(.rodata);
         src/data/sprites/arachnus.o(.rodata);
         src/data/sprites/core_x.o(.rodata);
+        src/data/sprites/core_x_downloading_varia.o(.rodata);
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);
         src/data/sprites/super_missile_barrier.o(.rodata);

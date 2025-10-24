@@ -1000,5 +1000,3 @@ const u32 sGravityCoreXGfx[512 * 5] = INCBIN_U32("data/sprites/gravity_core_x.gf
 const u16 sGravityCoreXPal[16 * 5] = INCBIN_U16("data/sprites/gravity_core_x.pal");
 const u32 sScrewAttackCoreXGfx[512 * 5] = INCBIN_U32("data/sprites/screw_attack_core_x.gfx");
 const u16 sScrewAttackCoreXPal[16 * 5] = INCBIN_U16("data/sprites/screw_attack_core_x.pal");
-
-static const u8 sBlob_312fe8_35dd74[] = INCBIN_U8("data/Blob_312fe8_35dd74.bin");

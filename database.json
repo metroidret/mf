@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_312fe8_35dd74.bin",
-    "count": "0x4AD8C",
+    "path": "Blob_316414_35dd74.bin",
+    "count": "0x47960",
     "addr": {
-      "us": "0x312FE8"
+      "us": "0x316414"
     },
     "size": 1
   },
@@ -2734,6 +2734,30 @@
       "us": "0x312F48"
     },
     "size": 2
+  },
+  {
+    "path": "sprites/core_x_downloading_varia.gfx",
+    "count": "0x800",
+    "addr": {
+      "us": "0x312FE8"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/core_x_downloading_varia.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x314FE8"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/varia_x_after_downloading.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x315414"
+    },
+    "size": 4
   },
   {
     "path": "sprites/blue_x.gfx",
