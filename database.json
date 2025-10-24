@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_2fd0b8_35dd74.bin",
-    "count": "0x60CBC",
+    "path": "Blob_3031e0_35dd74.bin",
+    "count": "0x5AB94",
     "addr": {
-      "us": "0x2FD0B8"
+      "us": "0x3031E0"
     },
     "size": 1
   },
@@ -2620,6 +2620,22 @@
     "count": "0x20",
     "addr": {
       "us": "0x2FC610"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/arachnus.gfx",
+    "count": "0x1000",
+    "addr": {
+      "us": "0x2FD118"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/arachnus.pal",
+    "count": "0x80",
+    "addr": {
+      "us": "0x301118"
     },
     "size": 2
   },

@@ -175,7 +175,7 @@ void GeemerHiding(void)
 
 void GeemerUncovering(void)
 {
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
     {
         GeemerSetHitbox();
         GeemerSetIdleGraphics();
@@ -589,7 +589,7 @@ void GeemerIdle(void)
     }
     else
     {
-        if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+        if (SpriteUtilHasCurrentAnimationNearlyEnded())
             gCurrentSprite.pose = 1;
 
         GeemerCheckShouldHide();
@@ -697,7 +697,7 @@ void Geemer(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpritesFreezeTimer(SSPRITE_GEEMER_FLASHING_LIGHT, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_GEEMER_FLASHING_LIGHT, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
@@ -771,7 +771,7 @@ void GeemerFlashingLight(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdatePrimarySpriteFreezeTimer();
+        SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent();
         return;
     }
 

@@ -1847,9 +1847,9 @@ u32 SpriteUtilHasSubSprite2AnimationNearlyEnded(void)
  * 
  * @param yRange Y range
  * @param xRange X range
- * @return u8 NSLR result
+ * @return u32 NSLR result
  */
-u8 SpriteUtilCheckSamusNearSpriteLeftRight(u16 yRange, u16 xRange)
+u32 SpriteUtilCheckSamusNearSpriteLeftRight(u16 yRange, u16 xRange)
 {
     u8 result;
     u16 samusY;
@@ -1903,9 +1903,9 @@ u8 SpriteUtilCheckSamusNearSpriteLeftRight(u16 yRange, u16 xRange)
  * 
  * @param yRange Y range
  * @param xRange X range
- * @return u8 NSLR result
+ * @return u32 NSLR result
  */
-u8 SpriteUtilCheckSamusNearSpriteAboveBelow(u16 yRange, u16 xRange)
+u32 SpriteUtilCheckSamusNearSpriteAboveBelow(u16 yRange, u16 xRange)
 {
     u8 result;
     u16 samusY;
@@ -1960,9 +1960,9 @@ u8 SpriteUtilCheckSamusNearSpriteAboveBelow(u16 yRange, u16 xRange)
  * @param yRange Y range
  * @param xRangeFront X range (in front)
  * @param xRangeBehind X range (behind)
- * @return u8 NSFB result
+ * @return u32 NSFB result
  */
-u8 SpriteUtilCheckSamusNearSpriteFrontBehind(u16 yRange, u16 xRangeFront, u16 xRangeBehind)
+u32 SpriteUtilCheckSamusNearSpriteFrontBehind(u16 yRange, u16 xRangeFront, u16 xRangeBehind)
 {
     u8 result;
     u16 samusY;
@@ -2043,9 +2043,9 @@ u8 SpriteUtilCheckSamusNearSpriteFrontBehind(u16 yRange, u16 xRangeFront, u16 xR
  * @param xRange X range
  * @param yRangeFront X range (in front)
  * @param yRangeBehind Y range (behind)
- * @return u8 NSFB result
+ * @return u32 NSFB result
  */
-u8 SpriteUtilCheckSamusNearSpriteFrontBehindY(u16 xRange, u16 yRangeFront, u16 yRangeBehind)
+u32 SpriteUtilCheckSamusNearSpriteFrontBehindY(u16 xRange, u16 yRangeFront, u16 yRangeBehind)
 {
     u8 result;
     u16 samusY;
@@ -2126,9 +2126,9 @@ u8 SpriteUtilCheckSamusNearSpriteFrontBehindY(u16 xRange, u16 yRangeFront, u16 y
  * @param xRange 
  * @param yRangeBelow 
  * @param yRangeAbove 
- * @return u8 
+ * @return u32
  */
-u8 SpriteUtilCheckSamusNearSpriteAboveBelowSeparateRanges(u16 xRange, u16 yRangeBelow, u16 yRangeAbove)
+u32 SpriteUtilCheckSamusNearSpriteAboveBelowSeparateRanges(u16 xRange, u16 yRangeBelow, u16 yRangeAbove)
 {
     u8 result;
     u16 samusY;

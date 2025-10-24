@@ -226,6 +226,8 @@ SECTIONS {
 
         asm/disasm_0x080157cc.o(.text);
 
+        src/sprites_AI/hornoad.o(.text);
+        src/sprites_AI/halzyn.o(.text);
         src/sprites_AI/movable_platform.o(.text);
         src/sprites_AI/moto.o(.text);
         src/sprites_AI/save_pad.o(.text);
@@ -235,8 +237,10 @@ SECTIONS {
         src/sprites_AI/area_banner.o(.text);
         src/sprites_AI/skree.o(.text);
         src/sprites_AI/zombie_researcher.o(.text);
+        src/sprites_AI/geemer.o(.text);
+        src/sprites_AI/arachnus.o(.text);
 
-        asm/disasm_0x080220EC.o(.text);
+        asm/disasm_0x08025270.o(.text);
 
         src/sprites_AI/blue_x.o(.text);
         src/sprites_AI/missile_hatch.o(.text);
@@ -313,6 +317,7 @@ SECTIONS {
         src/data/sprites/skree.o(.rodata);
         src/data/sprites/zombie_researcher.o(.rodata);
         src/data/sprites/geemer.o(.rodata);
+        src/data/sprites/arachnus.o(.rodata);
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);
         src/data/sprites/super_missile_barrier.o(.rodata);

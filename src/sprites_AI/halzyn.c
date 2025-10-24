@@ -1,9 +1,6 @@
 #include "sprites_AI/halzyn.h"
 #include "macros.h"
 #include "globals.h"
-#include "sprite.h"
-#include "sprite_debris.h"
-#include "sprite_util.h"
 
 #include "data/sprite_data.h"
 #include "data/sprites/halzyn.h"
@@ -362,7 +359,7 @@ void HalzynFlyingUp(void)
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
     else if (gCurrentSprite.workY < gCurrentSprite.yPosition)
         gCurrentSprite.yPosition -= PIXEL_SIZE / 2;
-    else if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    else if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 
     if (gCurrentSprite.currentAnimationFrame == 3 && gCurrentSprite.animationDurationCounter == 2)
@@ -613,7 +610,7 @@ void Halzyn(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpritesFreezeTimer(SSPRITE_HALZYN_WING, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_HALZYN_WING, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
@@ -682,7 +679,7 @@ void HalzynWing(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdatePrimarySpriteFreezeTimer();
+        SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent();
         return;
     }
 

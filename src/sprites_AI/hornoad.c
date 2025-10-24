@@ -442,7 +442,7 @@ void HornoadIdle(void)
         }
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         HornoadJumpingInit();
 }
 
@@ -607,7 +607,7 @@ void HornoadLanding(void)
     u8 rangeAction;
     u32 rng;
 
-    if (!SpriteUtilCheckEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationEnded())
         return;
 
     if (gCurrentSprite.properties & SP_CAN_ABSORB_X)
@@ -738,7 +738,7 @@ void HornoadIdleAnimation(void)
         }
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         rangeAction = HornoadCheckSamusInJumpingRange();
 
@@ -780,7 +780,7 @@ void HornoadWaitingForX(void)
         }
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.work1++;
 
@@ -798,7 +798,7 @@ void HornoadTurningAround(void)
     if (gCurrentSprite.currentAnimationFrame != 0)
         gCurrentSprite.yPosition -= PIXEL_SIZE;
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
 
@@ -842,7 +842,7 @@ void HornoadTurningAroundSecondPart(void)
             gCurrentSprite.xPosition += PIXEL_SIZE;
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         HornoadIdleAnimationInit();
 }
 
@@ -870,7 +870,7 @@ void HornoadSpitting(void)
         SoundPlayNotAlreadyPlaying(SOUND_HORNOAD_SPIT);
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.work3--;
 
@@ -967,7 +967,7 @@ void HornoadSpitExploding(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
         gCurrentSprite.status = 0;
 }
 
@@ -1101,7 +1101,7 @@ void HornoadSpwanerDelayBeforeSpawning(void)
  */
 void HornoadSpwanerSpawnHornoad(void)
 {
-    if (!SpriteUtilCheckEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationEnded())
         return;
 
     SpriteSpawnPrimary(PSPRITE_HORNOAD, gCurrentSprite.roomSlot, gCurrentSprite.spritesetGfxSlot, SSP_UNINFECTED_OR_BOSS,
