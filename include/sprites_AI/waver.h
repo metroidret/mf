@@ -4,7 +4,7 @@
 #include "types.h"
 
 u8 WaverCheckSamusInRange(void);
-void WaverSetFlyingGFX(void);
+void WaverSetFlyingGraphics(void);
 void WaverInit(void);
 void WaverFlyingInit(void);
 void WaverFlying(void);

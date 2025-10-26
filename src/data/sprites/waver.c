@@ -18,7 +18,7 @@ const s16 sWaverFlyingYMovement[12] = {
     3, 2, 1, 0
 };
 
-const u32 sWaverGfc[2 * 512] = INCBIN_U32("data/sprites/waver.gfx");
+const u32 sWaverGfx[2 * 512] = INCBIN_U32("data/sprites/waver.gfx");
 const u16 sWaverPal[2 * 16] = INCBIN_U16("data/sprites/waver.pal");
 
 static const u16 sWaverDebrisOam_Frame0[OAM_DATA_SIZE(5)] = {
@@ -184,3 +184,5 @@ const struct FrameData sWaverDebrisOam[5] = {
     },
     [4] = FRAME_DATA_TERMINATOR
 };
+
+static const u8 sBlob_317630_35dd74[] = INCBIN_U8("data/Blob_317630_35dd74.bin");

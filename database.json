@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_316414_35dd74.bin",
-    "count": "0x47960",
+    "path": "Blob_317630_35dd74.bin",
+    "count": "0x46744",
     "addr": {
-      "us": "0x316414"
+      "us": "0x317630"
     },
     "size": 1
   },
@@ -2760,6 +2760,22 @@
     "size": 4
   },
   {
+    "path": "sprites/waver.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x316468"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/waver.pal",
+    "count": "0x20",
+    "addr": {
+      "us": "0x317468"
+    },
+    "size": 2
+  },
+  {
     "path": "sprites/blue_x.gfx",
     "count": "0x400",
     "addr": {
@@ -3020,22 +3036,6 @@
     "count": "0x20",
     "addr": {
       "us": "0x378790"
-    },
-    "size": 2
-  },
-  {
-    "path": "sprites/waver.gfx",
-    "count": 1024,
-    "addr": {
-      "us": 316468
-    },
-    "size": 4
-  },
-  {
-    "path": "sprites/waver.pal",
-    "count": 32,
-    "addr": {
-      "us": 317468
     },
     "size": 2
   }

@@ -4,7 +4,16 @@
 #include "types.h"
 #include "oam.h"
 
-extern const u32 sWaverGfx[1024];
-extern const u16 sWaverPal[32];
+extern const s16 sWaverDebrisFallingSpeed[30];
+extern const s16 sWaverFlyingYMovement[12];
+
+extern const u32 sWaverGfx[2 * 512];
+extern const u16 sWaverPal[2 * 16];
+
+extern const struct FrameData sWaverOam_FlyingUp[2];
+extern const struct FrameData sWaverOam_FlyingDown[6];
+extern const struct FrameData sWaverOam_BackingOut[3];
+extern const struct FrameData sWaverOam_Charging[6];
+extern const struct FrameData sWaverDebrisOam[5];
 
 #endif /* WAVER_DATA_H */
