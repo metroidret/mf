@@ -631,5 +631,3 @@ const struct FrameData sLabExplosionOam_Idle[49] = {
 
 const u32 sSaXLabExplosionsGfx[2 * 512] = INCBIN_U32("data/sa_x/lab_explosions.gfx");
 const u16 sSaXLabExplosionsPal[2 * 16] = INCBIN_U16("data/sa_x/lab_explosions.pal");
-
-static const u8 sBlob_2e9218_2ed2e8[] = INCBIN_U8("data/Blob_2e9218_2ed2e8.bin");

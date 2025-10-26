@@ -63,7 +63,7 @@ void YamebaInit(void)
     {
         gCurrentSprite.work0++;
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
     }
 
     if (gCurrentSprite.work0 == 0)
@@ -241,7 +241,7 @@ void YamebaChasingSamusInit(void)
     gCurrentSprite.work1 = 0;
     gCurrentSprite.work4 = 1;
 
-    gCurrentSprite.unk_8 = 0;
+    gCurrentSprite.workX = 0;
     gCurrentSprite.pose = 0x18;
 
     SpriteUtilMakeSpriteFaceSamusDirection();
@@ -366,10 +366,10 @@ void YamebaChasingSamus(void)
             {
                 gCurrentSprite.status &= ~SPRITE_STATUS_FACING_RIGHT;
                 gCurrentSprite.work3 = 1;
-                gCurrentSprite.unk_8++;
+                gCurrentSprite.workX++;
 
-                if (gCurrentSprite.unk_8 > 3)
-                    gCurrentSprite.unk_8 = 0;
+                if (gCurrentSprite.workX > 3)
+                    gCurrentSprite.workX = 0;
             }
         }
     }
@@ -399,10 +399,10 @@ void YamebaChasingSamus(void)
             {
                 gCurrentSprite.status |= SPRITE_STATUS_FACING_RIGHT;
                 gCurrentSprite.work3 = 1;
-                gCurrentSprite.unk_8++;
+                gCurrentSprite.workX++;
 
-                if (gCurrentSprite.unk_8 > 3)
-                    gCurrentSprite.unk_8 = 0;
+                if (gCurrentSprite.workX > 3)
+                    gCurrentSprite.workX = 0;
             }
         }
     }
@@ -473,7 +473,7 @@ void YamebaChasingSamus(void)
  */
 void Yameba(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 0x4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 0x4)
         SoundPlayNotAlreadyPlaying(0x15F);
 
     if (gCurrentSprite.freezeTimer != 0)

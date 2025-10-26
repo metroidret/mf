@@ -61,11 +61,11 @@ void SkreeInit(void)
         gCurrentSprite.currentAnimationFrame = 0;
 
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
     }
     else
     {
-        gCurrentSprite.xParasiteTimer = gCurrentSprite.yPosition;
+        gCurrentSprite.workY = gCurrentSprite.yPosition;
     }
 }
 
@@ -116,7 +116,7 @@ void SkreeWarningInit(void)
  */
 void SkreeWarning(void)
 {
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SKREE_GOING_DOWN_INIT;
 }
 
@@ -196,7 +196,7 @@ void SkreeGoingDown(void)
         {
             gCurrentSprite.yPosition = blockTop;
             gCurrentSprite.work1 = 1;
-            gCurrentSprite.unk_8 = gCurrentSprite.xPosition;
+            gCurrentSprite.workX = gCurrentSprite.xPosition;
 
             SoundPlay(0x1DB);
             return;
@@ -244,8 +244,8 @@ void SkreeCrashing(void)
         return;
     }
 
-    if (gCurrentSprite.unk_8 - 0xC0 < gSamusData.xPosition &&
-        gSamusData.xPosition < gCurrentSprite.unk_8 + 0xC0)
+    if (gCurrentSprite.workX - 0xC0 < gSamusData.xPosition &&
+        gSamusData.xPosition < gCurrentSprite.workX + 0xC0)
     {
         gCurrentSprite.xPosition = gSamusData.xPosition;
         gCurrentSprite.pose = SKREE_GOING_UP_WARNING_INIT;
@@ -373,13 +373,13 @@ void SkreeGoingUp(void)
 {
     SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition - BLOCK_SIZE * 2, gCurrentSprite.xPosition);
 
-    if (gPreviousCollisionCheck == COLLISION_AIR && gCurrentSprite.xParasiteTimer < gCurrentSprite.yPosition)
+    if (gPreviousCollisionCheck == COLLISION_AIR && gCurrentSprite.workY < gCurrentSprite.yPosition)
     {
         gCurrentSprite.yPosition -= QUARTER_BLOCK_SIZE;
     }
     else
     {
-        gCurrentSprite.yPosition = gCurrentSprite.xParasiteTimer;
+        gCurrentSprite.yPosition = gCurrentSprite.workY;
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
     }
 }

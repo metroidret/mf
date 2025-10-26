@@ -160,7 +160,7 @@ void GadoraInit(void)
     {
         // Set spawning from X
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
     }
     else
     {
@@ -291,7 +291,7 @@ void GadoraOpeningEyeInit(void)
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
-    if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+    if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
         SoundPlayNotAlreadyPlaying(0x1B2);
 }
 
@@ -301,7 +301,7 @@ void GadoraOpeningEyeInit(void)
  */
 void GadoraOpeningEye(void)
 {
-    if (!SpriteUtilCheckEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationEnded())
         return;
 
     // Determine whether or not to shoot, ~50% chance and didn't already shoot more than 3 beams
@@ -315,7 +315,7 @@ void GadoraOpeningEye(void)
 
         gCurrentSprite.pOam = sGadoraOam_Shooting;
 
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
             SoundPlayNotAlreadyPlaying(0x1B5);
 
         // Timer for how long the eye stays open
@@ -352,7 +352,7 @@ void GadoraVulnerable(void)
         gCurrentSprite.animationDurationCounter = 0;
         gCurrentSprite.currentAnimationFrame = 0;
 
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
             SoundPlayNotAlreadyPlaying(0x1B3);
     }
     else
@@ -392,7 +392,7 @@ void GadoraShooting(void)
     SpriteSpawnSecondary(SSPRITE_GADORA_BEAM, 0, gCurrentSprite.spritesetGfxSlot, gCurrentSprite.primarySpriteRamSlot,
         gCurrentSprite.yPosition, xPosition, status);
 
-    if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+    if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
         SoundPlayNotAlreadyPlaying(0x1B6);
 
     gCurrentSprite.pose = GADORA_POSE_CLOSING_EYE;
@@ -408,7 +408,7 @@ void GadoraShooting(void)
  */
 void GadoraClosingEye(void)
 {
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
@@ -481,7 +481,7 @@ void GadoraEye(void)
 
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 4)
         SoundPlayNotAlreadyPlaying(0x1B8);
 
     ramSlot = gCurrentSprite.primarySpriteRamSlot;
@@ -541,7 +541,7 @@ void GadoraEye(void)
                 // Allow projectile collision
                 gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
 
-                if (SPRITE_HAS_ISFT(gCurrentSprite))
+                if (SPRITE_GET_ISFT(gCurrentSprite))
                 {
                     // Eye got it, set timer to 0 to close it right away
                     gSpriteData[ramSlot].work1 = 0;
@@ -674,7 +674,7 @@ void GadoraBeam(void)
                 // Destroy beam
                 ParticleSet(gCurrentSprite.yPosition + (BLOCK_SIZE - QUARTER_BLOCK_SIZE), gCurrentSprite.xPosition, PE_0x2F);
 
-                if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+                if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
                     SoundPlayNotAlreadyPlaying(0x1B7);
 
                 gCurrentSprite.status = 0;

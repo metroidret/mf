@@ -28,7 +28,7 @@ void SpriteUtilInitLocationText(void)
 
     if (gfxSlot < 8)
     {
-        gSpriteData[0].status = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_NOT_DRAWN |
+        gSpriteData[0].status = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_NOT_DRAWN |
             SPRITE_STATUS_HIGH_PRIORITY | SPRITE_STATUS_IGNORE_PROJECTILES;
 
         gSpriteData[0].properties = SP_ABSOLUTE_POSITION;
@@ -352,11 +352,11 @@ void SpriteUtilSamusAndSpriteCollision(void)
     samusLeft = samusX + gSamusData.drawDistanceLeft;
     samusRight = samusX + gSamusData.drawDistanceRight;
 
-    statusCheckFlags = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN | SPRITE_STATUS_HIDDEN;
+    statusCheckFlags = SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN | SPRITE_STATUS_HIDDEN;
     for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
     {
         status = gSpriteData[i].status;
-        if ((status & statusCheckFlags) != (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ON_SCREEN))
+        if ((status & statusCheckFlags) != (SPRITE_STATUS_EXISTS | SPRITE_STATUS_ONSCREEN))
             continue;
 
         if (gSpriteData[i].ignoreSamusCollisionTimer != 0)
@@ -981,6 +981,7 @@ void SpriteUtilSamusAndSpriteCollision(void)
                 default:
                     gSpriteData[i].ignoreSamusCollisionTimer = 15;
                     gIgnoreSamusAndSpriteCollision = TRUE;
+                    break;
             }
         }
 
@@ -1054,6 +1055,7 @@ u32 SpriteUtilCheckVerticalCollisionAtPosition(u16 yPosition, u16 xPosition)
 
         default:
             blockTop = yPosition & BLOCK_POSITION_FLAG;
+            break;
     }
 
     return blockTop;
@@ -1118,6 +1120,7 @@ u32 SpriteUtilCheckVerticalCollisionAtPositionSlopes(u16 yPosition, u16 xPositio
             
         default:
             blockTop = yPosition & BLOCK_POSITION_FLAG;
+            break;
     }
 
     if (clipdata == CLIPDATA_TYPE_PASS_THROUGH_BOTTOM)
@@ -1142,7 +1145,7 @@ u32 SpriteUtilCheckVerticalCollisionAtPositionSlopes(u16 yPosition, u16 xPositio
  * @brief 1129c | 74 | Aligns the current sprite's Y position on slope, check position at origin
  * 
  */
-void SpriteUtilAlignYPosOnSlope(void)
+void SpriteUtilAlignYPositionOnSlopeAtOrigin(void)
 {
     u16 yPosition;
     u16 xPosition;
@@ -1185,7 +1188,7 @@ void SpriteUtilAlignYPosOnSlope(void)
  * @brief 11310 | 80 | Aligns the current sprite's Y position on slope, check position at bottom of hitbox, X origin
  * 
  */
-void SpriteUtilAlignYPosOnSlopeAtHitboxBottom(void)
+void SpriteUtilAlignYPositionOnSlopeAtHitboxBottom(void)
 {
     u16 yPosition;
     u16 xPosition;
@@ -1269,6 +1272,7 @@ void SpriteUtilCheckCollisionAtPosition(u32 yPosition, u32 xPosition)
 
         case CLIPDATA_TYPE_PASS_THROUGH_BOTTOM:
             gPreviousCollisionCheck = COLLISION_PASS_THROUGH_BOTTOM;
+            break;
     }
 }
 
@@ -1276,7 +1280,7 @@ void SpriteUtilCheckCollisionAtPosition(u32 yPosition, u32 xPosition)
  * @brief 11428 | 70 | Handles the current sprite falling
  * 
  */
-void SpriteUtilCurrentSpriteFalling(void)
+void SpriteUtilCurrentSpriteFall(void)
 {
     u32 blockTop;
     s16 movement;
@@ -1597,7 +1601,7 @@ u8 SpriteUtilMakeSpriteRotateTowardsTarget(s16 oamRotation, s16 targetY, s16 tar
  * 
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckEndCurrentSpriteAnim(void)
+u32 SpriteUtilHasCurrentAnimationEnded(void)
 {
     u8 adc;
     u16 caf;
@@ -1627,7 +1631,7 @@ u32 SpriteUtilCheckEndCurrentSpriteAnim(void)
  * 
  * @return u32 bool, nearly ended
  */
-u32 SpriteUtilCheckNearEndCurrentSpriteAnim(void)
+u32 SpriteUtilHasCurrentAnimationNearlyEnded(void)
 {
     u8 adc;
     u16 caf;
@@ -1659,7 +1663,7 @@ u32 SpriteUtilCheckNearEndCurrentSpriteAnim(void)
  * @param spriteSlot Sprite slot
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckEndSpriteAnim(u8 spriteSlot)
+u32 SpriteUtilHasAnimationEnded(u8 spriteSlot)
 {
     u8 adc;
     u16 caf;
@@ -1690,7 +1694,7 @@ u32 SpriteUtilCheckEndSpriteAnim(u8 spriteSlot)
  * @param spriteSlot Sprite slot
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckNearEndSpriteAnim(u8 spriteSlot)
+u32 SpriteUtilHasAnimationNearlyEnded(u8 spriteSlot)
 {
     u8 adc;
     u16 caf;
@@ -1721,7 +1725,7 @@ u32 SpriteUtilCheckNearEndSpriteAnim(u8 spriteSlot)
  * 
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckEndSubSprite1Anim(void)
+u32 SpriteUtilHasSubSprite1AnimationEnded(void)
 {
     u8 adc;
     u16 caf;
@@ -1751,7 +1755,7 @@ u32 SpriteUtilCheckEndSubSprite1Anim(void)
  * 
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckNearEndSubSprite1Anim(void)
+u32 SpriteUtilHasSubSprite1AnimationNearlyEnded(void)
 {
     u8 adc;
     u16 caf;
@@ -1782,7 +1786,7 @@ u32 SpriteUtilCheckNearEndSubSprite1Anim(void)
  * 
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckEndSubSpriteData2Anim(void)
+u32 SpriteUtilHasSubSprite2AnimationEnded(void)
 {
     u8 adc;
     u16 caf;
@@ -1812,7 +1816,7 @@ u32 SpriteUtilCheckEndSubSpriteData2Anim(void)
  * 
  * @return u32 bool, ended
  */
-u32 SpriteUtilCheckNearEndSubSpriteData2Anim(void)
+u32 SpriteUtilHasSubSprite2AnimationNearlyEnded(void)
 {
     u8 adc;
     u16 caf;
@@ -1843,9 +1847,9 @@ u32 SpriteUtilCheckNearEndSubSpriteData2Anim(void)
  * 
  * @param yRange Y range
  * @param xRange X range
- * @return u8 NSLR result
+ * @return u32 NSLR result
  */
-u8 SpriteUtilCheckSamusNearSpriteLeftRight(u16 yRange, u16 xRange)
+u32 SpriteUtilCheckSamusNearSpriteLeftRight(u16 yRange, u16 xRange)
 {
     u8 result;
     u16 samusY;
@@ -1899,9 +1903,9 @@ u8 SpriteUtilCheckSamusNearSpriteLeftRight(u16 yRange, u16 xRange)
  * 
  * @param yRange Y range
  * @param xRange X range
- * @return u8 NSLR result
+ * @return u32 NSLR result
  */
-u8 SpriteUtilCheckSamusNearSpriteAboveBelow(u16 yRange, u16 xRange)
+u32 SpriteUtilCheckSamusNearSpriteAboveBelow(u16 yRange, u16 xRange)
 {
     u8 result;
     u16 samusY;
@@ -1956,9 +1960,9 @@ u8 SpriteUtilCheckSamusNearSpriteAboveBelow(u16 yRange, u16 xRange)
  * @param yRange Y range
  * @param xRangeFront X range (in front)
  * @param xRangeBehind X range (behind)
- * @return u8 NSFB result
+ * @return u32 NSFB result
  */
-u8 SpriteUtilCheckSamusNearSpriteFrontBehind(u16 yRange, u16 xRangeFront, u16 xRangeBehind)
+u32 SpriteUtilCheckSamusNearSpriteFrontBehind(u16 yRange, u16 xRangeFront, u16 xRangeBehind)
 {
     u8 result;
     u16 samusY;
@@ -2039,9 +2043,9 @@ u8 SpriteUtilCheckSamusNearSpriteFrontBehind(u16 yRange, u16 xRangeFront, u16 xR
  * @param xRange X range
  * @param yRangeFront X range (in front)
  * @param yRangeBehind Y range (behind)
- * @return u8 NSFB result
+ * @return u32 NSFB result
  */
-u8 SpriteUtilCheckSamusNearSpriteFrontBehindY(u16 xRange, u16 yRangeFront, u16 yRangeBehind)
+u32 SpriteUtilCheckSamusNearSpriteFrontBehindY(u16 xRange, u16 yRangeFront, u16 yRangeBehind)
 {
     u8 result;
     u16 samusY;
@@ -2122,9 +2126,9 @@ u8 SpriteUtilCheckSamusNearSpriteFrontBehindY(u16 xRange, u16 yRangeFront, u16 y
  * @param xRange 
  * @param yRangeBelow 
  * @param yRangeAbove 
- * @return u8 
+ * @return u32
  */
-u8 SpriteUtilCheckSamusNearSpriteAboveBelowSeparateRanges(u16 xRange, u16 yRangeBelow, u16 yRangeAbove)
+u32 SpriteUtilCheckSamusNearSpriteAboveBelowSeparateRanges(u16 xRange, u16 yRangeBelow, u16 yRangeAbove)
 {
     u8 result;
     u16 samusY;
@@ -2254,7 +2258,7 @@ void SpriteUtilUpdateFreezeTimer(void)
  * @param spriteId Secondary sprite id
  * @param ramSlot Primary sprite slot
  */
-void SpriteUtilUpdateSecondarySpritesFreezeTimer(u8 spriteId, u8 ramSlot)
+void SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(u8 spriteId, u8 ramSlot)
 {
     u8 i;
 
@@ -2287,7 +2291,7 @@ void SpriteUtilUpdateSecondarySpritesFreezeTimer(u8 spriteId, u8 ramSlot)
  * @brief 11f40 | 60 | Updates the freeze timer of the primary sprite of the current sprite
  * 
  */
-void SpriteUtilUpdatePrimarySpriteFreezeTimer(void)
+void SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent(void)
 {
     u8 ramSlot;
 
@@ -2378,6 +2382,7 @@ void unk_12008(u16 yPosition, u16 xPosition)
 
         case 26:
             ParticleSet(yPosition, xPosition, PE_0x25);
+            break;
     }
 }
 
@@ -2424,6 +2429,7 @@ void unk_120ac(u16 yPosition, u16 xPosition)
 
         case 26:
             ParticleSet(yPosition, xPosition, PE_0x24);
+            break;
     }
 }
 
@@ -2762,7 +2768,7 @@ u32 SpriteUtilCheckSamusPassThroughSprite(u8 spriteSlot)
                     break;
                 }
 
-                if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
+                if (ProjectileGetSpriteWeakness(spriteSlot) & (WEAKNESS_CHARGE_BEAM | WEAKNESS_BEAM_BOMBS))
                     passThrough++;
             }
             break;
@@ -2779,6 +2785,7 @@ u32 SpriteUtilCheckSamusPassThroughSprite(u8 spriteSlot)
         case SPOSE_SCREW_ATTACKING:
         case SPOSE_SHINESPARKING:
             passThrough++;
+            break;
     }
 
     return passThrough;
@@ -2880,6 +2887,7 @@ u32 SpriteUtilCheckSamusDamagingPose(void)
         default:
             if (gSamusData.speedboostingCounter != 0)
                 damaging = TRUE;
+            break;
     }
 
     return damaging;
@@ -2911,9 +2919,10 @@ u32 SpriteUtilCheckSamusPseudoScrew(u8 spriteSlot)
                     break;
                 }
 
-                if (ProjectileGetSpriteWeakness(spriteSlot) & (SPRITE_WEAKNESS_CHARGE_BEAM | SPRITE_WEAKNESS_BEAM_BOMBS))
+                if (ProjectileGetSpriteWeakness(spriteSlot) & (WEAKNESS_CHARGE_BEAM | WEAKNESS_BEAM_BOMBS))
                     pseudoScrew++;
             }
+            break;
     }
 
     return pseudoScrew;
@@ -3058,7 +3067,7 @@ u8 SpriteUtilCountPrimarySprites(u8 spriteId)
  * @param spriteId Sprite id
  * @return u8 Sprite ram slot
  */
-u8 SpriteUtilFindPrimarySprite(u8 spriteId)
+u8 SpriteUtilFindPrimary(u8 spriteId)
 {
     u8 i;
     u8 count;
@@ -3085,7 +3094,7 @@ u8 SpriteUtilFindPrimarySprite(u8 spriteId)
  * @param spriteId Sprite id
  * @return u8 Sprite ram slot
  */
-u8 SpriteUtilFindSecondarySprite(u8 spriteId)
+u8 SpriteUtilFindSecondary(u8 spriteId)
 {
     u8 i;
     u8 count;
@@ -3113,7 +3122,7 @@ u8 SpriteUtilFindSecondarySprite(u8 spriteId)
  * @param ramSlot Primary sprite ram slot
  * @return u8 Count
  */
-u8 SpriteUtilCountSecondarySpritesWithRamSlot(u8 spriteId, u8 ramSlot)
+u8 SpriteUtilFindSecondaryWithRamSlot(u8 spriteId, u8 ramSlot)
 {
     u8 i;
     u8 count;
@@ -3178,6 +3187,7 @@ void SpriteUtilMoveEyeCoreXBeam(u8 movement)
                 gCurrentSprite.xPosition += movement;
             else
                 gCurrentSprite.xPosition -= movement;
+            break;
     }
 }
 
@@ -3195,7 +3205,7 @@ void SpriteUtilMoveEyeCoreXBeamPart(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONAL_DOWN:
+        case ACD_DIAGONALLY_DOWN:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (gCurrentSprite.roomSlot == 1)
@@ -3224,7 +3234,7 @@ void SpriteUtilMoveEyeCoreXBeamPart(void)
             }
             break;
 
-        case ACD_DIAGONAL_UP:
+        case ACD_DIAGONALLY_UP:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (gCurrentSprite.roomSlot == 1)
@@ -3299,7 +3309,7 @@ void SpriteUtilMoveEyeCoreXWaveBeamPart(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONAL_DOWN:
+        case ACD_DIAGONALLY_DOWN:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (roomSlot == 1)
@@ -3328,7 +3338,7 @@ void SpriteUtilMoveEyeCoreXWaveBeamPart(void)
             }
             break;
 
-        case ACD_DIAGONAL_UP:
+        case ACD_DIAGONALLY_UP:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (roomSlot == 1)
@@ -4084,9 +4094,9 @@ void unk_1343c(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 speedDivisor, 
     {
         gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
 
-        gCurrentSprite.unk_8++;
-        if (gCurrentSprite.unk_8 > 3)
-            gCurrentSprite.unk_8 = 0;
+        gCurrentSprite.workX++;
+        if (gCurrentSprite.workX > 3)
+            gCurrentSprite.workX = 0;
         
         gCurrentSprite.work3 = 1;
         SoundPlayNotAlreadyPlaying(soundId);
@@ -4256,9 +4266,9 @@ void unk_136ac(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor)
     {
         gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
 
-        gCurrentSprite.unk_8++;
-        if (gCurrentSprite.unk_8 > 3)
-            gCurrentSprite.unk_8 = 0;
+        gCurrentSprite.workX++;
+        if (gCurrentSprite.workX > 3)
+            gCurrentSprite.workX = 0;
         
         gCurrentSprite.work3 = 1;
     }
@@ -4535,7 +4545,7 @@ void SpriteUtilUpdateStunTimer(void)
 {
     u8 isft;
 
-    if (!SPRITE_HAS_ISFT(gCurrentSprite))
+    if (!SPRITE_GET_ISFT(gCurrentSprite))
         return;
 
     isft = --gCurrentSprite.invincibilityStunFlashTimer;

@@ -28,7 +28,7 @@ void PowerBombBarrierInit(void)
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
     }
     else
     {
@@ -146,13 +146,13 @@ void PowerBombBarrierDying(void)
  */
 void PowerBombBarrier(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 4)
         SoundPlayNotAlreadyPlaying(0x160);
 
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpritesFreezeTimer(SSPRITE_X_BARRIER_CORE_POWER_BOMB_STEM, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_X_BARRIER_CORE_POWER_BOMB_STEM, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
@@ -202,7 +202,7 @@ void PowerBombBarrierStem(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdatePrimarySpriteFreezeTimer();
+        SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent();
         return;
     }
 
@@ -249,7 +249,7 @@ void PowerBombBarrierStem(void)
         case 0x18:
             gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-            if (SpriteUtilCheckEndCurrentSpriteAnim())
+            if (SpriteUtilHasCurrentAnimationEnded())
                 gCurrentSprite.status = 0;
     }
 

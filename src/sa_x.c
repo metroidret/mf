@@ -398,6 +398,7 @@ void SaXSetPose(u8 pose)
 
         default:
             gSaXData.diagonalAim = DIAG_AIM_NONE;
+            break;
     }
 
     gSaXData.pose = pose;
@@ -480,6 +481,7 @@ void SaXUpdateGraphicsAndDraw(void)
 
         default:
             pAnim = sSaXOamDataPointers[gSaXData.pose][direction];
+            break;
     }
 
     pAnim = &pAnim[gSaXData.currentAnimationFrame];
@@ -514,6 +516,7 @@ void SaXUpdateGraphicsAndDraw(void)
 
             default:
                 pPalette = sSaXPalette_Default;
+                break;
         }
     }
     else
@@ -970,6 +973,7 @@ u8 SaXElevatorBlowingUpWall(void)
 
             gSaXElevatorData.timer = 0;
             ended = TRUE;
+            break;
     }
 
     return ended;
@@ -1000,6 +1004,7 @@ u8 SaXElevatorWalkingBeforeTurningToCamera(void)
                 gSaXElevatorData.timer = 0;
                 ended = TRUE;
             }
+            break;
     }
 
     return ended;
@@ -1029,6 +1034,7 @@ u8 SaXElevatorBeforeJumping(void)
                 gSaXElevatorData.timer = 0;
                 ended = TRUE;
             }
+            break;
     }
 
     return ended;
@@ -1081,6 +1087,7 @@ u8 SaXElevatorBeforeShootingDoor(void)
 
             gSaXElevatorData.timer = 0;
             ended = tmp;
+            break;
     }
 
     return ended;

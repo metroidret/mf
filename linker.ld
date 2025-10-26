@@ -40,6 +40,8 @@ SECTIONS {
         . = 0x00000049; gLastElevatorUsed = .;
         . = 0x0000004a; gCurrentEventBasedEffect = .;
         . = 0x0000004b; gCurrentEventBasedEffectCopy = .;
+        . = 0x0000004e; gScreenShakeXOffset = .;
+        . = 0x0000004f; gScreenShakeYOffset = .;
         . = 0x00000052; gSpritesetNumber = .;
         . = 0x00000053; gCurrentClipdataAffectingAction = .;
         . = 0x00000060; gSubEventCounter = .;
@@ -53,6 +55,8 @@ SECTIONS {
         . = 0x000000c8; gBackgroundPositions = .;
         . = 0x000000dc; gSaXSpawnPosition = .;
         . = 0x000000e8; gWindow1Border = .;
+        . = 0x000000f0; gScreenShakeY = .;
+        . = 0x000000f4; gScreenShakeX = .;
         . = 0x00000110; gCurrentPowerBomb = .;
         . = 0x00000138; gInGameTimer = .;
         . = 0x0000013c; gMaxInGameTimeFlag = .;
@@ -218,9 +222,12 @@ SECTIONS {
         src/sprites_AI/target.o(.text);
         src/sprites_AI/unused_sprites.o(.text);
         src/sprites_AI/bubbles.o(.text);
+        src/sprites_AI/x_parasite.o(.text);
 
-        asm/disasm_0x0801503C.o(.text);
+        asm/disasm_0x080157cc.o(.text);
 
+        src/sprites_AI/hornoad.o(.text);
+        src/sprites_AI/halzyn.o(.text);
         src/sprites_AI/movable_platform.o(.text);
         src/sprites_AI/moto.o(.text);
         src/sprites_AI/save_pad.o(.text);
@@ -229,8 +236,13 @@ SECTIONS {
         src/sprites_AI/security_pad.o(.text);
         src/sprites_AI/area_banner.o(.text);
         src/sprites_AI/skree.o(.text);
+        src/sprites_AI/zombie_researcher.o(.text);
+        src/sprites_AI/geemer.o(.text);
+        src/sprites_AI/arachnus.o(.text);
+        src/sprites_AI/core_x.o(.text);
+        src/sprites_AI/core_x_downloading_varia.o(.text);
 
-        asm/disasm_0x080220EC.o(.text);
+        asm/disasm_0x08026C7C.o(.text);
 
         src/sprites_AI/blue_x.o(.text);
         src/sprites_AI/missile_hatch.o(.text);
@@ -248,8 +260,10 @@ SECTIONS {
         asm/disasm_0x08049888.o(.text);
 
         src/event_checks.o(.text);
+        src/x_parasite_util.o(.text);
+        src/screen_shake.o(.text);
 
-        asm/disasm_0x08061004.o(.text);
+        asm/disasm_0x080626F4.o(.text);
 
         src/power_bomb_explosion.o(.text);
 
@@ -293,6 +307,8 @@ SECTIONS {
         src/data/sprite_debris_data.o(.rodata);
         src/data/sprites/target.o(.rodata);
         src/data/sprites/sa_x.o(.rodata);
+        src/data/sprites/hornoad.o(.rodata);
+        src/data/sprites/halzyn.o(.rodata);
         src/data/sprites/movable_platform.o(.rodata);
         src/data/sprites/moto.o(.rodata);
         src/data/sprites/save_pad.o(.rodata);
@@ -301,6 +317,11 @@ SECTIONS {
         src/data/sprites/security_pad.o(.rodata);
         src/data/sprites/area_banner.o(.rodata);
         src/data/sprites/skree.o(.rodata);
+        src/data/sprites/zombie_researcher.o(.rodata);
+        src/data/sprites/geemer.o(.rodata);
+        src/data/sprites/arachnus.o(.rodata);
+        src/data/sprites/core_x.o(.rodata);
+        src/data/sprites/core_x_downloading_varia.o(.rodata);
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);
         src/data/sprites/super_missile_barrier.o(.rodata);

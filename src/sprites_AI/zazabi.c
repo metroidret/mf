@@ -197,7 +197,7 @@ void ZazabiProjectilesCollision(void)
                 }
             }
 
-            if (SPRITE_HAS_ISFT(gCurrentSprite) < 2)
+            if (SPRITE_GET_ISFT(gCurrentSprite) < 2)
             {
                 SPRITE_CLEAR_AND_SET_ISFT(gCurrentSprite, 2);
             }
@@ -301,11 +301,11 @@ u8 ZazabiXMovement(u16 movement)
 void ZazabiSpawningFromX(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
-    gCurrentSprite.xParasiteTimer--;
+    gCurrentSprite.workY--;
 
-    if (gCurrentSprite.xParasiteTimer != 0)
+    if (gCurrentSprite.workY != 0)
     {
-        gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
+        gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
     }
     else
     {
@@ -351,7 +351,7 @@ void ZazabiInit(void)
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
     }
     else
     {
@@ -511,7 +511,7 @@ void ZazabiIdleInit(void)
  */
 void ZazabiIdle(void)
 {
-    if (SpriteUtilCheckNearEndSubSprite1Anim())
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
     {
         gCurrentSprite.work1--;
 
@@ -636,7 +636,7 @@ void ZazabiJumpWarningInit(void)
  */
 void ZazabiJumpWarning(void)
 {
-    if (SpriteUtilCheckNearEndSubSprite1Anim())
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
     {
         gCurrentSprite.pose = ZAZABI_POSE_JUMPING_INIT;
 
@@ -1075,7 +1075,7 @@ void ZazabiLandingMouthOpen(void)
     if (gSubSpriteData1.currentAnimationFrame == 1 && gSubSpriteData1.animationDurationCounter == 1 && gSubSpriteData1.health != 40)
         SoundPlay(0x27F);
 
-    if (SpriteUtilCheckNearEndSubSprite1Anim())
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
     {
         if (gSamusData.pose == SPOSE_GRABBED_BY_ZAZABI)
         {
@@ -1120,7 +1120,7 @@ void ZazabiLandingInit(void)
  */
 void ZazabiLanding(void)
 {
-    if (SpriteUtilCheckNearEndSubSprite1Anim())
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         gCurrentSprite.pose = ZAZABI_POSE_JUMPING_INIT;
 }
 
@@ -1193,7 +1193,7 @@ void ZazabiEatingSamus2(void)
     }
     else
     {
-        if (SpriteUtilCheckNearEndSubSprite1Anim())
+        if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_3_INIT;
             SoundPlay(0x281);
@@ -1282,7 +1282,7 @@ void ZazabiEatingSamus4(void)
     }
     else
     {
-        if (SpriteUtilCheckNearEndSubSprite1Anim())
+        if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_5_INIT;
             SoundPlay(0x281);
@@ -1368,7 +1368,7 @@ void ZazabiSpittingSamus(void)
         gBossWork0 = FALSE;
     }
 
-    if (SpriteUtilCheckNearEndSubSprite1Anim())
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         gCurrentSprite.pose = ZAZABI_POSE_LANDING_AFTER_SPITTING_INIT;
 }
 
@@ -1397,7 +1397,7 @@ void ZazabiLandingAfterSpittingInit(void)
  */
 void ZazabiLandingAfterSpitting(void)
 {
-    if (SpriteUtilCheckNearEndSubSprite1Anim())
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         gCurrentSprite.pose = ZAZABI_POSE_IDLE_INIT;
 }
 
@@ -1412,8 +1412,8 @@ void ZazabiDyingInit(void)
     gCurrentSprite.health = 1;
     gCurrentSprite.invincibilityStunFlashTimer = 0;
     gCurrentSprite.paletteRow = 0;
-    gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
-    gCurrentSprite.unk_8 = 1;
+    gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
+    gCurrentSprite.workX = 1;
 
     ParticleSet(gCurrentSprite.yPosition, gCurrentSprite.xPosition, PE_0x2F);
     SoundPlay_3b1c(0x286);
@@ -1428,15 +1428,15 @@ void ZazabiDying(void)
     u16 spriteY;
     u16 spriteX;
 
-    gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
-    gCurrentSprite.xParasiteTimer--;
+    gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
+    gCurrentSprite.workY--;
 
     spriteY = gSubSpriteData1.yPosition + ZAZABI_HEIGHT + HALF_BLOCK_SIZE;
     spriteX = gSubSpriteData1.xPosition;
 
-    if (gCurrentSprite.unk_8 != 0)
+    if (gCurrentSprite.workX != 0)
     {
-        switch (gCurrentSprite.xParasiteTimer)
+        switch (gCurrentSprite.workY)
         {
             case 40:
                 ParticleSet(spriteY - BLOCK_SIZE, spriteX, PE_0x25);
@@ -1456,15 +1456,15 @@ void ZazabiDying(void)
                 break;
 
             case 0:
-                gCurrentSprite.unk_8 = 0;
-                gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+                gCurrentSprite.workX = 0;
+                gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
                 break;
         }
 
         return;
     }
 
-    switch (gCurrentSprite.xParasiteTimer)
+    switch (gCurrentSprite.workY)
     {
         case 40:
             ParticleSet(spriteY - BLOCK_SIZE * 3, spriteX - BLOCK_SIZE, PE_0x26);
@@ -1492,11 +1492,11 @@ void ZazabiDying(void)
             break;
     }
 
-    if (gCurrentSprite.xParasiteTimer < 20)
+    if (gCurrentSprite.workY < 20)
     {
-        SpriteLoadGfx(gCoreXFormationSpriteId, 0, gCurrentSprite.xParasiteTimer);
+        SpriteLoadGfx(gCoreXFormationSpriteId, 0, gCurrentSprite.workY);
     }
-    else if (gCurrentSprite.xParasiteTimer == 20)
+    else if (gCurrentSprite.workY == 20)
     {
         SpriteLoadPal(gCoreXFormationSpriteId, 0, 5);
     }
@@ -1891,7 +1891,7 @@ void ZazabiPartPupil(void)
         case ZAZABI_POSE_IDLE:
             if (gCurrentSprite.pOam == sZazabiPartOam_PupilBlinking)
             {
-                if (SpriteUtilCheckEndCurrentSpriteAnim())
+                if (SpriteUtilHasCurrentAnimationEnded())
                 {
                     gCurrentSprite.pOam = sZazabiPartOam_PupilClosed;
                     gCurrentSprite.animationDurationCounter = 0;

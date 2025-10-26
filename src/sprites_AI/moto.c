@@ -34,11 +34,11 @@ void MotoSpawningFromX(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
 
-    gCurrentSprite.xParasiteTimer--;
+    gCurrentSprite.workY--;
 
-    if (gCurrentSprite.xParasiteTimer != 0)
+    if (gCurrentSprite.workY != 0)
     {
-        gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.xParasiteTimer];
+        gWrittenToMosaic_H = sXParasiteMosaicValues[gCurrentSprite.workY];
     }
     else
     {
@@ -95,7 +95,7 @@ void MotoInit(void)
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
     {
         gCurrentSprite.pose = SPRITE_POSE_SPAWNING_FROM_X;
-        gCurrentSprite.xParasiteTimer = ARRAY_SIZE(sXParasiteMosaicValues);
+        gCurrentSprite.workY = X_PARASITE_MOSAIC_MAX_INDEX;
         return;
     }
 
@@ -154,7 +154,7 @@ void MotoIdleInit(void)
  */
 void MotoIdle(void)
 {
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -162,7 +162,7 @@ void MotoIdle(void)
         return;
     }
 
-    if (!SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationNearlyEnded())
         return;
 
     if (SpriteUtilCheckSamusNearSpriteFrontBehind(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE, BLOCK_SIZE * 5, BLOCK_SIZE * 5) == NSFB_BEHIND)
@@ -190,7 +190,7 @@ void MotoHittingWallInit(void)
  */
 void MotoHittingWall(void)
 {
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -198,7 +198,7 @@ void MotoHittingWall(void)
         return;
     }
 
-    if (!SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (!SpriteUtilHasCurrentAnimationNearlyEnded())
         return;
 
     gCurrentSprite.pose = MOTO_POSE_TURNING_AROUND_INIT;
@@ -228,7 +228,7 @@ void MotoWalking(void)
 
     nsfb = NSFB_OUT_OF_RANGE;
     
-    SpriteUtilAlignYPosOnSlope();
+    SpriteUtilAlignYPositionOnSlopeAtOrigin();
 
     if (gPreviousVerticalCollisionCheck == COLLISION_AIR)
     {
@@ -263,7 +263,7 @@ void MotoWalking(void)
             }
         }
     }
-    else if (gPreviousVerticalCollisionCheck & COLLISION_FLAGS_UNKNOWN)
+    else if (gPreviousVerticalCollisionCheck & COLLISION_FLAGS_UNKNOWN_F0)
     {
         if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
         {
@@ -394,7 +394,7 @@ void MotoWalking(void)
             }
             else
             {
-                if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+                if (SpriteUtilHasCurrentAnimationNearlyEnded())
                 {
                     if (gSpriteRandomNumber > 12)
                         gCurrentSprite.pose = MOTO_POSE_IDLE_INIT;
@@ -475,7 +475,7 @@ void MotoCharging(void)
         SoundPlayNotAlreadyPlaying(0x158);
     }
 
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.pose = MOTO_POSE_WALKING_FASTER;
 
@@ -506,7 +506,7 @@ void MotoTurningInit(void)
  */
 void MotoTurning(void)
 {
-    if (SpriteUtilCheckEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationEnded())
     {
         gCurrentSprite.pose = MOTO_POSE_TURNING_AROUND_SECOND_PART;
 
@@ -524,7 +524,7 @@ void MotoTurning(void)
  */
 void MotoTurningEnd(void)
 {
-    if (SpriteUtilCheckNearEndCurrentSpriteAnim())
+    if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
@@ -628,19 +628,19 @@ void MotoFrontIdle(void)
  */
 void Moto(void)
 {
-    if (SPRITE_HAS_ISFT(gCurrentSprite) == 4)
+    if (SPRITE_GET_ISFT(gCurrentSprite) == 4)
         SoundPlayNotAlreadyPlaying(0x154);
 
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpritesFreezeTimer(SSPRITE_MOTO_FRONT, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_MOTO_FRONT, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
-    if (SPRITE_HAS_ISFT(gCurrentSprite))
+    if (SPRITE_GET_ISFT(gCurrentSprite))
     {
-        if (gCurrentSprite.status & SPRITE_STATUS_ON_SCREEN)
+        if (gCurrentSprite.status & SPRITE_STATUS_ONSCREEN)
             gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
     }
 
@@ -695,7 +695,7 @@ void Moto(void)
             MotoFallingInit();
 
         case SPRITE_POSE_FALLING:
-            SpriteUtilCurrentSpriteFalling();
+            SpriteUtilCurrentSpriteFall();
             break;
 
         case SPRITE_POSE_DYING_INIT:
@@ -726,7 +726,7 @@ void Moto(void)
  */
 void MotoFront(void)
 {
-    if (SPRITE_HAS_ISFT(gSpriteData[gCurrentSprite.primarySpriteRamSlot]) < SPRITE_HAS_ISFT(gCurrentSprite))
+    if (SPRITE_GET_ISFT(gSpriteData[gCurrentSprite.primarySpriteRamSlot]) < SPRITE_GET_ISFT(gCurrentSprite))
     {
         SPRITE_CLEAR_AND_SET_ISFT(gSpriteData[gCurrentSprite.primarySpriteRamSlot], (gCurrentSprite.invincibilityStunFlashTimer + 1) & 0x7F);
     }
@@ -734,7 +734,7 @@ void MotoFront(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdatePrimarySpriteFreezeTimer();
+        SpriteUtilUpdatePrimarySpriteFreezeTimerOfCurrent();
         return;
     }
     

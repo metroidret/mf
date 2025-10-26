@@ -33,6 +33,14 @@
         value = (max);         \
 }
 
+#define SET_ABS_SUB(var, v1, v2)\
+{                               \
+    if ((v1) > (v2))            \
+        var = (v1) - (v2);      \
+    else                        \
+        var = (v2) - (v1);      \
+}
+
 /**
  * @brief Performs a modulo (value % mod) operation on a value using the and operation (WARNING only use a value for mod that is a power of 2)
  * 
@@ -40,6 +48,13 @@
  * @param mod Modulo
  */
 #define MOD_AND(value, mod) ((value) & ((mod) - 1))
+
+/**
+ * @brief Gets the binary logarithm of a value (WARNING only use a value that is a power of 2 and <= 1024)
+ *
+ * @param value Value
+ */
+#define LOG2(value) ((value) == 2 ? 1 : ((value) == 4 ? 2 : ((value) == 8 ? 3 : ((value) == 16 ? 4 : ((value) == 32 ? 5 : ((value) == 64 ? 6 : ((value) == 128 ? 7 : ((value) == 256 ? 8 : ((value) == 512 ? 9 : ((value) == 1024 ? 10 : 0))))))))))
 
 /**
  * @brief Performs a division (value / div) operation on a value using the right shift operation (WARNING only use a value for div that is a power of 2 and <= 1024)
@@ -112,6 +127,8 @@
 #define SIN(angle) (sSineTable[angle])
 #define COS(angle) (sSineTable[angle + PI / 2])
 
+#define EMPTY_DO_WHILE {do {} while(0);}
+
 #define COLOR_MASK 0x1F
 #define RED(c) ((c) & COLOR_MASK)
 #define GREEN(c) (((c) & (COLOR_MASK << 5)) >> 5)
@@ -122,29 +139,6 @@
 #define COLOR_BLACK COLOR(0, 0, 0)
 
 #define SET_BACKDROP_COLOR(color) (write16(PALRAM_BASE, (color)))
-
-#define GET_PSPRITE_HEALTH(id) sPrimarySpriteStats[(id)][0]
-#define GET_SSPRITE_HEALTH(id) sSecondarySpriteStats[(id)][0]
-
-#define GET_PSPRITE_DAMAGE(id) sPrimarySpriteStats[(id)][1]
-#define GET_SSPRITE_DAMAGE(id) sSecondarySpriteStats[(id)][1]
-
-#define GET_PSPRITE_SUIT_REDUCTION(id) sPrimarySpriteStats[(id)][2]
-#define GET_SSPRITE_SUIT_REDUCTION(id) sSecondarySpriteStats[(id)][2]
-
-#define GET_PSPRITE_WEAKNESS(id) sPrimarySpriteStats[(id)][3]
-#define GET_SSPRITE_WEAKNESS(id) sSecondarySpriteStats[(id)][3]
-
-#define SPRITE_HAS_ISFT(sprite) ((sprite).invincibilityStunFlashTimer & 0x7F)
-#define SPRITE_CLEAR_ISFT(sprite) ((sprite).invincibilityStunFlashTimer &= 0x80)
-#define SPRITE_SET_ISFT(sprite, value) ((sprite).invincibilityStunFlashTimer |= (value))
-#define SPRITE_CLEAR_AND_SET_ISFT(sprite, value)\
-{                                               \
-    SPRITE_CLEAR_ISFT(sprite);                  \
-    SPRITE_SET_ISFT(sprite, value);             \
-}
-#define SPRITE_SET_ABSOLUTE_PALETTE_ROW(sprite, row) ((sprite).paletteRow = (row) + 8 - ((sprite).spritesetGfxSlot + (sprite).frozenPaletteRowOffset))
-#define SPRITE_IS_INFECTED(sprite) ((sprite).spritesetSlotAndProperties >= SSP_X_ABSORBABLE_BY_SAMUS && (sprite).spritesetSlotAndProperties < SSP_UNKNOWN_40 + 0x10)
 
 #define SUB_PIXEL_TO_PIXEL(pixel) ((pixel) / SUB_PIXEL_RATIO)
 #define SUB_PIXEL_TO_PIXEL_(pixel) (DIV_SHIFT(pixel, SUB_PIXEL_RATIO))
@@ -177,3 +171,6 @@
 
 #define FORCE_RODATA __attribute__((section(".rodata")))
 #define NAKED_FUNCTION __attribute__((naked))
+
+#define ALIGN_2() asm(".align 2, 0")
+#define ALIGN_4() asm(".align 4, 0")
