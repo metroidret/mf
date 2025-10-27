@@ -1,5 +1,5 @@
-#ifndef SCISER_H
-#define SCISER_H
+#ifndef SCISER_AI_H
+#define SCISER_AI_H
 
 #include "types.h"
 
@@ -24,4 +24,4 @@ void SciserProjectileExploding(void);
 void Sciser(void);
 void SciserProjectile(void);
 
-#endif /* SCISER_H */
+#endif /* SCISER_AI_H */

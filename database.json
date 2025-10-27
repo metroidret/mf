@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_31a158_35dd74.bin",
-    "count": "0x43C1C",
+    "path": "Blob_31ad70_35dd74.bin",
+    "count": "0x43004",
     "addr": {
-      "us": "0x31A158"
+      "us": "0x31AD70"
     },
     "size": 1
   },
@@ -2804,6 +2804,22 @@
     "count": "0x20",
     "addr": {
       "us": "0x31A118"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/sidehopper.gfx",
+    "count": "0x200",
+    "addr": {
+      "us": "0x31A180"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/sidehopper.pal",
+    "count": "0x10",
+    "addr": {
+      "us": "0x31A980"
     },
     "size": 2
   },
