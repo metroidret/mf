@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_31ad70_35dd74.bin",
-    "count": "0x43004",
+    "path": "Blob_31b9f0_35dd74.bin",
+    "count": "0x42384",
     "addr": {
-      "us": "0x31AD70"
+      "us": "0x31B9F0"
     },
     "size": 1
   },
@@ -2820,6 +2820,22 @@
     "count": "0x10",
     "addr": {
       "us": "0x31A980"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/dessgeega.gfx",
+    "count": "0x200",
+    "addr": {
+      "us": "0x31AD98"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/dessgeega.pal",
+    "count": "0x10",
+    "addr": {
+      "us": "0x31B598"
     },
     "size": 2
   },
