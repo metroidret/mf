@@ -242,6 +242,7 @@ SECTIONS {
         src/sprites_AI/core_x.o(.text);
         src/sprites_AI/core_x_downloading_varia.o(.text);
         src/sprites_AI/waver.o(.text);
+        src/sprites_AI/sciser.o(.text);
 
         asm/disasm_0x08026C7C.o(.text);
 
@@ -324,6 +325,7 @@ SECTIONS {
         src/data/sprites/core_x.o(.rodata);
         src/data/sprites/core_x_downloading_varia.o(.rodata);
         src/data/sprites/waver.o(.rodata);
+        src/data/sprites/sciser.o(.rodata);
 
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);

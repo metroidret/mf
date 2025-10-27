@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_317630_35dd74.bin",
-    "count": "0x46744",
+    "path": "Blob_31a158_35dd74.bin",
+    "count": "0x43C1C",
     "addr": {
-      "us": "0x317630"
+      "us": "0x31A158"
     },
     "size": 1
   },
@@ -2772,6 +2772,38 @@
     "count": "0x20",
     "addr": {
       "us": "0x317468"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/sciser.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x3176C4"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/sciser.pal",
+    "count": "0x20",
+    "addr": {
+      "us": "0x3186c4"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/gold_sciser.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x319118"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/gold_sciser.pal",
+    "count": "0x20",
+    "addr": {
+      "us": "0x31A118"
     },
     "size": 2
   },

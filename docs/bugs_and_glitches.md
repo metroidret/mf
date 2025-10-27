@@ -5,6 +5,7 @@ These are known bugs and glitches in the game: code that clearly does not work a
 ## Contents
 
 - [Bugs](#bugs)
+  - [Y-flipped sciser uses the wrong size for top hitbox](#y-flipped-sciser-uses-the-wrong-size-for-top-hitbox)
 - [Oversights and Design Flaws](#oversights-and-design-flaws)
 - [Uninitialized Variables](#uninitialized-variables)
 - [TODO](#todo)
@@ -14,6 +15,20 @@ These are known bugs and glitches in the game: code that clearly does not work a
 
 ## Bugs
 
+### Y-flipped sciser uses the wrong size for top hitbox
+
+**Fix:** Edit `SciserUpdateHitbox` in [sciser.c](../src/sprites_AI/sciser.c) to make the `hitboxTop` value negative.
+
+```diff
+  if (gCurrentSprite.status & SPRITE_STATUS_Y_FLIP)
+  {
+-     gCurrentSprite.hitboxTop = QUARTER_BLOCK_SIZE; // BUG: should be -QUARTER_BLOCK_SIZE
++     gCurrentSprite.hitboxTop = -QUARTER_BLOCK_SIZE;
+      gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(1.125f);
+      gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(.75f);
+      gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(.75f); 
+  }
+```
 
 ## Oversights and Design Flaws
 
