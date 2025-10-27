@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_31b9f0_35dd74.bin",
-    "count": "0x42384",
+    "path": "Blob_31c370_35dd74.bin",
+    "count": "0x41A04",
     "addr": {
-      "us": "0x31B9F0"
+      "us": "0x31C370"
     },
     "size": 1
   },
@@ -2836,6 +2836,22 @@
     "count": "0x10",
     "addr": {
       "us": "0x31B598"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/missile_geron.gfx",
+    "count": "0x200",
+    "addr": {
+      "us": "0x31B9F0"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/missile_geron.pal",
+    "count": "0x10",
+    "addr": {
+      "us": "0x31C1F0"
     },
     "size": 2
   },

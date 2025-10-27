@@ -338,5 +338,3 @@ const struct FrameData sDessgeegaSpikeOam_Exploding[4] = {
     },
     [3] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_31b9f0_35dd74[] = INCBIN_U8("data/Blob_31b9f0_35dd74.bin");
