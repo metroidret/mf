@@ -92,6 +92,8 @@ These are known bugs and glitches in the game: code that clearly does not work a
 - X parasites can get stuck moving in a circle
 - The Metroids in the Restricted Lab check Samus's Y position to set their X position
 - Pseudo-screw collision with Nettori spores is inconsistent
+- Power bomb gerons use the wrong sprite ID to calculate the destroyed bit position
+- Bomb's hitbox isn't centered
 
 ### Room Issues
 - An energy tank can be collected after Arachnus spawns, corrupting its graphics
