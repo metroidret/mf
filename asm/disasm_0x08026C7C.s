@@ -2,8 +2,8 @@
 
     .syntax unified
 
-	thumb_func_start XBarrierSetCollision
-XBarrierSetCollision: @ 0x08029CF0
+	thumb_func_start GeronSetCollision
+GeronSetCollision: @ 0x08029CF0
 	push {r4, r5, r6, lr}
 	mov r6, r8
 	push {r6}
@@ -46,8 +46,8 @@ XBarrierSetCollision: @ 0x08029CF0
 _08029D44: .4byte gCurrentSprite
 _08029D48: .4byte gCurrentClipdataAffectingAction
 
-	thumb_func_start XBarrierCoreInit
-XBarrierCoreInit: @ 0x08029D4C
+	thumb_func_start GeronInit
+GeronInit: @ 0x08029D4C
 	push {r4, r5, lr}
 	sub sp, #0xc
 	bl SpriteUtilTrySetAbsorbXFlag
@@ -70,7 +70,7 @@ _08029D70:
 	subs r0, #0x41
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
-	ldr r0, _08029D94 @ =gNormalXBarrierCoresDestroyed
+	ldr r0, _08029D94 @ =gMissileGeronsDestroyed
 	ldrh r0, [r0]
 	asrs r0, r1
 	lsls r0, r0, #0x10
@@ -83,7 +83,7 @@ _08029D70:
 	strh r0, [r2]
 	b _08029E6E
 	.align 2, 0
-_08029D94: .4byte gNormalXBarrierCoresDestroyed
+_08029D94: .4byte gMissileGeronsDestroyed
 _08029D98:
 	movs r0, #2
 	strb r0, [r3]
@@ -186,7 +186,7 @@ _08029E60: .4byte 0x0000FFD0
 _08029E64: .4byte 0x0000FFD8
 _08029E68:
 	movs r0, #3
-	bl XBarrierSetCollision
+	bl GeronSetCollision
 _08029E6E:
 	add sp, #0xc
 	pop {r4, r5}
@@ -194,8 +194,8 @@ _08029E6E:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start XBarrierCoreIdleInit
-XBarrierCoreIdleInit: @ 0x08029E78
+	thumb_func_start GeronIdleInit
+GeronIdleInit: @ 0x08029E78
 	ldr r1, _08029E90 @ =gCurrentSprite
 	adds r2, r1, #0
 	adds r2, #0x24
@@ -211,13 +211,13 @@ XBarrierCoreIdleInit: @ 0x08029E78
 _08029E90: .4byte gCurrentSprite
 _08029E94: .4byte 0x0831C348
 
-	thumb_func_start XBarrierCoreIdle
-XBarrierCoreIdle: @ 0x08029E98
+	thumb_func_start GeronIdle
+GeronIdle: @ 0x08029E98
 	bx lr
 	.align 2, 0
 
-	thumb_func_start XBarrierCoreDeath
-XBarrierCoreDeath: @ 0x08029E9C
+	thumb_func_start GeronDeath
+GeronDeath: @ 0x08029E9C
 	push {lr}
 	ldr r0, _08029EC4 @ =gCurrentSprite
 	ldrb r0, [r0, #0x1d]
@@ -228,20 +228,20 @@ XBarrierCoreDeath: @ 0x08029E9C
 	lsls r1, r1, #9
 	lsls r1, r0
 	lsrs r1, r1, #0x10
-	ldr r2, _08029EC8 @ =gNormalXBarrierCoresDestroyed
+	ldr r2, _08029EC8 @ =gMissileGeronsDestroyed
 	ldrh r0, [r2]
 	orrs r1, r0
 	strh r1, [r2]
 	movs r0, #1
-	bl XBarrierSetCollision
+	bl GeronSetCollision
 	pop {r0}
 	bx r0
 	.align 2, 0
 _08029EC4: .4byte gCurrentSprite
-_08029EC8: .4byte gNormalXBarrierCoresDestroyed
+_08029EC8: .4byte gMissileGeronsDestroyed
 
-	thumb_func_start XBarrierCore
-XBarrierCore: @ 0x08029ECC
+	thumb_func_start Geron
+Geron: @ 0x08029ECC
 	push {r4, lr}
 	ldr r4, _08029F04 @ =gCurrentSprite
 	adds r0, r4, #0
@@ -299,12 +299,12 @@ _08029F2A:
 	beq _08029F70
 	b _08029F74
 _08029F3C:
-	bl XBarrierCoreInit
+	bl GeronInit
 	b _08029F74
 _08029F42:
-	bl XBarrierCoreIdleInit
+	bl GeronIdleInit
 _08029F46:
-	bl XBarrierCoreIdle
+	bl GeronIdle
 	b _08029F74
 _08029F4C:
 	adds r0, r4, #0
@@ -312,13 +312,13 @@ _08029F4C:
 	ldrb r1, [r0]
 	movs r0, #0x1d
 	bl SpriteUtilUnfreezeSecondarySprites
-	bl XBarrierCoreDeath
+	bl GeronDeath
 	bl SpriteDyingInit
 _08029F60:
 	bl SpriteDying
 	b _08029F74
 _08029F66:
-	bl XBarrierCoreInit
+	bl GeronInit
 _08029F6A:
 	bl SpriteSpawningFromX
 	b _08029F74
@@ -330,8 +330,8 @@ _08029F74:
 	bx r0
 	.align 2, 0
 
-	thumb_func_start XBarrierStem
-XBarrierStem: @ 0x08029F7C
+	thumb_func_start GeronStem
+GeronStem: @ 0x08029F7C
 	push {r4, r5, r6, lr}
 	ldr r4, _08029F94 @ =gCurrentSprite
 	adds r0, r4, #0

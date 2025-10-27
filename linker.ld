@@ -72,11 +72,11 @@ SECTIONS {
         . = 0x000006ac; gBossFormationSpriteId = .;
         . = 0x000006ad; gCoreXFormationSpriteId = .;
         . = 0x000006ae; gAtmosphericStabilizersOnline = .;
-        . = 0x000006b0; gNormalXBarrierCoresDestroyed = .;
-        . = 0x000006b2; gSuperXBarrierCoresDestroyed = .;
-        . = 0x000006b4; gPowerBombXBarrierCoresDestroyed = .;
+        . = 0x000006b0; gMissileGeronsDestroyed = .;
+        . = 0x000006b2; gSuperMissileGeronsDestroyed = .;
+        . = 0x000006b4; gPowerBombGeronsDestroyed = .;
         . = 0x000006b6; gGadorasDestroyed = .;
-        . = 0x000006b8; gMissilesHatchDestroyed = .;
+        . = 0x000006b8; gMissileHatchDestroyed = .;
         . = 0x000006b9; gWaterLowered = .;
         . = 0x000006bc; gCurrentSprite = .;
         . = 0x000006f4; gSpriteDebris = .;
@@ -250,8 +250,8 @@ SECTIONS {
 
         src/sprites_AI/blue_x.o(.text);
         src/sprites_AI/missile_hatch.o(.text);
-        src/sprites_AI/super_missile_barrier.o(.text);
-        src/sprites_AI/power_bomb_barrier.o(.text);
+        src/sprites_AI/super_missile_geron.o(.text);
+        src/sprites_AI/power_bomb_geron.o(.text);
         src/sprites_AI/ripper.o(.text);
         src/sprites_AI/zoro_cocoon.o(.text);
         src/sprites_AI/gadora.o(.text);
@@ -333,8 +333,8 @@ SECTIONS {
 
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);
-        src/data/sprites/super_missile_barrier.o(.rodata);
-        src/data/sprites/power_bomb_barrier.o(.rodata);
+        src/data/sprites/super_missile_geron.o(.rodata);
+        src/data/sprites/power_bomb_geron.o(.rodata);
         src/data/sprites/ripper.o(.rodata);
         src/data/sprites/zoro_cocoon.o(.rodata);
         src/data/sprites/gadora.o(.rodata);

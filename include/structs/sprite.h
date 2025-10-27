@@ -81,11 +81,11 @@ extern u16 gUnk_030007c0[24];
 extern u8 gSpriteRandomNumber;
 
 extern u16 gAtmosphericStabilizersOnline;
-extern u16 gNormalXBarrierCoresDestroyed;
-extern u16 gSuperXBarrierCoresDestroyed;
-extern u16 gPowerBombXBarrierCoresDestroyed;
+extern u16 gMissileGeronsDestroyed;
+extern u16 gSuperMissileGeronsDestroyed;
+extern u16 gPowerBombGeronsDestroyed;
 extern u16 gGadorasDestroyed;
-extern u8 gMissilesHatchDestroyed;
+extern u8 gMissileHatchDestroyed;
 extern u8 gWaterLowered;
 
 extern u8 gBossWork0;

@@ -1,9 +1,9 @@
-#include "sprites_AI/super_missile_barrier.h"
+#include "sprites_AI/super_missile_geron.h"
 #include "macros.h"
 #include "globals.h"
 #include "sprite_util.h"
 
-#include "data/sprites/super_missile_barrier.h"
+#include "data/sprites/super_missile_geron.h"
 #include "data/sprites/x_parasite.h"
 #include "data/sprite_data.h"
 
@@ -15,13 +15,13 @@
 #include "structs/samus.h"
 
 /**
- * @brief 41e84 | 12c | Iniializes a super missile barrier
+ * @brief 41e84 | 12c | Iniializes a super missile geron
  * 
  */
-void SuperMissileBarrierInit(void)
+void SuperMissileGeronInit(void)
 {
     u8 spriteId;
-    u16 barrierBit;
+    u16 geronBit;
     
     SpriteUtilTrySetAbsorbXFlag();
 
@@ -32,14 +32,14 @@ void SuperMissileBarrierInit(void)
     }
     else
     {
-        // All barrier sprite ids are next to each other numerically, so doing spriteId - firstBarrierId offsets the id to start at 0
+        // All geron sprite ids are next to each other numerically, so doing spriteId - firstGeronId offsets the id to start at 0
         spriteId = gCurrentSprite.spriteId;
-        spriteId -= PSPRITE_X_BARRIER_CORE_SUPER_1;
+        spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
 
-        // Get bit affected by the current barrier
-        barrierBit = gSuperXBarrierCoresDestroyed >> spriteId;
+        // Get bit affected by the current geron
+        geronBit = gSuperMissileGeronsDestroyed >> spriteId;
 
-        if (barrierBit & 1)
+        if (geronBit & 1)
         {
             gCurrentSprite.status = 0;
             return;
@@ -57,7 +57,7 @@ void SuperMissileBarrierInit(void)
     gCurrentSprite.drawOrder = 5;
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_SOLID;
 
-    gCurrentSprite.pOam = sSuperMissileBarrierOam_Idle;
+    gCurrentSprite.pOam = sSuperMissileGeronOam_Idle;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
@@ -81,7 +81,7 @@ void SuperMissileBarrierInit(void)
     gCurrentSprite.hitboxLeft = -(HALF_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
     gCurrentSprite.hitboxRight = HALF_BLOCK_SIZE + EIGHTH_BLOCK_SIZE;
 
-    spriteId = SpriteSpawnSecondary(SSPRITE_X_BARRIER_CORE_SUPER_STEM, gCurrentSprite.roomSlot, gCurrentSprite.spritesetGfxSlot,
+    spriteId = SpriteSpawnSecondary(SSPRITE_GERON_SUPER_MISSILE_STEM, gCurrentSprite.roomSlot, gCurrentSprite.spritesetGfxSlot,
         gCurrentSprite.primarySpriteRamSlot, gCurrentSprite.yPosition, gCurrentSprite.xPosition, 0);
 
     if (spriteId == UCHAR_MAX)
@@ -90,57 +90,57 @@ void SuperMissileBarrierInit(void)
         return;
     }
 
-    XBarrierSetCollision(CAA_MAKE_SOLID_STOP_ENEMY);
+    GeronSetCollision(CAA_MAKE_SOLID_STOP_ENEMY);
 }
 
 /**
- * @brief 41fb0 | 20 | Initializes a super missile barrier to be idle
+ * @brief 41fb0 | 20 | Initializes a super missile geron to be idle
  * 
  */
-void SuperMissileBarrierIdleInit(void)
+void SuperMissileGeronIdleInit(void)
 {
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
 
-    gCurrentSprite.pOam = sSuperMissileBarrierOam_Idle;
+    gCurrentSprite.pOam = sSuperMissileGeronOam_Idle;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
 /**
- * @brief 41fd0 | 20 | Handles a super missile barrier being idle
+ * @brief 41fd0 | 20 | Handles a super missile geron being idle
  * 
  */
-void SuperMissileBarrierIdle(void)
+void SuperMissileGeronIdle(void)
 {
     return;
 }
 
 /**
- * @brief 41fd4 | 30 | Handles a super missile barrier dying
+ * @brief 41fd4 | 30 | Handles a super missile geron dying
  * 
  */
-void SuperMissileBarrierDying(void)
+void SuperMissileGeronDying(void)
 {
     u8 spriteId;
-    u16 barrierBit;
+    u16 geronBit;
 
-    // All barrier sprite ids are next to each other numerically, so doing spriteId - firstBarrierId offsets the id to start at 0
+    // All geron sprite ids are next to each other numerically, so doing spriteId - firstGeronId offsets the id to start at 0
     spriteId = gCurrentSprite.spriteId;
-    spriteId -= PSPRITE_X_BARRIER_CORE_SUPER_1;
+    spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
 
-    // Get bit affected by the current barrier
-    barrierBit = 1 << spriteId;
+    // Get bit affected by the current geron
+    geronBit = 1 << spriteId;
 
-    gSuperXBarrierCoresDestroyed |= barrierBit;
+    gSuperMissileGeronsDestroyed |= geronBit;
 
-    XBarrierSetCollision(CAA_REMOVE_SOLID);
+    GeronSetCollision(CAA_REMOVE_SOLID);
 }
 
 /**
- * @brief 42004 | b0 | Super missile barrier AI
+ * @brief 42004 | b0 | Super missile geron AI
  * 
  */
-void SuperMissileBarrier(void)
+void SuperMissileGeron(void)
 {
     if (SPRITE_GET_ISFT(gCurrentSprite) == 0x4)
         SoundPlayNotAlreadyPlaying(0x160);
@@ -148,26 +148,26 @@ void SuperMissileBarrier(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_X_BARRIER_CORE_SUPER_STEM, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_GERON_SUPER_MISSILE_STEM, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
     switch (gCurrentSprite.pose)
     {
         case SPRITE_POSE_UNINITIALIZED:
-            SuperMissileBarrierInit();
+            SuperMissileGeronInit();
             break;
 
         case SPRITE_POSE_IDLE_INIT:
-            SuperMissileBarrierIdleInit();
+            SuperMissileGeronIdleInit();
 
         case SPRITE_POSE_IDLE:
-            SuperMissileBarrierIdle();
+            SuperMissileGeronIdle();
             break;
 
         case SPRITE_POSE_DYING_INIT:
-            SpriteUtilUnfreezeSecondarySprites(SSPRITE_X_BARRIER_CORE_SUPER_STEM, gCurrentSprite.primarySpriteRamSlot);
-            SuperMissileBarrierDying();
+            SpriteUtilUnfreezeSecondarySprites(SSPRITE_GERON_SUPER_MISSILE_STEM, gCurrentSprite.primarySpriteRamSlot);
+            SuperMissileGeronDying();
             SpriteDyingInit();
 
         case SPRITE_POSE_DYING:
@@ -175,7 +175,7 @@ void SuperMissileBarrier(void)
             break;
 
         case SPRITE_POSE_SPAWNING_FROM_X_INIT:
-            SuperMissileBarrierInit();
+            SuperMissileGeronInit();
 
         case SPRITE_POSE_SPAWNING_FROM_X:
             SpriteSpawningFromX();
@@ -187,10 +187,10 @@ void SuperMissileBarrier(void)
 }
 
 /**
- * @brief 420b4 | 13c | Super missile barrier stem AI
+ * @brief 420b4 | 13c | Super missile geron stem AI
  * 
  */
-void SuperMissileBarrierStem(void)
+void SuperMissileGeronStem(void)
 {
     u8 ramSlot;
     
@@ -224,7 +224,7 @@ void SuperMissileBarrierStem(void)
             gCurrentSprite.drawOrder = 6;
             gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_SOLID;
 
-            gCurrentSprite.pOam = sSuperMissileBarrierStemOam_Idle;
+            gCurrentSprite.pOam = sSuperMissileGeronStemOam_Idle;
             gCurrentSprite.animationDurationCounter = 0;
             gCurrentSprite.currentAnimationFrame = 0;
             break;
@@ -234,7 +234,7 @@ void SuperMissileBarrierStem(void)
             {
                 gCurrentSprite.pose = 0x18;
 
-                gCurrentSprite.pOam = sSuperMissileBarrierStemOam_Destroyed;
+                gCurrentSprite.pOam = sSuperMissileGeronStemOam_Destroyed;
                 gCurrentSprite.animationDurationCounter = 0;
                 gCurrentSprite.currentAnimationFrame = 0;
 

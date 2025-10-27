@@ -1,9 +1,9 @@
-#include "sprites_AI/power_bomb_barrier.h"
+#include "sprites_AI/power_bomb_geron.h"
 #include "macros.h"
 #include "globals.h"
 #include "sprite_util.h"
 
-#include "data/sprites/power_bomb_barrier.h"
+#include "data/sprites/power_bomb_geron.h"
 #include "data/sprites/x_parasite.h"
 #include "data/sprite_data.h"
 
@@ -15,13 +15,13 @@
 #include "structs/samus.h"
 
 /**
- * @brief 421f0 | 130 | Initializes a power bomb barrier
+ * @brief 421f0 | 130 | Initializes a power bomb geron
  * 
  */
-void PowerBombBarrierInit(void)
+void PowerBombGeronInit(void)
 {
     u8 spriteId;
-    u16 barrierBit;
+    u16 geronBit;
 
     SpriteUtilTrySetAbsorbXFlag();
 
@@ -32,15 +32,15 @@ void PowerBombBarrierInit(void)
     }
     else
     {
-        // All barrier sprite idsx are next to each other numerically, so doing spriteId - firstBarrierId offsets the id to start at 0
-        // For some reason this offsets to the super missile barrier ids
+        // All geron sprite idsx are next to each other numerically, so doing spriteId - firstGeronId offsets the id to start at 0
+        // For some reason this offsets to the super missile geron ids
         spriteId = gCurrentSprite.spriteId;
-        spriteId -= PSPRITE_X_BARRIER_CORE_SUPER_1;
+        spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
 
-        // Get bit affected by the current barrier
-        barrierBit = gPowerBombXBarrierCoresDestroyed >> spriteId;
+        // Get bit affected by the current geron
+        geronBit = gPowerBombGeronsDestroyed >> spriteId;
 
-        if (barrierBit & 1)
+        if (geronBit & 1)
         {
             gCurrentSprite.status = 0;
             return;
@@ -58,7 +58,7 @@ void PowerBombBarrierInit(void)
     gCurrentSprite.frozenPaletteRowOffset = 1;
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_SOLID;
 
-    gCurrentSprite.pOam = sPowerBombBarrierOam_Idle;
+    gCurrentSprite.pOam = sPowerBombGeronOam_Idle;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
@@ -82,7 +82,7 @@ void PowerBombBarrierInit(void)
         gCurrentSprite.hitboxLeft = -(BLOCK_SIZE - QUARTER_BLOCK_SIZE);
         gCurrentSprite.hitboxRight = BLOCK_SIZE - QUARTER_BLOCK_SIZE;
 
-        spriteId = SpriteSpawnSecondary(SSPRITE_X_BARRIER_CORE_POWER_BOMB_STEM, gCurrentSprite.roomSlot,
+        spriteId = SpriteSpawnSecondary(SSPRITE_GERON_POWER_BOMB_STEM, gCurrentSprite.roomSlot,
             gCurrentSprite.spritesetGfxSlot, gCurrentSprite.primarySpriteRamSlot,
             gCurrentSprite.yPosition, gCurrentSprite.xPosition, 0);
 
@@ -92,59 +92,59 @@ void PowerBombBarrierInit(void)
             return;
         }
 
-        XBarrierSetCollision(CAA_MAKE_SOLID_STOP_ENEMY);
+        GeronSetCollision(CAA_MAKE_SOLID_STOP_ENEMY);
     }
 }
 
 /**
- * @brief 42320 | 20 | Initializes a power bomb barrier to be idle
+ * @brief 42320 | 20 | Initializes a power bomb geron to be idle
  * 
  */
-void PowerBombBarrierIdleInit(void)
+void PowerBombGeronIdleInit(void)
 {
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
 
-    gCurrentSprite.pOam = sPowerBombBarrierOam_Idle;
+    gCurrentSprite.pOam = sPowerBombGeronOam_Idle;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
 /**
- * @brief 42340 | 20 | Handles a power bomb X barrier being idle
+ * @brief 42340 | 20 | Handles a power bomb X geron being idle
  * 
  */
-void PowerBombBarrierIdle(void)
+void PowerBombGeronIdle(void)
 {
     if (gCurrentSprite.currentAnimationFrame == 36 && gCurrentSprite.animationDurationCounter == 1)
         SoundPlayNotAlreadyPlaying(0x1B0);
 }
 
 /**
- * @brief 42360 | 30 | Handles a power bomb X barrier dying
+ * @brief 42360 | 30 | Handles a power bomb X geron dying
  * 
  */
-void PowerBombBarrierDying(void)
+void PowerBombGeronDying(void)
 {
     u8 spriteId;
-    u16 barrierBit;
+    u16 geronBit;
 
-    // All barrier sprite ids are next to each other numerically, so doing spriteId - firstBarrierId offsets the id to start at 0
-    // For some reason this offsets to the super missile barrier ids
-    spriteId = gCurrentSprite.spriteId - PSPRITE_X_BARRIER_CORE_SUPER_1;
+    // All geron sprite ids are next to each other numerically, so doing spriteId - firstGeronId offsets the id to start at 0
+    // For some reason this offsets to the super missile geron ids
+    spriteId = gCurrentSprite.spriteId - PSPRITE_GERON_SUPER_MISSILE_1;
 
-    // Get bit affected by the current barrier
-    barrierBit = 1 << spriteId;
+    // Get bit affected by the current geron
+    geronBit = 1 << spriteId;
 
-    gPowerBombXBarrierCoresDestroyed |= barrierBit;
+    gPowerBombGeronsDestroyed |= geronBit;
 
-    XBarrierSetCollision(CAA_REMOVE_SOLID);
+    GeronSetCollision(CAA_REMOVE_SOLID);
 }
 
 /**
- * @brief 42390 | b0 | Power bomb barrier AI
+ * @brief 42390 | b0 | Power bomb geron AI
  * 
  */
-void PowerBombBarrier(void)
+void PowerBombGeron(void)
 {
     if (SPRITE_GET_ISFT(gCurrentSprite) == 4)
         SoundPlayNotAlreadyPlaying(0x160);
@@ -152,26 +152,26 @@ void PowerBombBarrier(void)
     if (gCurrentSprite.freezeTimer != 0)
     {
         SpriteUtilUpdateFreezeTimer();
-        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_X_BARRIER_CORE_POWER_BOMB_STEM, gCurrentSprite.primarySpriteRamSlot);
+        SpriteUtilUpdateSecondarySpriteFreezeTimerOfCurrent(SSPRITE_GERON_POWER_BOMB_STEM, gCurrentSprite.primarySpriteRamSlot);
         return;
     }
 
     switch (gCurrentSprite.pose)
     {
         case SPRITE_POSE_UNINITIALIZED:
-            PowerBombBarrierInit();
+            PowerBombGeronInit();
             break;
 
         case SPRITE_POSE_IDLE_INIT:
-            PowerBombBarrierIdleInit();
+            PowerBombGeronIdleInit();
 
         case SPRITE_POSE_IDLE:
-            PowerBombBarrierIdle();
+            PowerBombGeronIdle();
             break;
 
         case SPRITE_POSE_DYING_INIT:
-            SpriteUtilUnfreezeSecondarySprites(SSPRITE_X_BARRIER_CORE_POWER_BOMB_STEM, gCurrentSprite.primarySpriteRamSlot);
-            PowerBombBarrierDying();
+            SpriteUtilUnfreezeSecondarySprites(SSPRITE_GERON_POWER_BOMB_STEM, gCurrentSprite.primarySpriteRamSlot);
+            PowerBombGeronDying();
             SpriteDyingInit();
 
         case SPRITE_POSE_DYING:
@@ -179,7 +179,7 @@ void PowerBombBarrier(void)
             break;
 
         case SPRITE_POSE_SPAWNING_FROM_X_INIT:
-            PowerBombBarrierInit();
+            PowerBombGeronInit();
 
         case SPRITE_POSE_SPAWNING_FROM_X:
             SpriteSpawningFromX();
@@ -192,10 +192,10 @@ void PowerBombBarrier(void)
 }
 
 /**
- * @brief 42440 | 13c | Power bomb barrier stem AI
+ * @brief 42440 | 13c | Power bomb geron stem AI
  * 
  */
-void PowerBombBarrierStem(void)
+void PowerBombGeronStem(void)
 {
     u8 ramSlot;
 
@@ -227,7 +227,7 @@ void PowerBombBarrierStem(void)
             gCurrentSprite.drawOrder = 6;
             gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_SOLID;
 
-            gCurrentSprite.pOam = sPowerBombBarrierStemOam_Idle;
+            gCurrentSprite.pOam = sPowerBombGeronStemOam_Idle;
             gCurrentSprite.animationDurationCounter = 0;
             gCurrentSprite.currentAnimationFrame = 0;
             break;
@@ -237,7 +237,7 @@ void PowerBombBarrierStem(void)
             {
                 gCurrentSprite.pose = 0x18;
 
-                gCurrentSprite.pOam = sPowerBombBarrierStemOam_Destroyed;
+                gCurrentSprite.pOam = sPowerBombGeronStemOam_Destroyed;
                 gCurrentSprite.animationDurationCounter = 0;
                 gCurrentSprite.currentAnimationFrame = 0;
 

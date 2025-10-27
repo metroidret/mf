@@ -176,9 +176,9 @@ const u32 sSpritesGraphicsLength[PSPRITE_END - 0x10] = {
     [PSPRITE_MORPH_BALL_ABILITY - 0x10] = SPRITE_GFX_SIZE(5),
 
     [PSPRITE_X_PARASITE_CORE_X_FORMATION - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_NORMAL_1 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_NORMAL_2 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_NORMAL_3 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_MISSILE_1 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_MISSILE_2 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_MISSILE_3 - 0x10] = SPRITE_GFX_SIZE(1),
 
     [PSPRITE_HIGH_JUMP_ABILITY - 0x10] = SPRITE_GFX_SIZE(5),
     [PSPRITE_SPEEDBOOSTER_ABILITY - 0x10] = SPRITE_GFX_SIZE(5),
@@ -245,25 +245,25 @@ const u32 sSpritesGraphicsLength[PSPRITE_END - 0x10] = {
     [PSPRITE_QUARANTINE_BAY_HORNOAD - 0x10] = SPRITE_GFX_SIZE(3),
     [PSPRITE_BOX_DEBRIS - 0x10] = SPRITE_GFX_SIZE(8),
 
-    [PSPRITE_X_BARRIER_CORE_SUPER_1 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_SUPER_2 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_SUPER_3 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_SUPER_4 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_1 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_2 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_3 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_4 - 0x10] = SPRITE_GFX_SIZE(1),
 
-    [PSPRITE_X_BARRIER_CORE_SUPER_5 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_SUPER_6 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_SUPER_7 - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_X_BARRIER_CORE_SUPER_8 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_5 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_6 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_7 - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERON_SUPER_MISSILE_8 - 0x10] = SPRITE_GFX_SIZE(1),
 
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_1 - 0x10] = SPRITE_GFX_SIZE(2),
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_2 - 0x10] = SPRITE_GFX_SIZE(2),
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_3 - 0x10] = SPRITE_GFX_SIZE(2),
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_4 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_1 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_2 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_3 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_4 - 0x10] = SPRITE_GFX_SIZE(2),
 
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_5 - 0x10] = SPRITE_GFX_SIZE(2),
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_6 - 0x10] = SPRITE_GFX_SIZE(2),
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_7 - 0x10] = SPRITE_GFX_SIZE(2),
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_8 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_5 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_6 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_7 - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_GERON_POWER_BOMB_8 - 0x10] = SPRITE_GFX_SIZE(2),
 
     [PSPRITE_RIPPER - 0x10] = SPRITE_GFX_SIZE(1),
     [PSPRITE_ZORO_COCOON - 0x10] = SPRITE_GFX_SIZE(2),
@@ -951,7 +951,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         0,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_NORMAL_1] = {
+    [PSPRITE_GERON_MISSILE_1] = {
         30,
         30,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -960,7 +960,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_NORMAL_2] = {
+    [PSPRITE_GERON_MISSILE_2] = {
         30,
         30,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -969,7 +969,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_NORMAL_3] = {
+    [PSPRITE_GERON_MISSILE_3] = {
         30,
         30,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1446,7 +1446,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         0,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_1] = {
+    [PSPRITE_GERON_SUPER_MISSILE_1] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1455,7 +1455,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_2] = {
+    [PSPRITE_GERON_SUPER_MISSILE_2] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1464,7 +1464,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_3] = {
+    [PSPRITE_GERON_SUPER_MISSILE_3] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1473,7 +1473,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_4] = {
+    [PSPRITE_GERON_SUPER_MISSILE_4] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1482,7 +1482,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_5] = {
+    [PSPRITE_GERON_SUPER_MISSILE_5] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1491,7 +1491,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_6] = {
+    [PSPRITE_GERON_SUPER_MISSILE_6] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1500,7 +1500,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_7] = {
+    [PSPRITE_GERON_SUPER_MISSILE_7] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1509,7 +1509,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_SUPER_8] = {
+    [PSPRITE_GERON_SUPER_MISSILE_8] = {
         90,
         56,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1518,7 +1518,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         1024,
         0
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_1] = {
+    [PSPRITE_GERON_POWER_BOMB_1] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1527,7 +1527,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_2] = {
+    [PSPRITE_GERON_POWER_BOMB_2] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1536,7 +1536,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_3] = {
+    [PSPRITE_GERON_POWER_BOMB_3] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1545,7 +1545,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_4] = {
+    [PSPRITE_GERON_POWER_BOMB_4] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1554,7 +1554,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_5] = {
+    [PSPRITE_GERON_POWER_BOMB_5] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1563,7 +1563,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_6] = {
+    [PSPRITE_GERON_POWER_BOMB_6] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1572,7 +1572,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_7] = {
+    [PSPRITE_GERON_POWER_BOMB_7] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -1581,7 +1581,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         300,
         524
     },
-    [PSPRITE_X_BARRIER_CORE_POWER_BOMB_8] = {
+    [PSPRITE_GERON_POWER_BOMB_8] = {
         17,
         96,
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
@@ -2413,7 +2413,7 @@ const u16 sSecondarySpriteStats[SSPRITE_END][4] = {
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,
         WEAKNESS_NONE
     },
-    [SSPRITE_X_BARRIER_STEM] = {
+    [SSPRITE_GERON_MISSILE_STEM] = {
         1,
         18,
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,
@@ -2635,13 +2635,13 @@ const u16 sSecondarySpriteStats[SSPRITE_END][4] = {
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,
         WEAKNESS_NONE
     },
-    [SSPRITE_X_BARRIER_CORE_SUPER_STEM] = {
+    [SSPRITE_GERON_SUPER_MISSILE_STEM] = {
         1,
         56,
         SDRT_60_30 | SDRT_CAN_CREATE_DEBRIS,
         WEAKNESS_NONE
     },
-    [SSPRITE_X_BARRIER_CORE_POWER_BOMB_STEM] = {
+    [SSPRITE_GERON_POWER_BOMB_STEM] = {
         1,
         30,
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,

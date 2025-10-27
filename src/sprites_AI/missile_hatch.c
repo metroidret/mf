@@ -47,7 +47,7 @@ void MissileHatchSetCollision(u8 caa)
  */
 void MissileHatchInit(void)
 {
-    if (gMissilesHatchDestroyed)
+    if (gMissileHatchDestroyed)
     {
         gCurrentSprite.status = 0;
         return;
@@ -90,7 +90,7 @@ void MissileHatchIdle(void)
     {
         gCurrentSprite.pose = MISSILE_HATCH_POSE_EXPLODING;
         gCurrentSprite.work1 = 0;
-        gMissilesHatchDestroyed = TRUE;
+        gMissileHatchDestroyed = TRUE;
         MissileHatchSetCollision(CAA_REMOVE_SOLID);
     }
 }

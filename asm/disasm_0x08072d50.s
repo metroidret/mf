@@ -25542,15 +25542,15 @@ _0807F5F4:
 	ldrh r0, [r7]
 	ldr r1, [sp, #0x10]
 	strh r0, [r1]
-	ldr r2, _0807F7A0 @ =gNormalXBarrierCoresDestroyed
+	ldr r2, _0807F7A0 @ =gMissileGeronsDestroyed
 	ldrh r0, [r2]
 	ldr r3, [sp, #0x14]
 	strh r0, [r3]
-	ldr r7, _0807F7A4 @ =gSuperXBarrierCoresDestroyed
+	ldr r7, _0807F7A4 @ =gSuperMissileGeronsDestroyed
 	ldrh r0, [r7]
 	ldr r1, [sp, #0x18]
 	strh r0, [r1]
-	ldr r2, _0807F7A8 @ =gPowerBombXBarrierCoresDestroyed
+	ldr r2, _0807F7A8 @ =gPowerBombGeronsDestroyed
 	ldrh r0, [r2]
 	ldr r3, [sp, #0x1c]
 	strh r0, [r3]
@@ -25558,7 +25558,7 @@ _0807F5F4:
 	ldrh r0, [r7]
 	ldr r1, [sp, #0x20]
 	strh r0, [r1]
-	ldr r2, _0807F7B0 @ =gMissilesHatchDestroyed
+	ldr r2, _0807F7B0 @ =gMissileHatchDestroyed
 	ldrb r0, [r2]
 	ldr r3, [sp, #0x24]
 	strb r0, [r3]
@@ -25658,11 +25658,11 @@ _0807F790: .4byte gEquipment
 _0807F794: .4byte gPreventMovementTimer
 _0807F798: .4byte gDisableDrawingSamusAndScrollingFlag
 _0807F79C: .4byte gAtmosphericStabilizersOnline
-_0807F7A0: .4byte gNormalXBarrierCoresDestroyed
-_0807F7A4: .4byte gSuperXBarrierCoresDestroyed
-_0807F7A8: .4byte gPowerBombXBarrierCoresDestroyed
+_0807F7A0: .4byte gMissileGeronsDestroyed
+_0807F7A4: .4byte gSuperMissileGeronsDestroyed
+_0807F7A8: .4byte gPowerBombGeronsDestroyed
 _0807F7AC: .4byte gGadorasDestroyed
-_0807F7B0: .4byte gMissilesHatchDestroyed
+_0807F7B0: .4byte gMissileHatchDestroyed
 _0807F7B4: .4byte gWaterLowered
 _0807F7B8: .4byte gInGameTimer
 _0807F7BC: .4byte 0x085821F8
@@ -25905,15 +25905,15 @@ _0807F920:
 	strh r0, [r4]
 	ldr r5, [sp, #0xc]
 	ldrh r0, [r5]
-	ldr r1, _0807FA8C @ =gNormalXBarrierCoresDestroyed
+	ldr r1, _0807FA8C @ =gMissileGeronsDestroyed
 	strh r0, [r1]
 	ldr r2, [sp, #0x10]
 	ldrh r0, [r2]
-	ldr r3, _0807FA90 @ =gSuperXBarrierCoresDestroyed
+	ldr r3, _0807FA90 @ =gSuperMissileGeronsDestroyed
 	strh r0, [r3]
 	ldr r4, [sp, #0x14]
 	ldrh r0, [r4]
-	ldr r5, _0807FA94 @ =gPowerBombXBarrierCoresDestroyed
+	ldr r5, _0807FA94 @ =gPowerBombGeronsDestroyed
 	strh r0, [r5]
 	ldr r1, [sp, #0x18]
 	ldrh r0, [r1]
@@ -25921,7 +25921,7 @@ _0807F920:
 	strh r0, [r2]
 	ldr r3, [sp, #0x1c]
 	ldrb r0, [r3]
-	ldr r4, _0807FA9C @ =gMissilesHatchDestroyed
+	ldr r4, _0807FA9C @ =gMissileHatchDestroyed
 	strb r0, [r4]
 	ldr r5, [sp, #0x20]
 	ldrb r0, [r5]
@@ -25993,11 +25993,11 @@ _0807FA7C: .4byte gEquipment
 _0807FA80: .4byte gPreventMovementTimer
 _0807FA84: .4byte gDisableDrawingSamusAndScrollingFlag
 _0807FA88: .4byte gAtmosphericStabilizersOnline
-_0807FA8C: .4byte gNormalXBarrierCoresDestroyed
-_0807FA90: .4byte gSuperXBarrierCoresDestroyed
-_0807FA94: .4byte gPowerBombXBarrierCoresDestroyed
+_0807FA8C: .4byte gMissileGeronsDestroyed
+_0807FA90: .4byte gSuperMissileGeronsDestroyed
+_0807FA94: .4byte gPowerBombGeronsDestroyed
 _0807FA98: .4byte gGadorasDestroyed
-_0807FA9C: .4byte gMissilesHatchDestroyed
+_0807FA9C: .4byte gMissileHatchDestroyed
 _0807FAA0: .4byte gWaterLowered
 _0807FAA4: .4byte gInGameTimer
 

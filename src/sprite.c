@@ -782,11 +782,11 @@ void SpriteLoadAllData(void)
     {
         // Reset sprite global data
         gAtmosphericStabilizersOnline = 0;
-        gNormalXBarrierCoresDestroyed = 0;
-        gSuperXBarrierCoresDestroyed = 0;
-        gPowerBombXBarrierCoresDestroyed = 0;
+        gMissileGeronsDestroyed = 0;
+        gSuperMissileGeronsDestroyed = 0;
+        gPowerBombGeronsDestroyed = 0;
         gGadorasDestroyed = 0;
-        gMissilesHatchDestroyed = FALSE;
+        gMissileHatchDestroyed = FALSE;
         gWaterLowered = FALSE;
     }
 

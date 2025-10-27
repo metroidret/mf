@@ -2872,7 +2872,7 @@
     "size": 2
   },
   {
-    "path": "sprites/super_missile_barrier.gfx",
+    "path": "sprites/super_missile_geron.gfx",
     "count": "0x200",
     "addr": {
       "us": "0x35FD0C"
@@ -2880,7 +2880,7 @@
     "size": 4
   },
   {
-    "path": "sprites/super_missile_barrier.pal",
+    "path": "sprites/super_missile_geron.pal",
     "count": "0x10",
     "addr": {
       "us": "0x36050C"
@@ -2888,7 +2888,7 @@
     "size": 2
   },
   {
-    "path": "sprites/power_bomb_barrier.gfx",
+    "path": "sprites/power_bomb_geron.gfx",
     "count": "0x400",
     "addr": {
       "us": "0x36068C"
@@ -2896,7 +2896,7 @@
     "size": 4
   },
   {
-    "path": "sprites/power_bomb_barrier.pal",
+    "path": "sprites/power_bomb_geron.pal",
     "count": "0x20",
     "addr": {
       "us": "0x36168C"
