@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_31c370_35dd74.bin",
-    "count": "0x41A04",
+    "path": "Blob_31e3d0_35dd74.bin",
+    "count": "0x3F9A4",
     "addr": {
-      "us": "0x31C370"
+      "us": "0x31E3D0"
     },
     "size": 1
   },
@@ -2852,6 +2852,22 @@
     "count": "0x10",
     "addr": {
       "us": "0x31C1F0"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/navigation_pad.gfx",
+    "count": "0x600",
+    "addr": {
+      "us": "0x31C370"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/navigation_pad.pal",
+    "count": "0x30",
+    "addr": {
+      "us": "0x31DB70"
     },
     "size": 2
   },

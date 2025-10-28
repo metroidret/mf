@@ -141,5 +141,3 @@ const struct FrameData sMissileGeronOam_Idle[5] = {
     },
     [4] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_31c370_35dd74[] = INCBIN_U8("data/Blob_31c370_35dd74.bin");
