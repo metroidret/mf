@@ -136,7 +136,7 @@ const u32 sSpritesGraphicsLength[PSPRITE_END - 0x10] = {
     [PSPRITE_SAVE_PAD - 0x10] = SPRITE_GFX_SIZE(3),
 
     [PSPRITE_PRE_BOX_CEILING_DEBRIS - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_MESSAGE_BOX - 0x10] = SPRITE_GFX_SIZE(2),
+    [PSPRITE_MESSAGE_BANNER - 0x10] = SPRITE_GFX_SIZE(2),
     [PSPRITE_KAGO - 0x10] = SPRITE_GFX_SIZE(2),
     [PSPRITE_ELECTRIC_WATER_DAMAGE - 0x10] = SPRITE_GFX_SIZE(2),
 
@@ -663,7 +663,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         0,
         0
     },
-    [PSPRITE_MESSAGE_BOX] = {
+    [PSPRITE_MESSAGE_BANNER] = {
         0,
         0,
         SDRT_30_10,

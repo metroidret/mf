@@ -48,10 +48,10 @@
     "size": 1
   },
   {
-    "path": "Blob_31e3d0_35dd74.bin",
-    "count": "0x3F9A4",
+    "path": "Blob_31f818_35dd74.bin",
+    "count": "0x3E55C",
     "addr": {
-      "us": "0x31E3D0"
+      "us": "0x31F818"
     },
     "size": 1
   },
@@ -2868,6 +2868,22 @@
     "count": "0x30",
     "addr": {
       "us": "0x31DB70"
+    },
+    "size": 2
+  },
+  {
+    "path": "sprites/message_banner.gfx",
+    "count": "0x400",
+    "addr": {
+      "us": "0x31E3D0"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/message_banner.pal",
+    "count": "0x20",
+    "addr": {
+      "us": "0x31F3D0"
     },
     "size": 2
   },

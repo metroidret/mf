@@ -4,7 +4,7 @@
 
 #include "data/sprite_data.h"
 #include "data/sprites/core_x.h"
-#include "data/sprites/message_box.h"
+#include "data/sprites/message_banner.h"
 #include "data/sprites/x_parasite.h"
 
 #include "constants/audio.h"
@@ -64,10 +64,10 @@ void CoreXAbilityTransfromation(void)
         gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
     }
 
-    if (gCurrentSprite.workY < sizeof(sMessageBoxGfx) / 512)
-        SpriteLoadGfx(PSPRITE_MESSAGE_BOX, 6, gCurrentSprite.workY);
-    else if (gCurrentSprite.workY == sizeof(sMessageBoxGfx) / 512)
-        SpriteLoadPal(PSPRITE_MESSAGE_BOX, 6, ARRAY_SIZE(sMessageBoxPal) / 16);
+    if (gCurrentSprite.workY < sizeof(sMessageBannerGfx) / 512)
+        SpriteLoadGfx(PSPRITE_MESSAGE_BANNER, 6, gCurrentSprite.workY);
+    else if (gCurrentSprite.workY == sizeof(sMessageBannerGfx) / 512)
+        SpriteLoadPal(PSPRITE_MESSAGE_BANNER, 6, ARRAY_SIZE(sMessageBannerPal) / 16);
 }
 
 /**
@@ -642,7 +642,7 @@ void CoreXAbilityGettingAbsorbed(void)
     else
     {
         gCurrentSprite.status = 0;
-        SpriteSpawnPrimary(PSPRITE_MESSAGE_BOX, 0, 6, SSP_UNINFECTED_OR_BOSS, gAbilityRestingYPosition,
+        SpriteSpawnPrimary(PSPRITE_MESSAGE_BANNER, 0, 6, SSP_UNINFECTED_OR_BOSS, gAbilityRestingYPosition,
             gAbilityRestingXPosition, 0);
     }
 }
