@@ -149,3 +149,20 @@ void DachoraStanding(void) {
 
     gCurrentSprite.pose = 9;
 }
+
+void DachoraHeadMovementInit(void) {
+    gCurrentSprite.pose = 0xA;
+    
+    if (gCurrentSprite.work2 == 1) {
+        gCurrentSprite.pOam = (struct FrameData*)0x083845c4;
+    } else if (gCurrentSprite.work2 == 2) {
+        gCurrentSprite.pOam = (struct FrameData*)0x083845e4;
+    } else if (gCurrentSprite.work2 == 3) {
+        gCurrentSprite.pOam = (struct FrameData*)0x083845fc;
+    } else {
+        gCurrentSprite.pOam = (struct FrameData*)0x08384584;
+    }
+    
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+}
