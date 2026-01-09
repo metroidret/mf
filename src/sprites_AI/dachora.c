@@ -71,3 +71,13 @@ void DachoraInit(void)
   }
   return;
 }
+
+void DachoraIdleInit(void) {
+  gCurrentSprite.pose = 2;
+  gCurrentSprite.pOam = (struct FrameData*)0x0838451c;
+  gCurrentSprite.animationDurationCounter = 0;
+  gCurrentSprite.currentAnimationFrame = 0;
+  gCurrentSprite.work3 = 0;
+  gCurrentSprite.work1 = gSpriteRandomNumber * 4 + 0x3c;
+  return;
+}
