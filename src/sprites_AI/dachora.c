@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "event_checks.h"
 #include "structs/sprite.h"
 #include "constants/sprite.h"
@@ -81,3 +82,54 @@ void DachoraIdleInit(void) {
   gCurrentSprite.work1 = gSpriteRandomNumber * 4 + 0x3c;
   return;
 }
+
+void DachoraIdle(void)
+{
+    u16 var1;
+    u16 var2;
+
+    if (CheckOnAfterAnimalsReleasedEvent()) {
+        if (gSpriteData[gBossWork2].pose == 0x1A) {
+            var1 = (gAbilityRestingXPosition - 0x100) & 0xFFFF;
+            if (gCurrentSprite.xPosition > var1 - 0x20 &&
+                gCurrentSprite.xPosition < var1 + 0x20) {
+                gCurrentSprite.pose = 0x17;
+                return;
+            }
+        }
+    } else if (gCurrentSprite.xPosition > gAbilityRestingXPosition + 0x1C0 ||
+               gCurrentSprite.xPosition < gAbilityRestingXPosition - 0x1C0) {
+
+        if (gCurrentSprite.work1 != 0) {
+            gCurrentSprite.work1--;
+        } else if ((gFrameCounter8Bit & 0x1F) == 0 &&
+                   (boolu8)DachoraCheckDoHeadMovement()) {
+            return;
+        }
+    }
+
+    var2 = gCurrentSprite.work3 >> 2;
+
+    if (gCurrentSprite.work3 <= 0x0F)
+        gCurrentSprite.work3++;
+
+    if (gCurrentSprite.status & 0x40) {
+        if (gCurrentSprite.workX + 0x380 >= gCurrentSprite.xPosition) {
+            var1 = gCurrentSprite.xPosition;
+            var1 = var1 + var2;
+            gCurrentSprite.xPosition = var1;
+            return;
+        }
+        gCurrentSprite.pose = 3;
+    } else {
+      if (gCurrentSprite.workX - 0x380 > gCurrentSprite.xPosition) {
+        gCurrentSprite.pose = 3;
+      } else {
+        gCurrentSprite.xPosition -= var2;
+      }
+    }
+
+    return;
+}
+
+asm (".short 0x0000");
