@@ -133,3 +133,11 @@ void DachoraIdle(void)
 }
 
 asm (".short 0x0000");
+
+void DachoraStandingIdle(void) {
+    gCurrentSprite.pose = 8;
+    gCurrentSprite.pOam = (struct FrameData*)0x0838450c;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.work1 = 0xb;
+}
