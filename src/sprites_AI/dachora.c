@@ -185,3 +185,64 @@ void DachoraHeadMovement(void) {
 }
 
 asm (".short 0x0000");
+
+void DachoraTurningAroundInit(void) {
+    gCurrentSprite.pose = 4;
+    gCurrentSprite.pOam = (struct FrameData* )0x08384554;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+}
+
+void DachoraTurningAround(void) {
+    if (!SpriteUtilHasCurrentAnimationEnded()) {
+        return;
+    }
+
+    gCurrentSprite.pose = 5;
+    gCurrentSprite.pOam = (struct FrameData* )0x0838456C;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.status ^= 0x40;
+
+    if (gCurrentSprite.drawOrder == 0xE) {
+        gCurrentSprite.drawOrder = 0xf;
+    } else {
+        gCurrentSprite.drawOrder = 0xe;
+    }
+}
+
+void DachoraTurningAroundSecondPart(void) {
+    if (SpriteUtilHasCurrentAnimationNearlyEnded() != 0) {
+        gCurrentSprite.pose = 1;
+    }
+}
+
+void DachoraTurningAroundWhileLeavingInit(void) {
+    gCurrentSprite.pose = 0x38;
+    gCurrentSprite.pOam = (struct FrameData* )0x08384554;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+}
+
+void DachoraTurningAroundWhileLeaving(void) {
+    if (SpriteUtilHasCurrentAnimationEnded() != 0) {
+        gCurrentSprite.pose = 0x3A;
+        gCurrentSprite.pOam = (struct FrameData* )0x0838456C;
+        gCurrentSprite.animationDurationCounter = 0;
+        gCurrentSprite.currentAnimationFrame = 0;
+        gCurrentSprite.status ^= 0x40;
+    }
+}
+
+void DachoraTurningAroundWhileLeavingSecondPart(void) {
+    if (SpriteUtilHasCurrentAnimationNearlyEnded() != 0) {
+        gCurrentSprite.pose = 0x19;
+    }
+}
+
+void DachoraLeavingEnclosureInit(void) {
+    gCurrentSprite.pose = 0x18;
+    gCurrentSprite.work4 = 0;
+    gCurrentSprite.bgPriority = 2;
+    gCurrentSprite.drawOrder = 4;
+}
