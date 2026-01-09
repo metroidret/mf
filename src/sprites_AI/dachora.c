@@ -1,9 +1,4 @@
-#include "constants/sprite.h"
-#include "data/samus_data.h"
-#include "event_checks.h"
-#include "globals.h"
-#include "samus.h"
-#include "structs/sprite.h"
+#include "sprites_AI/dachora.h"
 
 boolu32 DachoraCheckDoHeadMovement(void) {
   boolu32 do_head_movement;
@@ -65,7 +60,7 @@ void DachoraInit(void) {
     gCurrentSprite.workX = gCurrentSprite.xPosition;
     MakeSpriteFaceSamusXFlip();
     gCurrentSprite.pose = 2;
-    gCurrentSprite.pOam = (struct FrameData *)0x0838451c; // ?
+    gCurrentSprite.pOam = (struct FrameData *)0x0838451c;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = animals_released;
     gCurrentSprite.work3 = 0;
@@ -88,7 +83,7 @@ void DachoraIdle(void) {
   u16 var1;
   u16 var2;
 
-  if (CheckOnAfterAnimalsReleasedEvent()) {
+  if (EventCheckAfter_AnimalsReleased()) {
     if (gSpriteData[gBossWork2].pose == 0x1A) {
       var1 = (gAbilityRestingXPosition - 0x100) & 0xFFFF;
       if (gCurrentSprite.xPosition > var1 - 0x20 &&
@@ -241,8 +236,6 @@ void DachoraLeavingEnclosureInit(void) {
   gCurrentSprite.bgPriority = 2;
   gCurrentSprite.drawOrder = 4;
 }
-
-extern const s16 sArray_838188c[];
 
 void DachoraLeavingEnclosure(void) {
   s16 offset;
@@ -423,8 +416,6 @@ void BabyDachoraWalkingToGate(void) {
   }
 }
 
-extern const s16 sArray_0x0838188c[];
-
 void BabyDachoraLeavingEnclosure(void) {
   u8 var;
 
@@ -455,8 +446,6 @@ void BabyDachoraWalkingToWaitingSpot(void) {
     gCurrentSprite.currentAnimationFrame = var;
   }
 }
-
-extern u8 sVar_0x030006ea[];
 
 void BabyDachoraWaitingToRun(void) {
   u8 i;
