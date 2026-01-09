@@ -166,3 +166,22 @@ void DachoraHeadMovementInit(void) {
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 }
+
+void DachoraHeadMovement(void) {
+    if (!SpriteUtilHasCurrentAnimationEnded()) {
+        return;
+    }
+
+    if (gCurrentSprite.work2 == 1 &&
+        gSpriteRandomNumber > 0xc) {
+        return;
+    }
+    
+    if (gSpriteRandomNumber <= 2) {
+        gCurrentSprite.pose = 3;
+    } else {
+        gCurrentSprite.pose = 1;
+    }
+}
+
+asm (".short 0x0000");
