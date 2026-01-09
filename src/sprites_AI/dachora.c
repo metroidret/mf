@@ -141,3 +141,11 @@ void DachoraStandingIdle(void) {
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.work1 = 0xb;
 }
+
+void DachoraStanding(void) {
+    gCurrentSprite.work1 = gCurrentSprite.work1 - 1;
+    if (gCurrentSprite.work1)
+        return;
+
+    gCurrentSprite.pose = 9;
+}
