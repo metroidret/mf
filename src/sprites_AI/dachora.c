@@ -2,6 +2,8 @@
 #include "event_checks.h"
 #include "structs/sprite.h"
 #include "constants/sprite.h"
+#include "samus.h"
+#include "data/samus_data.h"
 
 boolu32 DachoraCheckDoHeadMovement(void) {
     boolu32 do_head_movement;
@@ -132,8 +134,6 @@ void DachoraIdle(void)
     return;
 }
 
-asm (".short 0x0000");
-
 void DachoraStandingIdle(void) {
     gCurrentSprite.pose = 8;
     gCurrentSprite.pOam = (struct FrameData*)0x0838450c;
@@ -183,8 +183,6 @@ void DachoraHeadMovement(void) {
         gCurrentSprite.pose = 1;
     }
 }
-
-asm (".short 0x0000");
 
 void DachoraTurningAroundInit(void) {
     gCurrentSprite.pose = 4;
@@ -246,3 +244,133 @@ void DachoraLeavingEnclosureInit(void) {
     gCurrentSprite.bgPriority = 2;
     gCurrentSprite.drawOrder = 4;
 }
+
+extern const s16 sArray_838188c[];
+
+void DachoraLeavingEnclosure(void)
+{
+    s16 offset;
+    u8 index;
+
+    index = gCurrentSprite.work4;
+    offset = sArray_838188c[index];
+    
+    if (offset == SHORT_MAX)
+    {
+        if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
+            gCurrentSprite.pose = 0x1a;
+        else
+            gCurrentSprite.pose = 0x37;
+    } 
+    else 
+    {
+        gCurrentSprite.work4++;
+        gCurrentSprite.yPosition += offset;
+
+        if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
+            gCurrentSprite.xPosition += PIXEL_SIZE;
+        else
+            gCurrentSprite.xPosition -= PIXEL_SIZE;
+    }
+}
+
+void DachoraWalkingToWaitingSpotInit(void) {
+    gCurrentSprite.pOam = (struct FrameData* )0x0838451C;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.pose = 0x1A;
+}
+
+void DachoraWalkingToWaitingSpot(void) {
+    if ((s32) gCurrentSprite.xPosition < (s32) (gAbilityRestingXPosition - 0xC0)) {
+        gCurrentSprite.xPosition += 4;
+        return;
+    }
+    gCurrentSprite.pOam = (struct FrameData* )0x083846CC;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.pose = 0x1B;
+}
+
+void DachoraWaitingForOthers(void) {
+    u8 count;
+    u8 i;
+    
+    if (gCurrentSprite.currentAnimationFrame == 0 && gCurrentSprite.animationDurationCounter == 1) {
+        SoundPlay(0x122);
+    }
+
+    for (count = 0, i = 0; i < 0x18; i++) {
+        if (gSpriteData[i].status & 1 &&
+            !(gSpriteData[i].properties & 0x80) &&
+            gSpriteData[i].spriteId == 0xB6 &&
+            gSpriteData[i].pose == 0x1C)
+                count++;
+    }
+    
+    if (count == 3) {
+        gCurrentSprite.pose = 0x1C;
+        gCurrentSprite.work1 = 0x3C;
+    }
+}
+
+void DachoraWaitingToSpawnBaby(void) {
+    if (gCurrentSprite.currentAnimationFrame == 0 &&
+        gCurrentSprite.animationDurationCounter == 1) {
+        SoundPlay(0x122);
+    }
+
+    gCurrentSprite.work1--;
+    if (gCurrentSprite.work1 == 0) {
+        gCurrentSprite.pose = 0x1D;
+        SpriteSpawnSecondary(0x69, 0, gCurrentSprite.spritesetGfxSlot, 
+                             gCurrentSprite.primarySpriteRamSlot, 
+                             gCurrentSprite.yPosition - 0x20, gCurrentSprite.xPosition - 0xC0, 0x40);
+        gCurrentSprite.work1 = 0x78;
+    }
+}
+
+void DachoraWaitingForBaby(void) {
+    u32 var;
+
+    if (gCurrentSprite.currentAnimationFrame == 0 && 
+        gCurrentSprite.animationDurationCounter == 1) {
+        SoundPlay(0x122);
+    }
+
+    var = (--gCurrentSprite.work1) & 0xff;
+    if (var == 0) {
+        gCurrentSprite.pose = 0x1E;
+        gPreventMovementTimer = var;
+        sSamusSetPoseFunctionPointer[gSamusData.unk_0](0x3B);
+        gCurrentSprite.work1 = 0x3C;
+        gCurrentSprite.work2 = 1;
+    }
+}
+
+void DachoraBowing(void) {
+    u32 var1, var2;
+    
+    if (gCurrentSprite.work1 != 0) {
+        var1 = --gCurrentSprite.work1;
+        if (var1 == 0) {
+            gCurrentSprite.pOam = (struct FrameData* )0x08384584;
+            gCurrentSprite.animationDurationCounter = var1;
+            gCurrentSprite.currentAnimationFrame = var1;
+            SoundPlay(0x123);
+        } else if (gCurrentSprite.currentAnimationFrame == 0 && 
+                   gCurrentSprite.animationDurationCounter == 1) {
+            SoundPlay(0x122);
+        }
+    } else if (SpriteUtilHasCurrentAnimationEnded() != 0) {
+        var2 = --gCurrentSprite.work2;
+        if (var2 == 0) {
+            gCurrentSprite.pose = 0x1F;
+            gCurrentSprite.work1 = 0x3C;
+            gCurrentSprite.pOam = (struct FrameData* )0x083846CC;
+            gCurrentSprite.animationDurationCounter = var2;
+            gCurrentSprite.currentAnimationFrame = var2;
+        }
+    }
+}
+
