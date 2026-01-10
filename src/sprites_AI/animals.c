@@ -1,6 +1,5 @@
-#include "sprites_AI/dachora.h"
+#include "sprites_AI/animals.h"
 
-#include "constants/audio.h"
 #include "event_checks.h"
 #include "globals.h"
 #include "samus.h"
@@ -8,11 +7,38 @@
 #include "sprite_util.h"
 
 #include "data/samus_data.h"
-#include "data/sprites/dachora.h"
+#include "data/sprites/animals.h"
 
+#include "constants/audio.h"
 #include "constants/sprite.h"
 
 #include "structs/sprite.h"
+
+enum DachoraPose {
+    DACHORA_POSE_INIT = 0,
+    DACHORA_POSE_IDLE_INIT = 1,
+    DACHORA_POSE_IDLE = 2,
+    DACHORA_POSE_TURNING_AROUND_INIT = 3,
+    DACHORA_POSE_TURNING_AROUND = 4,
+    DACHORA_POSE_TURNING_AROUND_SECOND_PART = 5,
+    DACHORA_POSE_STANDING_INIT = 7,
+    DACHORA_POSE_STANDING = 8,
+    DACHORA_POSE_HEAD_MOVEMENT_INIT = 9,
+    DACHORA_POSE_HEAD_MOVEMENT = 10,
+    DACHORA_POSE_LEAVING_ENCLOSURE_INIT = 23,
+    DACHORA_POSE_LEAVING_ENCLOSURE = 24,
+    DACHORA_POSE_WALKING_TO_WAITING_SPOT_INIT = 25,
+    DACHORA_POSE_WALKING_TO_WAITING_SPOT = 26,
+    DACHORA_POSE_WAITING_FOR_OTHERS = 27,
+    DACHORA_POSE_WAITING_TO_SPAWN_BABY = 28,
+    DACHORA_POSE_WAITING_FOR_BABY = 29,
+    DACHORA_POSE_BOWING = 30,
+    DACHORA_POSE_WAITING_TO_RUN = 31,
+    DACHORA_POSE_RUNNING = 32,
+    DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING_INIT = 55,
+    DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING = 56,
+    DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING_SECOND_PART = 58,
+};
 
 boolu8 DachoraCheckDoHeadMovement(void)
 {
@@ -25,25 +51,25 @@ boolu8 DachoraCheckDoHeadMovement(void)
         case 1:
         case 2:
         case 3:
-            gCurrentSprite.pose = 7;
+            gCurrentSprite.pose = DACHORA_POSE_STANDING_INIT;
             gCurrentSprite.work2 = 0;
             break;
         case 4:
         case 5:
         case 6:
         case 7:
-            gCurrentSprite.pose = 7;
+            gCurrentSprite.pose = DACHORA_POSE_STANDING_INIT;
             gCurrentSprite.work2 = 1;
             break;
         case 8:
         case 9:
-            gCurrentSprite.pose = 7;
+            gCurrentSprite.pose = DACHORA_POSE_STANDING_INIT;
             gCurrentSprite.work2 = 2;
             break;
         case 10:
         case 11:
         case 12:
-            gCurrentSprite.pose = 7;
+            gCurrentSprite.pose = DACHORA_POSE_STANDING_INIT;
             gCurrentSprite.work2 = 3;
             break;
         default:
@@ -67,37 +93,35 @@ void DachoraInit(void)
     {
         gCurrentSprite.properties = gCurrentSprite.properties | SP_ALWAYS_ACTIVE;
         gCurrentSprite.samusCollision = SSC_NONE;
-        gCurrentSprite.drawOrder = 0xe;
+        gCurrentSprite.drawOrder = 14;
         gCurrentSprite.bgPriority = 3;
-        gCurrentSprite.drawDistanceTop = 0x30;
+        gCurrentSprite.drawDistanceTop = 48;
         gCurrentSprite.drawDistanceBottom = 8;
-        gCurrentSprite.drawDistanceHorizontal = 0x20;
+        gCurrentSprite.drawDistanceHorizontal = 32;
         gCurrentSprite.hitboxTop = -4;
         gCurrentSprite.hitboxBottom = 4;
         gCurrentSprite.hitboxLeft = -4;
         gCurrentSprite.hitboxRight = 4;
-        gCurrentSprite.yPosition = gCurrentSprite.yPosition - 0x20;
+        gCurrentSprite.yPosition = gCurrentSprite.yPosition - 32;
         gCurrentSprite.workX = gCurrentSprite.xPosition;
         MakeSpriteFaceSamusXFlip();
-        gCurrentSprite.pose = 2;
+        gCurrentSprite.pose = DACHORA_POSE_IDLE;
         gCurrentSprite.pOam = (struct FrameData*)0x0838451c;
         gCurrentSprite.animationDurationCounter = 0;
         gCurrentSprite.currentAnimationFrame = animals_released;
         gCurrentSprite.work3 = 0;
-        gCurrentSprite.work1 = 0xb4;
+        gCurrentSprite.work1 = 180;
     }
-    return;
 }
 
 void DachoraIdleInit(void)
 {
-    gCurrentSprite.pose = 2;
+    gCurrentSprite.pose = DACHORA_POSE_IDLE;
     gCurrentSprite.pOam = (struct FrameData*)0x0838451c;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.work3 = 0;
-    gCurrentSprite.work1 = gSpriteRandomNumber * 4 + 0x3c;
-    return;
+    gCurrentSprite.work1 = gSpriteRandomNumber * 4 + 60;
 }
 
 void DachoraIdle(void)
@@ -107,24 +131,24 @@ void DachoraIdle(void)
 
     if (EventCheckAfter_AnimalsReleased())
     {
-        if (gSpriteData[gBossWork2].pose == 0x1A)
+        if (gSpriteData[gBossWork2].pose == DACHORA_POSE_WALKING_TO_WAITING_SPOT)
         {
-            var1 = gAbilityRestingXPosition - 0x100;
-            if (gCurrentSprite.xPosition > var1 - 0x20 && gCurrentSprite.xPosition < var1 + 0x20)
+            var1 = gAbilityRestingXPosition - 256;
+            if (gCurrentSprite.xPosition > var1 - 32 && gCurrentSprite.xPosition < var1 + 32)
             {
-                gCurrentSprite.pose = 0x17;
+                gCurrentSprite.pose = DACHORA_POSE_LEAVING_ENCLOSURE_INIT;
                 return;
             }
         }
     }
-    else if (gCurrentSprite.xPosition > gAbilityRestingXPosition + 0x1C0 ||
-        gCurrentSprite.xPosition < gAbilityRestingXPosition - 0x1C0)
+    else if (gCurrentSprite.xPosition > gAbilityRestingXPosition + 448 ||
+        gCurrentSprite.xPosition < gAbilityRestingXPosition - 448)
     {
         if (gCurrentSprite.work1 != 0)
         {
             gCurrentSprite.work1--;
         }
-        else if ((gFrameCounter8Bit & 0x1F) == 0 && DachoraCheckDoHeadMovement())
+        else if ((gFrameCounter8Bit & 31) == 0 && DachoraCheckDoHeadMovement())
         {
             return;
         }
@@ -132,65 +156,53 @@ void DachoraIdle(void)
 
     var2 = gCurrentSprite.work3 >> 2;
 
-    if (gCurrentSprite.work3 <= 0x0F)
+    if (gCurrentSprite.work3 < 16)
         gCurrentSprite.work3++;
 
     if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
     {
-        if (gCurrentSprite.workX + 0x380 >= gCurrentSprite.xPosition)
+        if (gCurrentSprite.workX + 896 >= gCurrentSprite.xPosition)
         {
             var1 = gCurrentSprite.xPosition;
             var1 = var1 + var2;
             gCurrentSprite.xPosition = var1;
             return;
         }
-        gCurrentSprite.pose = 3;
+        gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_INIT;
     }
     else
     {
-        if (gCurrentSprite.workX - 0x380 > gCurrentSprite.xPosition)
+        if (gCurrentSprite.workX - 896 > gCurrentSprite.xPosition)
         {
-            gCurrentSprite.pose = 3;
+            gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_INIT;
         }
         else
         {
             gCurrentSprite.xPosition -= var2;
         }
     }
-
-    return;
-}
-
-void DachoraStandingIdle(void)
-{
-    gCurrentSprite.pose = 8;
-    gCurrentSprite.pOam = (struct FrameData*)0x0838450c;
-    gCurrentSprite.animationDurationCounter = 0;
-    gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.work1 = 0xb;
 }
 
 void DachoraStandingInit(void)
 {
-    gCurrentSprite.pose = 8;
-    gCurrentSprite.pOam = (struct FrameData*)0x0838450C;
+    gCurrentSprite.pose = DACHORA_POSE_STANDING;
+    gCurrentSprite.pOam = (struct FrameData*)0x0838450c;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.work1 = 0xB;
+    gCurrentSprite.work1 = 11;
 }
 
 void DachoraStanding(void)
 {
-    gCurrentSprite.work1 = gCurrentSprite.work1 - 1;
-    if (gCurrentSprite.work1)
-        return;
-
-    gCurrentSprite.pose = 9;
+    gCurrentSprite.work1--;
+    if (!gCurrentSprite.work1)
+        gCurrentSprite.pose = DACHORA_POSE_HEAD_MOVEMENT_INIT;
 }
+
 
 void DachoraHeadMovementInit(void)
 {
-    gCurrentSprite.pose = 0xA;
+    gCurrentSprite.pose = DACHORA_POSE_HEAD_MOVEMENT;
 
     if (gCurrentSprite.work2 == 1)
     {
@@ -215,29 +227,24 @@ void DachoraHeadMovementInit(void)
 
 void DachoraHeadMovement(void)
 {
-    if (!SpriteUtilHasCurrentAnimationEnded())
-    {
-        return;
-    }
-
-    if (gCurrentSprite.work2 == 1 && gSpriteRandomNumber > 0xc)
+    if (!SpriteUtilHasCurrentAnimationEnded() || (gCurrentSprite.work2 == 1 && gSpriteRandomNumber > 12))
     {
         return;
     }
 
     if (gSpriteRandomNumber <= 2)
     {
-        gCurrentSprite.pose = 3;
+        gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_INIT;
     }
     else
     {
-        gCurrentSprite.pose = 1;
+        gCurrentSprite.pose = DACHORA_POSE_IDLE_INIT;
     }
 }
 
 void DachoraTurningAroundInit(void)
 {
-    gCurrentSprite.pose = 4;
+    gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND;
     gCurrentSprite.pOam = (struct FrameData*)0x08384554;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
@@ -250,19 +257,19 @@ void DachoraTurningAround(void)
         return;
     }
 
-    gCurrentSprite.pose = 5;
+    gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_SECOND_PART;
     gCurrentSprite.pOam = (struct FrameData*)0x0838456C;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
 
-    if (gCurrentSprite.drawOrder == 0xE)
+    if (gCurrentSprite.drawOrder == 14)
     {
-        gCurrentSprite.drawOrder = 0xf;
+        gCurrentSprite.drawOrder = 15;
     }
     else
     {
-        gCurrentSprite.drawOrder = 0xe;
+        gCurrentSprite.drawOrder = 14;
     }
 }
 
@@ -270,13 +277,13 @@ void DachoraTurningAroundSecondPart(void)
 {
     if (SpriteUtilHasCurrentAnimationNearlyEnded() != 0)
     {
-        gCurrentSprite.pose = 1;
+        gCurrentSprite.pose = DACHORA_POSE_IDLE_INIT;
     }
 }
 
 void DachoraTurningAroundWhileLeavingInit(void)
 {
-    gCurrentSprite.pose = 0x38;
+    gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING;
     gCurrentSprite.pOam = (struct FrameData*)0x08384554;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
@@ -286,7 +293,7 @@ void DachoraTurningAroundWhileLeaving(void)
 {
     if (SpriteUtilHasCurrentAnimationEnded() != 0)
     {
-        gCurrentSprite.pose = 0x3A;
+        gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING_SECOND_PART;
         gCurrentSprite.pOam = (struct FrameData*)0x0838456C;
         gCurrentSprite.animationDurationCounter = 0;
         gCurrentSprite.currentAnimationFrame = 0;
@@ -298,13 +305,13 @@ void DachoraTurningAroundWhileLeavingSecondPart(void)
 {
     if (SpriteUtilHasCurrentAnimationNearlyEnded() != 0)
     {
-        gCurrentSprite.pose = 0x19;
+        gCurrentSprite.pose = DACHORA_POSE_WALKING_TO_WAITING_SPOT_INIT;
     }
 }
 
 void DachoraLeavingEnclosureInit(void)
 {
-    gCurrentSprite.pose = 0x18;
+    gCurrentSprite.pose = DACHORA_POSE_LEAVING_ENCLOSURE;
     gCurrentSprite.work4 = 0;
     gCurrentSprite.bgPriority = 2;
     gCurrentSprite.drawOrder = 4;
@@ -321,9 +328,9 @@ void DachoraLeavingEnclosure(void)
     if (offset == SHORT_MAX)
     {
         if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
-            gCurrentSprite.pose = 0x1a;
+            gCurrentSprite.pose = DACHORA_POSE_WALKING_TO_WAITING_SPOT;
         else
-            gCurrentSprite.pose = 0x37;
+            gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING_INIT;
     }
     else
     {
@@ -342,20 +349,22 @@ void DachoraWalkingToWaitingSpotInit(void)
     gCurrentSprite.pOam = (struct FrameData*)0x0838451C;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.pose = 0x1A;
+    gCurrentSprite.pose = DACHORA_POSE_WALKING_TO_WAITING_SPOT;
 }
 
 void DachoraWalkingToWaitingSpot(void)
 {
-    if (gCurrentSprite.xPosition < gAbilityRestingXPosition - 0xC0)
+    if (gCurrentSprite.xPosition < gAbilityRestingXPosition - 192)
     {
         gCurrentSprite.xPosition += 4;
-        return;
     }
-    gCurrentSprite.pOam = (struct FrameData*)0x083846CC;
-    gCurrentSprite.animationDurationCounter = 0;
-    gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.pose = 0x1B;
+    else
+    {
+        gCurrentSprite.pOam = (struct FrameData*)0x083846CC;
+        gCurrentSprite.animationDurationCounter = 0;
+        gCurrentSprite.currentAnimationFrame = 0;
+        gCurrentSprite.pose = DACHORA_POSE_WAITING_FOR_OTHERS;
+    }
 }
 
 
@@ -369,17 +378,17 @@ void DachoraWaitingForOthers(void)
         SoundPlay(SOUND_122);
     }
 
-    for (count = 0, i = 0; i < 0x18; i++)
+    for (count = 0, i = 0; i < 24; i++)
     {
         if (gSpriteData[i].status & SPRITE_STATUS_EXISTS && !(gSpriteData[i].properties & SP_SECONDARY_SPRITE) &&
-            gSpriteData[i].spriteId == PSPRITE_ETECOON && gSpriteData[i].pose == 0x1C)
+            gSpriteData[i].spriteId == PSPRITE_ETECOON && gSpriteData[i].pose == DACHORA_POSE_WAITING_TO_SPAWN_BABY)
             count++;
     }
 
     if (count == 3)
     {
-        gCurrentSprite.pose = 0x1C;
-        gCurrentSprite.work1 = 0x3C;
+        gCurrentSprite.pose = DACHORA_POSE_WAITING_TO_SPAWN_BABY;
+        gCurrentSprite.work1 = 60;
     }
 }
 
@@ -393,10 +402,10 @@ void DachoraWaitingToSpawnBaby(void)
     gCurrentSprite.work1--;
     if (gCurrentSprite.work1 == 0)
     {
-        gCurrentSprite.pose = 0x1D;
-        SpriteSpawnSecondary(0x69, 0, gCurrentSprite.spritesetGfxSlot, gCurrentSprite.primarySpriteRamSlot,
-            gCurrentSprite.yPosition - 0x20, gCurrentSprite.xPosition - 0xC0, 0x40);
-        gCurrentSprite.work1 = 0x78;
+        gCurrentSprite.pose = DACHORA_POSE_WAITING_FOR_BABY;
+        SpriteSpawnSecondary(105, 0, gCurrentSprite.spritesetGfxSlot, gCurrentSprite.primarySpriteRamSlot,
+            gCurrentSprite.yPosition - 32, gCurrentSprite.xPosition - 192, 64);
+        gCurrentSprite.work1 = 120;
     }
 }
 
@@ -412,10 +421,10 @@ void DachoraWaitingForBaby(void)
     var = --gCurrentSprite.work1;
     if (var == 0)
     {
-        gCurrentSprite.pose = 0x1E;
+        gCurrentSprite.pose = DACHORA_POSE_BOWING;
         gPreventMovementTimer = var;
-        sSamusSetPoseFunctionPointer[gSamusData.unk_0](0x3B);
-        gCurrentSprite.work1 = 0x3C;
+        sSamusSetPoseFunctionPointer[gSamusData.unk_0](59);
+        gCurrentSprite.work1 = 60;
         gCurrentSprite.work2 = 1;
     }
 }
@@ -444,8 +453,8 @@ void DachoraBowing(void)
         var2 = --gCurrentSprite.work2;
         if (var2 == 0)
         {
-            gCurrentSprite.pose = 0x1F;
-            gCurrentSprite.work1 = 0x3C;
+            gCurrentSprite.pose = DACHORA_POSE_WAITING_TO_RUN;
+            gCurrentSprite.work1 = 60;
             gCurrentSprite.pOam = (struct FrameData*)0x083846CC;
             gCurrentSprite.animationDurationCounter = var2;
             gCurrentSprite.currentAnimationFrame = var2;
@@ -460,7 +469,7 @@ void DachoraWaitingToRun(void)
     var = --gCurrentSprite.work1;
     if (var == 0)
     {
-        *(&gCurrentSprite.work1 - 0xA) = 0x20;
+        *(&gCurrentSprite.work1 - 10) = 32;
         gCurrentSprite.pOam = (struct FrameData*)0x0838451C;
         gCurrentSprite.animationDurationCounter = var;
         gCurrentSprite.currentAnimationFrame = var;
@@ -472,7 +481,7 @@ void DachoraRunning(void)
 {
     u16 temp;
 
-    gCurrentSprite.xPosition += 0xE;
+    gCurrentSprite.xPosition += 14;
     gCurrentSprite.animationDurationCounter += 2;
     temp = gCurrentSprite.status & SPRITE_STATUS_ONSCREEN;
     if (temp == 0)
@@ -485,10 +494,10 @@ void BabyDachoraInit(void)
 {
     gCurrentSprite.status &= 0xFFFB;
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
-    gCurrentSprite.drawOrder = 0xC;
+    gCurrentSprite.drawOrder = 12;
     gCurrentSprite.bgPriority = 3;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.drawDistanceTop = 0x10;
+    gCurrentSprite.drawDistanceTop = 16;
     gCurrentSprite.drawDistanceBottom = 0;
     gCurrentSprite.drawDistanceHorizontal = 8;
     gCurrentSprite.hitboxTop = -4;
@@ -498,8 +507,8 @@ void BabyDachoraInit(void)
     gCurrentSprite.pOam = (struct FrameData*)0x0838462C;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.pose = 1;
-    gCurrentSprite.work1 = 0x20;
+    gCurrentSprite.pose = DACHORA_POSE_IDLE_INIT;
+    gCurrentSprite.work1 = 32;
 }
 
 void BabyDachoraWalkingToGate(void)
@@ -513,7 +522,7 @@ void BabyDachoraWalkingToGate(void)
     }
     else
     {
-        gCurrentSprite.pose = 2;
+        gCurrentSprite.pose = DACHORA_POSE_IDLE;
         gCurrentSprite.work4 = var;
     }
 }
@@ -524,10 +533,10 @@ void BabyDachoraLeavingEnclosure(void)
 
     var = gCurrentSprite.work4;
 
-    if (sAnimalsEnclosure_38188c[var] == 0x7FFF)
+    if (sAnimalsEnclosure_38188c[var] == SHORT_MAX)
     {
-        gCurrentSprite.pose = 0x17;
-        gCurrentSprite.work1 = 0x28;
+        gCurrentSprite.pose = DACHORA_POSE_LEAVING_ENCLOSURE_INIT;
+        gCurrentSprite.work1 = 40;
         gCurrentSprite.bgPriority = 2;
     }
     else
@@ -549,7 +558,7 @@ void BabyDachoraWalkingToWaitingSpot(void)
     }
     else
     {
-        gCurrentSprite.pose = 0x18;
+        gCurrentSprite.pose = DACHORA_POSE_LEAVING_ENCLOSURE;
         gCurrentSprite.drawOrder = 5;
         gCurrentSprite.pOam = (struct FrameData*)0x083846F4;
         gCurrentSprite.animationDurationCounter = var;
@@ -572,10 +581,10 @@ void BabyDachoraWaitingToRun(void)
         if (gSpriteData[i].spriteId != PSPRITE_DACHORA)
             continue;
 
-        if (gSpriteData[i].pose == 0x20)
+        if (gSpriteData[i].pose == DACHORA_POSE_RUNNING)
         {
-            gCurrentSprite.pose = 0x19;
-            gCurrentSprite.work1 = 0x5A;
+            gCurrentSprite.pose = DACHORA_POSE_WALKING_TO_WAITING_SPOT_INIT;
+            gCurrentSprite.work1 = 90;
         }
     }
 }
@@ -617,66 +626,66 @@ void Dachora(void)
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
     switch (gCurrentSprite.pose)
     {
-        case 0x0:
+        case DACHORA_POSE_INIT:
             DachoraInit();
             break;
-        case 0x1:
+        case DACHORA_POSE_IDLE_INIT:
             DachoraIdleInit();
-        case 0x2:
+        case DACHORA_POSE_IDLE:
             DachoraIdle();
             break;
-        case 0x3:
+        case DACHORA_POSE_TURNING_AROUND_INIT:
             DachoraTurningAroundInit();
-        case 0x4:
+        case DACHORA_POSE_TURNING_AROUND:
             DachoraTurningAround();
             break;
-        case 0x5:
+        case DACHORA_POSE_TURNING_AROUND_SECOND_PART:
             DachoraTurningAroundSecondPart();
             break;
-        case 0x7:
+        case DACHORA_POSE_STANDING_INIT:
             DachoraStandingInit();
-        case 0x8:
+        case DACHORA_POSE_STANDING:
             DachoraStanding();
             break;
-        case 0x9:
+        case DACHORA_POSE_HEAD_MOVEMENT_INIT:
             DachoraHeadMovementInit();
-        case 0xA:
+        case DACHORA_POSE_HEAD_MOVEMENT:
             DachoraHeadMovement();
             break;
-        case 0x37:
+        case DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING_INIT:
             DachoraTurningAroundWhileLeavingInit();
-        case 0x38:
+        case DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING:
             DachoraTurningAroundWhileLeaving();
             break;
-        case 0x3A:
+        case DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING_SECOND_PART:
             DachoraTurningAroundWhileLeavingSecondPart();
             break;
-        case 0x17:
+        case DACHORA_POSE_LEAVING_ENCLOSURE_INIT:
             DachoraLeavingEnclosureInit();
-        case 0x18:
+        case DACHORA_POSE_LEAVING_ENCLOSURE:
             DachoraLeavingEnclosure();
             break;
-        case 0x19:
+        case DACHORA_POSE_WALKING_TO_WAITING_SPOT_INIT:
             DachoraWalkingToWaitingSpotInit();
-        case 0x1A:
+        case DACHORA_POSE_WALKING_TO_WAITING_SPOT:
             DachoraWalkingToWaitingSpot();
             break;
-        case 0x1B:
+        case DACHORA_POSE_WAITING_FOR_OTHERS:
             DachoraWaitingForOthers();
             break;
-        case 0x1C:
+        case DACHORA_POSE_WAITING_TO_SPAWN_BABY:
             DachoraWaitingToSpawnBaby();
             break;
-        case 0x1D:
+        case DACHORA_POSE_WAITING_FOR_BABY:
             DachoraWaitingForBaby();
             break;
-        case 0x1E:
+        case DACHORA_POSE_BOWING:
             DachoraBowing();
             break;
-        case 0x1F:
+        case DACHORA_POSE_WAITING_TO_RUN:
             DachoraWaitingToRun();
             break;
-        case 0x20:
+        case DACHORA_POSE_RUNNING:
             DachoraRunning();
             break;
     }

@@ -7,7 +7,6 @@ boolu8 DachoraCheckDoHeadMovement(void);
 void DachoraInit(void);
 void DachoraIdleInit(void);
 void DachoraIdle(void);
-void DachoraStandingIdle(void);
 void DachoraStandingInit(void);
 void DachoraStanding(void);
 void DachoraHeadMovementInit(void);
