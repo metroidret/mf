@@ -10,6 +10,8 @@
 #include "sprite_util.h"
 #include "sprite.h"
 
+#include "data/sprites/dachora.h"
+
 boolu32 DachoraCheckDoHeadMovement(void);
 void DachoraInit(void);
 void DachoraIdleInit(void);
@@ -41,9 +43,5 @@ void BabyDachoraLeavingEnclosure(void);
 void BabyDachoraWalkingToWaitingSpot(void);
 void BabyDachoraWaitingToRun(void);
 void BabyDachoraRunning(void);
-
-extern const s16 sArray_838188c[];
-extern const s16 sArray_0x0838188c[];
-extern u8 sVar_0x030006ea[];
 
 #endif /* DACHORA_H */
