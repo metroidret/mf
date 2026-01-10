@@ -1,22 +1,14 @@
 #ifndef DACHORA_H
 #define DACHORA_H
 
-#include "constants/sprite.h"
-#include "data/samus_data.h"
-#include "event_checks.h"
-#include "globals.h"
-#include "samus.h"
-#include "structs/sprite.h"
-#include "sprite_util.h"
-#include "sprite.h"
+#include "types.h"
 
-#include "data/sprites/dachora.h"
-
-boolu32 DachoraCheckDoHeadMovement(void);
+boolu8 DachoraCheckDoHeadMovement(void);
 void DachoraInit(void);
 void DachoraIdleInit(void);
 void DachoraIdle(void);
 void DachoraStandingIdle(void);
+void DachoraStandingInit(void);
 void DachoraStanding(void);
 void DachoraHeadMovementInit(void);
 void DachoraHeadMovement(void);
@@ -36,6 +28,7 @@ void DachoraWaitingForBaby(void);
 void DachoraBowing(void);
 void DachoraWaitingToRun(void);
 void DachoraRunning(void);
+void Dachora(void);
 
 void BabyDachoraInit(void);
 void BabyDachoraWalkingToGate(void);
@@ -43,5 +36,6 @@ void BabyDachoraLeavingEnclosure(void);
 void BabyDachoraWalkingToWaitingSpot(void);
 void BabyDachoraWaitingToRun(void);
 void BabyDachoraRunning(void);
+void BabyDachora(void);
 
 #endif /* DACHORA_H */

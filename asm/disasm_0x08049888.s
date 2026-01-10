@@ -7407,8 +7407,8 @@ _0804D588:
 	.align 2, 0
 _0804D58C: .4byte 0x083846CC
 
-	thumb_func_start DachorawaitingForOthers
-DachorawaitingForOthers: @ 0x0804D590
+	thumb_func_start DachoraWaitingForOthers
+DachoraWaitingForOthers: @ 0x0804D590
 	push {r4, r5, lr}
 	ldr r1, _0804D608 @ =gCurrentSprite
 	ldrh r0, [r1, #0x16]
@@ -9592,7 +9592,7 @@ _0804E686:
 	bl DachoraWalkingToWaitingSpot
 	b _0804E6AE
 _0804E68C:
-	bl DachorawaitingForOthers
+	bl DachoraWaitingForOthers
 	b _0804E6AE
 _0804E692:
 	bl DachoraWaitingToSpawnBaby
