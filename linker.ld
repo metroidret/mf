@@ -40,6 +40,7 @@ SECTIONS {
         . = 0x00000030; gDisplayLocationName = .;
         . = 0x00000044; gEffectYPosition = .;
         . = 0x00000046; gDoorUnlockTimer = .;
+        . = 0x00000047; gUnk_03000047 = .;
         . = 0x00000048; gCurrentNavigationRoom = .;
         . = 0x00000049; gLastElevatorUsed = .;
         . = 0x0000004a; gCurrentEventBasedEffect = .;
@@ -318,8 +319,29 @@ SECTIONS {
         src/sprites_AI/elevator_pad.o(.text);
         src/sprites_AI/serris.o(.text);
         src/sprites_AI/owtch.o(.text);
+        src/sprites_AI/geega.o(.text);
+        src/sprites_AI/pillar.o(.text);
+        src/sprites_AI/genesis.o(.text);
+        src/sprites_AI/puyo.o(.text);
+        src/sprites_AI/mimic.o(.text);
 
-        asm/disasm_0x08049888.o(.text);
+        asm/disasm_0x0804C578.o(.text);
+
+        src/sprites_AI/zozoro.o(.text);
+
+        asm/disasm_0x080507F4.o(.text);
+
+        src/sprites_AI/frozen_ridley.o(.text);
+        src/sprites_AI/gold_enemy_door_lock.o(.text);
+        src/sprites_AI/mega_x.o(.text);
+        src/sprites_AI/omega_metroid_husk.o(.text);
+        src/sprites_AI/ice_beam_ability.o(.text);
+        src/sprites_AI/metroid_husk.o(.text);
+        src/sprites_AI/ridley.o(.text);
+        src/sprites_AI/ridley_pre_spawn.o(.text);
+        src/sprites_AI/yakuza.o(.text);
+
+        asm/disasm_0x08057294.o(.text);
 
         src/event_checks.o(.text);
         src/x_parasite_util.o(.text);
@@ -464,6 +486,22 @@ SECTIONS {
         src/data/sprites/elevator_pad.o(.rodata);
         src/data/sprites/serris.o(.rodata);
         src/data/sprites/owtch.o(.rodata);
+        src/data/sprites/geega.o(.rodata);
+        src/data/sprites/pillar.o(.rodata);
+        src/data/sprites/genesis.o(.rodata);
+        src/data/sprites/puyo.o(.rodata);
+        src/data/sprites/mimic.o(.rodata);
+
+        src/data/sprites/zozoro.o(.rodata);
+
+        src/data/sprites/frozen_ridley.o(.rodata);
+        src/data/sprites/mega_x.o(.rodata);
+        src/data/sprites/omega_metroid_husk.o(.rodata);
+        src/data/sprites/ice_beam_ability.o(.rodata);
+        src/data/sprites/metroid_husk.o(.rodata);
+        src/data/sprites/ridley.o(.rodata);
+        src/data/sprites/ridley_pre_spawn.o(.rodata);
+        src/data/sprites/yakuza.o(.rodata);
 
         src/data/sprites/x_parasite.o(.rodata);
         src/data/clipdata_data.o(.rodata);

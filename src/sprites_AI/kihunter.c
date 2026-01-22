@@ -249,7 +249,7 @@ void KihunterGroundTurningAroundInit(void)
 void KihunterGroundSpittingInit(void)
 {
     gCurrentSprite.pose = 0x2a;
-    gCurrentSprite.pOam = sKihunterGroundOam_Barfing;
+    gCurrentSprite.pOam = sKihunterGroundOam_Spitting;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
@@ -1126,7 +1126,7 @@ void KihunterSpitInit(void)
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(0.125f);
-    gCurrentSprite.pOam = sKihunterBarfOam_Moving;
+    gCurrentSprite.pOam = sKihunterSpitOam_Moving;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.work4 = 0;
@@ -1173,7 +1173,7 @@ void KihunterSpitExplodingInit(void)
 {
     gCurrentSprite.pose = 0x38;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.pOam = sKihunterBarfOam_Exploding;
+    gCurrentSprite.pOam = sKihunterSpitOam_Exploding;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 }

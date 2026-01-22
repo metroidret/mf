@@ -45,10 +45,13 @@ void TargetInit(void)
 
     SpriteUtilChooseRandomXDirection();
 
+    // BUG: A random X direction is chosen, but is overridden if Samus is facing right. This is either:
+    // 1. A leftover from testing, to force facing right
+    // 2. Meant to set facing down instead of facing right
     if (gSamusData.direction & KEY_RIGHT)
         gCurrentSprite.status |= SPRITE_STATUS_FACING_RIGHT;
 
-    gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
+    gCurrentSprite.status |= SPRITE_STATUS_FACING_DOWN;
 }
 
 /**
@@ -133,14 +136,14 @@ void TargetDiagonal(void)
                 gCurrentSprite.status |= SPRITE_STATUS_FACING_RIGHT;
         }
 
-        if (gCurrentSprite.status & SPRITE_STATUS_SAMUS_DETECTED)
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_DOWN)
         {
             SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition + gCurrentSprite.hitboxTop, gCurrentSprite.xPosition);
 
             if (gPreviousCollisionCheck == COLLISION_AIR)
                 gCurrentSprite.yPosition -= PIXEL_SIZE / 2;
             else
-                gCurrentSprite.status &= ~SPRITE_STATUS_SAMUS_DETECTED;
+                gCurrentSprite.status &= ~SPRITE_STATUS_FACING_DOWN;
         }
         else
         {
@@ -149,7 +152,7 @@ void TargetDiagonal(void)
             if (gPreviousCollisionCheck == COLLISION_AIR)
                 gCurrentSprite.yPosition += PIXEL_SIZE / 2;
             else
-                gCurrentSprite.status |= SPRITE_STATUS_SAMUS_DETECTED;
+                gCurrentSprite.status |= SPRITE_STATUS_FACING_DOWN;
         }
     }
     else

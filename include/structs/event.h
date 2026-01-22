@@ -56,5 +56,6 @@ extern u16 gSoundEventCounter;
 extern u16 gPreviousSoundEvent;
 
 extern s8 gDoorUnlockTimer;
+extern u8 gUnk_03000047;
 
 #endif /* EVENT_STRUCTS_H */

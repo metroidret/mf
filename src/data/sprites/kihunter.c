@@ -480,7 +480,7 @@ static const u16 sKihunterBugOam_Frame2[OAM_DATA_SIZE(1)] = {
     OAM_ENTRY(-4, -3, OAM_DIMS_8x8, OAM_Y_FLIP, 0x2ab, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame7[OAM_DATA_SIZE(11)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame7[OAM_DATA_SIZE(11)] = {
     11,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -495,7 +495,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame7[OAM_DATA_SIZE(11)] = {
     OAM_ENTRY(-17, -26, OAM_DIMS_8x8, OAM_NO_FLIP, 0x2a8, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame8[OAM_DATA_SIZE(11)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame8[OAM_DATA_SIZE(11)] = {
     11,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -510,7 +510,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame8[OAM_DATA_SIZE(11)] = {
     OAM_ENTRY(-25, -27, OAM_DIMS_16x8, OAM_NO_FLIP, 0x288, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame9[OAM_DATA_SIZE(11)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame9[OAM_DATA_SIZE(11)] = {
     11,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -525,7 +525,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame9[OAM_DATA_SIZE(11)] = {
     OAM_ENTRY(-24, -27, OAM_DIMS_16x8, OAM_NO_FLIP, 0x28a, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame10[OAM_DATA_SIZE(12)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame10[OAM_DATA_SIZE(12)] = {
     12,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -541,7 +541,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame10[OAM_DATA_SIZE(12)] = {
     OAM_ENTRY(-29, -30, OAM_DIMS_16x16, OAM_NO_FLIP, 0x28c, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame11[OAM_DATA_SIZE(12)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame11[OAM_DATA_SIZE(12)] = {
     12,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -557,24 +557,24 @@ static const u16 sKihunterGroundOam_Barfing_Frame11[OAM_DATA_SIZE(12)] = {
     OAM_ENTRY(-16, -26, OAM_DIMS_8x8, OAM_NO_FLIP, 0x2a9, 8, 0),
 };
 
-static const u16 sKihunterBarfOam_Moving_Frame0[OAM_DATA_SIZE(1)] = {
+static const u16 sKihunterSpitOam_Moving_Frame0[OAM_DATA_SIZE(1)] = {
     1,
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x28e, 8, 0),
 };
 
-static const u16 sKihunterBarfOam_Moving_Frame1[OAM_DATA_SIZE(1)] = {
+static const u16 sKihunterSpitOam_Moving_Frame1[OAM_DATA_SIZE(1)] = {
     1,
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x28c, 8, 0),
 };
 
-static const u16 sKihunterBarfOam_Exploding_Frame0[OAM_DATA_SIZE(3)] = {
+static const u16 sKihunterSpitOam_Exploding_Frame0[OAM_DATA_SIZE(3)] = {
     3,
     OAM_ENTRY(-12, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x290, 9, 0),
     OAM_ENTRY(4, -12, OAM_DIMS_8x16, OAM_NO_FLIP, 0x292, 9, 0),
     OAM_ENTRY(-9, 4, OAM_DIMS_16x8, OAM_NO_FLIP, 0x293, 9, 0),
 };
 
-static const u16 sKihunterBarfOam_Exploding_Frame1[OAM_DATA_SIZE(4)] = {
+static const u16 sKihunterSpitOam_Exploding_Frame1[OAM_DATA_SIZE(4)] = {
     4,
     OAM_ENTRY(-12, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x295, 9, 0),
     OAM_ENTRY(4, -12, OAM_DIMS_8x16, OAM_NO_FLIP, 0x297, 9, 0),
@@ -582,7 +582,7 @@ static const u16 sKihunterBarfOam_Exploding_Frame1[OAM_DATA_SIZE(4)] = {
     OAM_ENTRY(1, 4, OAM_DIMS_8x8, OAM_X_FLIP, 0x2b8, 9, 0),
 };
 
-static const u16 sKihunterBarfOam_Exploding_Frame2[OAM_DATA_SIZE(4)] = {
+static const u16 sKihunterSpitOam_Exploding_Frame2[OAM_DATA_SIZE(4)] = {
     4,
     OAM_ENTRY(-12, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x298, 9, 0),
     OAM_ENTRY(-12, 5, OAM_DIMS_16x8, OAM_X_FLIP, 0x298, 9, 0),
@@ -590,7 +590,7 @@ static const u16 sKihunterBarfOam_Exploding_Frame2[OAM_DATA_SIZE(4)] = {
     OAM_ENTRY(5, 5, OAM_DIMS_8x8, OAM_NO_FLIP, 0x2b8, 9, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame4[OAM_DATA_SIZE(10)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame4[OAM_DATA_SIZE(10)] = {
     10,
     OAM_ENTRY(-5, -21, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
     OAM_ENTRY(-18, -16, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
@@ -604,7 +604,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame4[OAM_DATA_SIZE(10)] = {
     OAM_ENTRY(-12, -8, OAM_DIMS_16x8, OAM_NO_FLIP, 0x23c, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame5[OAM_DATA_SIZE(11)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame5[OAM_DATA_SIZE(11)] = {
     11,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -619,7 +619,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame5[OAM_DATA_SIZE(11)] = {
     OAM_ENTRY(-13, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x218, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame6[OAM_DATA_SIZE(10)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame6[OAM_DATA_SIZE(10)] = {
     10,
     OAM_ENTRY(-17, -19, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -23, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -633,7 +633,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame6[OAM_DATA_SIZE(10)] = {
     OAM_ENTRY(-13, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x218, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame12[OAM_DATA_SIZE(10)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame12[OAM_DATA_SIZE(10)] = {
     10,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -647,7 +647,7 @@ static const u16 sKihunterGroundOam_Barfing_Frame12[OAM_DATA_SIZE(10)] = {
     OAM_ENTRY(-13, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x218, 8, 0),
 };
 
-static const u16 sKihunterGroundOam_Barfing_Frame13[OAM_DATA_SIZE(10)] = {
+static const u16 sKihunterGroundOam_Spitting_Frame13[OAM_DATA_SIZE(10)] = {
     10,
     OAM_ENTRY(-18, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 0x24b, 8, 0),
     OAM_ENTRY(-5, -22, OAM_DIMS_8x16, OAM_NO_FLIP, 0x251, 8, 0),
@@ -913,35 +913,35 @@ const struct FrameData sKihunterBugOam[4] = {
     [3] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sKihunterBarfOam_Moving[3] = {
+const struct FrameData sKihunterSpitOam_Moving[3] = {
     [0] = {
-        .pFrame = sKihunterBarfOam_Moving_Frame0,
+        .pFrame = sKihunterSpitOam_Moving_Frame0,
         .timer = 4
     },
     [1] = {
-        .pFrame = sKihunterBarfOam_Moving_Frame1,
+        .pFrame = sKihunterSpitOam_Moving_Frame1,
         .timer = 4
     },
     [2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sKihunterBarfOam_Exploding[4] = {
+const struct FrameData sKihunterSpitOam_Exploding[4] = {
     [0] = {
-        .pFrame = sKihunterBarfOam_Exploding_Frame0,
+        .pFrame = sKihunterSpitOam_Exploding_Frame0,
         .timer = 2
     },
     [1] = {
-        .pFrame = sKihunterBarfOam_Exploding_Frame1,
+        .pFrame = sKihunterSpitOam_Exploding_Frame1,
         .timer = 3
     },
     [2] = {
-        .pFrame = sKihunterBarfOam_Exploding_Frame2,
+        .pFrame = sKihunterSpitOam_Exploding_Frame2,
         .timer = 3
     },
     [3] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sKihunterGroundOam_Barfing[15] = {
+const struct FrameData sKihunterGroundOam_Spitting[15] = {
     [0] = {
         .pFrame = sKihunterGroundOam_StartLowJump_Frame0,
         .timer = 2
@@ -959,43 +959,43 @@ const struct FrameData sKihunterGroundOam_Barfing[15] = {
         .timer = 6
     },
     [4] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame4,
+        .pFrame = sKihunterGroundOam_Spitting_Frame4,
         .timer = 6
     },
     [5] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame5,
+        .pFrame = sKihunterGroundOam_Spitting_Frame5,
         .timer = 4
     },
     [6] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame6,
+        .pFrame = sKihunterGroundOam_Spitting_Frame6,
         .timer = 4
     },
     [7] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame7,
+        .pFrame = sKihunterGroundOam_Spitting_Frame7,
         .timer = 3
     },
     [8] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame8,
+        .pFrame = sKihunterGroundOam_Spitting_Frame8,
         .timer = 3
     },
     [9] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame9,
+        .pFrame = sKihunterGroundOam_Spitting_Frame9,
         .timer = 3
     },
     [10] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame10,
+        .pFrame = sKihunterGroundOam_Spitting_Frame10,
         .timer = 3
     },
     [11] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame11,
+        .pFrame = sKihunterGroundOam_Spitting_Frame11,
         .timer = 3
     },
     [12] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame12,
+        .pFrame = sKihunterGroundOam_Spitting_Frame12,
         .timer = 4
     },
     [13] = {
-        .pFrame = sKihunterGroundOam_Barfing_Frame13,
+        .pFrame = sKihunterGroundOam_Spitting_Frame13,
         .timer = 6
     },
     [14] = FRAME_DATA_TERMINATOR
