@@ -2,9 +2,14 @@
 #include "new_file_intro.h"
 #include "data/new_file_intro_data.h"
 
+extern void unk_99940(void); // For V-blank callback
+
 static void NewFileIntroSamusShipFlyingInit(void);
 static boolu32 NewFileIntroSamusShipFlyingProcess(void);
 static boolu32 NewFileIntroSamusShipFlying(void);
+static void NewFileIntroSamusFaintingInit(void);
+static boolu32 NewFileIntroSamusFaintingProcess(void);
+static boolu32 NewFileIntroSamusFainting(void);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -12,8 +17,6 @@ static u16* sMonologueTextPointersGerman[19];
 static u16* sMonologueTextPointersFrench[19];
 static u16* sMonologueTextPointersItalian[19];
 static u16* sMonologueTextPointersSpanish[19];
-
-extern void unk_99940(void); // For V-blank callback
 
 static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx0,
@@ -619,8 +622,11 @@ static boolu32 NewFileIntroSamusShipFlying(void)
     return result;
 }
 
-
-void NewFileIntroSamusFaintingInit(void) 
+ /**
+ * @brief 87e90 | 1d8 | Setup for the new file intro Samus fainting cutscene
+ * 
+ */
+static void NewFileIntroSamusFaintingInit(void)
 {
     CallbackSetVBlank(unk_99940);
 
@@ -629,11 +635,11 @@ void NewFileIntroSamusFaintingInit(void)
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
 
-    LZ77UncompVram(0x08605684, VRAM_BASE + 0xF000);
-    LZ77UncompVram(0x08605684, VRAM_BASE + 0xF800);
-    LZ77UncompVram(0x0860093c, VRAM_BASE);
+    LZ77UncompVram(sIntroSamusSittingTilemap, VRAM_BASE + 0xF000);
+    LZ77UncompVram(sIntroSamusSittingTilemap, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSamusSittingGfx, VRAM_BASE);
 
-    DMA3_COPY_32(0x08605484, PALRAM_BASE, 128);
+    DMA3_COPY_32(sIntroSamusSittingPal, PALRAM_BASE, 128);
 
     WRITE_16(PALRAM_BASE, 0);
 
@@ -666,7 +672,7 @@ void NewFileIntroSamusFaintingInit(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
 
-    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, VRAM_SIZE / 24 );
 
     gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
     
@@ -679,8 +685,11 @@ void NewFileIntroSamusFaintingInit(void)
     gWrittenToBldalpha_Evb = 8;
 }
 
-
-boolu32 NewFileIntroSamusFaintingProcess(void) 
+ /**
+ * @brief 88068 | 13c | Processes the new file intro Samus fainting cutscene
+ * 
+ */
+static boolu32 NewFileIntroSamusFaintingProcess(void)
 {
     boolu32 finished;
 
@@ -746,8 +755,11 @@ boolu32 NewFileIntroSamusFaintingProcess(void)
     return finished;
 }
 
-
-boolu32 NewFileIntroSamusFainting(void)
+ /**
+ * @brief 881a4 | 9c | Main handler for the new file intro Samus fainting cutscene
+ * 
+ */
+static boolu32 NewFileIntroSamusFainting(void)
 {
     boolu32 finished;
 

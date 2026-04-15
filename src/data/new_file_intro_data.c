@@ -8,7 +8,13 @@ static const u8 sBlob_598190_598898[] = INCBIN_U8("data/Blob_598190_598898.bin")
 
 const u32 sIntroSamusShipFlyingTextTilemap[125] = INCBIN_U32("data/new_file_intro/samus_ship_flying_text.tm.lz");
 
-static const u8 sBlob_598a8c_0x60b148[] = INCBIN_U8("data/Blob_598a8c_0x60b148.bin");
+static const u8 sBlob_598a8c_60093c[] = INCBIN_U8("data/Blob_598a8c_60093c.bin");
+
+const u32 sIntroSamusSittingGfx[4818] = INCBIN_U32("data/new_file_intro/samus_sitting.gfx.lz");
+const u16 sIntroSamusSittingPal[256] = INCBIN_U16("data/new_file_intro/samus_sitting.pal");
+const u32 sIntroSamusSittingTilemap[171] = INCBIN_U32("data/new_file_intro/samus_sitting.tm.lz");
+
+static const u8 sBlob_605930_60b148[] = INCBIN_U8("data/Blob_605930_60b148.bin");
 
 const u8 sIntroSpaceTilemap[1320] = INCBIN_U8("data/new_file_intro/space_bg.tm.lz");
 const u8 sIntroBslTilemap[1586] = INCBIN_U8("data/new_file_intro/bsl_bg.tm.lz");

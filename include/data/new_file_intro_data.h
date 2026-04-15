@@ -7,6 +7,11 @@ extern const u16 sIntroSamusShipPal[80];
 extern const u16 sPal_598150[32];
 
 extern const u32 sIntroSamusShipFlyingTextTilemap[125];
+
+extern const u32 sIntroSamusSittingGfx[4818];
+extern const u16 sIntroSamusSittingPal[256];
+extern const u32 sIntroSamusSittingTilemap[171];
+
 extern const u8 sIntroSpaceTilemap[1320];
 extern const u8 sIntroBslTilemap[1586];
 

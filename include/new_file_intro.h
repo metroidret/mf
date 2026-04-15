@@ -8,8 +8,4 @@ boolu32 NewFileIntroHandler(void);
 boolu32 unk_87920(void);
 void NewFileIntroSamusShipFlyingVblank(void);
 
-void NewFileIntroSamusFaintingInit(void);
-boolu32 NewFileIntroSamusFaintingProcess(void);
-boolu32 NewFileIntroSamusFainting(void);
-
 #endif /* NEW_FILE_INTRO_H */

@@ -26177,10 +26177,42 @@
     "size": 4
   },
   {
-    "path": "Blob_598a8c_0x60b148.bin",
-    "count": "0x726BC",
+    "path": "Blob_598a8c_60093c.bin",
+    "count": "0x67EB0",
     "addr": {
       "us": "0x598A8C"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/samus_sitting.gfx.lz",
+    "count": "0x12D2",
+    "addr": {
+      "us": "0x60093C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_sitting.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x605484"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/samus_sitting.tm.lz",
+    "count": "0xAB",
+    "addr": {
+      "us": "0x605684"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_605930_60b148.bin",
+    "count": "0x5818",
+    "addr": {
+      "us": "0x605930"
     },
     "size": 1
   },
