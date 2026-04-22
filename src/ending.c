@@ -8,6 +8,152 @@ extern void EndingDrawIgtAndCompletionPercentage();
 extern void EndingImageDisplayLinePermanently(s32);
 extern void EndingImageLoadTextOam(s32);
 extern void EndingImageUpdateLettersSpawnDelay(s32);
+extern void unk_a1cfc(void);
+extern void EndingImageVblank(void);
+
+
+
+boolu32 EndingImageInit(void) 
+{
+    s32 temp;
+    s32 i;
+    u32 value;
+    
+    WRITE_16(REG_IME, 0);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~16);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~2);
+    WRITE_16(REG_IME, 1);
+
+    CallbackSetVBlank(unk_a1cfc);
+
+    WRITE_16(REG_DISPCNT, 0);
+    
+    if (gNonGameplayRam.ending.unk_9A > 99)
+    {
+        temp = 3;
+
+        if (gNonGameplayRam.ending.unk_99 == 2)
+        {
+            temp = 4;
+        }
+    }
+    else
+    {
+        temp = gNonGameplayRam.ending.unk_99;
+    }
+
+    switch (temp)
+    {
+        case 0:
+            LZ77UncompVram(0x08761a88, VRAM_BASE);
+            LZ77UncompVram(0x08767278, VRAM_BASE + 0x8000);
+            LZ77UncompVram(0x0878fd10, VRAM_BASE + 0xF000);
+            LZ77UncompVram(0x087905ac, VRAM_BASE + 0xF800);
+            DMA3_COPY_16(0x08749d58, PALRAM_BASE, 256);
+            break;
+
+        case 1:
+            LZ77UncompVram(0x0876a454, VRAM_BASE);
+            LZ77UncompVram(0x08770084, VRAM_BASE + 0x8000);
+            LZ77UncompVram(0x08790b6c, VRAM_BASE + 0xF000);
+            LZ77UncompVram(0x08791408, VRAM_BASE + 0xF800);
+            DMA3_COPY_16(0x08749f58, PALRAM_BASE, 256);
+            break;
+
+        case 2:
+            LZ77UncompVram(0x08772f2c, VRAM_BASE);
+            LZ77UncompVram(0x087788b8, VRAM_BASE + 0x8000);
+            LZ77UncompVram(0x087919c8, VRAM_BASE + 0xF000);
+            LZ77UncompVram(0x08792264, VRAM_BASE + 0xF800);
+            DMA3_COPY_16(0x0874a158, PALRAM_BASE, 256);
+            break;
+
+        case 3:
+            LZ77UncompVram(0x0877bc2c, VRAM_BASE);
+            LZ77UncompVram(0x08781f9c, VRAM_BASE + 0x8000);
+            LZ77UncompVram(0x08792824, VRAM_BASE + 0xF000);
+            LZ77UncompVram(0x087930c0, VRAM_BASE + 0xF800);
+            DMA3_COPY_16(0x0874a358, PALRAM_BASE, 256);
+            break;
+
+        default:
+            LZ77UncompVram(0x08785b44, VRAM_BASE);
+            LZ77UncompVram(0x0878c650, VRAM_BASE + 0x8000);
+            LZ77UncompVram(0x08793684, VRAM_BASE + 0xF000);
+            LZ77UncompVram(0x08793f20, VRAM_BASE + 0xF800);
+            DMA3_COPY_16(0x0874a558, PALRAM_BASE, 256);
+            break;
+    }
+
+    switch (gLanguage)
+    {
+        case 3:
+            LZ77UncompVram(0x08798fbc, VRAM_OBJ);
+            break;
+
+        case 4:
+            LZ77UncompVram(0x087957a8, VRAM_OBJ);
+            break;
+
+        case 5:
+            LZ77UncompVram(0x087969f4, VRAM_OBJ);
+            break;
+
+        case 6:
+            LZ77UncompVram(0x08797d08, VRAM_OBJ);
+            break;
+
+        default:
+            LZ77UncompVram(0x087944e4, VRAM_OBJ);
+            break;
+    }
+
+    DMA3_COPY_16(0x0874a758, PALRAM_OBJ, 64);
+
+    WRITE_16(REG_BG0CNT, 0x1e01);
+    WRITE_16(REG_BG1CNT, 0x1f08);
+    WRITE_16(REG_DISPCNT, 0x1300);
+    WRITE_16(REG_BLDCNT, 0x1fdf);
+
+    gNextOamSlot = 0;
+    ResetFreeOam();
+
+    gBg0XPosition = 0;
+    gBg0YPosition = 0x1000;
+    gBg1XPosition = 0;
+    gBg1YPosition = 0;
+    gBg2XPosition = 0;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+
+    gNonGameplayRam.ending.unk_8 = 128;
+    gNonGameplayRam.ending.unk_2 = 0;
+    gNonGameplayRam.ending.unk_4 = 0;
+    gNonGameplayRam.ending.unk_6 = 0;
+    gNonGameplayRam.ending.unk_98++;
+
+    value = 31;
+    for (i = 31; i >= 0; i--)
+        gNonGameplayRam.ending.unk_A[i] = value;
+
+    CallbackSetVBlank(EndingImageVblank);
+
+    return FALSE;    
+}
+
+
+
+
 
 boolu32 EndingImage(void) 
 {
@@ -156,7 +302,7 @@ boolu32 EndingImage(void)
                     case 7:
                         palette = 3;
                         break;
-                        
+
                     case 1:
                     case 6:
                         palette = 2;
