@@ -456,6 +456,8 @@ SECTIONS {
 
         asm/disasm_0x0809deb4.o(.text);
 
+        src/ending.o(.text);
+
         *libgcc.a:_call_via_rX.o(.text);
         *libgcc.a:_divsi3.o(.text);
         *libgcc.a:_dvmd_tls.o(.text);
