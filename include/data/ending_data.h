@@ -11,6 +11,10 @@ extern const u16 sOamFrame_749c80[OAM_DATA_SIZE(25)];
 extern const u16 sOamFrame_749d18[OAM_DATA_SIZE(6)];
 extern const u16 sOamFrame_749d3e[OAM_DATA_SIZE(4)];
 
+extern const u32* const sPreResultsSamusBgGfxPointers1[4];
+extern const u32* const sPreResultsSamusBgGfxPointers2[4];
+extern const u32* const sPreResultsSamusBgGfxPointers3[4];
+
 extern const u8 sData_753E80[374];
 
 extern const u32 sPreResultsSamusWithoutHelmetBgGfx1[897];

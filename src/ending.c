@@ -18,6 +18,112 @@ extern void EndingImageVblank(void);
 
 
 
+
+
+
+boolu32 SamusPosing(void)
+{
+    u32 index;
+    u32 offset;
+    void* temp1;
+    u32 temp2;
+
+    switch (gNonGameplayRam.ending.timer++) 
+    {
+        case 0:
+            index = gNonGameplayRam.ending.unk_98 - 2;
+            
+            if (gNonGameplayRam.ending.unk_98 & 1)
+                offset = 0x8000;
+            else 
+                offset = 0xA800;
+            
+            LZ77UncompVram(sPreResultsSamusBgGfxPointers1[index], VRAM_BASE + offset);
+            break;
+        
+        case 1:
+            index = gNonGameplayRam.ending.unk_98 - 2;
+
+            if (gNonGameplayRam.ending.unk_98 & 1)
+                offset = 0x9000;
+            else 
+                offset = 0xB800;
+
+            LZ77UncompVram(sPreResultsSamusBgGfxPointers2[index], VRAM_BASE + offset);
+            break;
+        
+        case 2:
+            index = gNonGameplayRam.ending.unk_98 - 2;
+
+            if (gNonGameplayRam.ending.unk_98 & 1)
+                offset = 0xF800;
+            else 
+                offset = 0xF000;
+                
+            LZ77UncompVram(sPreResultsSamusBgGfxPointers3[index], VRAM_BASE + offset);
+            break;
+        
+        case 50:
+            gWrittenToBldalpha_Eva = 16;
+            gWrittenToBldalpha_Evb = 0;
+
+            //WRITE_16(REG_BLDALPHA, 16); // Doesn't match
+            temp1 = REG_BLDALPHA;
+            temp2 = 16;
+            WRITE_16(temp1, temp2);
+            
+            if (gNonGameplayRam.ending.unk_98 & 1)
+                WRITE_16(REG_BLDCNT, 0x542);
+            else
+                WRITE_16(REG_BLDCNT, 0x641);
+            
+            WRITE_16(REG_DISPCNT, 0x1700);
+            gNonGameplayRam.ending.unk_2 = 1;
+            break;
+        
+        case 100:
+            WRITE_16(REG_BLDCNT, 0);
+            
+            if (1 & gNonGameplayRam.ending.unk_98) 
+            {
+                WRITE_16(REG_DISPCNT, 0x1500);
+                WRITE_16(REG_BG0CNT, 0x1F08);
+                WRITE_16(REG_BG1CNT, 0x1E09);
+            } 
+            else 
+            {
+                WRITE_16(REG_DISPCNT, 0x1600);
+                WRITE_16(REG_BG0CNT, 0x1F09);
+                WRITE_16(REG_BG1CNT, 0x1E08);
+            }
+        
+            gNonGameplayRam.ending.unk_2 = 0;
+            gNonGameplayRam.ending.timer = 0;
+            gNonGameplayRam.ending.unk_97 = 0;
+            gNonGameplayRam.ending.unk_98++;
+            break;
+    }
+    
+    if (gNonGameplayRam.ending.unk_2 == 1 && gNonGameplayRam.ending.unk_97++ > 1) 
+    {
+        gNonGameplayRam.ending.unk_97 = 0;
+            
+        if (gWrittenToBldalpha_Eva)
+            gWrittenToBldalpha_Eva--;
+                
+        if (gWrittenToBldalpha_Evb < 16)
+            gWrittenToBldalpha_Evb++;
+
+        WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
+    }
+    
+    return FALSE;
+}
+
+
+
+
+
 boolu32 SamusPosingTransforming(void) 
 {
     boolu32 ended;

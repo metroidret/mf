@@ -56,7 +56,30 @@ const u16 sOamFrame_749d3e[OAM_DATA_SIZE(4)] = {
     OAM_ENTRY(34, 52, OAM_DIMS_16x32, OAM_NO_FLIP, 0x2d2, 1, 0),
 };
 
-static const u8 sBlob_749d58_753e80[] = INCBIN_U8("data/Blob_749d58_753e80.bin");
+static const u8 sBlob_749d58_74e620[] = INCBIN_U8("data/Blob_749d58_74e620.bin");
+
+const u32* const sPreResultsSamusBgGfxPointers1[4] = {
+    (const u32*)0x8755720,
+    (const u32*)0x87571c0,
+    (const u32*)0x8758db4,
+    (const u32*)0x875a828
+};
+
+const u32* const sPreResultsSamusBgGfxPointers2[4] = {
+    (const u32*)0x8756470,
+    (const u32*)0x8757f00,
+    (const u32*)0x8759c00,
+    (const u32*)0x875b694
+};
+
+const u32* const sPreResultsSamusBgGfxPointers3[4] = {
+    (const u32*)0x875de04,
+    (const u32*)0x875e100,
+    (const u32*)0x875e414,
+    (const u32*)0x875e6fc
+};
+
+static const u8 sBlob_74e650_753e80[] = INCBIN_U8("data/Blob_74e650_753e80.bin");
 
 const u8 sData_753E80[374] = INCBIN_U8("data/ending/tilemap_753e80.tm.lz"); // Tilemap?
 
