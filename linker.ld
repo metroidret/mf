@@ -1018,6 +1018,7 @@ SECTIONS {
         src/data/menus/title_screen.o(.rodata);
         src/data/new_file_intro_data.o(.rodata);
         src/data/sa_x_close_up.o(.rodata);
+        src/data/ending_data.o(.rodata);
         src/data/sprite_pointers.o(.rodata);
         src/data/frame_data_pointers.o(.rodata);
     } >rom
