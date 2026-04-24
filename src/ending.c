@@ -185,7 +185,7 @@ boolu32 SamusPosingTransforming(void)
         case 0x65:
             if (gNonGameplayRam.ending.unk_99)
             {
-                LZ77UncompVram(&sData_753E80, VRAM_BASE + 0xF800);
+                LZ77UncompVram(sData_753E80, VRAM_BASE + 0xF800);
                 WRITE_16(REG_BG0CNT, 0x1F00);
             }
             break;
@@ -216,33 +216,33 @@ boolu32 SamusPosingTransforming(void)
         case 0x8D:
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
-                LZ77UncompVram(&sPreResultsSamusWithoutHelmetBgGfx1, VRAM_BASE + 0x8000);
+                LZ77UncompVram(sPreResultsSamusWithoutHelmetBgGfx1, VRAM_BASE + 0x8000);
             }
             else if (gNonGameplayRam.ending.unk_99)
             {
-                LZ77UncompVram(&sPreResultsSamusSuitlessBgGfx1, VRAM_BASE + 0x8000);
+                LZ77UncompVram(sPreResultsSamusSuitlessBgGfx1, VRAM_BASE + 0x8000);
             }
             break;
         
         case 0x8E:
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
-                LZ77UncompVram(&sPreResultsSamusWithoutHelmetBgGfx2, VRAM_BASE + 0x9000);
+                LZ77UncompVram(sPreResultsSamusWithoutHelmetBgGfx2, VRAM_BASE + 0x9000);
             }
             else if (gNonGameplayRam.ending.unk_99)
             {
-                LZ77UncompVram(&sPreResultsSamusSuitlessBgGfx2, VRAM_BASE + 0x9000);
+                LZ77UncompVram(sPreResultsSamusSuitlessBgGfx2, VRAM_BASE + 0x9000);
             }
             break;
 
         case 0x8F:
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
-                LZ77UncompVram(&sData_75E990, VRAM_BASE + 0xF000);
+                LZ77UncompVram(sData_75E990, VRAM_BASE + 0xF000);
             }
             else if (gNonGameplayRam.ending.unk_99) 
             {
-                LZ77UncompVram(&sData_75EB94, VRAM_BASE + 0xF000);
+                LZ77UncompVram(sData_75EB94, VRAM_BASE + 0xF000);
             }
             break;
 
@@ -391,42 +391,42 @@ boolu32 EndingImageInit(void)
     switch (temp)
     {
         case 0:
-            LZ77UncompVram((void*)0x08761a88, VRAM_BASE);
-            LZ77UncompVram((void*)0x08767278, VRAM_BASE + 0x8000);
-            LZ77UncompVram((void*)0x0878fd10, VRAM_BASE + 0xF000);
-            LZ77UncompVram((void*)0x087905ac, VRAM_BASE + 0xF800);
+            LZ77UncompVram(sEnding_0_GfxTop, VRAM_BASE);
+            LZ77UncompVram(sEnding_0_GfxBottom, VRAM_BASE + 0x8000);
+            LZ77UncompVram(sEnding_0_TilemapTop, VRAM_BASE + 0xF000);
+            LZ77UncompVram(sEnding_0_TilemapBottom, VRAM_BASE + 0xF800);
             DMA3_COPY_16(0x08749d58, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         case 1:
-            LZ77UncompVram((void*)0x0876a454, VRAM_BASE);
-            LZ77UncompVram((void*)0x08770084, VRAM_BASE + 0x8000);
-            LZ77UncompVram((void*)0x08790b6c, VRAM_BASE + 0xF000);
-            LZ77UncompVram((void*)0x08791408, VRAM_BASE + 0xF800);
+            LZ77UncompVram(sEnding_1_GfxTop, VRAM_BASE);
+            LZ77UncompVram(sEnding_1_GfxBottom, VRAM_BASE + 0x8000);
+            LZ77UncompVram(sEnding_1_TilemapTop, VRAM_BASE + 0xF000);
+            LZ77UncompVram(sEnding_1_TilemapBottom, VRAM_BASE + 0xF800);
             DMA3_COPY_16(0x08749f58, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         case 2:
-            LZ77UncompVram((void*)0x08772f2c, VRAM_BASE);
-            LZ77UncompVram((void*)0x087788b8, VRAM_BASE + 0x8000);
-            LZ77UncompVram((void*)0x087919c8, VRAM_BASE + 0xF000);
-            LZ77UncompVram((void*)0x08792264, VRAM_BASE + 0xF800);
+            LZ77UncompVram(sEnding_2_GfxTop, VRAM_BASE);
+            LZ77UncompVram(sEnding_2_GfxBottom, VRAM_BASE + 0x8000);
+            LZ77UncompVram(sEnding_2_TilemapTop, VRAM_BASE + 0xF000);
+            LZ77UncompVram(sEnding_2_TilemapBottom, VRAM_BASE + 0xF800);
             DMA3_COPY_16(0x0874a158, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         case 3:
-            LZ77UncompVram((void*)0x0877bc2c, VRAM_BASE);
-            LZ77UncompVram((void*)0x08781f9c, VRAM_BASE + 0x8000);
-            LZ77UncompVram((void*)0x08792824, VRAM_BASE + 0xF000);
-            LZ77UncompVram((void*)0x087930c0, VRAM_BASE + 0xF800);
+            LZ77UncompVram(sEnding_3_GfxTop, VRAM_BASE);
+            LZ77UncompVram(sEnding_3_GfxBottom, VRAM_BASE + 0x8000);
+            LZ77UncompVram(sEnding_3_TilemapTop, VRAM_BASE + 0xF000);
+            LZ77UncompVram(sEnding_3_TilemapBottom, VRAM_BASE + 0xF800);
             DMA3_COPY_16(0x0874a358, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         default:
-            LZ77UncompVram((void*)0x08785b44, VRAM_BASE);
-            LZ77UncompVram((void*)0x0878c650, VRAM_BASE + 0x8000);
-            LZ77UncompVram((void*)0x08793684, VRAM_BASE + 0xF000);
-            LZ77UncompVram((void*)0x08793f20, VRAM_BASE + 0xF800);
+            LZ77UncompVram(sEnding_4_GfxTop, VRAM_BASE);
+            LZ77UncompVram(sEnding_4_GfxBottom, VRAM_BASE + 0x8000);
+            LZ77UncompVram(sEnding_4_TilemapTop, VRAM_BASE + 0xF000);
+            LZ77UncompVram(sEnding_4_TilemapBottom, VRAM_BASE + 0xF800);
             DMA3_COPY_16(0x0874a558, PALRAM_BASE, 16 * PAL_ROW);
             break;
     }
@@ -434,23 +434,23 @@ boolu32 EndingImageInit(void)
     switch (gLanguage)
     {
         case 3:
-            LZ77UncompVram((void*)0x08798fbc, VRAM_OBJ);
+            LZ77UncompVram(sResultScreenGermanTextGfx, VRAM_OBJ);
             break;
 
         case 4:
-            LZ77UncompVram((void*)0x087957a8, VRAM_OBJ);
+            LZ77UncompVram(sResultScreenFrenchTextGfx, VRAM_OBJ);
             break;
 
         case 5:
-            LZ77UncompVram((void*)0x087969f4, VRAM_OBJ);
+            LZ77UncompVram(sResultScreenItalianTextGfx, VRAM_OBJ);
             break;
 
         case 6:
-            LZ77UncompVram((void*)0x08797d08, VRAM_OBJ);
+            LZ77UncompVram(sResultScreenSpanishTextGfx, VRAM_OBJ);
             break;
 
         default:
-            LZ77UncompVram((void*)0x087944e4, VRAM_OBJ);
+            LZ77UncompVram(sResultScreenEnglishTextGfx, VRAM_OBJ);
             break;
     }
 
