@@ -3,9 +3,11 @@
 #include "macros.h"
 #include "syscalls.h"
 
-#include "structs/ending.h"
+#include "constants/game_state.h"
 
 #include "data/ending_data.h"
+
+#include "structs/ending.h"
 
 extern void EndingDrawIgtAndCompletionPercentage(void);
 extern void EndingImageDisplayLinePermanently(s32);
@@ -93,11 +95,13 @@ boolu32 SamusPosing(void)
             WRITE_16(temp1, temp2);
             
             if (gNonGameplayRam.ending.unk_98 & 1)
-                WRITE_16(REG_BLDCNT, 0x542);
+                WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | 
+                    BLDCNT_BG0_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL);
             else
-                WRITE_16(REG_BLDCNT, 0x641);
+                WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | 
+                    BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL);
             
-            WRITE_16(REG_DISPCNT, 0x1700);
+            WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
             gNonGameplayRam.ending.unk_2 = 1;
             break;
         
@@ -106,15 +110,15 @@ boolu32 SamusPosing(void)
             
             if (1 & gNonGameplayRam.ending.unk_98) 
             {
-                WRITE_16(REG_DISPCNT, 0x1500);
-                WRITE_16(REG_BG0CNT, 0x1F08);
-                WRITE_16(REG_BG1CNT, 0x1E09);
+                WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
+                WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+                WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 30, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
             } 
-            else 
+            else
             {
-                WRITE_16(REG_DISPCNT, 0x1600);
-                WRITE_16(REG_BG0CNT, 0x1F09);
-                WRITE_16(REG_BG1CNT, 0x1E08);
+                WRITE_16(REG_DISPCNT, DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
+                WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
+                WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 30, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
             }
         
             gNonGameplayRam.ending.unk_2 = 0;
@@ -168,7 +172,8 @@ boolu32 SamusPosingTransforming(void)
             temp2 = BLDALPHA_MAX_VALUE;
             WRITE_16(temp1, temp2);
             
-            WRITE_16(REG_BLDCNT, 0x1441);
+            WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | 
+                BLDCNT_BG2_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
             gNonGameplayRam.ending.unk_9B = 1;
             gNonGameplayRam.ending.unk_9D = 1;
             gNonGameplayRam.ending.unk_A0 = (u16*)&sOamFrame_749c80;
@@ -176,7 +181,7 @@ boolu32 SamusPosingTransforming(void)
             break;
 
         case 0x64:
-            WRITE_16(REG_DISPCNT, 0x1400);
+            WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_OBJ);
             WRITE_16(REG_BLDCNT, 0);
             gNonGameplayRam.ending.unk_9D = 0;
             gNonGameplayRam.ending.unk_2 = 0;
@@ -186,7 +191,7 @@ boolu32 SamusPosingTransforming(void)
             if (gNonGameplayRam.ending.unk_99)
             {
                 LZ77UncompVram(sData_753E80, VRAM_BASE + 0xF800);
-                WRITE_16(REG_BG0CNT, 0x1F00);
+                WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
             }
             break;
 
@@ -194,8 +199,8 @@ boolu32 SamusPosingTransforming(void)
             if (gNonGameplayRam.ending.unk_99)
             {
                 WRITE_16(REG_IME, 0);
-                WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) | 0x10);
-                WRITE_16(REG_IE, READ_16(REG_IE) | 2);
+                WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) | DSTAT_IF_HBLANK);
+                WRITE_16(REG_IE, READ_16(REG_IE) | IF_HBLANK);
                 WRITE_16(REG_IME, 1);
                 gNonGameplayRam.ending.unk_96 = 1;
             }
@@ -207,8 +212,8 @@ boolu32 SamusPosingTransforming(void)
                 WRITE_16(REG_WIN0H, 0);
                 WRITE_16(REG_WIN0V, 0);
                 WRITE_16(REG_WININ, 0);
-                WRITE_16(REG_WINOUT, 0x2326);
-                WRITE_16(REG_DISPCNT, 0xB500);
+                WRITE_16(REG_WINOUT, WIN0_BG1 | WIN0_BG2 | WIN0_COLOR_EFFECT | WIN1_BG0 | WIN1_BG1 | WIN1_COLOR_EFFECT);
+                WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ | DCNT_WIN0 | DCNT_WINOBJ);
                 gNonGameplayRam.ending.unk_9C = 2;
             }
             break;
@@ -280,8 +285,9 @@ boolu32 SamusPosingTransforming(void)
                 temp2 = BLDALPHA_MAX_VALUE;
                 WRITE_16(temp1, temp2);
                 
-                WRITE_16(REG_BLDCNT, 0x651);
-                WRITE_16(REG_DISPCNT, 0xB700);
+                WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_OBJ_FIRST_TARGET_PIXEL | 
+                    BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL);
+                WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ | DCNT_WIN0 | DCNT_WINOBJ);
                 gNonGameplayRam.ending.unk_2 = 1;
                 gNonGameplayRam.ending.unk_97 = 0;
             }
@@ -290,7 +296,7 @@ boolu32 SamusPosingTransforming(void)
         case 0x10E:
             if (gNonGameplayRam.ending.unk_99)
             {
-                WRITE_16(REG_DISPCNT, 0x600);
+                WRITE_16(REG_DISPCNT, DCNT_BG1 | DCNT_BG2);
                 WRITE_16(REG_BLDCNT, 0);
                 gNonGameplayRam.ending.unk_9B = 0;
                 gNonGameplayRam.ending.unk_2 = 0;
@@ -361,13 +367,13 @@ boolu32 SamusPosingTransforming(void)
  */
 boolu32 EndingImageInit(void) 
 {
-    s32 temp;
-    s32 i;
+    s32 ending;
     u32 value;
+    s32 i;
     
     WRITE_16(REG_IME, 0);
-    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~16);
-    WRITE_16(REG_IE, READ_16(REG_IE) & ~2);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, 1);
 
     CallbackSetVBlank(unk_a1cfc);
@@ -376,19 +382,19 @@ boolu32 EndingImageInit(void)
     
     if (gNonGameplayRam.ending.unk_9A > 99)
     {
-        temp = 3;
+        ending = 3;
 
         if (gNonGameplayRam.ending.unk_99 == 2)
         {
-            temp = 4;
+            ending = 4;
         }
     }
     else
     {
-        temp = gNonGameplayRam.ending.unk_99;
+        ending = gNonGameplayRam.ending.unk_99;
     }
 
-    switch (temp)
+    switch (ending)
     {
         case 0:
             LZ77UncompVram(sEnding_0_GfxTop, VRAM_BASE);
@@ -433,19 +439,19 @@ boolu32 EndingImageInit(void)
 
     switch (gLanguage)
     {
-        case 3:
+        case LANGUAGE_GERMAN:
             LZ77UncompVram(sResultScreenGermanTextGfx, VRAM_OBJ);
             break;
 
-        case 4:
+        case LANGUAGE_FRENCH:
             LZ77UncompVram(sResultScreenFrenchTextGfx, VRAM_OBJ);
             break;
 
-        case 5:
+        case LANGUAGE_ITALIAN:
             LZ77UncompVram(sResultScreenItalianTextGfx, VRAM_OBJ);
             break;
 
-        case 6:
+        case LANGUAGE_SPANISH:
             LZ77UncompVram(sResultScreenSpanishTextGfx, VRAM_OBJ);
             break;
 
@@ -456,10 +462,13 @@ boolu32 EndingImageInit(void)
 
     DMA3_COPY_16(0x0874a758, PALRAM_OBJ, 4 * PAL_ROW);
 
-    WRITE_16(REG_BG0CNT, 0x1e01);
-    WRITE_16(REG_BG1CNT, 0x1f08);
-    WRITE_16(REG_DISPCNT, 0x1300);
-    WRITE_16(REG_BLDCNT, 0x1fdf);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 30, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_OBJ);
+    WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_BG2_FIRST_TARGET_PIXEL | 
+        BLDCNT_BG3_FIRST_TARGET_PIXEL | BLDCNT_OBJ_FIRST_TARGET_PIXEL | BLDCNT_BRIGHTNESS_DECREASE_EFFECT | 
+        BLDCNT_BG0_SECOND_TARGET_PIXEL | BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL | 
+        BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
 
     gNextOamSlot = 0;
     ResetFreeOam();
@@ -516,12 +525,12 @@ boolu32 EndingImage(void)
     
     switch (gLanguage) 
     {
-        case 3:
-        case 4:
-        case 6:
+        case LANGUAGE_GERMAN:
+        case LANGUAGE_FRENCH:
+        case LANGUAGE_SPANISH:
             break;
         
-        case 5:
+        case LANGUAGE_ITALIAN:
         default:
             if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6.25f)) 
             {
@@ -613,8 +622,7 @@ boolu32 EndingImage(void)
         dst = (u16*)&gOamData;
         dst += gNextOamSlot * sizeof(union OamData) / sizeof(*dst);
         
-        currSlot = gNextOamSlot;
-        nextSlot = currSlot;
+        currSlot = nextSlot = gNextOamSlot;
 
         EMPTY_DO_WHILE
         
@@ -667,7 +675,7 @@ boolu32 EndingImage(void)
 
             src = gNonGameplayRam.ending.oamFramePointers[i];
             part = *src++;
-            nextSlot += (part & 0xFF);
+            nextSlot += MOD_AND(part, 0x100);
             
             for (; currSlot < nextSlot; currSlot++)
             {
@@ -679,7 +687,7 @@ boolu32 EndingImage(void)
                 part = *src++;
                 *dst++ = part;
 
-                gOamData[currSlot].split.x = MOD_AND(part + gNonGameplayRam.ending.oamXPositions[i], 512);
+                gOamData[currSlot].split.x = MOD_AND(part + gNonGameplayRam.ending.oamXPositions[i], 0x200);
 
                 *dst++ = *src++;
                 
