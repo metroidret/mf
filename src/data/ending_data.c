@@ -3,10 +3,8 @@
 #include "macros.h"
 #include "oam.h"
 
-const u16 sPreResultsSamusWithoutHelmetBgPal[160] = INCBIN_U16("data/ending/samus_without_helmet_bg.pal"); // 749800
-
-const u16 sPreResultsSamusSuitlessBgPal[160] = INCBIN_U16("data/ending/samus_suitless_bg.pal"); // 749940
-
+const u16 sPreResultsSamusWithoutHelmetBgPal[160] = INCBIN_U16("data/ending/samus_without_helmet_bg.pal");
+const u16 sPreResultsSamusSuitlessBgPal[160] = INCBIN_U16("data/ending/samus_suitless_bg.pal");
 const u16 sPreResultsSamusObjPal[256] = INCBIN_U16("data/ending/samus_obj.pal");
 
 const u16 sOamFrame_749c80[OAM_DATA_SIZE(25)] = {
@@ -56,7 +54,14 @@ const u16 sOamFrame_749d3e[OAM_DATA_SIZE(4)] = {
     OAM_ENTRY(34, 52, OAM_DIMS_16x32, OAM_NO_FLIP, 0x2d2, 1, 0),
 };
 
-static const u8 sBlob_749d58_74e620[] = INCBIN_U8("data/Blob_749d58_74e620.bin");
+const u16 sEnding_0_Pal[256] = INCBIN_U16("data/ending/ending_0.pal");
+const u16 sEnding_1_Pal[256] = INCBIN_U16("data/ending/ending_1.pal");
+const u16 sEnding_2_Pal[256] = INCBIN_U16("data/ending/ending_2.pal");
+const u16 sEnding_3_Pal[256] = INCBIN_U16("data/ending/ending_3.pal");
+const u16 sEnding_4_Pal[256] = INCBIN_U16("data/ending/ending_4.pal");
+const u16 sResultsTextPal[64] = INCBIN_U16("data/ending/results_text.pal");
+
+static const u8 sBlob_74a7d8_74e620[] = INCBIN_U8("data/Blob_74a7d8_74e620.bin");
 
 const u32* const sPreResultsSamusBgGfxPointers1[4] = {
     (const u32*)0x8755720,
@@ -81,92 +86,48 @@ const u32* const sPreResultsSamusBgGfxPointers3[4] = {
 
 static const u8 sBlob_74e650_753e80[] = INCBIN_U8("data/Blob_74e650_753e80.bin");
 
-const u8 sData_753E80[374] = INCBIN_U8("data/ending/tilemap_753e80.tm.lz"); // Tilemap?
+const u8 sTilemap_753E80[374] = INCBIN_U8("data/ending/tilemap_753e80.tm.lz");
 
 static const u8 sBlob_753ff6_75be54[] = INCBIN_U8("data/Blob_753ff6_75be54.bin");
 
-const u32 sPreResultsSamusWithoutHelmetBgGfx1[897] = INCBIN_U32("data/ending/samus_without_helmet_bg_1.gfx.lz"); // 75BE54
-
-const u32 sPreResultsSamusWithoutHelmetBgGfx2[124] = INCBIN_U32("data/ending/samus_without_helmet_bg_2.gfx.lz"); // 75CC58
-
-const u32 sPreResultsSamusSuitlessBgGfx1[710] = INCBIN_U32("data/ending/samus_suitless_bg_1.gfx.lz"); // 75CE48
-
-const u32 sPreResultsSamusSuitlessBgGfx2[124] = INCBIN_U32("data/ending/samus_suitless_bg_2.gfx.lz"); // 75D960
+const u32 sPreResultsSamusWithoutHelmetBgGfx1[897] = INCBIN_U32("data/ending/samus_without_helmet_bg_1.gfx.lz");
+const u32 sPreResultsSamusWithoutHelmetBgGfx2[124] = INCBIN_U32("data/ending/samus_without_helmet_bg_2.gfx.lz");
+const u32 sPreResultsSamusSuitlessBgGfx1[710] = INCBIN_U32("data/ending/samus_suitless_bg_1.gfx.lz");
+const u32 sPreResultsSamusSuitlessBgGfx2[124] = INCBIN_U32("data/ending/samus_suitless_bg_2.gfx.lz");
 
 static const u8 sBlob_75db50_75e990[] = INCBIN_U8("data/Blob_75db50_75e990.bin");
 
-const u8 sData_75E990[516] = INCBIN_U8("data/ending/tilemap_75e990.tm.lz"); // Tilemap?
-
-const u8 sData_75EB94[474] = INCBIN_U8("data/ending/tilemap_75eb94.tm.lz"); // Tilemap?
+const u8 sTilemap_75E990[516] = INCBIN_U8("data/ending/tilemap_75e990.tm.lz");
+const u8 sTilemap_75EB94[474] = INCBIN_U8("data/ending/tilemap_75eb94.tm.lz");
 
 static const u8 sBlob_75ed6e_761a88[] = INCBIN_U8("data/Blob_75ed6e_761a88.bin");
 
-// 0x08761a88 Ending 0 graphics top
 const u32 sEnding_0_GfxTop[5628] = INCBIN_U32("data/ending/ending_0_top.gfx.lz");
-// 0x08767278 Ending 0 graphics bottom
 const u32 sEnding_0_GfxBottom[3191] = INCBIN_U32("data/ending/ending_0_bottom.gfx.lz");
-// 0x0876a454 Ending 1 graphics top
 const u32 sEnding_1_GfxTop[5900] = INCBIN_U32("data/ending/ending_1_top.gfx.lz");
-// 0x08770084 Ending 1 graphics bottom
 const u32 sEnding_1_GfxBottom[2986] = INCBIN_U32("data/ending/ending_1_bottom.gfx.lz");
-// 0x08772f2c Ending 2 graphics top
 const u32 sEnding_2_GfxTop[5731] = INCBIN_U32("data/ending/ending_2_top.gfx.lz");
-// 0x087788b8 Ending 2 graphics bottom
 const u32 sEnding_2_GfxBottom[3293] = INCBIN_U32("data/ending/ending_2_bottom.gfx.lz");
-// 0x0877bc2c Ending 3 graphics top
 const u32 sEnding_3_GfxTop[6364] = INCBIN_U32("data/ending/ending_3_top.gfx.lz");
-// 0x08781f9c Ending 3 graphics bottom
 const u32 sEnding_3_GfxBottom[3818] = INCBIN_U32("data/ending/ending_3_bottom.gfx.lz");
-// 0x08785b44 Ending 4 graphics top
 const u32 sEnding_4_GfxTop[6851] = INCBIN_U32("data/ending/ending_4_top.gfx.lz");
-// 0x0878c650 Ending 4 graphics bottom
 const u32 sEnding_4_GfxBottom[3504] = INCBIN_U32("data/ending/ending_4_bottom.gfx.lz");
 
-// 0x0878fd10 ending 0 top tilemap
 const u8 sEnding_0_TilemapTop[2204] = INCBIN_U8("data/ending/ending_0_top.tm.lz");
-// 0x087905ac ending 0 bottom tilemap
 const u8 sEnding_0_TilemapBottom[1472] = INCBIN_U8("data/ending/ending_0_bottom.tm.lz");
-// 0x08790b6c ending 1 top tilemap
 const u8 sEnding_1_TilemapTop[2204] = INCBIN_U8("data/ending/ending_1_top.tm.lz");
-// 0x08791408 ending 1 bottom tilemap
 const u8 sEnding_1_TilemapBottom[1472] = INCBIN_U8("data/ending/ending_1_bottom.tm.lz");
-// 0x087919c8 ending 2 top tilemap
 const u8 sEnding_2_TilemapTop[2204] = INCBIN_U8("data/ending/ending_2_top.tm.lz");
-// 0x08792264 ending 2 bottom tilemap
 const u8 sEnding_2_TilemapBottom[1472] = INCBIN_U8("data/ending/ending_2_bottom.tm.lz");
-// 0x08792824 ending 3 top tilemap
 const u8 sEnding_3_TilemapTop[2204] = INCBIN_U8("data/ending/ending_3_top.tm.lz");
-// 0x087930c0 ending 3 bottom tilemap
 const u8 sEnding_3_TilemapBottom[1476] = INCBIN_U8("data/ending/ending_3_bottom.tm.lz");
-// 0x08793684 ending 4 top tilemap
 const u8 sEnding_4_TilemapTop[2204] = INCBIN_U8("data/ending/ending_4_top.tm.lz");
-// 0x08793f20 ending 4 bottom tilemap
 const u8 sEnding_4_TilemapBottom[1476] = INCBIN_U8("data/ending/ending_4_bottom.tm.lz");
 
-// 0x087944e4 Results screen English text graphics
-const u32 sResultScreenEnglishTextGfx[1201] = INCBIN_U32("data/ending/results_english_text.gfx.lz");
-
-// 0x087957a8 Results screen French text graphics
-const u32 sResultScreenFrenchTextGfx[1171] = INCBIN_U32("data/ending/results_french_text.gfx.lz");
-
-// 0x087969f4 Results screen Italian text graphics
-const u32 sResultScreenItalianTextGfx[1221] = INCBIN_U32("data/ending/results_italian_text.gfx.lz");
-
-// 0x08797d08 Results screen Spanish text graphics
-const u32 sResultScreenSpanishTextGfx[1197] = INCBIN_U32("data/ending/results_spanish_text.gfx.lz");
-
-// 0x08798fbc Results screen German text graphics
-const u32 sResultScreenGermanTextGfx[1144] = INCBIN_U32("data/ending/results_german_text.gfx.lz");
-
-
+const u32 sResultsScreenEnglishTextGfx[1201] = INCBIN_U32("data/ending/results_english_text.gfx.lz");
+const u32 sResultsScreenFrenchTextGfx[1171] = INCBIN_U32("data/ending/results_french_text.gfx.lz");
+const u32 sResultsScreenItalianTextGfx[1221] = INCBIN_U32("data/ending/results_italian_text.gfx.lz");
+const u32 sResultsScreenSpanishTextGfx[1197] = INCBIN_U32("data/ending/results_spanish_text.gfx.lz");
+const u32 sResultsScreenGermanTextGfx[1144] = INCBIN_U32("data/ending/results_german_text.gfx.lz");
 
 static const u8 sBlob_79a19c_79a29c[] = INCBIN_U8("data/Blob_79a19c_79a29c.bin");
-
-
-
-// 0x08749d58 ending 1 palette
-// 0x08749f58 ending 2 palette
-// 0x0874a158 ending 3 palette
-// 0x0874a358 ending 4 palette
-// 0x0874a558 ending 5 palette
-

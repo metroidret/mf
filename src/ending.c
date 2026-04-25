@@ -50,7 +50,7 @@ boolu32 SamusPosing(void)
     void* temp1;
     u32 temp2;
 
-    switch (gNonGameplayRam.ending.timer++) 
+    switch (gNonGameplayRam.ending.timer++)
     {
         case 0:
             index = gNonGameplayRam.ending.unk_98 - 2;
@@ -63,7 +63,7 @@ boolu32 SamusPosing(void)
             LZ77UncompVram(sPreResultsSamusBgGfxPointers1[index], VRAM_BASE + offset);
             break;
         
-        case 1:
+        case CONVERT_SECONDS(1.f / 60):
             index = gNonGameplayRam.ending.unk_98 - 2;
 
             if (gNonGameplayRam.ending.unk_98 & 1)
@@ -74,7 +74,7 @@ boolu32 SamusPosing(void)
             LZ77UncompVram(sPreResultsSamusBgGfxPointers2[index], VRAM_BASE + offset);
             break;
         
-        case 2:
+        case CONVERT_SECONDS(1.f / 30):
             index = gNonGameplayRam.ending.unk_98 - 2;
 
             if (gNonGameplayRam.ending.unk_98 & 1)
@@ -85,7 +85,7 @@ boolu32 SamusPosing(void)
             LZ77UncompVram(sPreResultsSamusBgGfxPointers3[index], VRAM_BASE + offset);
             break;
         
-        case 50:
+        case CONVERT_SECONDS(5.f / 6):
             gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
             gWrittenToBldalpha_Evb = 0;
 
@@ -105,7 +105,7 @@ boolu32 SamusPosing(void)
             gNonGameplayRam.ending.unk_2 = 1;
             break;
         
-        case 100:
+        case CONVERT_SECONDS(1 + 2.f / 3):
             WRITE_16(REG_BLDCNT, 0);
             
             if (1 & gNonGameplayRam.ending.unk_98) 
@@ -163,7 +163,7 @@ boolu32 SamusPosingTransforming(void)
     
     switch (gNonGameplayRam.ending.timer++) 
     {
-        case 0x32:
+        case CONVERT_SECONDS(5.f / 6):
             gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
             gWrittenToBldalpha_Evb = 0;
             
@@ -180,22 +180,23 @@ boolu32 SamusPosingTransforming(void)
             gNonGameplayRam.ending.unk_2 = 1;
             break;
 
-        case 0x64:
+        case CONVERT_SECONDS(1 + 2.f / 3):
             WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_OBJ);
             WRITE_16(REG_BLDCNT, 0);
             gNonGameplayRam.ending.unk_9D = 0;
             gNonGameplayRam.ending.unk_2 = 0;
             break;
 
-        case 0x65:
+        case CONVERT_SECONDS(1 + 41.f / 60):
             if (gNonGameplayRam.ending.unk_99)
             {
-                LZ77UncompVram(sData_753E80, VRAM_BASE + 0xF800);
+                LZ77UncompVram(sTilemap_753E80, VRAM_BASE + 0xF800);
                 WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
             }
             break;
 
-        case 0x6E:
+        //case CONVERT_SECONDS(1 + 5.f / 6): // No match
+        case CONVERT_SECONDS(11.f / 6):
             if (gNonGameplayRam.ending.unk_99)
             {
                 WRITE_16(REG_IME, 0);
@@ -206,7 +207,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
 
-        case 0x8C:
+        case CONVERT_SECONDS(2 + 1.f / 3):
             if (gNonGameplayRam.ending.unk_99)
             {
                 WRITE_16(REG_WIN0H, 0);
@@ -218,7 +219,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
 
-        case 0x8D:
+        case CONVERT_SECONDS(2 + 21.f / 60):
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
                 LZ77UncompVram(sPreResultsSamusWithoutHelmetBgGfx1, VRAM_BASE + 0x8000);
@@ -229,7 +230,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
         
-        case 0x8E:
+        case CONVERT_SECONDS(2 + 22.f / 60):
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
                 LZ77UncompVram(sPreResultsSamusWithoutHelmetBgGfx2, VRAM_BASE + 0x9000);
@@ -240,18 +241,18 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
 
-        case 0x8F:
+        case CONVERT_SECONDS(2 + 23.f / 60):
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
-                LZ77UncompVram(sData_75E990, VRAM_BASE + 0xF000);
+                LZ77UncompVram(sTilemap_75E990, VRAM_BASE + 0xF000);
             }
             else if (gNonGameplayRam.ending.unk_99) 
             {
-                LZ77UncompVram(sData_75EB94, VRAM_BASE + 0xF000);
+                LZ77UncompVram(sTilemap_75EB94, VRAM_BASE + 0xF000);
             }
             break;
 
-        case 0x90:
+        case CONVERT_SECONDS(2 + 24.f / 60):
             if (gNonGameplayRam.ending.unk_99 == 1)
             {
                 DMA3_COPY_16(&sPreResultsSamusWithoutHelmetBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
@@ -262,7 +263,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
         
-        case 0xAA:
+        case CONVERT_SECONDS(2 + 5.f / 6):
             if (gNonGameplayRam.ending.unk_99 == 1) 
             {
                 gNonGameplayRam.ending.unk_A0 = (u16*)&sOamFrame_749d18;
@@ -274,7 +275,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
 
-        case 0xDC:
+        case CONVERT_SECONDS(3 + 2.f / 3):
             if (gNonGameplayRam.ending.unk_99)
             {
                 gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
@@ -293,7 +294,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
         
-        case 0x10E:
+        case CONVERT_SECONDS(4 + 1.f / 2):
             if (gNonGameplayRam.ending.unk_99)
             {
                 WRITE_16(REG_DISPCNT, DCNT_BG1 | DCNT_BG2);
@@ -304,7 +305,7 @@ boolu32 SamusPosingTransforming(void)
             }
             break;
 
-        case 0x19A:
+        case CONVERT_SECONDS(6 + 5.f / 6):
             ended = TRUE;
             break;
     }
@@ -401,7 +402,7 @@ boolu32 EndingImageInit(void)
             LZ77UncompVram(sEnding_0_GfxBottom, VRAM_BASE + 0x8000);
             LZ77UncompVram(sEnding_0_TilemapTop, VRAM_BASE + 0xF000);
             LZ77UncompVram(sEnding_0_TilemapBottom, VRAM_BASE + 0xF800);
-            DMA3_COPY_16(0x08749d58, PALRAM_BASE, 16 * PAL_ROW);
+            DMA3_COPY_16(sEnding_0_Pal, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         case 1:
@@ -409,7 +410,7 @@ boolu32 EndingImageInit(void)
             LZ77UncompVram(sEnding_1_GfxBottom, VRAM_BASE + 0x8000);
             LZ77UncompVram(sEnding_1_TilemapTop, VRAM_BASE + 0xF000);
             LZ77UncompVram(sEnding_1_TilemapBottom, VRAM_BASE + 0xF800);
-            DMA3_COPY_16(0x08749f58, PALRAM_BASE, 16 * PAL_ROW);
+            DMA3_COPY_16(sEnding_1_Pal, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         case 2:
@@ -417,7 +418,7 @@ boolu32 EndingImageInit(void)
             LZ77UncompVram(sEnding_2_GfxBottom, VRAM_BASE + 0x8000);
             LZ77UncompVram(sEnding_2_TilemapTop, VRAM_BASE + 0xF000);
             LZ77UncompVram(sEnding_2_TilemapBottom, VRAM_BASE + 0xF800);
-            DMA3_COPY_16(0x0874a158, PALRAM_BASE, 16 * PAL_ROW);
+            DMA3_COPY_16(sEnding_2_Pal, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         case 3:
@@ -425,7 +426,7 @@ boolu32 EndingImageInit(void)
             LZ77UncompVram(sEnding_3_GfxBottom, VRAM_BASE + 0x8000);
             LZ77UncompVram(sEnding_3_TilemapTop, VRAM_BASE + 0xF000);
             LZ77UncompVram(sEnding_3_TilemapBottom, VRAM_BASE + 0xF800);
-            DMA3_COPY_16(0x0874a358, PALRAM_BASE, 16 * PAL_ROW);
+            DMA3_COPY_16(sEnding_3_Pal, PALRAM_BASE, 16 * PAL_ROW);
             break;
 
         default:
@@ -433,34 +434,34 @@ boolu32 EndingImageInit(void)
             LZ77UncompVram(sEnding_4_GfxBottom, VRAM_BASE + 0x8000);
             LZ77UncompVram(sEnding_4_TilemapTop, VRAM_BASE + 0xF000);
             LZ77UncompVram(sEnding_4_TilemapBottom, VRAM_BASE + 0xF800);
-            DMA3_COPY_16(0x0874a558, PALRAM_BASE, 16 * PAL_ROW);
+            DMA3_COPY_16(sEnding_4_Pal, PALRAM_BASE, 16 * PAL_ROW);
             break;
     }
 
     switch (gLanguage)
     {
         case LANGUAGE_GERMAN:
-            LZ77UncompVram(sResultScreenGermanTextGfx, VRAM_OBJ);
+            LZ77UncompVram(sResultsScreenGermanTextGfx, VRAM_OBJ);
             break;
 
         case LANGUAGE_FRENCH:
-            LZ77UncompVram(sResultScreenFrenchTextGfx, VRAM_OBJ);
+            LZ77UncompVram(sResultsScreenFrenchTextGfx, VRAM_OBJ);
             break;
 
         case LANGUAGE_ITALIAN:
-            LZ77UncompVram(sResultScreenItalianTextGfx, VRAM_OBJ);
+            LZ77UncompVram(sResultsScreenItalianTextGfx, VRAM_OBJ);
             break;
 
         case LANGUAGE_SPANISH:
-            LZ77UncompVram(sResultScreenSpanishTextGfx, VRAM_OBJ);
+            LZ77UncompVram(sResultsScreenSpanishTextGfx, VRAM_OBJ);
             break;
 
         default:
-            LZ77UncompVram(sResultScreenEnglishTextGfx, VRAM_OBJ);
+            LZ77UncompVram(sResultsScreenEnglishTextGfx, VRAM_OBJ);
             break;
     }
 
-    DMA3_COPY_16(0x0874a758, PALRAM_OBJ, 4 * PAL_ROW);
+    DMA3_COPY_16(sResultsTextPal, PALRAM_OBJ, 4 * PAL_ROW);
 
     WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 30, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
     WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
@@ -550,12 +551,13 @@ boolu32 EndingImage(void)
             gNonGameplayRam.ending.unk_2 = 1;
             break;
         
-        case CONVERT_SECONDS(0.5f):
+        case CONVERT_SECONDS(1.f / 2):
             EndingImageLoadTextOam(0);
             gNonGameplayRam.ending.unk_97 = 1;
             break;
         
-        case CONVERT_SECONDS(1.84f):
+        //case CONVERT_SECONDS(1 + 5.f / 6): // No match
+        case CONVERT_SECONDS(11.f / 6):
             EndingImageDisplayLinePermanently(0);
             break;
         
@@ -563,15 +565,15 @@ boolu32 EndingImage(void)
             EndingImageDisplayLinePermanently(1);
             break;
         
-        case CONVERT_SECONDS(5.5f):
+        case CONVERT_SECONDS(5 + 1.f / 2):
             EndingImageLoadTextOam(1);
             break;
         
-        case CONVERT_SECONDS(7.67f):
+        case CONVERT_SECONDS(7 + 2.f / 3):
             EndingImageDisplayLinePermanently(3);
             break;
         
-        case CONVERT_SECONDS(8.84f):
+        case CONVERT_SECONDS(8 + 5.f / 6):
             EndingImageDisplayLinePermanently(4);
             break;
         
@@ -579,12 +581,12 @@ boolu32 EndingImage(void)
             EndingImageDisplayLinePermanently(5);
             break;
         
-        case CONVERT_SECONDS(22.94f):
+        case CONVERT_SECONDS(22 + 14.f / 15):
             if (!(gChangedInput & (KEY_A | KEY_B | KEY_START)))
                 gNonGameplayRam.ending.timer--;
             break;
         
-        case CONVERT_SECONDS(27.74f):
+        case CONVERT_SECONDS(27 + 11.f / 15):
             ended++;
             break;
     }
