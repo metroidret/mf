@@ -108,7 +108,7 @@ boolu32 SamusPosing(void)
         case CONVERT_SECONDS(1 + 2.f / 3):
             WRITE_16(REG_BLDCNT, 0);
             
-            if (1 & gNonGameplayRam.ending.unk_98) 
+            if (gNonGameplayRam.ending.unk_98 & 1) 
             {
                 WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
                 WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
@@ -533,11 +533,11 @@ boolu32 EndingImage(void)
         
         case LANGUAGE_ITALIAN:
         default:
-            if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6.25f)) 
+            if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6 + 1.f / 4)) 
             {
                 EndingImageDisplayLinePermanently(2);
             } 
-            else if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6.34f)) 
+            else if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6 + 1.f / 3)) 
             {
                 EndingImageLoadTextOam(2);
             }
@@ -619,7 +619,8 @@ boolu32 EndingImage(void)
             EndingImageUpdateLettersSpawnDelay(currSlot);
     }
 
-    if (gNonGameplayRam.ending.timer <= CONVERT_SECONDS(23) && (gNonGameplayRam.ending.timer < CONVERT_SECONDS(13.5f) || !(gButtonInput & (KEY_L | KEY_R))))  
+    if (gNonGameplayRam.ending.timer <= CONVERT_SECONDS(23) && (gNonGameplayRam.ending.timer < CONVERT_SECONDS(13 + 1.f / 2) || 
+        !(gButtonInput & (KEY_L | KEY_R))))  
     {
         dst = (u16*)&gOamData;
         dst += gNextOamSlot * sizeof(union OamData) / sizeof(*dst);

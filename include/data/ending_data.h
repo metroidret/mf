@@ -26,7 +26,6 @@ extern const u8 sTilemap_753E80[374];
 
 extern const u32 sPreResultsSamusWithoutHelmetBgGfx1[897];
 extern const u32 sPreResultsSamusWithoutHelmetBgGfx2[124];
-
 extern const u32 sPreResultsSamusSuitlessBgGfx1[710];
 extern const u32 sPreResultsSamusSuitlessBgGfx2[124];
 
