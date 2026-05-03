@@ -26385,10 +26385,386 @@
     "size": 4
   },
   {
-    "path": "Blob_73421e_79a29c.bin",
-    "count": "0x6607E",
+    "path": "Blob_73421e_749800.bin",
+    "count": "0x155E2",
     "addr": {
       "us": "0x73421E"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/samus_without_helmet_bg.pal",
+    "count": "0xA0",
+    "addr": {
+      "us": "0x749800"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/samus_suitless_bg.pal",
+    "count": "0xA0",
+    "addr": {
+      "us": "0x749940"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/samus_obj.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x749A80"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/ending_0.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x749D58"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/ending_1.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x749F58"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/ending_2.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x74A158"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/ending_3.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x74A358"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/ending_4.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x74A558"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending/results_text.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x74A758"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_74a7d8_74e620.bin",
+    "count": "0x3E48",
+    "addr": {
+      "us": "0x74A7D8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_74e650_753e80.bin",
+    "count": "0x5830",
+    "addr": {
+      "us": "0x74E650"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/tilemap_753e80.tm.lz",
+    "count": "0x176",
+    "addr": {
+      "us": "0x753E80"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_753ff6_75be54.bin",
+    "count": "0x7E5E",
+    "addr": {
+      "us": "0x753FF6"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/samus_without_helmet_bg_1.gfx.lz",
+    "count": "0x381",
+    "addr": {
+      "us": "0x75BE54"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/samus_without_helmet_bg_2.gfx.lz",
+    "count": "0x7C",
+    "addr": {
+      "us": "0x75CC58"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/samus_suitless_bg_1.gfx.lz",
+    "count": "0x2C6",
+    "addr": {
+      "us": "0x75CE48"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/samus_suitless_bg_2.gfx.lz",
+    "count": "0x7C",
+    "addr": {
+      "us": "0x75D960"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_75db50_75e990.bin",
+    "count": "0xE40",
+    "addr": {
+      "us": "0x75DB50"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/tilemap_75e990.tm.lz",
+    "count": "0x204",
+    "addr": {
+      "us": "0x75E990"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/tilemap_75eb94.tm.lz",
+    "count": "0x1DA",
+    "addr": {
+      "us": "0x75EB94"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_75ed6e_761a88.bin",
+    "count": "0x2D1A",
+    "addr": {
+      "us": "0x75ED6E"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_0_top.gfx.lz",
+    "count": "0x15FC",
+    "addr": {
+      "us": "0x761A88"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_0_bottom.gfx.lz",
+    "count": "0xC77",
+    "addr": {
+      "us": "0x767278"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_1_top.gfx.lz",
+    "count": "0x170C",
+    "addr": {
+      "us": "0x76A454"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_1_bottom.gfx.lz",
+    "count": "0xBAA",
+    "addr": {
+      "us": "0x770084"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_2_top.gfx.lz",
+    "count": "0x1663",
+    "addr": {
+      "us": "0x772F2C"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_2_bottom.gfx.lz",
+    "count": "0xCDD",
+    "addr": {
+      "us": "0x7788B8"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_3_top.gfx.lz",
+    "count": "0x18DC",
+    "addr": {
+      "us": "0x77BC2C"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_3_bottom.gfx.lz",
+    "count": "0xEEA",
+    "addr": {
+      "us": "0x781F9C"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_4_top.gfx.lz",
+    "count": "0x1AC3",
+    "addr": {
+      "us": "0x785B44"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_4_bottom.gfx.lz",
+    "count": "0xDB0",
+    "addr": {
+      "us": "0x78C650"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/ending_0_top.tm.lz",
+    "count": "0x89C",
+    "addr": {
+      "us": "0x78FD10"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_0_bottom.tm.lz",
+    "count": "0x5C0",
+    "addr": {
+      "us": "0x7905AC"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_1_top.tm.lz",
+    "count": "0x89C",
+    "addr": {
+      "us": "0x790B6C"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_1_bottom.tm.lz",
+    "count": "0x5C0",
+    "addr": {
+      "us": "0x791408"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_2_top.tm.lz",
+    "count": "0x89C",
+    "addr": {
+      "us": "0x7919C8"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_2_bottom.tm.lz",
+    "count": "0x5C0",
+    "addr": {
+      "us": "0x792264"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_3_top.tm.lz",
+    "count": "0x89C",
+    "addr": {
+      "us": "0x792824"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_3_bottom.tm.lz",
+    "count": "0x5C4",
+    "addr": {
+      "us": "0x7930C0"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_4_top.tm.lz",
+    "count": "0x89C",
+    "addr": {
+      "us": "0x793684"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/ending_4_bottom.tm.lz",
+    "count": "0x5C4",
+    "addr": {
+      "us": "0x793F20"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending/results_english_text.gfx.lz",
+    "count": "0x4B1",
+    "addr": {
+      "us": "0x7944E4"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/results_french_text.gfx.lz",
+    "count": "0x493",
+    "addr": {
+      "us": "0x7957A8"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/results_italian_text.gfx.lz",
+    "count": "0x4C5",
+    "addr": {
+      "us": "0x7969F4"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/results_spanish_text.gfx.lz",
+    "count": "0x4AD",
+    "addr": {
+      "us": "0x797D08"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending/results_german_text.gfx.lz",
+    "count": "0x478",
+    "addr": {
+      "us": "0x798FBC"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_79a19c_79a29c.bin",
+    "count": "0x100",
+    "addr": {
+      "us": "0x79A19C"
     },
     "size": 1
   },
