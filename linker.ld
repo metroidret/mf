@@ -456,6 +456,8 @@ SECTIONS {
 
         asm/disasm_0x0809deb4.o(.text);
 
+        src/ending.o(.text);
+
         *libgcc.a:_call_via_rX.o(.text);
         *libgcc.a:_divsi3.o(.text);
         *libgcc.a:_dvmd_tls.o(.text);
@@ -1016,6 +1018,7 @@ SECTIONS {
         src/data/menus/title_screen.o(.rodata);
         src/data/new_file_intro_data.o(.rodata);
         src/data/sa_x_close_up.o(.rodata);
+        src/data/ending_data.o(.rodata);
         src/data/sprite_pointers.o(.rodata);
         src/data/frame_data_pointers.o(.rodata);
     } >rom
