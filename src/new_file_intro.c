@@ -2,9 +2,14 @@
 #include "new_file_intro.h"
 #include "data/new_file_intro_data.h"
 
+extern void unk_99940(void); // For V-blank callback
+
 static void NewFileIntroSamusShipFlyingInit(void);
 static boolu32 NewFileIntroSamusShipFlyingProcess(void);
 static boolu32 NewFileIntroSamusShipFlying(void);
+static void NewFileIntroSamusFaintingInit(void);
+static boolu32 NewFileIntroSamusFaintingProcess(void);
+static boolu32 NewFileIntroSamusFainting(void);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -12,8 +17,6 @@ static u16* sMonologueTextPointersGerman[19];
 static u16* sMonologueTextPointersFrench[19];
 static u16* sMonologueTextPointersItalian[19];
 static u16* sMonologueTextPointersSpanish[19];
-
-extern void unk_99940(void); // For V-blank callback
 
 static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx0,
@@ -618,4 +621,191 @@ static boolu32 NewFileIntroSamusShipFlying(void)
 
     return result;
 }
+
+ /**
+ * @brief 87e90 | 1d8 | Setup for the new file intro Samus fainting cutscene
+ * 
+ */
+static void NewFileIntroSamusFaintingInit(void)
+{
+    CallbackSetVBlank(unk_99940);
+
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+
+    DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
+    DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
+
+    LZ77UncompVram(sIntroSamusSittingTilemap, VRAM_BASE + 0xF000);
+    LZ77UncompVram(sIntroSamusSittingTilemap, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSamusSittingGfx, VRAM_BASE);
+
+    DMA3_COPY_32(sIntroSamusSittingPal, PALRAM_BASE, 128);
+
+    WRITE_16(PALRAM_BASE, 0);
+
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
+
+    DMA3_COPY_32(sIntroBslSpaceBgPal, PALRAM_BASE + 0x100, 64);
+    
+    WRITE_16(REG_BG0HOFS, -8);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+
+    gBg1XPosition = 0;
+    gBg1YPosition = 0;
+    gBg2XPosition = 10;
+    gBg2YPosition = 2;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+
+    WRITE_16(REG_BLDCNT, BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_SCREEN_FIRST_TARGET);
+    WRITE_16(REG_BG0CNT, 28 << BGCNT_SCREEN_BASE_BLOCK_SHIFT | 2 << BGCNT_CHAR_BASE_BLOCK_SHIFT);
+    WRITE_16(REG_BG2CNT, 30 << BGCNT_SCREEN_BASE_BLOCK_SHIFT | BGCNT_LOW_MID_PRIORITY);
+    WRITE_16(REG_BG3CNT, 31 << BGCNT_SCREEN_BASE_BLOCK_SHIFT | BGCNT_LOW_PRIORITY);
+
+    NewFileIntroSetupOam(200, 250, 0, 0);
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, VRAM_SIZE / 24 );
+
+    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    
+    WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
+
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    
+    gWrittenToBldy = 0;
+    gWrittenToBldalpha_Eva = 12;
+    gWrittenToBldalpha_Evb = 8;
+}
+
+ /**
+ * @brief 88068 | 13c | Processes the new file intro Samus fainting cutscene
+ * 
+ */
+static boolu32 NewFileIntroSamusFaintingProcess(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+    
+    if ((*gNonGameplayRam.intro.pText == 0xFC00) && (gChangedInput & KEY_A) && (gNonGameplayRam.intro.unk_218 == 0))
+        gNonGameplayRam.intro.unk_218 = 1;
+    
+    gNonGameplayRam.intro.timer += 1;
+    
+    switch (gNonGameplayRam.intro.unk_214) 
+    {
+        case 0:
+            if (gNonGameplayRam.intro.timer == 1)
+            {
+                WRITE_16(REG_BLDCNT, BLDCNT_OBJ_SECOND_TARGET_PIXEL | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_FIRST_TARGET_PIXEL);
+                NewFileIntroSetupOam(10, (s16)gBg2XPosition, (s16)gBg2YPosition, 1);
+            }
+            else if (gNonGameplayRam.intro.timer == 59)
+            {
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG0);
+            }
+            else if (gNonGameplayRam.intro.timer == 60)
+            {
+                gNonGameplayRam.intro.timer = 0;
+                gNonGameplayRam.intro.unk_212 = 0;
+                gNonGameplayRam.intro.unk_E = 0;
+                gNonGameplayRam.intro.unk_C = 0;
+                gNonGameplayRam.intro.pText = sMonologueTextPointers[gLanguage][11];
+                gNonGameplayRam.intro.unk_214 = 1;
+            }
+            break;
+        
+        case 1:
+            gNonGameplayRam.intro.timer = 0;
+
+            if (gNonGameplayRam.intro.unk_218 == 2 || gNonGameplayRam.intro.unk_218 == 4)
+            {
+                gNonGameplayRam.intro.unk_218 = 0;
+            }
+            else if (gNonGameplayRam.intro.unk_218 == 3)
+            {
+                gNonGameplayRam.intro.unk_218 = 0;
+                gNonGameplayRam.intro.unk_214 = 2;
+                gWrittenToBldy = 16;
+            }
+            break;
+        
+        case 2:
+            if (gNonGameplayRam.intro.timer == 30) 
+            {
+                WRITE_16(REG_BLDCNT, BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_SCREEN_FIRST_TARGET);
+                gNonGameplayRam.intro.timer = 0;
+                finished = TRUE;
+            }
+            break;
+    }
+    
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    IntroProcessText();
+    
+    return finished;
+}
+
+ /**
+ * @brief 881a4 | 9c | Main handler for the new file intro Samus fainting cutscene
+ * 
+ */
+static boolu32 NewFileIntroSamusFainting(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    switch (gNonGameplayRam.intro.stage)
+    {
+        case 0:
+            NewFileIntroSamusFaintingInit();
+            gNonGameplayRam.intro.stage = 2;
+            break;
+
+        case 1:
+            SpecialCutsceneFadeIn();
+            if (!gWrittenToBldy)
+                gNonGameplayRam.intro.stage = 2;
+            break;
+
+        case 2:
+            if (NewFileIntroSamusFaintingProcess())
+            {
+                gNonGameplayRam.intro.stage = 3;
+                gNonGameplayRam.intro.timer = 0;
+                gNonGameplayRam.intro.unk_214 = 0;
+            }
+            break;
+
+        case 3:
+            if (gWrittenToBldy < 16)
+            {
+                gWrittenToBldy++;
+            }
+            else 
+            {
+                gNonGameplayRam.intro.unk_213 = 0;
+                gNonGameplayRam.intro.unk_214 = 0;
+                gNonGameplayRam.intro.stage = 0;
+                finished = TRUE;
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+
+    return finished;
+}
+
 
