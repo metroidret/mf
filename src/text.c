@@ -9,6 +9,59 @@
 extern void DrawLocationTextCharacters(u8 param_1, u16** ppText);
 
 /**
+ * @brief 797d0 | 110 | To document
+ * 
+ */
+void TextDrawMessageBanner(u8 messageId, u8 gfxSlot, u8 stage) 
+{
+    s32 index;
+    u16* pText;
+
+    if ((u8)(stage - 4) < 2)
+    {
+        index = messageId;
+        if (index > 21)
+            index = 21;
+        
+        index += 21;
+        pText = sMessageTextPointers[gLanguage][index];
+    }
+
+    if (stage == 7)
+    {
+        BitFill(3, 0xFFFF, EWRAM_BASE, 0x800, 16);
+    } 
+    else if (stage == 6)
+    {
+        BitFill(3, 0xFFFF, EWRAM_BASE + 0x800, 0x800, 16);
+    }
+    else if (stage == 5)
+    {
+        DrawLocationTextCharacters(1, &pText);
+    }
+    else if (stage == 4)
+    {
+        DrawLocationTextCharacters(2, &pText);
+    }
+    else if (stage == 3)
+    {
+        DMA3_COPY_32(EWRAM_BASE, VRAM_OBJ + 0x4000 + gfxSlot * 0x800, 0xE0);
+    }
+    else if (stage == 2)
+    {
+        DMA3_COPY_32(EWRAM_BASE + 0x400, VRAM_OBJ + 0x4400 + gfxSlot * 0x800, 0xE0);
+    }
+    else if (stage == 1)
+    {
+        DMA3_COPY_32(EWRAM_BASE + 0x800, VRAM_OBJ + 0x4800 + gfxSlot * 0x800, 0xE0);
+    }
+    else if (stage == 0)
+    {
+        DMA3_COPY_32(EWRAM_BASE + 0xC00, VRAM_OBJ + 0x4C00 + gfxSlot * 0x800, 0xE0);
+    }
+}
+
+/**
  * @brief 798e0 | 158 | To document
  * 
  */
