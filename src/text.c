@@ -9,6 +9,25 @@
 extern void DrawLocationTextCharacters(u8 param_1, u16** ppText);
 
 /**
+ * @brief 79740 | 90 | Draws a location text
+ * 
+ * @param locationText Location text
+ * @param gfxSlot Graphics slot
+ */
+void DrawLocationText(u8 locationText, u8 gfxSlot) 
+{
+    u16* pText;
+
+    DMA3_FILL_16(0xFFFF, EWRAM_BASE, 0x800);
+
+    pText = sLocationTextPointers[gLanguage][locationText];
+    DrawLocationTextCharacters(1, &pText);
+
+    DMA3_COPY_32(EWRAM_BASE, VRAM_OBJ + 0x4000 + gfxSlot * 0x800, 0xE0);
+    DMA3_COPY_32(EWRAM_BASE + 0x400, VRAM_OBJ + 0x4400 + gfxSlot * 0x800, 0xE0);
+}
+
+/**
  * @brief 797d0 | 110 | To document
  * 
  */
