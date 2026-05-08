@@ -191,7 +191,7 @@ void KihunterGroundJumpWarningInit(void)
     }
 }
 
-void KihhunterGroundJumpInit(void)
+void KihunterGroundJumpInit(void)
 {
     gCurrentSprite.pose = 0x18;
     gCurrentSprite.animationDurationCounter = 0;
@@ -274,7 +274,7 @@ void KihunterGroundJumpWarning(void)
     }
 
     if (SpriteUtilHasCurrentAnimationEnded())
-        KihhunterGroundJumpInit();
+        KihunterGroundJumpInit();
 }
 
 void KihunterGroundJumping(void)
@@ -405,7 +405,7 @@ void KihunterGroundLanding(void)
             result = KihunterGroundDetectSamus();
             if (result == KIHUNTER_GROUND_SAMUS_IN_FRONT)
             {
-                KihhunterGroundJumpInit();
+                KihunterGroundJumpInit();
             }
             else if (result == KIHUNTER_GROUND_SAMUS_BEHIND)
             {
