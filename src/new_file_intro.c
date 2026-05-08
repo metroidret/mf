@@ -1,5 +1,8 @@
 #include "globals.h"
 #include "new_file_intro.h"
+
+#include "constants/game_state.h"
+
 #include "data/new_file_intro_data.h"
 
 extern void unk_99940(void); // For V-blank callback
@@ -31,7 +34,7 @@ static const u32* sIntroBslObjectGfxPointers[8] = {
 
 static u8 sBlob_79c41c_79c5a4[] = INCBIN_U8("data/Blob_79c41c_79c5a4.bin");
 
-static u16** sMonologueTextPointers[7] = {
+static u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,
     sMonologueTextPointersJapanese,
     sMonologueTextPointersEnglish,
@@ -41,7 +44,19 @@ static u16** sMonologueTextPointers[7] = {
     sMonologueTextPointersSpanish
 };
 
-static u8 sBlob_79c5c0_79e6a0[] = INCBIN_U8("data/Blob_79c5c0_79e6a0.bin");
+static u8 sBlob_79c5c0_79cdf4[] = INCBIN_U8("data/Blob_79c5c0_79cdf4.bin");
+
+u16** sMessageTextPointers[LANGUAGE_COUNT] = {
+    (u16**)0x879c5c0,
+    (u16**)0x879c6e8,
+    (u16**)0x879c810,
+    (u16**)0x879c938,
+    (u16**)0x879ca60,
+    (u16**)0x879cb88,
+    (u16**)0x879ccb0
+};
+
+static u8 sBlob_79ce10_79e6a0[] = INCBIN_U8("data/Blob_79ce10_79e6a0.bin");
 
 static u16* sMonologueTextPointersJapanese[19] = {
 	(u16*)0x871e20c,
