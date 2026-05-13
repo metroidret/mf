@@ -28,15 +28,18 @@ void DrawLocationText(u8 locationText, u8 gfxSlot)
 }
 
 /**
- * @brief 797d0 | 110 | To document
+ * @brief 797d0 | 110 | Draws a message banner
  * 
+ * @param messageId Message ID
+ * @param gfxSlot Graphics slot
+ * @param stage Stage
  */
 void TextDrawMessageBanner(u8 messageId, u8 gfxSlot, u8 stage) 
 {
     s32 index;
     u16* pText;
 
-    if ((u8)(stage - 4) < 2)
+    if (stage == 4 || stage == 5)
     {
         index = messageId;
         if (index > 21)
@@ -81,15 +84,17 @@ void TextDrawMessageBanner(u8 messageId, u8 gfxSlot, u8 stage)
 }
 
 /**
- * @brief 798e0 | 158 | To document
+ * @brief 798e0 | 158 | Displays an event message
  * 
+ * @param gfxSlot Graphics slot 
+ * @param stage Stage
  */
 void DisplayMessage(u8 gfxSlot, u8 stage) 
 {
     u32 index;
     u16* pText;
 
-    if ((u8)(stage - 4) < 2)
+    if (stage == 4 || stage == 5)
     {
         for (index = 18; index != 0; --index)
         {
@@ -141,8 +146,9 @@ void DisplayMessage(u8 gfxSlot, u8 stage)
 }
 
 /**
- * @brief 79a38 | c4 | To document
+ * @brief 79a38 | c4 | Clears text graphics in VRAM in one of multiple ways
  * 
+ * @param action Type of clearing action
  */
 void ClearTextGraphics(u8 action)
 {
