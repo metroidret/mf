@@ -32,7 +32,26 @@ static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx7
 };
 
-static u8 sBlob_79c41c_79c5a4[] = INCBIN_U8("data/Blob_79c41c_79c5a4.bin");
+// 79C41C Intro Samus sitting BG graphics pointers [5]
+static const u32* sIntroSamusSittingBgGfxPointers[5] = {
+    (u32*)0x0864578c,
+    (u32*)0x086465ec,
+    (u32*)0x08647534,
+    (u32*)0x0864843c,
+    (u32*)0x086492fc,
+};
+
+// 79C430 Intro Samus helmet close up BG graphics pointers [6]
+static const u32* sIntroSamusHelmetCloseupBgGfxPointers[6] = {
+    (u32*)0x08649f7c,
+    (u32*)0x0864a8d4,
+    (u32*)0x0864b614,
+    (u32*)0x0864c444,
+    (u32*)0x0864d0f4,
+    (u32*)0x0864de24,
+};
+
+static u8 sBlob_79c448_79c5a4[] = INCBIN_U8("data/Blob_79c448_79c5a4.bin");
 
 static u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,
@@ -832,5 +851,170 @@ static boolu32 NewFileIntroSamusFainting(void)
 
     return finished;
 }
+
+
+void NewFileIntroSamusDriftingInit(void)
+{
+    u16 i;
+
+    CallbackSetVBlank(unk_99940);
+    
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+    
+    for (i = 0; i < 8; i++)
+        LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
+    
+    DMA3_COPY_32(sIntroSamusShipPal, PALRAM_OBJ, 5 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sPal_598150, PALRAM_OBJ + 0x100, 2 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
+    DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
+    
+    LZ77UncompWram(sIntroBslSpaceBgGfx, 0x02010000);
+    
+    DMA3_COPY_32(EWRAM_BASE + 0x10000, VRAM_BASE, (VRAM_SIZE / 3) / 4);
+    
+    LZ77UncompVram(sIntroBslTilemap, 0x0600E800);
+    LZ77UncompVram(sIntroSpaceTilemap, 0x0600F800);
+    
+    DMA3_COPY_32(sIntroBslSpaceBgPal, PALRAM_BASE + 0x100, 8 * PAL_ROW_SIZE / 4);
+    
+    WRITE_16(PALRAM_BASE, 0);
+    
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, 0x0600E000);
+    
+    WRITE_16(REG_BG0HOFS, -8);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+    
+    gBg1XPosition = 0;
+    gBg1YPosition = 0;
+    gBg2XPosition = 48;
+    gBg2YPosition = -8;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+    
+    WRITE_16(REG_BLDCNT, 0xFF);
+    WRITE_16(REG_BG0CNT, 0x1C08);
+    WRITE_16(REG_BG2CNT, 0x5D02);
+    WRITE_16(REG_BG3CNT, 0x1F03);
+    
+    NewFileIntroSetupOam(200, 250, 0, 0);
+    NewFileIntroSetupOam(1, (s16)gBg2XPosition, (s16)gBg2YPosition, 0);
+    NewFileIntroSetupOam(20, 160, 90, 0);
+    NewFileIntroSetupOam(4, 0, 0, 1);
+    
+    for (i = 0; i < 10; i++)
+    {
+        NewFileIntroSetupOam(3, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
+    }
+    
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
+    
+    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    
+    WRITE_16(REG_DISPCNT, 0x1C00);
+    
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    
+    gWrittenToBldy = 0;
+}
+
+
+void NewFileIntroSamusLosingConsciousnessVblank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, 256);
+
+    WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
+
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+
+    WRITE_16(REG_BG1HOFS, gBg1XPosition);
+    WRITE_16(REG_BG1VOFS, gBg1YPosition);
+    WRITE_16(REG_BG2HOFS, gBg2XPosition);
+    WRITE_16(REG_BG2VOFS, gBg2YPosition);
+    WRITE_16(REG_BG3HOFS, gBg3XPosition);
+    WRITE_16(REG_BG3VOFS, gBg3YPosition);
+    
+    if (gNonGameplayRam.intro.unk_110 == 1)
+    {
+        gNonGameplayRam.intro.unk_110 = 0;
+        DMA3_COPY_32(0x08598AAC, PALRAM_BASE, 32);
+    }
+}
+
+
+void NewFileIntroSamusLosingConsciousnessInit(void) 
+{
+    u16 i;
+
+    CallbackSetVBlank(unk_99940);
+    
+    DMA3_FILL_32(0, 0x030016a0, 720);
+    
+    DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
+    DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
+
+    for (i = 0; i < 6; i++)
+        LZ77UncompVram(sIntroSamusHelmetCloseupBgGfxPointers[i], VRAM_BASE + i * 0x1000);
+    
+    LZ77UncompVram(0x08598190, 0x0600F000);
+    LZ77UncompVram(0x08598190, 0x0600F800);
+
+    DMA3_COPY_32(0x08598818, PALRAM_BASE, 4 * PAL_ROW_SIZE / 4);
+    
+    WRITE_16(PALRAM_BASE, 0);
+    
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, 0x0600E000);
+    
+    DMA3_COPY_32(sIntroBslSpaceBgPal, PALRAM_BASE + 0x100, 8 * PAL_ROW_SIZE / 4);
+    
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+    
+    gBg1XPosition = 0;
+    gBg1YPosition = 0;
+    gBg2XPosition = 10;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+    
+    WRITE_16(REG_BLDCNT, 0xFF);
+    
+    WRITE_16(REG_BG0CNT, 0x1C08);
+    WRITE_16(REG_BG2CNT, 0x1E02);
+    WRITE_16(REG_BG3CNT, 0x1F03);
+    
+    NewFileIntroSetupOam(0xC8, 0xFA, 0, 0);
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
+    
+    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    
+    WRITE_16(REG_DISPCNT, 0x1C00);
+    
+    CallbackSetVBlank(NewFileIntroSamusLosingConsciousnessVblank);
+    
+    gWrittenToBldy = 0;
+    gWrittenToBldalpha_Eva = 12;
+    gWrittenToBldalpha_Evb = 8;
+}
+
+
 
 
