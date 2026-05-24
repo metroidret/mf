@@ -458,3 +458,21 @@ void Box2FinishedCrawlingInit(void)
 
     SoundPlay(0x264);
 }
+
+void Box2FinishCrawling(void)
+{
+    if (gCurrentSprite.work1 > 1)
+    {
+        if (SpriteUtilHasSubSprite1AnimationEnded())
+            gCurrentSprite.work1--;
+    }
+    else if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        if (SpriteUtilCheckSamusOnCeilingLadder())
+            gCurrentSprite.pose = 0x3b;
+        else if (gCurrentSprite.work2 != 0)
+            gCurrentSprite.pose = 0x3b;
+        else
+            gCurrentSprite.pose = 0x19;
+    }
+}
