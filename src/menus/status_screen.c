@@ -40,3 +40,39 @@ void StatusScreenHandler(void)
         PAUSE_SCREEN_DATA.pauseDebugEditingValue = FALSE;
     }
 }
+
+/**
+ * @brief 7e6ac | a4 | Draws every stat on the status screen
+ *
+ */
+void StatusScreenDrawEverything(void)
+{
+    StatusScreenDrawBeamOrSuit(0, gEquipment.beamStatus);
+    StatusScreenDrawMissileOrBomb(1, gEquipment.weaponsStatus);
+    StatusScreenDrawBeamOrSuit(3, gEquipment.suitMiscStatus);
+    StatusScreenDrawMissileOrBomb(2, gEquipment.weaponsStatus);
+    StatusScreenDrawMisc(4, gEquipment.suitMiscStatus);
+
+    StatusScreenDrawNumber(5, gEquipment.currentEnergy, 6, FALSE);
+    StatusScreenDrawNumber(6, gEquipment.maxEnergy, 3, TRUE);
+
+    if (gEquipment.weaponsStatus & MBF_MISSILES)
+    {
+        StatusScreenDrawNumber(7, gEquipment.currentMissiles, 6, FALSE);
+        StatusScreenDrawNumber(8, gEquipment.maxMissiles, 3, TRUE);
+    }
+    else
+    {
+        StatusScreenRemoveAmmoHeader(1);
+    }
+
+    if ((gEquipment.weaponsStatus & (MBF_BOMBS | MBF_POWER_BOMBS)) == (MBF_BOMBS | MBF_POWER_BOMBS))
+    {
+        StatusScreenDrawNumber(9, gEquipment.currentPowerBombs, 6, FALSE);
+        StatusScreenDrawNumber(0xa, gEquipment.maxPowerBombs, 3, TRUE);
+    }
+    else
+    {
+        StatusScreenRemoveAmmoHeader(2);
+    }
+}

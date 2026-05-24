@@ -6,12 +6,12 @@
 // Forward declarations for the StatusScreen* cluster.
 // Uncomment and fill in the correct signature as each function is
 // decompiled into the matching .c file.
-// extern <return_type> StatusScreenHandler(<params>);
-// extern <return_type> StatusScreenDrawEverything(<params>);
-// extern <return_type> StatusScreenDrawNumber(<params>);
-// extern <return_type> StatusScreenDrawBeamOrSuit(<params>);
-// extern <return_type> StatusScreenDrawMissileOrBomb(<params>);
-// extern <return_type> StatusScreenDrawMisc(<params>);
-// extern <return_type> StatusScreenRemoveAmmoHeader(<params>);
+extern void StatusScreenHandler(void);
+extern void StatusScreenDrawEverything(void);
+extern void StatusScreenDrawNumber(u8 section, u16 value, u8 palette, boolu8 isMax);
+extern void StatusScreenDrawBeamOrSuit(u8 section, u8 value);
+extern void StatusScreenDrawMissileOrBomb(u8 section, u8 value);
+extern void StatusScreenDrawMisc(u8 section, u8 value);
+extern void StatusScreenRemoveAmmoHeader(u8 position);
 
 #endif // STATUS_SCREEN_H
