@@ -2,36 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2FinishedCrawlingInit
-Box2FinishedCrawlingInit: @ 0x080522B4
-	push {r4, lr}
-	ldr r2, _080522E4 @ =gSubSpriteData1
-	ldr r0, _080522E8 @ =0x083913B4
-	str r0, [r2]
-	ldr r1, _080522EC @ =gCurrentSprite
-	movs r0, #0x2e
-	adds r0, r0, r1
-	mov ip, r0
-	movs r3, #0
-	movs r0, #2
-	mov r4, ip
-	strb r0, [r4]
-	strb r3, [r2, #6]
-	strh r3, [r2, #4]
-	adds r1, #0x24
-	movs r0, #8
-	strb r0, [r1]
-	movs r0, #0x99
-	lsls r0, r0, #2
-	bl SoundPlay
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080522E4: .4byte gSubSpriteData1
-_080522E8: .4byte 0x083913B4
-_080522EC: .4byte gCurrentSprite
-
 	thumb_func_start Box2FinishCrawling
 Box2FinishCrawling: @ 0x080522F0
 	push {r4, r5, lr}

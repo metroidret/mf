@@ -447,3 +447,14 @@ void Box2Landing(void)
         }
     }
 }
+
+void Box2FinishedCrawlingInit(void)
+{
+    gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x083913B4;
+    gCurrentSprite.work1 = 2;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = 8;
+
+    SoundPlay(0x264);
+}
