@@ -2,41 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2WaitingToRun
-Box2WaitingToRun: @ 0x08051CE4
-	push {lr}
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _08051D08
-	ldr r1, _08051D20 @ =gCurrentSprite
-	adds r2, r1, #0
-	adds r2, #0x2e
-	ldrb r0, [r2]
-	adds r0, #1
-	strb r0, [r2]
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #1
-	bne _08051D08
-	adds r1, #0x24
-	movs r0, #0x19
-	strb r0, [r1]
-_08051D08:
-	ldr r1, _08051D20 @ =gCurrentSprite
-	adds r0, r1, #0
-	adds r0, #0x2f
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _08051D1A
-	adds r1, #0x24
-	movs r0, #0x3b
-	strb r0, [r1]
-_08051D1A:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051D20: .4byte gCurrentSprite
-
 	thumb_func_start Box2SlowRunningInit
 Box2SlowRunningInit: @ 0x08051D24
 	push {lr}

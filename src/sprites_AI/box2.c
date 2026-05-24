@@ -160,3 +160,12 @@ void Box2WaitingToRunInit(void)
 
     SoundPlay(SOUND_BOX_WAIT_TO_RUN);
 }
+
+void Box2WaitingToRun(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded() && ++gCurrentSprite.work1 == 1)
+        gCurrentSprite.pose = 0x19;
+
+    if (gCurrentSprite.work2 != 0)
+        gCurrentSprite.pose = 0x3b;
+}
