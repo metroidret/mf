@@ -575,6 +575,7 @@ SECTIONS {
         src/data/sprites/flashing_number.o(.rodata);
 
         src/data/sprites/zozoro.o(.rodata);
+        src/data/sprites/box2.o(.rodata);
         src/data/sprites/electric_water_damage_box2.o(.rodata);
 
         src/data/sprites/frozen_ridley.o(.rodata);

@@ -18,7 +18,8 @@ extern const struct FrameData* const sZazabiFrameDataPointers1[ZAZABI_OAM_END];
 
 // extern const struct FrameData* const sSaXMonsterFrameDataPointers[SA_X_MONSTER_OAM_END];
 
-// extern const struct FrameData* const sBox2FrameDataPointers[BOX_2_OAM_END];
+#include "data/sprites/box2.h"
+extern const struct FrameData* const sBox2FrameDataPointers[BOX_2_OAM_END];
 
 // extern const struct FrameData* const sOmegaMetroidFrameDataPointers[OMEGA_METROID_OAM_END];
 
