@@ -2,33 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2WaitingToRunInit
-Box2WaitingToRunInit: @ 0x08051CAC
-	push {lr}
-	ldr r1, _08051CD4 @ =gSubSpriteData1
-	ldr r0, _08051CD8 @ =0x083913DC
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	movs r3, #0
-	strh r0, [r1, #4]
-	ldr r0, _08051CDC @ =gCurrentSprite
-	adds r2, r0, #0
-	adds r2, #0x24
-	movs r1, #0x18
-	strb r1, [r2]
-	adds r0, #0x2e
-	strb r3, [r0]
-	ldr r0, _08051CE0 @ =0x0000026A
-	bl SoundPlay
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051CD4: .4byte gSubSpriteData1
-_08051CD8: .4byte 0x083913DC
-_08051CDC: .4byte gCurrentSprite
-_08051CE0: .4byte 0x0000026A
-
 	thumb_func_start Box2WaitingToRun
 Box2WaitingToRun: @ 0x08051CE4
 	push {lr}

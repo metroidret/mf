@@ -11,6 +11,7 @@
 #include "data/sprites/shake_trigger.h"
 #include "data/sprite_data.h"
 
+#include "constants/audio.h"
 #include "constants/samus.h"
 #include "constants/sprite.h"
 
@@ -147,4 +148,15 @@ void Box2Init(void)
         SpriteSpawnPrimary(PSPRITE_ELECTRIC_WATER_DAMAGE_BOX_2, gCurrentSprite.roomSlot, 7, 0x10,
             gCurrentSprite.yPosition, gCurrentSprite.xPosition, v);
     }
+}
+
+void Box2WaitingToRunInit(void)
+{
+    gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x083913DC;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = 0x18;
+    gCurrentSprite.work1 = 0;
+
+    SoundPlay(SOUND_BOX_WAIT_TO_RUN);
 }
