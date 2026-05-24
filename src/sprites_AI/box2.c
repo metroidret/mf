@@ -304,3 +304,17 @@ void Box2StopSkiddingInit(void)
 
     gCurrentSprite.pose = 0x20;
 }
+
+void Box2StopSkidding(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        gCurrentSprite.pose = 0x3b;
+        gCurrentSprite.work2 = 3;
+    }
+    else
+    {
+        if (gCurrentSprite.work2 != 0)
+            gCurrentSprite.pose = 0x3b;
+    }
+}

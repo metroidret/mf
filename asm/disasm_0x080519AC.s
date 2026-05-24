@@ -2,39 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2StopSkidding
-Box2StopSkidding: @ 0x08052028
-	push {lr}
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _08052048
-	ldr r1, _08052044 @ =gCurrentSprite
-	adds r2, r1, #0
-	adds r2, #0x24
-	movs r0, #0x3b
-	strb r0, [r2]
-	adds r1, #0x2f
-	movs r0, #3
-	b _08052058
-	.align 2, 0
-_08052044: .4byte gCurrentSprite
-_08052048:
-	ldr r1, _08052060 @ =gCurrentSprite
-	adds r0, r1, #0
-	adds r0, #0x2f
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _0805205A
-	adds r1, #0x24
-	movs r0, #0x3b
-_08052058:
-	strb r0, [r1]
-_0805205A:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052060: .4byte gCurrentSprite
-
 	thumb_func_start Box2BonkingInit
 Box2BonkingInit: @ 0x08052064
 	push {lr}
