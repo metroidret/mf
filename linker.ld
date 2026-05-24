@@ -396,6 +396,7 @@ SECTIONS {
 
         src/sprites_AI/continual_x_spawner.o(.text);
 
+        src/sprites_AI/box2.o(.text);
         asm/disasm_0x080519AC.o(.text);
 
         src/sprites_AI/electric_water_damage_box2.o(.text);
