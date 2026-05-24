@@ -219,3 +219,40 @@ void Box2FastRunningInit(void)
     gCurrentSprite.pose = 0x1c;
     gCurrentSprite.work1 = 10;
 }
+
+void Box2FastRunning(void)
+{
+    if (gSubSpriteData1.currentAnimationFrame == 3 && gSubSpriteData1.animationDurationCounter == 1)
+    {
+        SoundPlay(SOUND_279);
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            ParticleSet(gSubSpriteData1.yPosition - 0x3c, gSubSpriteData1.xPosition + 0xa0, 0x38);
+        else
+            ParticleSet(gSubSpriteData1.yPosition - 0x3c, gSubSpriteData1.xPosition - 0xa0, 0x38);
+    }
+
+    if (!Box2XMovement(8, 0x37))
+    {
+        if (gCurrentSprite.work1 != 0)
+        {
+            gCurrentSprite.work1--;
+            return;
+        }
+        else
+        {
+            if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            {
+                if (gSubSpriteData1.xPosition - 0xc8 > gSamusData.xPosition)
+                    gCurrentSprite.pose = 0x1d;
+            }
+            else
+            {
+                if (gSubSpriteData1.xPosition + 0xc8 < gSamusData.xPosition)
+                    gCurrentSprite.pose = 0x1d;
+            }
+        }
+    }
+
+    if (gCurrentSprite.work2 != 0)
+        gCurrentSprite.pose = 0x3b;
+}
