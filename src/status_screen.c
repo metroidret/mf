@@ -9,6 +9,8 @@
 
 #include "structs/samus.h"
 
+#include "data/menus/pause_debug.h"
+
 /**
  * @brief 7e678 | 34 | Handler for the status screen
  * 
@@ -67,7 +69,75 @@ void StatusScreenDrawEverything(void)
  */
 void StatusScreenDrawNumber(u8 section, u16 value, u8 palette, boolu8 isMax)
 {
+    register u16 *dst asm("r9");
+    const u8 *base;
+    const u8 *base2;
+    s32 sec5;
+    s32 yTile;
+    s32 startX;
+    s32 i;
+    s32 width;
+    s32 hasNonZero;
+    s32 tile;
+    s32 divisor;
 
+    base = &sBlob_58217b_58225c[1];
+    sec5 = section * 5;
+
+    yTile = *(sec5 + base) << 5;
+    base2 = base + 2;
+    startX = *(base2 + sec5);
+    dst = (u16 *)0x0600C800 + (yTile + startX);
+    base += 3;
+    width = *(sec5 + base) - startX;
+
+    divisor = sPauseDebugNumbersIncrementValues[width];
+    width++;
+    hasNonZero = 0;
+    i = 0;
+
+    while (divisor > 0)
+    {
+        tile = (value / divisor) % 10;
+        if (tile == 0)
+        {
+            if (hasNonZero == 0)
+            {
+                tile = 0x8c;
+                if (isMax)
+                    tile = 0;
+            }
+            else
+            {
+                tile = 0x80;
+            }
+        }
+        else
+        {
+            hasNonZero = 1;
+            tile += 0x80;
+        }
+
+        if (tile != 0)
+            dst[i] = (palette << 12) | tile;
+        else
+            i--;
+
+        divisor /= 10;
+        i++;
+    }
+
+    if (width != i)
+    {
+        u16 *p;
+        tile = (palette << 12) | 0x8c;
+        p = &dst[i];
+        do {
+            *p = tile;
+            p++;
+            i++;
+        } while (width != i);
+    }
 }
 
 /**
