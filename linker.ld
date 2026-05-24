@@ -444,6 +444,7 @@ SECTIONS {
 
         src/menus/pause_debug.o(.text);
 
+        src/menus/status_screen.o(.text);
         asm/disasm_0x0807e678.o(.text);
 
         src/projectile.o(.text);
