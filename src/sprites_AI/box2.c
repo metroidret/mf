@@ -395,3 +395,24 @@ void Box2LandingFromBonkInit(void)
 
     SoundPlay(0x27a);
 }
+
+void Box2LandingFromBonk(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        {
+            if (gCurrentSprite.xPosition > gSamusData.xPosition)
+                gCurrentSprite.pose = 0x3b;
+            else
+                gCurrentSprite.pose = 0x17;
+        }
+        else
+        {
+            if (gCurrentSprite.xPosition < gSamusData.xPosition)
+                gCurrentSprite.pose = 0x3b;
+            else
+                gCurrentSprite.pose = 0x17;
+        }
+    }
+}
