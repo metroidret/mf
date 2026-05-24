@@ -12569,10 +12569,18 @@
     "size": 2
   },
   {
-    "path": "Blob_388224_395348.bin",
-    "count": "0xD124",
+    "path": "Blob_388224_390550.bin",
+    "count": "0x832C",
     "addr": {
       "us": "0x388224"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_390578_395348.bin",
+    "count": "0x4DD0",
+    "addr": {
+      "us": "0x390578"
     },
     "size": 1
   },

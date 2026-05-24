@@ -4,6 +4,8 @@
 #include "types.h"
 #include "oam.h"
 
+extern const s16 sBox2BonkingSpeed[20];
+
 enum Box2Oam {
     Box2Oam_395348,
     Box2Oam_3953c8,

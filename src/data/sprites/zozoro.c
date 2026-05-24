@@ -987,4 +987,20 @@ const struct FrameData sZozoroOam_Landing[5] = {
     [4] = FRAME_DATA_TERMINATOR
 };
 
-static const u8 sBlob_388224_395348[] = INCBIN_U8("data/Blob_388224_395348.bin");
+static const u8 sBlob_388224_390550[] = INCBIN_U8("data/Blob_388224_390550.bin");
+
+/* Box 2 bonking-speed table (PSPRITE_BOX_2).
+ * Logically Box2 data; lives here because the surrounding bytes are
+ * still un-extracted and the linker order requires this address range
+ * to come from zozoro.o. Will migrate to src/data/sprites/box2.c once
+ * the rest of Box2 data extraction lands.
+ */
+const s16 sBox2BonkingSpeed[20] = {
+    -12, -10, -8, -6,
+    -4, -2, 0, 0,
+    0, 0, 1, 2,
+    4, 6, 8, 10,
+    12, 14, 16, SHORT_MAX
+};
+
+static const u8 sBlob_390578_395348[] = INCBIN_U8("data/Blob_390578_395348.bin");
