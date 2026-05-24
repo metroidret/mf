@@ -12569,10 +12569,432 @@
     "size": 2
   },
   {
-    "path": "Blob_388224_39f4b0.bin",
-    "count": "0x1728C",
+    "path": "Blob_388224_395348.bin",
+    "count": "0xD124",
     "addr": {
       "us": "0x388224"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395348.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x80",
+    "addr": {
+      "us": "0x395348"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3953c8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x38",
+    "addr": {
+      "us": "0x3953C8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395400.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395400"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395410.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395410"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395420.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395420"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395430.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395430"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395440.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395440"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395450.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395450"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395460.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395460"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395470.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395470"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395480.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395480"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395490.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395490"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3954a0.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3954A0"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3954b0.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x80",
+    "addr": {
+      "us": "0x3954B0"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395530.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x38",
+    "addr": {
+      "us": "0x395530"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395568.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395568"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395578.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395578"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395588.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395588"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395598.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395598"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3955a8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3955A8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3955b8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3955B8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3955c8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3955C8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3955d8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3955D8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3955e8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3955E8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3955f8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3955F8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395608.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395608"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395618.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395618"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395628.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395628"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395638.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395638"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395648.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395648"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395658.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x60",
+    "addr": {
+      "us": "0x395658"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3956b8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x38",
+    "addr": {
+      "us": "0x3956B8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3956f0.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x28",
+    "addr": {
+      "us": "0x3956F0"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395718.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395718"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395728.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x30",
+    "addr": {
+      "us": "0x395728"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395758.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x20",
+    "addr": {
+      "us": "0x395758"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395778.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x20",
+    "addr": {
+      "us": "0x395778"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395798.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x395798"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3957a8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3957A8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3957b8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3957B8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3957c8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3957C8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3957d8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3957D8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3957e8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x20",
+    "addr": {
+      "us": "0x3957E8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395808.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x60",
+    "addr": {
+      "us": "0x395808"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_395868.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x60",
+    "addr": {
+      "us": "0x395868"
+    },
+    "size": 1
+  },
+  {
+    "path": "Box2Oam_3958c8.bin",
+    "dir": "data/sprites/box2",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3958C8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_3958d8_39f4b0.bin",
+    "count": "0x9BD8",
+    "addr": {
+      "us": "0x3958D8"
     },
     "size": 1
   },
@@ -26801,10 +27223,18 @@
     "size": 1
   },
   {
-    "path": "Blob_79b458_79b708.bin",
-    "count": "0x2B0",
+    "path": "Blob_79b458_79b560.bin",
+    "count": "0x108",
     "addr": {
       "us": "0x79B458"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_79b618_79b708.bin",
+    "count": "0xF0",
+    "addr": {
+      "us": "0x79B618"
     },
     "size": 1
   },
