@@ -334,3 +334,51 @@ void Box2BonkingInit(void)
 
     ScreenShakeStartHorizontal(20, 0x81);
 }
+
+void Box2Bonking(void)
+{
+    u32 blockTop;
+    u8 offset;
+    s16 movement;
+
+    blockTop = SpriteUtilCheckVerticalCollisionAtPositionSlopes(gSubSpriteData1.yPosition, gSubSpriteData1.xPosition);
+    if (gPreviousVerticalCollisionCheck != 0)
+    {
+        gSubSpriteData1.yPosition = blockTop;
+        gCurrentSprite.pose = 0x4b;
+    }
+    else
+    {
+        offset = gCurrentSprite.work4;
+        movement = sBox2BonkingSpeed[offset];
+        if (movement == SHORT_MAX)
+        {
+            movement = sBox2BonkingSpeed[offset - 1];
+            gSubSpriteData1.yPosition += movement;
+        }
+        else
+        {
+            offset++;
+            gCurrentSprite.work4 = offset;
+            gSubSpriteData1.yPosition += movement;
+            if (offset == 0x10)
+            {
+                if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+                {
+                    ParticleSet(gSubSpriteData1.yPosition - 0x34, gSubSpriteData1.xPosition - 0x40, 0x38);
+                    ParticleSet(gSubSpriteData1.yPosition - 0x34, gSubSpriteData1.xPosition + 0x80, 0x38);
+                }
+                else
+                {
+                    ParticleSet(gSubSpriteData1.yPosition - 0x34, gSubSpriteData1.xPosition - 0x80, 0x38);
+                    ParticleSet(gSubSpriteData1.yPosition - 0x34, gSubSpriteData1.xPosition + 0x40, 0x38);
+                }
+            }
+        }
+
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            gSubSpriteData1.xPosition += BLOCK_TO_SUB_PIXEL(0.09375f);
+        else
+            gSubSpriteData1.xPosition -= BLOCK_TO_SUB_PIXEL(0.09375f);
+    }
+}
