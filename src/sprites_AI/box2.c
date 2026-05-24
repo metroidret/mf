@@ -382,3 +382,16 @@ void Box2Bonking(void)
             gSubSpriteData1.xPosition -= BLOCK_TO_SUB_PIXEL(0.09375f);
     }
 }
+
+void Box2LandingFromBonkInit(void)
+{
+    gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x08391224;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = 0x4c;
+    gCurrentSprite.work2 = 0;
+    gCurrentSprite.work4 = 0;
+
+    SoundPlay(0x27a);
+}
