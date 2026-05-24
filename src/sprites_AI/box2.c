@@ -428,3 +428,22 @@ void Box2LandingInit(void)
 
     SoundPlay(0x27a);
 }
+
+void Box2Landing(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        if (gCurrentSprite.work2 == 0)
+        {
+            gCurrentSprite.pose = 0x27;
+        }
+        else
+        {
+            gCurrentSprite.work2--;
+            if ((gCurrentSprite.work2 & 0x7f) == 0)
+                gCurrentSprite.work2 = 0;
+
+            gCurrentSprite.pose = 0x3b;
+        }
+    }
+}
