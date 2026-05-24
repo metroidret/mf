@@ -318,3 +318,19 @@ void Box2StopSkidding(void)
             gCurrentSprite.pose = 0x3b;
     }
 }
+
+void Box2BonkingInit(void)
+{
+    gSubSpriteData1.yPosition -= BLOCK_TO_SUB_PIXEL(0.25f);
+    gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x08391214;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = 0x38;
+    gCurrentSprite.work4 = 0;
+    gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
+
+    SoundPlay(SOUND_BOX_BONK);
+
+    ScreenShakeStartHorizontal(20, 0x81);
+}

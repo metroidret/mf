@@ -2,46 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2BonkingInit
-Box2BonkingInit: @ 0x08052064
-	push {lr}
-	ldr r1, _080520A8 @ =gSubSpriteData1
-	ldrh r0, [r1, #8]
-	subs r0, #0x10
-	movs r3, #0
-	movs r2, #0
-	strh r0, [r1, #8]
-	ldr r0, _080520AC @ =0x08391214
-	str r0, [r1]
-	strb r3, [r1, #6]
-	strh r2, [r1, #4]
-	ldr r2, _080520B0 @ =gCurrentSprite
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #0x38
-	strb r0, [r1]
-	adds r0, r2, #0
-	adds r0, #0x31
-	strb r3, [r0]
-	ldrh r0, [r2]
-	movs r3, #0x80
-	lsls r3, r3, #2
-	adds r1, r3, #0
-	eors r0, r1
-	strh r0, [r2]
-	ldr r0, _080520B4 @ =0x00000267
-	bl SoundPlay
-	movs r0, #0x14
-	movs r1, #0x81
-	bl ScreenShakeStartHorizontal
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080520A8: .4byte gSubSpriteData1
-_080520AC: .4byte 0x08391214
-_080520B0: .4byte gCurrentSprite
-_080520B4: .4byte 0x00000267
-
 	thumb_func_start Box2Bonking
 Box2Bonking: @ 0x080520B8
 	push {r4, r5, r6, r7, lr}
