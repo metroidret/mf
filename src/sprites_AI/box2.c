@@ -272,3 +272,22 @@ void Box2SkiddingInit(void)
 
     SoundPlay(SOUND_BOX_SKID);
 }
+
+void Box2Skidding(void)
+{
+    u8 collidedPose;
+
+    if (gCurrentSprite.work1 / 4 > 5)
+        collidedPose = 0x37;
+    else
+        collidedPose = 0x1f;
+
+    if (!Box2XMovement(gCurrentSprite.work1 / 4, collidedPose))
+    {
+        if (--gCurrentSprite.work1 == 0)
+            gCurrentSprite.pose = 0x1f;
+
+        if (gCurrentSprite.work2 != 0)
+            gCurrentSprite.pose = 0x3b;
+    }
+}

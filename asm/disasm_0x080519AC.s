@@ -2,50 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2Skidding
-Box2Skidding: @ 0x08051F94
-	push {r4, r5, lr}
-	ldr r4, _08051FE0 @ =gCurrentSprite
-	adds r5, r4, #0
-	adds r5, #0x2e
-	ldrb r0, [r5]
-	lsrs r0, r0, #2
-	movs r1, #0x1f
-	cmp r0, #5
-	bls _08051FA8
-	movs r1, #0x37
-_08051FA8:
-	bl Box2XMovement
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _08051FD8
-	ldrb r0, [r5]
-	subs r0, #1
-	strb r0, [r5]
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _08051FC6
-	adds r1, r4, #0
-	adds r1, #0x24
-	movs r0, #0x1f
-	strb r0, [r1]
-_08051FC6:
-	adds r0, r4, #0
-	adds r0, #0x2f
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _08051FD8
-	adds r1, r4, #0
-	adds r1, #0x24
-	movs r0, #0x3b
-	strb r0, [r1]
-_08051FD8:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051FE0: .4byte gCurrentSprite
-
 	thumb_func_start Box2StopSkiddingInit
 Box2StopSkiddingInit: @ 0x08051FE4
 	push {lr}
