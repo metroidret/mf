@@ -2,47 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2SlowRunningInit
-Box2SlowRunningInit: @ 0x08051D24
-	push {lr}
-	bl SpriteUtilMakeSpriteFaceSamusDirection
-	ldr r0, _08051D40 @ =gCurrentSprite
-	ldrh r1, [r0]
-	movs r0, #0x80
-	lsls r0, r0, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _08051D4C
-	ldr r1, _08051D44 @ =gSubSpriteData1
-	ldr r0, _08051D48 @ =0x08391354
-	b _08051D50
-	.align 2, 0
-_08051D40: .4byte gCurrentSprite
-_08051D44: .4byte gSubSpriteData1
-_08051D48: .4byte 0x08391354
-_08051D4C:
-	ldr r1, _08051D6C @ =gSubSpriteData1
-	ldr r0, _08051D70 @ =0x083912C4
-_08051D50:
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	movs r3, #0
-	strh r0, [r1, #4]
-	ldr r0, _08051D74 @ =gCurrentSprite
-	adds r2, r0, #0
-	adds r2, #0x24
-	movs r1, #0x1a
-	strb r1, [r2]
-	adds r0, #0x2e
-	strb r3, [r0]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051D6C: .4byte gSubSpriteData1
-_08051D70: .4byte 0x083912C4
-_08051D74: .4byte gCurrentSprite
-
 	thumb_func_start Box2SlowRunning
 Box2SlowRunning: @ 0x08051D78
 	push {r4, r5, lr}

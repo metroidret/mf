@@ -169,3 +169,18 @@ void Box2WaitingToRun(void)
     if (gCurrentSprite.work2 != 0)
         gCurrentSprite.pose = 0x3b;
 }
+
+void Box2SlowRunningInit(void)
+{
+    SpriteUtilMakeSpriteFaceSamusDirection();
+
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x08391354;
+    else
+        gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x083912C4;
+
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = 0x1a;
+    gCurrentSprite.work1 = 0;
+}
