@@ -36,3 +36,40 @@ void Box2SyncSubSprites(void)
     gCurrentSprite.xPosition =
         gSubSpriteData1.xPosition + pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_X_OFFSET];
 }
+
+u8 Box2XMovement(u16 movement, u8 collidedPose)
+{
+    u8 collided;
+
+    collided = FALSE;
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+    {
+        SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+            gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(1.71875f));
+        if (gPreviousCollisionCheck != 0)
+        {
+            gCurrentSprite.pose = collidedPose;
+            collided = TRUE;
+        }
+        else
+        {
+            gSubSpriteData1.xPosition += movement;
+        }
+    }
+    else
+    {
+        SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+            gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(1.71875f));
+        if (gPreviousCollisionCheck != 0)
+        {
+            gCurrentSprite.pose = collidedPose;
+            collided = TRUE;
+        }
+        else
+        {
+            gSubSpriteData1.xPosition -= movement;
+        }
+    }
+
+    return collided;
+}
