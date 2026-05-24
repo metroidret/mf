@@ -291,3 +291,16 @@ void Box2Skidding(void)
             gCurrentSprite.pose = 0x3b;
     }
 }
+
+void Box2StopSkiddingInit(void)
+{
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x08391454;
+    else
+        gSubSpriteData1.pMultiOam = (const struct MultiSpriteData*)0x08391434;
+
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = 0x20;
+}
