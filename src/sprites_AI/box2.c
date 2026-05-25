@@ -771,3 +771,59 @@ void Box2BrainRisingInit(void)
 
     RoomEffectStartStopEventBased(3);
 }
+
+void Box2BrainRising(void)
+{
+    u8 ramSlot;
+    u16 y;
+    u16 x;
+
+    if ((gFrameCounter8Bit & 1) == 0)
+        gCurrentSprite.status ^= SPRITE_STATUS_NOT_DRAWN;
+
+    y = gCurrentSprite.yPosition;
+    x = gCurrentSprite.xPosition;
+
+    switch (gCurrentSprite.work1)
+    {
+        case 0:
+            ramSlot = SpriteSpawnSecondary(SSPRITE_BOX_2_BRAIN_TOP, 0, gCurrentSprite.spritesetGfxSlot,
+                gCurrentSprite.primarySpriteRamSlot, y, x, 0);
+            gSpriteData[ramSlot].primarySpriteRamSlot = ramSlot;
+            ParticleSet(y + 0x48, x, PE_0x30);
+            SoundPlay_3b1c(SOUND_26E);
+            break;
+
+        case 1:
+            ParticleSet(y, x + 0x50, PE_0x35);
+            break;
+
+        case 8:
+            ParticleSet(y + 0x86, x + 0x70, PE_0x30);
+            break;
+
+        case 16:
+            ParticleSet(y + 0x86, x - 0x70, PE_0x30);
+            break;
+
+        case 30:
+            ParticleSet(y + 0x14, x - 0xa, PE_0x35);
+            break;
+
+        case 38:
+            ParticleSet(y + 0x5c, x + 0x90, PE_0x2F);
+            break;
+
+        case 46:
+            ParticleSet(y + 0x5c, x - 0x90, PE_0x2F);
+            break;
+
+        case 66:
+            gCurrentSprite.pose = BOX2_POSE_BRAIN_FLOATING;
+            gCurrentSprite.work1 = 0x3c;
+            gCurrentSprite.status |= SPRITE_STATUS_HIDDEN;
+            return;
+    }
+
+    gCurrentSprite.work1++;
+}
