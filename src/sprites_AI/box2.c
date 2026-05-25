@@ -845,3 +845,8 @@ void Box2IdleInit(void)
     gSubSpriteData1.currentAnimationFrame = 0;
     gCurrentSprite.pose = BOX2_POSE_CRAWLING;
 }
+
+void Box2Crawling(void)
+{
+    Box2XMovement(1, BOX2_POSE_FINISHED_CRAWLING_INIT);
+}

@@ -41,15 +41,6 @@
 
 
 
-	thumb_func_start Box2Crawling
-Box2Crawling: @ 0x08052B28
-	push {lr}
-	movs r0, #1
-	movs r1, #7
-	bl Box2XMovement
-	pop {r0}
-	bx r0
-	.align 2, 0
 
 	thumb_func_start Box2PartSetBoxWorkVar2
 Box2PartSetBoxWorkVar2: @ 0x08052B38
