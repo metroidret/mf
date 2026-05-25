@@ -451,3 +451,14 @@ void Box2Landing(void)
         }
     }
 }
+
+void Box2FinishedCrawlingInit(void)
+{
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_FinishedCrawling;
+    gCurrentSprite.work1 = 2;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_FINISH_CRAWLING;
+
+    SoundPlay(SOUND_BOX_FINISH_CRAWLING);
+}
