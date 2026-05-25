@@ -1016,5 +1016,82 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
 }
 
 
+void NewFileIntroSamusDriftingIntoAsteroidsInit(void) 
+{
+    u16 i;
+    void* temp1;
+    u32 temp2;
+    
+    WRITE_16(REG_IME, FALSE);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & 0xFFEF);
+    WRITE_16(REG_IE, READ_16(REG_IE) & 0xFFFD);
+    WRITE_16(REG_IME, TRUE);
+    
+    CallbackSetVBlank(unk_99940);
+    
+    DMA3_FILL_32(0, &gNonGameplayRam + 0x21C, 720);
+    
+    for (i = 0; i < 8; i++)
+        LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
+    
+    DMA3_COPY_32(0x08612F48, PALRAM_OBJ, 16 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sPal_598150, PALRAM_OBJ + 0x100, 2 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
+    DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
+
+    LZ77UncompVram((u32 *)0x08605D08, 0x06000000);
+    LZ77UncompVram((u32 *)0x08609220, 0x0600F800);
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, 0x0600E000);
+    
+    DMA3_COPY_32(0x08609020, PALRAM_BASE, 16 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(0x08598A8C, PALRAM_BASE + 0x1E0, PAL_ROW_SIZE / 4);
+    
+    WRITE_16(PALRAM_BASE, 0);
+    
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+    
+    gBg2XPosition = 0;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+    
+    WRITE_16(REG_BG0CNT, 0x1C08);
+    WRITE_16(REG_BG3CNT, 0x1F03);
+    WRITE_16(REG_BLDCNT, 0xFF);
+
+    gWrittenToBldalpha_Eva = gWrittenToBldalpha_Evb = 0;
+
+    //WRITE_16(REG_BLDALPHA, 0); // Doesn't match
+    temp1 = REG_BLDALPHA;
+    temp2 = 0;
+    WRITE_16(temp1, temp2);
+    
+    NewFileIntroSetupOam(0x1E, 0x8CU, 0x8CU, 0);
+    NewFileIntroSetupOam(0x1F, 0x8CU, 0x50U, 0);
+    
+    for (i = 0; i < 4; i++)
+        NewFileIntroSetupOam(36, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
+    
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    
+    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
+    
+    WRITE_16(REG_DISPCNT, 0x1900);
+    
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    
+    gWrittenToBldy = 0;
+}
+
 
 
