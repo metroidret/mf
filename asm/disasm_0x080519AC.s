@@ -44,17 +44,6 @@
 
 
 
-	thumb_func_start Box2PartRemoveIgnoreProjectiles
-Box2PartRemoveIgnoreProjectiles: @ 0x08052C40
-	ldr r2, _08052C4C @ =gCurrentSprite
-	ldrh r1, [r2]
-	ldr r0, _08052C50 @ =0x00007FFF
-	ands r0, r1
-	strh r0, [r2]
-	bx lr
-	.align 2, 0
-_08052C4C: .4byte gCurrentSprite
-_08052C50: .4byte 0x00007FFF
 
 	thumb_func_start Box2PartInit
 Box2PartInit: @ 0x08052C54

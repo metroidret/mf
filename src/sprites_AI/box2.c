@@ -883,3 +883,8 @@ void Box2PartCenterSetImmunity(u8 slot)
             break;
     }
 }
+
+void Box2PartRemoveIgnoreProjectiles(void)
+{
+    gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
+}
