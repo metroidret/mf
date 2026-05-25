@@ -33,32 +33,6 @@
 
 
 
-	thumb_func_start Box2DyingInit
-Box2DyingInit: @ 0x08052774
-	ldr r0, _0805279C @ =gCurrentSprite
-	ldr r1, _080527A0 @ =0x08395658
-	str r1, [r0, #0x18]
-	movs r2, #0
-	strb r2, [r0, #0x1c]
-	movs r3, #0
-	strh r2, [r0, #0x16]
-	adds r1, r0, #0
-	adds r1, #0x31
-	strb r3, [r1]
-	adds r0, #0x24
-	movs r1, #0x44
-	strb r1, [r0]
-	ldr r0, _080527A4 @ =gSubSpriteData1
-	ldr r1, _080527A8 @ =0x0839126C
-	str r1, [r0]
-	strb r3, [r0, #6]
-	strh r2, [r0, #4]
-	bx lr
-	.align 2, 0
-_0805279C: .4byte gCurrentSprite
-_080527A0: .4byte 0x08395658
-_080527A4: .4byte gSubSpriteData1
-_080527A8: .4byte 0x0839126C
 
 	thumb_func_start Box2Dying
 Box2Dying: @ 0x080527AC

@@ -698,3 +698,16 @@ void Box2DoneFiringMissiles(void)
     if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         gCurrentSprite.pose = BOX2_POSE_WAITING_TO_RUN_INIT;
 }
+
+void Box2DyingInit(void)
+{
+    gCurrentSprite.pOam = sBox2Oam_BrainIdle;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.work4 = 0;
+    gCurrentSprite.pose = BOX2_POSE_DYING;
+
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Idle;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+}
