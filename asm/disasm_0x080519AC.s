@@ -9,43 +9,6 @@
 
 
 
-	thumb_func_start Box2FastRunningInit
-Box2FastRunningInit: @ 0x08051E1C
-	push {lr}
-	ldr r2, _08051E34 @ =gCurrentSprite
-	ldrh r1, [r2]
-	movs r0, #0x80
-	lsls r0, r0, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _08051E40
-	ldr r1, _08051E38 @ =gSubSpriteData1
-	ldr r0, _08051E3C @ =0x08391384
-	b _08051E44
-	.align 2, 0
-_08051E34: .4byte gCurrentSprite
-_08051E38: .4byte gSubSpriteData1
-_08051E3C: .4byte 0x08391384
-_08051E40:
-	ldr r1, _08051E60 @ =gSubSpriteData1
-	ldr r0, _08051E64 @ =0x083912F4
-_08051E44:
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	strh r0, [r1, #4]
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #0x1c
-	strb r0, [r1]
-	adds r1, #0xa
-	movs r0, #0xa
-	strb r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051E60: .4byte gSubSpriteData1
-_08051E64: .4byte 0x083912F4
 
 	thumb_func_start Box2FastRunning
 Box2FastRunning: @ 0x08051E68

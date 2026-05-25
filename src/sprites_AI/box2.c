@@ -203,3 +203,17 @@ void Box2SlowRunning(void)
             gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
     }
 }
+
+void Box2FastRunningInit(void)
+{
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_FastRunning_Right;
+    else
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_FastRunning_Left;
+
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = BOX2_POSE_FAST_RUNNING;
+    gCurrentSprite.work1 = 10;
+}
