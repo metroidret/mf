@@ -564,3 +564,40 @@ void Box2JumpingInit(void)
 
     SoundPlay(SOUND_BOX_JUMP);
 }
+
+void Box2Jumping(void)
+{
+    u8 offset;
+    s16 movement;
+
+    offset = gCurrentSprite.work4;
+    movement = sBox2JumpingSpeed[offset];
+    if (movement == SHORT_MAX)
+    {
+        gCurrentSprite.pose = BOX2_POSE_LANDING_INIT;
+    }
+    else
+    {
+        offset++;
+        gCurrentSprite.work4 = offset;
+        gSubSpriteData1.yPosition += movement;
+        if (offset == 0x17)
+        {
+            if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            {
+                ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+                    gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(1.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+                ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+                    gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(2.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+            }
+            else
+            {
+                ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+                    gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(2.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+                ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+                    gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(1.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+            }
+        }
+        Box2XMovement(0xc, BOX2_POSE_BONKING_INIT);
+    }
+}
