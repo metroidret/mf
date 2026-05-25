@@ -759,3 +759,15 @@ void Box2Exploding(void)
             gCurrentSprite.pose = BOX2_POSE_BRAIN_RISING_INIT;
     }
 }
+
+void Box2BrainRisingInit(void)
+{
+    gCurrentSprite.pOam = sBox2Oam_BrainRising;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_BRAIN_RISING;
+    gCurrentSprite.paletteRow = 0;
+    gCurrentSprite.work1 = 0;
+
+    RoomEffectStartStopEventBased(3);
+}

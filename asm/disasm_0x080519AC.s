@@ -37,32 +37,6 @@
 
 
 
-	thumb_func_start Box2BrainRisingInit
-Box2BrainRisingInit: @ 0x08052878
-	push {lr}
-	ldr r3, _080528A4 @ =gCurrentSprite
-	ldr r0, _080528A8 @ =0x083958C8
-	str r0, [r3, #0x18]
-	movs r0, #0
-	strb r0, [r3, #0x1c]
-	movs r2, #0
-	strh r0, [r3, #0x16]
-	adds r1, r3, #0
-	adds r1, #0x24
-	movs r0, #0x48
-	strb r0, [r1]
-	adds r0, r3, #0
-	adds r0, #0x20
-	strb r2, [r0]
-	adds r0, #0xe
-	strb r2, [r0]
-	movs r0, #3
-	bl RoomEffectStartStopEventBased
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080528A4: .4byte gCurrentSprite
-_080528A8: .4byte 0x083958C8
 
 	thumb_func_start Box2BrainRising
 Box2BrainRising: @ 0x080528AC
