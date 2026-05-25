@@ -156,3 +156,12 @@ void Box2WaitingToRunInit(void)
 
     SoundPlay(SOUND_BOX_WAIT_TO_RUN);
 }
+
+void Box2WaitingToRun(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded() && ++gCurrentSprite.work1 == 1)
+        gCurrentSprite.pose = BOX2_POSE_SLOW_RUNNING_INIT;
+
+    if (gCurrentSprite.work2 != 0)
+        gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+}
