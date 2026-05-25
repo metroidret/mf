@@ -601,3 +601,14 @@ void Box2Jumping(void)
         Box2XMovement(0xc, BOX2_POSE_BONKING_INIT);
     }
 }
+
+void Box2StoppingToFireMissilesInit(void)
+{
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_FinishedCrawling;
+    gCurrentSprite.work1 = 3;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_STOPPING_TO_FIRE_MISSILES;
+
+    SoundPlay(SOUND_BOX_FINISH_CRAWLING);
+}

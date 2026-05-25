@@ -27,35 +27,6 @@
 
 
 
-	thumb_func_start Box2StoppingToFireMissilesInit
-Box2StoppingToFireMissilesInit: @ 0x08052578
-	push {r4, lr}
-	ldr r2, _080525A8 @ =gSubSpriteData1
-	ldr r0, _080525AC @ =0x083913B4
-	str r0, [r2]
-	ldr r1, _080525B0 @ =gCurrentSprite
-	movs r0, #0x2e
-	adds r0, r0, r1
-	mov ip, r0
-	movs r3, #0
-	movs r0, #3
-	mov r4, ip
-	strb r0, [r4]
-	strb r3, [r2, #6]
-	strh r3, [r2, #4]
-	adds r1, #0x24
-	movs r0, #0x28
-	strb r0, [r1]
-	movs r0, #0x99
-	lsls r0, r0, #2
-	bl SoundPlay
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080525A8: .4byte gSubSpriteData1
-_080525AC: .4byte 0x083913B4
-_080525B0: .4byte gCurrentSprite
 
 	thumb_func_start Box2StoppingToFireMissiles
 Box2StoppingToFireMissiles: @ 0x080525B4
