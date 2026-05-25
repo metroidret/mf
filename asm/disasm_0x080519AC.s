@@ -42,28 +42,6 @@
 
 
 
-	thumb_func_start Box2PartSetBoxWorkVar2
-Box2PartSetBoxWorkVar2: @ 0x08052B38
-	push {lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	lsls r1, r1, #0x18
-	lsrs r3, r1, #0x18
-	ldr r2, _08052B5C @ =gSpriteData
-	lsls r1, r0, #3
-	subs r1, r1, r0
-	lsls r1, r1, #3
-	adds r1, r1, r2
-	adds r1, #0x2f
-	ldrb r0, [r1]
-	cmp r0, r3
-	bhs _08052B56
-	strb r3, [r1]
-_08052B56:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052B5C: .4byte gSpriteData
 
 	thumb_func_start Box2PartCenterSetImmunity
 Box2PartCenterSetImmunity: @ 0x08052B60

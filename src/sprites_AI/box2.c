@@ -850,3 +850,9 @@ void Box2Crawling(void)
 {
     Box2XMovement(1, BOX2_POSE_FINISHED_CRAWLING_INIT);
 }
+
+void Box2PartSetBoxWorkVar2(u8 slot, u8 value)
+{
+    if (gSpriteData[slot].work2 < value)
+        gSpriteData[slot].work2 = value;
+}
