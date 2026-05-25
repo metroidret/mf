@@ -18,52 +18,6 @@
 
 
 
-	thumb_func_start Box2LandingFromBonk
-Box2LandingFromBonk: @ 0x080521EC
-	push {lr}
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _08052240
-	ldr r2, _08052218 @ =gCurrentSprite
-	ldrh r1, [r2]
-	movs r0, #0x80
-	lsls r0, r0, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _08052220
-	ldr r1, _0805221C @ =gSamusData
-	ldrh r0, [r2, #4]
-	ldrh r1, [r1, #0x16]
-	cmp r0, r1
-	bls _08052238
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #0x3b
-	b _0805223E
-	.align 2, 0
-_08052218: .4byte gCurrentSprite
-_0805221C: .4byte gSamusData
-_08052220:
-	ldr r1, _08052234 @ =gSamusData
-	ldrh r0, [r2, #4]
-	ldrh r1, [r1, #0x16]
-	cmp r0, r1
-	bhs _08052238
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #0x3b
-	b _0805223E
-	.align 2, 0
-_08052234: .4byte gSamusData
-_08052238:
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #0x17
-_0805223E:
-	strb r0, [r1]
-_08052240:
-	pop {r0}
-	bx r0
 
 	thumb_func_start Box2LandingInit
 Box2LandingInit: @ 0x08052244

@@ -399,3 +399,24 @@ void Box2LandingFromBonkInit(void)
 
     SoundPlay(SOUND_27A);
 }
+
+void Box2LandingFromBonk(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        {
+            if (gCurrentSprite.xPosition > gSamusData.xPosition)
+                gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+            else
+                gCurrentSprite.pose = BOX2_POSE_WAITING_TO_RUN_INIT;
+        }
+        else
+        {
+            if (gCurrentSprite.xPosition < gSamusData.xPosition)
+                gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+            else
+                gCurrentSprite.pose = BOX2_POSE_WAITING_TO_RUN_INIT;
+        }
+    }
+}
