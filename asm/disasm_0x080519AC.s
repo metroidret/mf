@@ -40,40 +40,6 @@
 
 
 
-	thumb_func_start Box2IdleInit
-Box2IdleInit: @ 0x08052AE4
-	push {lr}
-	ldr r2, _08052AFC @ =gCurrentSprite
-	ldrh r1, [r2]
-	movs r0, #0x80
-	lsls r0, r0, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _08052B08
-	ldr r1, _08052B00 @ =gSubSpriteData1
-	ldr r0, _08052B04 @ =0x08391324
-	b _08052B0C
-	.align 2, 0
-_08052AFC: .4byte gCurrentSprite
-_08052B00: .4byte gSubSpriteData1
-_08052B04: .4byte 0x08391324
-_08052B08:
-	ldr r1, _08052B20 @ =gSubSpriteData1
-	ldr r0, _08052B24 @ =0x08391294
-_08052B0C:
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	strh r0, [r1, #4]
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #2
-	strb r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052B20: .4byte gSubSpriteData1
-_08052B24: .4byte 0x08391294
 
 	thumb_func_start Box2Crawling
 Box2Crawling: @ 0x08052B28

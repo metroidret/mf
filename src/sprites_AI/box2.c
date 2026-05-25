@@ -833,3 +833,15 @@ void Box2BrainFloating(void)
     if (--gCurrentSprite.work1 == 0)
         gCurrentSprite.status = 0;
 }
+
+void Box2IdleInit(void)
+{
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Crawling_Right;
+    else
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Crawling_Left;
+
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_CRAWLING;
+}
