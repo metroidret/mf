@@ -145,3 +145,14 @@ void Box2Init(void)
     SpriteSpawnPrimary(PSPRITE_ELECTRIC_WATER_DAMAGE_BOX_2, gCurrentSprite.roomSlot, 7, 0x10,
         gCurrentSprite.yPosition, gCurrentSprite.xPosition, 0);
 }
+
+void Box2WaitingToRunInit(void)
+{
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_WaitingToRun;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_WAITING_TO_RUN;
+    gCurrentSprite.work1 = 0;
+
+    SoundPlay(SOUND_BOX_WAIT_TO_RUN);
+}
