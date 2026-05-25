@@ -727,3 +727,15 @@ void Box2Dying(void)
         gSubSpriteData1.yPosition += BLOCK_TO_SUB_PIXEL(0.25f);
     }
 }
+
+void Box2ExplodingInit(void)
+{
+    gCurrentSprite.pOam = sBox2Oam_BrainExploding;
+    gCurrentSprite.animationDurationCounter = 0;
+    gCurrentSprite.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_EXPLODING;
+
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Idle;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+}

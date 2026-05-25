@@ -35,29 +35,6 @@
 
 
 
-	thumb_func_start Box2ExplodingInit
-Box2ExplodingInit: @ 0x080527E8
-	ldr r1, _08052808 @ =gCurrentSprite
-	ldr r0, _0805280C @ =0x083956B8
-	str r0, [r1, #0x18]
-	movs r2, #0
-	strb r2, [r1, #0x1c]
-	movs r3, #0
-	strh r2, [r1, #0x16]
-	adds r1, #0x24
-	movs r0, #0x46
-	strb r0, [r1]
-	ldr r0, _08052810 @ =gSubSpriteData1
-	ldr r1, _08052814 @ =0x0839126C
-	str r1, [r0]
-	strb r3, [r0, #6]
-	strh r2, [r0, #4]
-	bx lr
-	.align 2, 0
-_08052808: .4byte gCurrentSprite
-_0805280C: .4byte 0x083956B8
-_08052810: .4byte gSubSpriteData1
-_08052814: .4byte 0x0839126C
 
 	thumb_func_start Box2Exploding
 Box2Exploding: @ 0x08052818
