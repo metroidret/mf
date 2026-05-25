@@ -34,36 +34,6 @@
 
 
 
-	thumb_func_start Box2Dying
-Box2Dying: @ 0x080527AC
-	push {r4, lr}
-	ldr r4, _080527D0 @ =gSubSpriteData1
-	ldrh r0, [r4, #8]
-	ldrh r1, [r4, #0xa]
-	bl SpriteUtilCheckVerticalCollisionAtPositionSlopes
-	adds r1, r0, #0
-	ldr r0, _080527D4 @ =gPreviousVerticalCollisionCheck
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _080527DC
-	strh r1, [r4, #8]
-	ldr r0, _080527D8 @ =gCurrentSprite
-	adds r0, #0x24
-	movs r1, #0x45
-	strb r1, [r0]
-	b _080527E2
-	.align 2, 0
-_080527D0: .4byte gSubSpriteData1
-_080527D4: .4byte gPreviousVerticalCollisionCheck
-_080527D8: .4byte gCurrentSprite
-_080527DC:
-	ldrh r0, [r4, #8]
-	adds r0, #0x10
-	strh r0, [r4, #8]
-_080527E2:
-	pop {r4}
-	pop {r0}
-	bx r0
 
 	thumb_func_start Box2ExplodingInit
 Box2ExplodingInit: @ 0x080527E8

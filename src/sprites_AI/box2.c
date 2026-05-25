@@ -711,3 +711,19 @@ void Box2DyingInit(void)
     gSubSpriteData1.animationDurationCounter = 0;
     gSubSpriteData1.currentAnimationFrame = 0;
 }
+
+void Box2Dying(void)
+{
+    u32 blockTop;
+
+    blockTop = SpriteUtilCheckVerticalCollisionAtPositionSlopes(gSubSpriteData1.yPosition, gSubSpriteData1.xPosition);
+    if (gPreviousVerticalCollisionCheck != 0)
+    {
+        gSubSpriteData1.yPosition = blockTop;
+        gCurrentSprite.pose = BOX2_POSE_EXPLODING_INIT;
+    }
+    else
+    {
+        gSubSpriteData1.yPosition += BLOCK_TO_SUB_PIXEL(0.25f);
+    }
+}
