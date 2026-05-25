@@ -217,3 +217,42 @@ void Box2FastRunningInit(void)
     gCurrentSprite.pose = BOX2_POSE_FAST_RUNNING;
     gCurrentSprite.work1 = 10;
 }
+
+void Box2FastRunning(void)
+{
+    if (gSubSpriteData1.currentAnimationFrame == 3 && gSubSpriteData1.animationDurationCounter == 1)
+    {
+        SoundPlay(SOUND_279);
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            ParticleSet(gSubSpriteData1.yPosition - 0x3c,
+                gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(2.5f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+        else
+            ParticleSet(gSubSpriteData1.yPosition - 0x3c,
+                gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(2.5f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+    }
+
+    if (!Box2XMovement(8, BOX2_POSE_BONKING_INIT))
+    {
+        if (gCurrentSprite.work1 != 0)
+        {
+            gCurrentSprite.work1--;
+            return;
+        }
+        else
+        {
+            if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            {
+                if (gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(3.125f) > gSamusData.xPosition)
+                    gCurrentSprite.pose = BOX2_POSE_SKIDDING_INIT;
+            }
+            else
+            {
+                if (gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(3.125f) < gSamusData.xPosition)
+                    gCurrentSprite.pose = BOX2_POSE_SKIDDING_INIT;
+            }
+        }
+    }
+
+    if (gCurrentSprite.work2 != 0)
+        gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+}
