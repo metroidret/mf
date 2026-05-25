@@ -32,21 +32,6 @@
 
 
 
-	thumb_func_start Box2DoneFiringMissiles
-Box2DoneFiringMissiles: @ 0x08052758
-	push {lr}
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _0805276A
-	ldr r0, _08052770 @ =gCurrentSprite
-	adds r0, #0x24
-	movs r1, #0x17
-	strb r1, [r0]
-_0805276A:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052770: .4byte gCurrentSprite
 
 	thumb_func_start Box2DyingInit
 Box2DyingInit: @ 0x08052774

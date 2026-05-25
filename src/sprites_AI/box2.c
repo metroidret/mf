@@ -692,3 +692,9 @@ void Box2FiringMissiles(void)
             gCurrentSprite.primarySpriteRamSlot, y - 0x8c, x + 0x30, ended);
     }
 }
+
+void Box2DoneFiringMissiles(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+        gCurrentSprite.pose = BOX2_POSE_WAITING_TO_RUN_INIT;
+}
