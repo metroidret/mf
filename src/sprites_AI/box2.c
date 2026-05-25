@@ -386,3 +386,16 @@ void Box2Bonking(void)
             gSubSpriteData1.xPosition -= BLOCK_TO_SUB_PIXEL(0.09375f);
     }
 }
+
+void Box2LandingFromBonkInit(void)
+{
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Landing;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = BOX2_POSE_LANDING_FROM_BONK;
+    gCurrentSprite.work2 = 0;
+    gCurrentSprite.work4 = 0;
+
+    SoundPlay(SOUND_27A);
+}

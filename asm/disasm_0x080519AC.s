@@ -17,35 +17,6 @@
 
 
 
-	thumb_func_start Box2LandingFromBonkInit
-Box2LandingFromBonkInit: @ 0x080521AC
-	push {lr}
-	ldr r1, _080521DC @ =gSubSpriteData1
-	ldr r0, _080521E0 @ =0x08391224
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	movs r2, #0
-	strh r0, [r1, #4]
-	ldr r3, _080521E4 @ =gCurrentSprite
-	adds r1, r3, #0
-	adds r1, #0x24
-	movs r0, #0x4c
-	strb r0, [r1]
-	adds r0, r3, #0
-	adds r0, #0x2f
-	strb r2, [r0]
-	adds r0, #2
-	strb r2, [r0]
-	ldr r0, _080521E8 @ =0x0000027A
-	bl SoundPlay
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080521DC: .4byte gSubSpriteData1
-_080521E0: .4byte 0x08391224
-_080521E4: .4byte gCurrentSprite
-_080521E8: .4byte 0x0000027A
 
 	thumb_func_start Box2LandingFromBonk
 Box2LandingFromBonk: @ 0x080521EC
