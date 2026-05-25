@@ -480,3 +480,22 @@ void Box2FinishCrawling(void)
             gCurrentSprite.pose = BOX2_POSE_SLOW_RUNNING_INIT;
     }
 }
+
+void Box2JumpWarningInit(void)
+{
+    u16 samusX;
+
+    samusX = gSamusData.xPosition;
+    if (gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(1.875f) < samusX &&
+        gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(1.875f) > samusX)
+    {
+        Box2StoppingToFireMissilesInit();
+    }
+    else
+    {
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_JumpWarning;
+        gSubSpriteData1.animationDurationCounter = 0;
+        gSubSpriteData1.currentAnimationFrame = 0;
+        gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING;
+    }
+}

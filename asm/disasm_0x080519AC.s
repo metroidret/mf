@@ -23,44 +23,6 @@
 
 
 
-	thumb_func_start Box2JumpWarningInit
-Box2JumpWarningInit: @ 0x0805234C
-	push {r4, lr}
-	ldr r0, _08052370 @ =gSamusData
-	ldrh r4, [r0, #0x16]
-	ldr r0, _08052374 @ =gSubSpriteData1
-	ldrh r2, [r0, #0xa]
-	adds r1, r2, #0
-	subs r1, #0x78
-	adds r3, r0, #0
-	cmp r1, r4
-	bge _08052378
-	adds r0, r2, #0
-	adds r0, #0x78
-	cmp r0, r4
-	ble _08052378
-	bl Box2StoppingToFireMissilesInit
-	b _0805238A
-	.align 2, 0
-_08052370: .4byte gSamusData
-_08052374: .4byte gSubSpriteData1
-_08052378:
-	ldr r0, _08052390 @ =0x08391244
-	str r0, [r3]
-	movs r0, #0
-	strb r0, [r3, #6]
-	strh r0, [r3, #4]
-	ldr r0, _08052394 @ =gCurrentSprite
-	adds r0, #0x24
-	movs r1, #0x3c
-	strb r1, [r0]
-_0805238A:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052390: .4byte 0x08391244
-_08052394: .4byte gCurrentSprite
 
 	thumb_func_start Box2JumpWarning
 Box2JumpWarning: @ 0x08052398
