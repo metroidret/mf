@@ -256,3 +256,19 @@ void Box2FastRunning(void)
     if (gCurrentSprite.work2 != 0)
         gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
 }
+
+void Box2SkiddingInit(void)
+{
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Skidding_Right;
+    else
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Skidding_Left;
+
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = BOX2_POSE_SKIDDING;
+    gCurrentSprite.work1 = 0x20;
+
+    SoundPlay(SOUND_BOX_SKID);
+}

@@ -11,46 +11,6 @@
 
 
 
-	thumb_func_start Box2SkiddingInit
-Box2SkiddingInit: @ 0x08051F40
-	push {lr}
-	ldr r2, _08051F58 @ =gCurrentSprite
-	ldrh r1, [r2]
-	movs r0, #0x80
-	lsls r0, r0, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _08051F64
-	ldr r1, _08051F5C @ =gSubSpriteData1
-	ldr r0, _08051F60 @ =0x08391444
-	b _08051F68
-	.align 2, 0
-_08051F58: .4byte gCurrentSprite
-_08051F5C: .4byte gSubSpriteData1
-_08051F60: .4byte 0x08391444
-_08051F64:
-	ldr r1, _08051F88 @ =gSubSpriteData1
-	ldr r0, _08051F8C @ =0x08391424
-_08051F68:
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	strh r0, [r1, #4]
-	adds r1, r2, #0
-	adds r1, #0x24
-	movs r0, #0x1e
-	strb r0, [r1]
-	adds r1, #0xa
-	movs r0, #0x20
-	strb r0, [r1]
-	ldr r0, _08051F90 @ =0x00000263
-	bl SoundPlay
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051F88: .4byte gSubSpriteData1
-_08051F8C: .4byte 0x08391424
-_08051F90: .4byte 0x00000263
 
 	thumb_func_start Box2Skidding
 Box2Skidding: @ 0x08051F94
