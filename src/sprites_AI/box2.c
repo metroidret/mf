@@ -888,3 +888,81 @@ void Box2PartRemoveIgnoreProjectiles(void)
 {
     gCurrentSprite.status &= ~SPRITE_STATUS_IGNORE_PROJECTILES;
 }
+
+void Box2PartInit(void)
+{
+    gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
+    gCurrentSprite.drawDistanceTop = 0x18;
+    gCurrentSprite.drawDistanceBottom = 0x18;
+    gCurrentSprite.drawDistanceHorizontal = 0x10;
+    gCurrentSprite.pose = BOX2_POSE_CRAWLING;
+
+    if (gCurrentSprite.roomSlot <= BOX2_PART_TOP_SHELL)
+        gCurrentSprite.drawOrder = 11;
+    else
+        gCurrentSprite.drawOrder = 13;
+
+    switch (gCurrentSprite.roomSlot)
+    {
+        case BOX2_PART_FRONT_LEFT_LEG:
+        case BOX2_PART_FRONT_RIGHT_LEG:
+            gCurrentSprite.hitboxTop = -0x48;
+            gCurrentSprite.hitboxBottom = 0x48;
+            gCurrentSprite.hitboxLeft = -0x20;
+            gCurrentSprite.hitboxRight = 0x20;
+            gCurrentSprite.frozenPaletteRowOffset = 2;
+            gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
+            gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
+            gCurrentSprite.properties |= SP_IMMUNE_TO_PROJECTILES;
+            Box2SyncSubSprites();
+            if (gCurrentSprite.roomSlot == BOX2_PART_FRONT_RIGHT_LEG)
+                gCurrentSprite.currentAnimationFrame = 7;
+            break;
+
+        case BOX2_PART_TOP_SHELL:
+            gCurrentSprite.hitboxTop = -0x30;
+            gCurrentSprite.hitboxBottom = 0x40;
+            gCurrentSprite.hitboxLeft = -0x20;
+            gCurrentSprite.hitboxRight = 0x20;
+            gCurrentSprite.frozenPaletteRowOffset = 1;
+            gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
+            gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
+            gCurrentSprite.pOam = sBox2Oam_CenterUndamaged;
+            gCurrentSprite.animationDurationCounter = 0;
+            gCurrentSprite.currentAnimationFrame = 0;
+            SpriteUtilSyncCurrentSpritePositionWithSubSprite1Position();
+            break;
+
+        case BOX2_PART_DEFAULT_9:
+            gCurrentSprite.hitboxTop = -0x20;
+            gCurrentSprite.hitboxBottom = 0x20;
+            gCurrentSprite.hitboxLeft = -0x40;
+            gCurrentSprite.hitboxRight = 0x40;
+            gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
+            gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
+            gCurrentSprite.properties |= SP_IMMUNE_TO_PROJECTILES;
+            Box2SyncSubSprites();
+            break;
+
+        case BOX2_PART_DEFAULT_1:
+        case BOX2_PART_DEFAULT_3:
+        case BOX2_PART_DEFAULT_4:
+        case BOX2_PART_DEFAULT_5:
+        case BOX2_PART_BOTTOM_SHELL:
+        case BOX2_PART_DEFAULT_10:
+        case BOX2_PART_DEFAULT_11:
+            gCurrentSprite.hitboxTop = -4;
+            gCurrentSprite.hitboxBottom = 4;
+            gCurrentSprite.hitboxLeft = -4;
+            gCurrentSprite.hitboxRight = 4;
+            gCurrentSprite.samusCollision = SSC_NONE;
+            gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
+            gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
+            Box2SyncSubSprites();
+            break;
+
+        default:
+            gCurrentSprite.status = 0;
+            break;
+    }
+}
