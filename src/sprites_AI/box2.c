@@ -856,3 +856,30 @@ void Box2PartSetBoxWorkVar2(u8 slot, u8 value)
     if (gSpriteData[slot].work2 < value)
         gSpriteData[slot].work2 = value;
 }
+
+void Box2PartCenterSetImmunity(u8 slot)
+{
+    switch (gSpriteData[slot].pose)
+    {
+        case BOX2_POSE_LOWERING_TO_FIRE_MISSILES_INIT:
+        case BOX2_POSE_LOWERING_TO_FIRE_MISSILES:
+        case BOX2_POSE_FIRING_MISSILES:
+        case BOX2_POSE_DONE_FIRING_MISSILES:
+            if ((gSpriteData[slot].work0 & 3) != 0)
+                gCurrentSprite.properties |= SP_IMMUNE_TO_PROJECTILES;
+            else
+                gCurrentSprite.properties &= ~SP_IMMUNE_TO_PROJECTILES;
+            break;
+
+        case 0x3f: /* part-AI pose, see Box2Part decomp TODO */
+        case 0x40: /* part-AI pose, see Box2Part decomp TODO */
+        case 0x41: /* part-AI pose, see Box2Part decomp TODO */
+        case 0x42: /* part-AI pose, see Box2Part decomp TODO */
+            gCurrentSprite.properties |= SP_IMMUNE_TO_PROJECTILES;
+            break;
+
+        default:
+            gCurrentSprite.properties &= ~SP_IMMUNE_TO_PROJECTILES;
+            break;
+    }
+}
