@@ -23,6 +23,8 @@ extern const u8 sPauseDebugMiscFlags[5];
 
 extern const u8 sStatusScreenSectionSizes[5];
 
+extern const u8 sBlob_58217b_58225c[];
+
 extern const u16 sPauseDebugNumbersIncrementValues[5];
 extern const u16 sPauseDebugNumbersMaxValues[3];
 

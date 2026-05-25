@@ -353,4 +353,4 @@ const u8 sDebugSectionInfo[PAUSE_DEBUG_SECTION_END][5] = {
     },
 };
 
-static const u8 sBlob_58217b_58225c[] = INCBIN_U8("data/Blob_58217b_58225c.bin");
+const u8 sBlob_58217b_58225c[] = INCBIN_U8("data/Blob_58217b_58225c.bin");
