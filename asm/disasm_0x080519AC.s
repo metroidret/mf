@@ -2,59 +2,6 @@
 
     .syntax unified
 
-	thumb_func_start Box2SyncSubSprites
-Box2SyncSubSprites: @ 0x080519AC
-	push {r4, lr}
-	ldr r4, _08051A08 @ =gSubSpriteData1
-	ldrh r0, [r4, #4]
-	ldr r1, [r4]
-	lsls r0, r0, #3
-	adds r0, r0, r1
-	ldr r3, [r0]
-	ldr r2, _08051A0C @ =gCurrentSprite
-	ldrb r1, [r2, #0x1e]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #1
-	adds r0, r0, r3
-	ldrh r0, [r0]
-	ldr r1, _08051A10 @ =0x0879B560
-	lsls r0, r0, #2
-	adds r0, r0, r1
-	ldr r1, [r2, #0x18]
-	ldr r0, [r0]
-	cmp r1, r0
-	beq _080519DE
-	str r0, [r2, #0x18]
-	movs r0, #0
-	strb r0, [r2, #0x1c]
-	strh r0, [r2, #0x16]
-_080519DE:
-	ldrb r1, [r2, #0x1e]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #1
-	adds r0, r0, r3
-	ldrh r0, [r0, #2]
-	ldrh r1, [r4, #8]
-	adds r0, r0, r1
-	strh r0, [r2, #2]
-	ldrb r1, [r2, #0x1e]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #1
-	adds r0, r0, r3
-	ldrh r0, [r0, #4]
-	ldrh r4, [r4, #0xa]
-	adds r0, r0, r4
-	strh r0, [r2, #4]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08051A08: .4byte gSubSpriteData1
-_08051A0C: .4byte gCurrentSprite
-_08051A10: .4byte 0x0879B560
 
 	thumb_func_start Box2XMovement
 Box2XMovement: @ 0x08051A14

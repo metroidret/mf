@@ -17,3 +17,29 @@
 
 #include "structs/samus.h"
 #include "structs/sprite.h"
+
+/**
+ * @brief 519ac | 68 | Syncs the sub-sprite copy with the master sprite for Box2
+ *
+ */
+void Box2SyncSubSprites(void)
+{
+    MultiSpriteDataInfo_T pData;
+    u16 oamIdx;
+
+    pData = gSubSpriteData1.pMultiOam[gSubSpriteData1.currentAnimationFrame].pData;
+
+    oamIdx = pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_OAM_INDEX];
+
+    if (gCurrentSprite.pOam != sBox2FrameDataPointers[oamIdx])
+    {
+        gCurrentSprite.pOam = sBox2FrameDataPointers[oamIdx];
+        gCurrentSprite.animationDurationCounter = 0;
+        gCurrentSprite.currentAnimationFrame = 0;
+    }
+
+    gCurrentSprite.yPosition =
+        gSubSpriteData1.yPosition + pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_Y_OFFSET];
+    gCurrentSprite.xPosition =
+        gSubSpriteData1.xPosition + pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_X_OFFSET];
+}
