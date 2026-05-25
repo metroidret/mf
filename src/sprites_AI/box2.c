@@ -499,3 +499,9 @@ void Box2JumpWarningInit(void)
         gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING;
     }
 }
+
+void Box2JumpWarning(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+        gCurrentSprite.pose = BOX2_POSE_JUMPING_INIT;
+}

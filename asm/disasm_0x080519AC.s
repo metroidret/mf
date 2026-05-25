@@ -24,21 +24,6 @@
 
 
 
-	thumb_func_start Box2JumpWarning
-Box2JumpWarning: @ 0x08052398
-	push {lr}
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _080523AA
-	ldr r0, _080523B0 @ =gCurrentSprite
-	adds r0, #0x24
-	movs r1, #0x3d
-	strb r1, [r0]
-_080523AA:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080523B0: .4byte gCurrentSprite
 
 	thumb_func_start Box2JumpingInit
 Box2JumpingInit: @ 0x080523B4
