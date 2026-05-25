@@ -625,3 +625,13 @@ void Box2StoppingToFireMissiles(void)
         gCurrentSprite.pose = BOX2_POSE_LOWERING_TO_FIRE_MISSILES_INIT;
     }
 }
+
+void Box2LoweringToFireMissilesInit(void)
+{
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_LoweringToFireMissiles;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+    gCurrentSprite.pose = BOX2_POSE_LOWERING_TO_FIRE_MISSILES;
+
+    SoundPlay(SOUND_BOX_LOWER_TO_FIRE_BOMB);
+}

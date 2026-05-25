@@ -29,28 +29,6 @@
 
 
 
-	thumb_func_start Box2LoweringToFireMissilesInit
-Box2LoweringToFireMissilesInit: @ 0x080525F0
-	push {lr}
-	ldr r1, _08052614 @ =gSubSpriteData1
-	ldr r0, _08052618 @ =0x08391464
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	strh r0, [r1, #4]
-	ldr r0, _0805261C @ =gCurrentSprite
-	adds r0, #0x24
-	movs r1, #0x2a
-	strb r1, [r0]
-	movs r0, #0x9a
-	lsls r0, r0, #2
-	bl SoundPlay
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052614: .4byte gSubSpriteData1
-_08052618: .4byte 0x08391464
-_0805261C: .4byte gCurrentSprite
 
 	thumb_func_start Box2LoweringToFireMissiles
 Box2LoweringToFireMissiles: @ 0x08052620
