@@ -28,37 +28,6 @@
 
 
 
-	thumb_func_start Box2StoppingToFireMissiles
-Box2StoppingToFireMissiles: @ 0x080525B4
-	push {r4, r5, lr}
-	ldr r5, _080525D4 @ =gCurrentSprite
-	adds r4, r5, #0
-	adds r4, #0x2e
-	ldrb r0, [r4]
-	cmp r0, #1
-	bls _080525D8
-	bl SpriteUtilHasSubSprite1AnimationEnded
-	cmp r0, #0
-	beq _080525E8
-	ldrb r0, [r4]
-	subs r0, #1
-	strb r0, [r4]
-	b _080525E8
-	.align 2, 0
-_080525D4: .4byte gCurrentSprite
-_080525D8:
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _080525E8
-	adds r1, r5, #0
-	adds r1, #0x24
-	movs r0, #0x29
-	strb r0, [r1]
-_080525E8:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
 
 	thumb_func_start Box2LoweringToFireMissilesInit
 Box2LoweringToFireMissilesInit: @ 0x080525F0

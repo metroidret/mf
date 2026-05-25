@@ -612,3 +612,16 @@ void Box2StoppingToFireMissilesInit(void)
 
     SoundPlay(SOUND_BOX_FINISH_CRAWLING);
 }
+
+void Box2StoppingToFireMissiles(void)
+{
+    if (gCurrentSprite.work1 > 1)
+    {
+        if (SpriteUtilHasSubSprite1AnimationEnded())
+            gCurrentSprite.work1--;
+    }
+    else if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        gCurrentSprite.pose = BOX2_POSE_LOWERING_TO_FIRE_MISSILES_INIT;
+    }
+}
