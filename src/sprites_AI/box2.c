@@ -462,3 +462,21 @@ void Box2FinishedCrawlingInit(void)
 
     SoundPlay(SOUND_BOX_FINISH_CRAWLING);
 }
+
+void Box2FinishCrawling(void)
+{
+    if (gCurrentSprite.work1 > 1)
+    {
+        if (SpriteUtilHasSubSprite1AnimationEnded())
+            gCurrentSprite.work1--;
+    }
+    else if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        if (SpriteUtilCheckSamusOnCeilingLadder())
+            gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+        else if (gCurrentSprite.work2 != 0)
+            gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+        else
+            gCurrentSprite.pose = BOX2_POSE_SLOW_RUNNING_INIT;
+    }
+}

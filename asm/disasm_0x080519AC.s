@@ -22,55 +22,6 @@
 
 
 
-	thumb_func_start Box2FinishCrawling
-Box2FinishCrawling: @ 0x080522F0
-	push {r4, r5, lr}
-	ldr r4, _08052310 @ =gCurrentSprite
-	adds r5, r4, #0
-	adds r5, #0x2e
-	ldrb r0, [r5]
-	cmp r0, #1
-	bls _08052314
-	bl SpriteUtilHasSubSprite1AnimationEnded
-	cmp r0, #0
-	beq _08052346
-	ldrb r0, [r5]
-	subs r0, #1
-	strb r0, [r5]
-	b _08052346
-	.align 2, 0
-_08052310: .4byte gCurrentSprite
-_08052314:
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _08052346
-	bl SpriteUtilCheckSamusOnCeilingLadder
-	cmp r0, #0
-	beq _0805232C
-	adds r1, r4, #0
-	adds r1, #0x24
-	movs r0, #0x3b
-	b _08052344
-_0805232C:
-	adds r0, r4, #0
-	adds r0, #0x2f
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _0805233E
-	adds r1, r4, #0
-	adds r1, #0x24
-	movs r0, #0x3b
-	b _08052344
-_0805233E:
-	adds r1, r4, #0
-	adds r1, #0x24
-	movs r0, #0x19
-_08052344:
-	strb r0, [r1]
-_08052346:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
 
 	thumb_func_start Box2JumpWarningInit
 Box2JumpWarningInit: @ 0x0805234C
