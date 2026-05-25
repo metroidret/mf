@@ -635,3 +635,14 @@ void Box2LoweringToFireMissilesInit(void)
 
     SoundPlay(SOUND_BOX_LOWER_TO_FIRE_BOMB);
 }
+
+void Box2LoweringToFireMissiles(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationEnded())
+    {
+        gCurrentSprite.pose = BOX2_POSE_FIRING_MISSILES;
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_FiringMissiles;
+        gSubSpriteData1.animationDurationCounter = 0;
+        gSubSpriteData1.currentAnimationFrame = 0;
+    }
+}
