@@ -420,3 +420,15 @@ void Box2LandingFromBonk(void)
         }
     }
 }
+
+void Box2LandingInit(void)
+{
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Landing;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = BOX2_POSE_LANDING;
+    gCurrentSprite.work4 = 0;
+
+    SoundPlay(SOUND_27A);
+}

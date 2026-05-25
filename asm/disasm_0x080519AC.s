@@ -19,32 +19,6 @@
 
 
 
-	thumb_func_start Box2LandingInit
-Box2LandingInit: @ 0x08052244
-	push {lr}
-	ldr r1, _0805226C @ =gSubSpriteData1
-	ldr r0, _08052270 @ =0x08391224
-	str r0, [r1]
-	movs r0, #0
-	strb r0, [r1, #6]
-	movs r3, #0
-	strh r0, [r1, #4]
-	ldr r0, _08052274 @ =gCurrentSprite
-	adds r2, r0, #0
-	adds r2, #0x24
-	movs r1, #0x3a
-	strb r1, [r2]
-	adds r0, #0x31
-	strb r3, [r0]
-	ldr r0, _08052278 @ =0x0000027A
-	bl SoundPlay
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0805226C: .4byte gSubSpriteData1
-_08052270: .4byte 0x08391224
-_08052274: .4byte gCurrentSprite
-_08052278: .4byte 0x0000027A
 
 	thumb_func_start Box2Landing
 Box2Landing: @ 0x0805227C
