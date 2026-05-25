@@ -505,3 +505,62 @@ void Box2JumpWarning(void)
     if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         gCurrentSprite.pose = BOX2_POSE_JUMPING_INIT;
 }
+
+void Box2JumpingInit(void)
+{
+    u8 colliding = 0;
+
+    gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_Bonking;
+    gSubSpriteData1.animationDurationCounter = 0;
+    gSubSpriteData1.currentAnimationFrame = 0;
+
+    gCurrentSprite.pose = BOX2_POSE_JUMPING;
+    gCurrentSprite.work4 = 0;
+
+    if (!(gCurrentSprite.work2 & 0x80))
+    {
+        if (SpriteUtilCheckSamusOnCeilingLadder())
+            SpriteUtilMakeSpriteFaceSamusDirection();
+        else
+            SpriteUtilMakeSpriteFaceAwayFromSamusDirection();
+
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+        {
+            SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.5f),
+                gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(5.46875f));
+            if (gPreviousCollisionCheck != 0)
+                colliding++;
+
+            SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.5f),
+                gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(1.875f));
+            if (gPreviousCollisionCheck != 0)
+                colliding++;
+
+            if (colliding != 0)
+            {
+                gCurrentSprite.status &= ~SPRITE_STATUS_FACING_RIGHT;
+                gCurrentSprite.work2 = 0x82;
+            }
+        }
+        else
+        {
+            SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.5f),
+                gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(5.46875f));
+            if (gPreviousCollisionCheck != 0)
+                colliding++;
+
+            SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.5f),
+                gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(1.875f));
+            if (gPreviousCollisionCheck != 0)
+                colliding++;
+
+            if (colliding != 0)
+            {
+                gCurrentSprite.status |= SPRITE_STATUS_FACING_RIGHT;
+                gCurrentSprite.work2 = 0x82;
+            }
+        }
+    }
+
+    SoundPlay(SOUND_BOX_JUMP);
+}
