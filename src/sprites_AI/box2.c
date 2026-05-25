@@ -432,3 +432,22 @@ void Box2LandingInit(void)
 
     SoundPlay(SOUND_27A);
 }
+
+void Box2Landing(void)
+{
+    if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+    {
+        if (gCurrentSprite.work2 == 0)
+        {
+            gCurrentSprite.pose = BOX2_POSE_STOPPING_TO_FIRE_MISSILES_INIT;
+        }
+        else
+        {
+            gCurrentSprite.work2--;
+            if ((gCurrentSprite.work2 & 0x7f) == 0)
+                gCurrentSprite.work2 = 0;
+
+            gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+        }
+    }
+}

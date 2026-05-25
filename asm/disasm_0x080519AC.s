@@ -20,39 +20,6 @@
 
 
 
-	thumb_func_start Box2Landing
-Box2Landing: @ 0x0805227C
-	push {lr}
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _080522B0
-	ldr r1, _08052298 @ =gCurrentSprite
-	adds r3, r1, #0
-	adds r3, #0x2f
-	ldrb r0, [r3]
-	cmp r0, #0
-	bne _0805229C
-	adds r1, #0x24
-	movs r0, #0x27
-	b _080522AE
-	.align 2, 0
-_08052298: .4byte gCurrentSprite
-_0805229C:
-	subs r0, #1
-	strb r0, [r3]
-	movs r2, #0x7f
-	ands r2, r0
-	cmp r2, #0
-	bne _080522AA
-	strb r2, [r3]
-_080522AA:
-	adds r1, #0x24
-	movs r0, #0x3b
-_080522AE:
-	strb r0, [r1]
-_080522B0:
-	pop {r0}
-	bx r0
 
 	thumb_func_start Box2FinishedCrawlingInit
 Box2FinishedCrawlingInit: @ 0x080522B4
