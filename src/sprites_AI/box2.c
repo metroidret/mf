@@ -180,3 +180,26 @@ void Box2SlowRunningInit(void)
     gCurrentSprite.pose = BOX2_POSE_SLOW_RUNNING;
     gCurrentSprite.work1 = 0;
 }
+
+void Box2SlowRunning(void)
+{
+    if (gSubSpriteData1.currentAnimationFrame == 3 && gSubSpriteData1.animationDurationCounter == 1)
+    {
+        SoundPlay(SOUND_279);
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.625f),
+                gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(1.875f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+        else
+            ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.625f),
+                gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(1.875f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+    }
+
+    if (!Box2XMovement(gCurrentSprite.work1, BOX2_POSE_BONKING_INIT))
+    {
+        if (SpriteUtilHasSubSprite1AnimationNearlyEnded() && ++gCurrentSprite.work1 == 7)
+            gCurrentSprite.pose = BOX2_POSE_FAST_RUNNING_INIT;
+
+        if (gCurrentSprite.work2 != 0)
+            gCurrentSprite.pose = BOX2_POSE_JUMP_WARNING_INIT;
+    }
+}
