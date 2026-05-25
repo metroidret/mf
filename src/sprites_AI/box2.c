@@ -739,3 +739,23 @@ void Box2ExplodingInit(void)
     gSubSpriteData1.animationDurationCounter = 0;
     gSubSpriteData1.currentAnimationFrame = 0;
 }
+
+void Box2Exploding(void)
+{
+    u16 onscreenX;
+
+    if ((gFrameCounter8Bit & 7) == 0)
+    {
+        if (gCurrentSprite.paletteRow == 0)
+            gCurrentSprite.paletteRow = 0xb;
+        else
+            gCurrentSprite.paletteRow = 0;
+    }
+
+    onscreenX = (gCurrentSprite.xPosition >> 2) - (gBg1XPosition >> 2);
+    if ((u16)(onscreenX - 0x19) <= 0xBE)
+    {
+        if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
+            gCurrentSprite.pose = BOX2_POSE_BRAIN_RISING_INIT;
+    }
+}

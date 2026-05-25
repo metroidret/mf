@@ -36,56 +36,6 @@
 
 
 
-	thumb_func_start Box2Exploding
-Box2Exploding: @ 0x08052818
-	push {r4, lr}
-	ldr r0, _08052838 @ =gFrameCounter8Bit
-	ldrb r0, [r0]
-	movs r2, #7
-	ands r2, r0
-	ldr r4, _0805283C @ =gCurrentSprite
-	cmp r2, #0
-	bne _08052842
-	adds r1, r4, #0
-	adds r1, #0x20
-	ldrb r0, [r1]
-	cmp r0, #0
-	bne _08052840
-	movs r0, #0xb
-	strb r0, [r1]
-	b _08052842
-	.align 2, 0
-_08052838: .4byte gFrameCounter8Bit
-_0805283C: .4byte gCurrentSprite
-_08052840:
-	strb r2, [r1]
-_08052842:
-	ldrh r0, [r4, #4]
-	lsrs r0, r0, #2
-	ldr r1, _08052870 @ =gBg1XPosition
-	ldrh r1, [r1]
-	lsrs r1, r1, #2
-	subs r0, r0, r1
-	lsls r0, r0, #0x10
-	ldr r1, _08052874 @ =0xFFE70000
-	adds r0, r0, r1
-	lsrs r0, r0, #0x10
-	cmp r0, #0xbe
-	bhi _0805286A
-	bl SpriteUtilHasSubSprite1AnimationNearlyEnded
-	cmp r0, #0
-	beq _0805286A
-	adds r1, r4, #0
-	adds r1, #0x24
-	movs r0, #0x47
-	strb r0, [r1]
-_0805286A:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052870: .4byte gBg1XPosition
-_08052874: .4byte 0xFFE70000
 
 	thumb_func_start Box2BrainRisingInit
 Box2BrainRisingInit: @ 0x08052878
