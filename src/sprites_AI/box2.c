@@ -646,3 +646,49 @@ void Box2LoweringToFireMissiles(void)
         gSubSpriteData1.currentAnimationFrame = 0;
     }
 }
+
+void Box2FiringMissiles(void)
+{
+    u32 ended;
+    u16 y;
+    u16 x;
+    u32 packed;
+    u32 *p;
+
+    ended = SpriteUtilHasSubSprite1AnimationEnded();
+    if (ended)
+    {
+        gCurrentSprite.pose = BOX2_POSE_DONE_FIRING_MISSILES;
+        gSubSpriteData1.pMultiOam = sBox2MultiSpriteData_DoneFiringMissiles;
+        gSubSpriteData1.animationDurationCounter = 0;
+        gSubSpriteData1.currentAnimationFrame = 0;
+        SoundPlay(SOUND_BOX_DONE_FIRING_BOMB);
+        return;
+    }
+
+    y = gCurrentSprite.yPosition;
+    x = gCurrentSprite.xPosition;
+    p = (u32*)&gSubSpriteData1;
+    packed = p[1] & 0x00FFFFFF;
+
+    if (packed == 0x00080000)
+    {
+        SpriteSpawnSecondary(SSPRITE_BOX_2_MISSILE, 0, gCurrentSprite.spritesetGfxSlot,
+            gCurrentSprite.primarySpriteRamSlot, y - 0x8c, x - 0x30, ended);
+    }
+    else if (packed == 0x00080003)
+    {
+        SpriteSpawnSecondary(SSPRITE_BOX_2_MISSILE, 1, gCurrentSprite.spritesetGfxSlot,
+            gCurrentSprite.primarySpriteRamSlot, y - 0x90, x - 0x18, ended);
+    }
+    else if (packed == 0x00080006)
+    {
+        SpriteSpawnSecondary(SSPRITE_BOX_2_MISSILE, 2, gCurrentSprite.spritesetGfxSlot,
+            gCurrentSprite.primarySpriteRamSlot, y - 0x90, x + 0x18, ended);
+    }
+    else if (packed == 0x00080009)
+    {
+        SpriteSpawnSecondary(SSPRITE_BOX_2_MISSILE, 3, gCurrentSprite.spritesetGfxSlot,
+            gCurrentSprite.primarySpriteRamSlot, y - 0x8c, x + 0x30, ended);
+    }
+}
