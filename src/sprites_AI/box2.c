@@ -334,3 +334,55 @@ void Box2BonkingInit(void)
 
     ScreenShakeStartHorizontal(20, 0x81);
 }
+
+void Box2Bonking(void)
+{
+    u32 blockTop;
+    u8 offset;
+    s16 movement;
+
+    blockTop = SpriteUtilCheckVerticalCollisionAtPositionSlopes(gSubSpriteData1.yPosition, gSubSpriteData1.xPosition);
+    if (gPreviousVerticalCollisionCheck != 0)
+    {
+        gSubSpriteData1.yPosition = blockTop;
+        gCurrentSprite.pose = BOX2_POSE_LANDING_FROM_BONK_INIT;
+    }
+    else
+    {
+        offset = gCurrentSprite.work4;
+        movement = sBox2BonkingSpeed[offset];
+        if (movement == SHORT_MAX)
+        {
+            movement = sBox2BonkingSpeed[offset - 1];
+            gSubSpriteData1.yPosition += movement;
+        }
+        else
+        {
+            offset++;
+            gCurrentSprite.work4 = offset;
+            gSubSpriteData1.yPosition += movement;
+            if (offset == 0x10)
+            {
+                if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+                {
+                    ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.8125f),
+                        gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(1.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+                    ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.8125f),
+                        gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(2.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+                }
+                else
+                {
+                    ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.8125f),
+                        gSubSpriteData1.xPosition - BLOCK_TO_SUB_PIXEL(2.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+                    ParticleSet(gSubSpriteData1.yPosition - BLOCK_TO_SUB_PIXEL(0.8125f),
+                        gSubSpriteData1.xPosition + BLOCK_TO_SUB_PIXEL(1.0f), PE_SPRITE_ENTER_OR_EXIT_WATER);
+                }
+            }
+        }
+
+        if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
+            gSubSpriteData1.xPosition += BLOCK_TO_SUB_PIXEL(0.09375f);
+        else
+            gSubSpriteData1.xPosition -= BLOCK_TO_SUB_PIXEL(0.09375f);
+    }
+}
