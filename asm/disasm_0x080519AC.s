@@ -39,25 +39,6 @@
 
 
 
-	thumb_func_start Box2BrainFloating
-Box2BrainFloating: @ 0x08052AC4
-	push {lr}
-	ldr r2, _08052AE0 @ =gCurrentSprite
-	adds r1, r2, #0
-	adds r1, #0x2e
-	ldrb r0, [r1]
-	subs r0, #1
-	strb r0, [r1]
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #0
-	bne _08052ADC
-	strh r0, [r2]
-_08052ADC:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052AE0: .4byte gCurrentSprite
 
 	thumb_func_start Box2IdleInit
 Box2IdleInit: @ 0x08052AE4

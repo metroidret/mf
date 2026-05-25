@@ -827,3 +827,9 @@ void Box2BrainRising(void)
 
     gCurrentSprite.work1++;
 }
+
+void Box2BrainFloating(void)
+{
+    if (--gCurrentSprite.work1 == 0)
+        gCurrentSprite.status = 0;
+}
