@@ -166,7 +166,7 @@ void MessageBannerPopUp(void)
             if (roomSlot != 0)
                 TextDrawMessageBanner(roomSlot, gCurrentSprite.spritesetGfxSlot, gCurrentSprite.work1);
             else
-                DisplayMessage(gCurrentSprite.spritesetGfxSlot, gCurrentSprite.work1);
+                TextDisplayMessage(gCurrentSprite.spritesetGfxSlot, gCurrentSprite.work1);
         }
     }
     else if (SpriteUtilHasCurrentAnimationEnded())

@@ -89,7 +89,7 @@ void TextDrawMessageBanner(u8 messageId, u8 gfxSlot, u8 stage)
  * @param gfxSlot Graphics slot 
  * @param stage Stage
  */
-void DisplayMessage(u8 gfxSlot, u8 stage) 
+void TextDisplayMessage(u8 gfxSlot, u8 stage) 
 {
     u32 index;
     u16* pText;
@@ -104,9 +104,8 @@ void DisplayMessage(u8 gfxSlot, u8 stage)
         
         if (index)
             index = sAbilityRamValues[index].messageNumber;
-        else
-            if ((u8)(gEquipment.securityHatchLevel - 1) < 4)
-                index = gEquipment.securityHatchLevel - 1;
+        else if (gEquipment.securityHatchLevel >= 1 && gEquipment.securityHatchLevel <= 4)
+            index = gEquipment.securityHatchLevel - 1;
         
         pText = sMessageTextPointers[gLanguage][index];
     }
@@ -150,7 +149,7 @@ void DisplayMessage(u8 gfxSlot, u8 stage)
  * 
  * @param action Type of clearing action
  */
-void ClearTextGraphics(u8 action)
+void TextClearGraphics(u8 action)
 {
     if (action == 1)
     {
@@ -186,5 +185,7 @@ void ClearTextGraphics(u8 action)
         BitFill(3, 0, VRAM_BASE + 0x6800, 0x800, 32);
     }
     else
+    {
         BitFill(3, 0, VRAM_BASE + 0x6000, 0x2000, 32);
+    }
 }

@@ -87,7 +87,7 @@ _08079B94:
 	cmp r0, #0xe0
 	bls _08079BA2
 	movs r0, #2
-	bl ClearTextGraphics
+	bl TextClearGraphics
 _08079BA2:
 	ldrb r0, [r5, #0x18]
 	lsls r0, r0, #1
@@ -138,7 +138,7 @@ _08079BF0:
 	movs r4, #0
 	strh r7, [r0]
 	movs r0, #1
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	ldrb r0, [r5, #0x18]
 	lsls r0, r0, #1
 	adds r1, r5, #0
@@ -676,7 +676,7 @@ _08079FE6:
 	cmp r3, r0
 	ble _0807A020
 	movs r0, #2
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	ldrb r0, [r4, #0x18]
 	lsls r0, r0, #1
 	adds r0, r0, r5
@@ -1116,7 +1116,7 @@ _0807A344:
 _0807A34A:
 	strb r0, [r1]
 	movs r0, #0
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	movs r0, #1
 	bl NavigationConversationUpdateTarget
 	bl NavigationConversationSetupOam
@@ -1360,7 +1360,7 @@ _0807A51A:
 	adds r0, #0x35
 	strb r5, [r0]
 	movs r0, #0
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	movs r0, #3
 	strb r0, [r4, #7]
 	strb r5, [r4, #6]
@@ -1690,7 +1690,7 @@ _0807A7CA:
 	adds r0, #0x35
 	strb r4, [r0]
 	movs r0, #1
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	movs r0, #1
 	strb r0, [r6]
 	movs r0, #3
@@ -1935,7 +1935,7 @@ _0807A9B8:
 	strb r2, [r0]
 _0807A9DA:
 	movs r0, #1
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	ldr r2, _0807AA14 @ =gNonGameplayRam
 	ldrb r1, [r2, #0x19]
 	lsls r0, r1, #1
@@ -2428,7 +2428,7 @@ _0807AD6C:
 	strb r1, [r0]
 _0807ADA4:
 	movs r0, #1
-	bl ClearTextGraphics
+	bl TextClearGraphics
 	ldrb r1, [r4, #0x19]
 	lsls r0, r1, #1
 	adds r0, r0, r1
