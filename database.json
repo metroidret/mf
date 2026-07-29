@@ -26841,10 +26841,18 @@
     "size": 1
   },
   {
-    "path": "Blob_79c5c0_79e6a0.bin",
-    "count": "0x20E0",
+    "path": "Blob_79c5c0_79cdd8.bin",
+    "count": "0x818",
     "addr": {
       "us": "0x79C5C0"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_79ce10_79e6a0.bin",
+    "count": "0x1890",
+    "addr": {
+      "us": "0x79CE10"
     },
     "size": 1
   },

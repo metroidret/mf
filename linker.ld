@@ -435,12 +435,14 @@ SECTIONS {
         src/escape.o(.text);
         src/hud_generic.o(.text);
         src/particle.o(.text);
-
-        asm/update_menu_oam_data_id.o(.text);
-
+        src/oam_id.o(.text);
         src/event.o(.text);
 
         asm/disasm_0x08074ffc.o(.text);
+
+        src/text.o(.text);
+
+        asm/disasm_0x08079afc.o(.text);
 
         src/menus/pause_debug.o(.text);
 
