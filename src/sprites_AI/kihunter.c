@@ -1239,9 +1239,9 @@ void KihunterHiveSpawnKihunter(void)
     ramSlot = SpriteSpawnPrimary(PSPRITE_KIHUNTER_FLYING, 0, gCurrentSprite.spritesetGfxSlot, SSP_X_ABSORBABLE_BY_SAMUS,
         gCurrentSprite.yPosition + BLOCK_TO_SUB_PIXEL(2.0f), gCurrentSprite.xPosition, flip);
     // BUG: Doesn't check if spawning failed, so ramSlot can go out of bounds
-    #ifdef BUGFIX
+#ifdef BUGFIX
     if (ramSlot != UCHAR_MAX)
-    #endif // BUGFIX
+#endif // BUGFIX
     {
         gSpriteData[ramSlot].pose = SPRITE_POSE_SPAWNING_FROM_X_INIT;
         gSpriteData[ramSlot].status |= SPRITE_STATUS_MOSAIC | SPRITE_STATUS_IGNORE_PROJECTILES;
@@ -1272,9 +1272,9 @@ void KihunterBugInit(void)
     gCurrentSprite.pOam = sKihunterBugOam;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    #ifndef BUGFIX
+#ifndef BUGFIX
     gCurrentSprite.work4 = 0; // Unnecessary assignment
-    #endif // !BUGFIX
+#endif // !BUGFIX
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.drawOrder = 12;

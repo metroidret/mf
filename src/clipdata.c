@@ -279,7 +279,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
 
     result = CLIPDATA_TYPE_AIR;
 
-    #ifdef BUGFIX
+#ifdef BUGFIX
 
     // This function is copied to RAM, presumably for performance reasons, because it is often
     // called many times per frame and code runs faster in RAM. However, the switch statement gets
@@ -467,7 +467,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
         result = pCollision->type;
     }
 
-    #else // BUGFIX
+#else // BUGFIX
 
     switch (pCollision->type)
     {
@@ -645,7 +645,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
             break;
     }
 
-    #endif // BUGFIX
+#endif // BUGFIX
 
     return result;
 }
@@ -793,9 +793,9 @@ u32 ClipdataCheckElevatorDisabled(u16 movementClip)
 {
     s32 i;
     s32 j;
-    #ifndef BUGFIX
+#ifndef BUGFIX
     u8 disabledElevators[ELEVATOR_END] = {0};
-    #endif // !BUGFIX
+#endif // !BUGFIX
 
     gLastElevatorUsed = UCHAR_MAX;
     j = FALSE;
@@ -833,10 +833,10 @@ u32 ClipdataCheckElevatorDisabled(u16 movementClip)
             // Check in the event range
             if (sElevatorDisabledEvents[j].eventStart <= gEventCounter && gEventCounter < sElevatorDisabledEvents[j].eventEnd)
             {
-                #ifdef BUGFIX
+#ifdef BUGFIX
                 if (sElevatorDisabledEvents[j].disabledElevators[gLastElevatorUsed])
                     return TRUE;
-                #else // !BUGFIX
+#else // !BUGFIX
                 // Apply flags
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_OPERATIONS_DECK]    |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_OPERATIONS_DECK];
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY]              |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY];
@@ -849,16 +849,16 @@ u32 ClipdataCheckElevatorDisabled(u16 movementClip)
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY_POWER_OUTAGE] |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY_POWER_OUTAGE];
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_HABITATIONS_DECK]   |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_HABITATIONS_DECK];
                 disabledElevators[ELEVATOR_RESTRICTED_ZONE_TO_SECTOR_1]     |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_RESTRICTED_ZONE_TO_SECTOR_1];
-                #endif // BUGFIX
+#endif // BUGFIX
             }
         }
 
-        #ifndef BUGFIX
+#ifndef BUGFIX
         j = disabledElevators[gLastElevatorUsed];
 
         if (j)
             return j;
-        #endif // !BUGFIX
+#endif // !BUGFIX
     }
 
     // Get trigger type and set elevator direction

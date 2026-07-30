@@ -346,9 +346,9 @@ void GerutaTurningAround(void)
         // BUG: Hitbox isn't updated after turning around
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
         gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
-        #ifdef BUGFIX
+#ifdef BUGFIX
         GerutaSetIdleHitboxes();
-        #endif // BUGFIX
+#endif // BUGFIX
     }
 }
 

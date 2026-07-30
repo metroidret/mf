@@ -286,11 +286,11 @@ void PreBoxCeilingDebris(void)
             break;
 
         case SPRITE_POSE_IDLE:
-            #ifdef BUGFIX
+#ifdef BUGFIX
             if (EventCheckOn_BoxRumble())
-            #else // !BUGFIX
+#else // !BUGFIX
             if (PreBoxCeilingDebrisCheckSamusInRange(6, 6) && EventCheckOn_BoxRumble())
-            #endif // BUGFIX
+#endif // BUGFIX
             {
                 gCurrentSprite.pose = 0x18;
                 gCurrentSprite.pOam = sShakeTriggerOam_TriggeredNotRestrictedLab;

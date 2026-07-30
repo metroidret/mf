@@ -342,7 +342,7 @@ u32 PauseDebugModifyValues(void)
             for (updateFlag = EVENT_NONE; updateFlag <= editflag; updateFlag++)
                 EventSet(updateFlag);
             
-            #ifdef BUGFIX
+#ifdef BUGFIX
             // Suits aren't equipped in EventSet, so equip them here
             if (gAbilityCount >= ABILITY_COUNT_VARIA_SUIT)
             {
@@ -351,7 +351,7 @@ u32 PauseDebugModifyValues(void)
                 if (gAbilityCount >= ABILITY_COUNT_GRAVITY_SUIT)
                     gEquipment.suitMiscStatus |= SMF_GRAVITY_SUIT;
             }
-            #endif // BUGFIX
+#endif // BUGFIX
 
             // Restore event based effect
             gCurrentEventBasedEffect = ebeBackup;

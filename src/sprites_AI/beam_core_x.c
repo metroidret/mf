@@ -468,10 +468,10 @@ void BeamCoreXEyeTransformation(void)
 
 void BeamCoreXEyeHandleRotation(void)
 {
-    #ifndef BUGFIX
+#ifndef BUGFIX
     u8 intensity;
     s32 targetRotation;
-    #endif // !BUGFIX
+#endif // !BUGFIX
 
     u8 primary;
     u8 shellSlot;
@@ -488,9 +488,9 @@ void BeamCoreXEyeHandleRotation(void)
     s16 yOffset;
     s16 xOffset;
 
-    #ifndef BUGFIX
+#ifndef BUGFIX
     intensity = Q_8_8(1.f / 128);
-    #endif // !BUGFIX
+#endif // !BUGFIX
 
     primary = gCurrentSprite.primarySpriteRamSlot;
     shellSlot = gCurrentSprite.roomSlot;
@@ -501,9 +501,9 @@ void BeamCoreXEyeHandleRotation(void)
     spriteY = gSpriteData[primary].yPosition;
     spriteX = gSpriteData[primary].xPosition;
 
-    #ifdef BUGFIX
+#ifdef BUGFIX
     oamRotation = SpriteUtilMakeSpriteRotateTowardsTarget(oamRotation, targetY, targetX, spriteY, spriteX);
-    #else // !BUGFIX
+#else // !BUGFIX
     // OVERSIGHT: This is copied from SpriteUtilMakeSpriteRotateTowardsTarget
     if (targetY < spriteY)
     {
@@ -607,7 +607,7 @@ void BeamCoreXEyeHandleRotation(void)
         else if ((u16)(oamRotation - Q_8_8(3.f / 8) - 1) >= Q_8_8(0.5f))
             oamRotation -= intensity;
     }
-    #endif
+#endif
 
     gCurrentSprite.work1 = oamRotation;
     gSpriteData[shellSlot].rotation = oamRotation;

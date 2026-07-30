@@ -623,14 +623,14 @@ void YardRolling(void)
             if (gPreviousCollisionCheck != COLLISION_AIR)
             {
                 // Still on ground or slope, check block above bottom-left
-                #ifdef BUGFIX
+#ifdef BUGFIX
                 SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition - BLOCK_TO_SUB_PIXEL(0.0625f),
                     gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(0.5f));
-                #else // !BUGFIX
+#else // !BUGFIX
                 // BUG: Y position should be subtracted by one pixel
                 SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
                     gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(0.5f));
-                #endif // BUGFIX
+#endif // BUGFIX
                 if (gPreviousCollisionCheck == COLLISION_SOLID)
                 {
                     // Hit a wall

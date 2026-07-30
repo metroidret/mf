@@ -254,12 +254,12 @@ void ChootSpitSpawning(void)
 
 void ChootSpitExplodingInit(void)
 {
-    #ifdef BUGFIX
+#ifdef BUGFIX
     SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition);
-    #else // !BUGFIX
+#else // !BUGFIX
     // BUG: Center of spit should be checked for collision, not one block to the right
     SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(1.0f));
-    #endif // BUGFIX
+#endif // BUGFIX
     if (gPreviousCollisionCheck & COLLISION_FLAGS_UNKNOWN_F0)
         gCurrentSprite.pOam = sChootSpitOam_ExplodingOnGround;
     else

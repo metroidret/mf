@@ -9416,11 +9416,11 @@ static const u16 sSamusOam_ShootingOnVerticalLadder_DiagonalDown_Right_Frame0[OA
 static const u16 sSamusOam_StartingWallJump_Left_Frame0[OAM_DATA_SIZE(3)] = {
     3,
     OAM_ENTRY(-22, -33, OAM_DIMS_16x16, OAM_NO_FLIP, 0x4, 0, 0),
-    #ifdef BUGFIX
+#ifdef BUGFIX
     OAM_ENTRY(-6, -33, OAM_DIMS_8x16, OAM_NO_FLIP, 0x6, 0, 0),
-    #else // !BUGFIX
+#else // !BUGFIX
     OAM_ENTRY(250, -33, OAM_DIMS_8x16, OAM_NO_FLIP, 0x6, 0, 0),
-    #endif // BUGFIX
+#endif // BUGFIX
     OAM_ENTRY(-24, -17, OAM_DIMS_32x16, OAM_NO_FLIP, 0x0, 0, 0),
 };
 

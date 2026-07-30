@@ -7175,11 +7175,11 @@ void SamusUpdateGraphics(u8 direction)
                     else if (gEquipment.suitMiscStatus & SMF_GRAVITY_SUIT)
                         pPalette = sSamusPal_Default_Row0_Gravity;
                     else if (gEquipment.suitMiscStatus & SMF_VARIA_SUIT)
-                        #ifdef BUGFIX
+#ifdef BUGFIX
                         pPalette = sSamusPal_Default_Row0_Varia;
-                        #else // !BUFIX
+#else // !BUFIX
                         pPalette = sSamusPal_Default_Row0_Fusion + PAL_ROW;
-                        #endif // BUGFIX
+#endif // BUGFIX
                     else
                         pPalette = sSamusPal_Default_Row0_Fusion;
                 }
@@ -7283,11 +7283,11 @@ void SamusUpdateGraphics(u8 direction)
                 else if (gEquipment.suitMiscStatus & SMF_GRAVITY_SUIT)
                     pPalette = sSamusPal_Default_Row0_Gravity;
                 else if (gEquipment.suitMiscStatus & SMF_VARIA_SUIT)
-                    #ifdef BUGFIX
+#ifdef BUGFIX
                     pPalette = sSamusPal_Default_Row0_Varia;
-                    #else // !BUGFIX
+#else // !BUGFIX
                     pPalette = sSamusPal_Default_Row0_Fusion + PAL_ROW;
-                    #endif // BUGFIX
+#endif // BUGFIX
                 else
                     pPalette = sSamusPal_Default_Row0_Fusion;
 

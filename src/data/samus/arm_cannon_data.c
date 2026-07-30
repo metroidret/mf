@@ -640,15 +640,15 @@ static const u16 sArmCannonOam_Frame_Unused_28a084[OAM_DATA_SIZE(3)] = {
 
 static const u16 sArmCannonOam_Shooting_DiagonalUp_Right_Frame0[OAM_DATA_SIZE(3)] = {
     3 | ARM_CANNON_OAM_ORDER_BEHIND,
-    #ifdef BUGFIX
+#ifdef BUGFIX
     OAM_ENTRY(2, -47, OAM_DIMS_16x16, OAM_NO_FLIP, 0x40, 1, 0),
     OAM_ENTRY(18, -39, OAM_DIMS_16x16, OAM_NO_FLIP, 0x42, 1, 0),
     OAM_ENTRY(2, -31, OAM_DIMS_16x16, OAM_NO_FLIP, 0x44, 1, 0),
-    #else // !BUGFIX
+#else // !BUGFIX
     OAM_ENTRY(3, -47, OAM_DIMS_16x16, OAM_NO_FLIP, 0x40, 1, 0),
     OAM_ENTRY(19, -39, OAM_DIMS_16x16, OAM_NO_FLIP, 0x42, 1, 0),
     OAM_ENTRY(3, -31, OAM_DIMS_16x16, OAM_NO_FLIP, 0x44, 1, 0),
-    #endif // BUGFIX
+#endif // BUGFIX
 };
 
 static const u16 sArmCannonOam_Standing_None_Right_Frame0[OAM_DATA_SIZE(3)] = {
@@ -741,15 +741,15 @@ static const u16 sArmCannonOam_ShootingAndCrouching_None_Right_Frame1[OAM_DATA_S
 };
 
 static const u16 sArmCannonOam_ShootingAndCrouching_None_Right_Frame0[OAM_DATA_SIZE(3)] = {
-    #ifdef BUGFIX
+#ifdef BUGFIX
     3 | ARM_CANNON_OAM_ORDER_BEHIND,
-    #endif // BUGFIX
+#endif // BUGFIX
     OAM_ENTRY(1, -28, OAM_DIMS_16x16, OAM_NO_FLIP, 0x42, 1, 0),
     OAM_ENTRY(1, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x44, 1, 0),
     OAM_ENTRY(11, -16, OAM_DIMS_8x8, OAM_NO_FLIP, 0x5f, 1, 0),
-    #ifndef BUGFIX
+#ifndef BUGFIX
     0
-    #endif // !BUGFIX
+#endif // !BUGFIX
 };
 
 static const u16 sArmCannonOam_ShootingAndCrouching_DiagonalDown_Right_Frame1[OAM_DATA_SIZE(3)] = {
@@ -1310,11 +1310,11 @@ const struct ArmCannonAnimData sArmCannonAnim_Running_None_Left[10] = {
         .pOam = sSamusOam_Empty
     },
     {
-        #ifdef BUGFIX
+#ifdef BUGFIX
         .pOffset = sArmCannonOffset_Running_None_Left_Frame5,
-        #else // !BUGFIX
+#else // !BUGFIX
         .pOffset = sArmCannonOffset_Empty,
-        #endif // BUGFIX
+#endif // BUGFIX
         .pOam = sSamusOam_Empty
     },
     {

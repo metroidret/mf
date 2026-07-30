@@ -101,11 +101,11 @@ void SciserUpdateHitbox(void)
     {
         if (gCurrentSprite.status & SPRITE_STATUS_Y_FLIP)
         {
-            #ifdef BUGFIX
+#ifdef BUGFIX
             gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
-            #else  // !BUGFIX
+#else  // !BUGFIX
             gCurrentSprite.hitboxTop = BLOCK_TO_SUB_PIXEL(0.25f); // BUG: Should be negative
-            #endif // BUGFIX
+#endif // BUGFIX
             gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(1.125f);
             gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.75f);
             gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(0.75f);

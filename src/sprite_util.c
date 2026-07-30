@@ -1500,12 +1500,12 @@ u8 SpriteUtilMakeSpriteRotateTowardsTarget(s16 oamRotation, s16 targetY, s16 tar
             // Target is directly above sprite
             targetRotation = Q_8_8(6.f / 8);
         }
-        #ifdef BUGFIX
+#ifdef BUGFIX
         else if (targetX > spriteX)
-        #else // !BUGFIX
+#else // !BUGFIX
         // BUG: Should be "else if"
         if (targetX > spriteX)
-        #endif // BUGFIX
+#endif // BUGFIX
         {
             // Target is right of sprite
             if (spriteY - targetY < BLOCK_SIZE)
