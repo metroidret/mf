@@ -852,7 +852,10 @@ static boolu32 NewFileIntroSamusFainting(void)
     return finished;
 }
 
-
+ /**
+ * @brief 88240 | 26c | Setup for the 'gunship drifting away from BSL ship' cutscene
+ * 
+ */
 void NewFileIntroSamusDriftingInit(void)
 {
     u16 i;
@@ -869,18 +872,19 @@ void NewFileIntroSamusDriftingInit(void)
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
     
-    LZ77UncompWram(sIntroBslSpaceBgGfx, 0x02010000);
+    LZ77UncompWram(sIntroBslSpaceBgGfx, EWRAM_BASE + 0x10000);
     
     DMA3_COPY_32(EWRAM_BASE + 0x10000, VRAM_BASE, (VRAM_SIZE / 3) / 4);
     
-    LZ77UncompVram(sIntroBslTilemap, 0x0600E800);
-    LZ77UncompVram(sIntroSpaceTilemap, 0x0600F800);
+    LZ77UncompVram(sIntroBslTilemap, VRAM_BASE + 0xE800);
+    LZ77UncompVram(sIntroSpaceTilemap, VRAM_BASE + 0xF800);
     
     DMA3_COPY_32(sIntroBslSpaceBgPal, PALRAM_BASE + 0x100, 8 * PAL_ROW_SIZE / 4);
     
-    WRITE_16(PALRAM_BASE, 0);
-    
-    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, 0x0600E000);
+    //WRITE_16(PALRAM_BASE, 0); // Set backdrop color to black
+    SET_BACKDROP_COLOR(COLOR_BLACK);
+
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
     
     WRITE_16(REG_BG0HOFS, -8);
     WRITE_16(REG_BG0VOFS, 0);
@@ -898,10 +902,10 @@ void NewFileIntroSamusDriftingInit(void)
     gBg3XPosition = 0;
     gBg3YPosition = 0;
     
-    WRITE_16(REG_BLDCNT, 0xFF);
-    WRITE_16(REG_BG0CNT, 0x1C08);
-    WRITE_16(REG_BG2CNT, 0x5D02);
-    WRITE_16(REG_BG3CNT, 0x1F03);
+    WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 29, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_512x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
     
     NewFileIntroSetupOam(200, 250, 0, 0);
     NewFileIntroSetupOam(1, (s16)gBg2XPosition, (s16)gBg2YPosition, 0);
@@ -909,9 +913,7 @@ void NewFileIntroSamusDriftingInit(void)
     NewFileIntroSetupOam(4, 0, 0, 1);
     
     for (i = 0; i < 10; i++)
-    {
         NewFileIntroSetupOam(3, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
-    }
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -920,17 +922,20 @@ void NewFileIntroSamusDriftingInit(void)
     
     gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
     
-    WRITE_16(REG_DISPCNT, 0x1C00);
+    WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
     CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
     
     gWrittenToBldy = 0;
 }
 
-
+ /**
+ * @brief 884ac | c8 | V-blank for the 'Samus losing conciousness' cutscene
+ * 
+ */
 void NewFileIntroSamusLosingConsciousnessVblank(void)
 {
-    DMA3_COPY_32(gOamData, OAM_BASE, 256);
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
 
@@ -946,18 +951,21 @@ void NewFileIntroSamusLosingConsciousnessVblank(void)
     if (gNonGameplayRam.intro.unk_110 == 1)
     {
         gNonGameplayRam.intro.unk_110 = 0;
-        DMA3_COPY_32(0x08598AAC, PALRAM_BASE, 32);
+        DMA3_COPY_32(sIntroSamusCloseupGrayscalePal, PALRAM_BASE, 4 * PAL_ROW_SIZE / 4);
     }
 }
 
-
+ /**
+ * @brief 88574 | 1e0 | Setup for the 'Samus losing conciousness' cutscene
+ * 
+ */
 void NewFileIntroSamusLosingConsciousnessInit(void) 
 {
     u16 i;
 
     CallbackSetVBlank(unk_99940);
     
-    DMA3_FILL_32(0, 0x030016a0, 720);
+    DMA3_FILL_32(0, 0x030016a0, 720); // TODO: Find out what 16a0 is
     
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
@@ -965,14 +973,15 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     for (i = 0; i < 6; i++)
         LZ77UncompVram(sIntroSamusHelmetCloseupBgGfxPointers[i], VRAM_BASE + i * 0x1000);
     
-    LZ77UncompVram(0x08598190, 0x0600F000);
-    LZ77UncompVram(0x08598190, 0x0600F800);
+    LZ77UncompVram(sIntroSamusHelmetCloseupTilemap, VRAM_BASE + 0xF000);
+    LZ77UncompVram(sIntroSamusHelmetCloseupTilemap, VRAM_BASE + 0xF800);
 
-    DMA3_COPY_32(0x08598818, PALRAM_BASE, 4 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sIntroSamusHelmetCloseupPal, PALRAM_BASE, 4 * PAL_ROW_SIZE / 4);
     
-    WRITE_16(PALRAM_BASE, 0);
-    
-    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, 0x0600E000);
+    //WRITE_16(PALRAM_BASE, 0);
+    SET_BACKDROP_COLOR(COLOR_BLACK);
+
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
     
     DMA3_COPY_32(sIntroBslSpaceBgPal, PALRAM_BASE + 0x100, 8 * PAL_ROW_SIZE / 4);
     
@@ -992,21 +1001,21 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     gBg3XPosition = 0;
     gBg3YPosition = 0;
     
-    WRITE_16(REG_BLDCNT, 0xFF);
+    WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
     
-    WRITE_16(REG_BG0CNT, 0x1C08);
-    WRITE_16(REG_BG2CNT, 0x1E02);
-    WRITE_16(REG_BG3CNT, 0x1F03);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 30, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
     
-    NewFileIntroSetupOam(0xC8, 0xFA, 0, 0);
+    NewFileIntroSetupOam(200, 250, 0, 0);
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
     
-    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
     gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
     
-    WRITE_16(REG_DISPCNT, 0x1C00);
+    WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
     CallbackSetVBlank(NewFileIntroSamusLosingConsciousnessVblank);
     
@@ -1015,7 +1024,10 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     gWrittenToBldalpha_Evb = 8;
 }
 
-
+ /**
+ * @brief 88754 | 25c | Setup for the 'gunship drifting into asteroids' cutscene
+ * 
+ */
 void NewFileIntroSamusDriftingIntoAsteroidsInit(void) 
 {
     u16 i;
@@ -1023,8 +1035,8 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     u32 temp2;
     
     WRITE_16(REG_IME, FALSE);
-    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & 0xFFEF);
-    WRITE_16(REG_IE, READ_16(REG_IE) & 0xFFFD);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
     
     CallbackSetVBlank(unk_99940);
@@ -1034,19 +1046,20 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     for (i = 0; i < 8; i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
-    DMA3_COPY_32(0x08612F48, PALRAM_OBJ, 16 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sPal_612f48, PALRAM_OBJ, 16 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sPal_598150, PALRAM_OBJ + 0x100, 2 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
 
-    LZ77UncompVram((u32 *)0x08605D08, 0x06000000);
-    LZ77UncompVram((u32 *)0x08609220, 0x0600F800);
-    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, 0x0600E000);
+    LZ77UncompVram(sTitleScreenSpaceBackgroundGfx, VRAM_BASE);
+    LZ77UncompVram(sTitleScreenSpaceBackgroundTilemap, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
     
-    DMA3_COPY_32(0x08609020, PALRAM_BASE, 16 * PAL_ROW_SIZE / 4);
-    DMA3_COPY_32(0x08598A8C, PALRAM_BASE + 0x1E0, PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sPal_609020, PALRAM_BASE, 16 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sPal_598a8c, PALRAM_BASE + 0x1E0, PAL_ROW_SIZE / 4);
     
-    WRITE_16(PALRAM_BASE, 0);
+    //WRITE_16(PALRAM_BASE, 0);
+    SET_BACKDROP_COLOR(COLOR_BLACK);
     
     WRITE_16(REG_BG0HOFS, 0);
     WRITE_16(REG_BG0VOFS, 0);
@@ -1062,9 +1075,9 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     gBg3XPosition = 0;
     gBg3YPosition = 0;
     
-    WRITE_16(REG_BG0CNT, 0x1C08);
-    WRITE_16(REG_BG3CNT, 0x1F03);
-    WRITE_16(REG_BLDCNT, 0xFF);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
 
     gWrittenToBldalpha_Eva = gWrittenToBldalpha_Evb = 0;
 
@@ -1073,8 +1086,8 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     temp2 = 0;
     WRITE_16(temp1, temp2);
     
-    NewFileIntroSetupOam(0x1E, 0x8CU, 0x8CU, 0);
-    NewFileIntroSetupOam(0x1F, 0x8CU, 0x50U, 0);
+    NewFileIntroSetupOam(30, 140, 140, 0);
+    NewFileIntroSetupOam(31, 140, 80, 0);
     
     for (i = 0; i < 4; i++)
         NewFileIntroSetupOam(36, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
@@ -1084,9 +1097,9 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     
     gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
     
-    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
-    WRITE_16(REG_DISPCNT, 0x1900);
+    WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG3 | DCNT_OBJ);
     
     CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
     
