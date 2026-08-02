@@ -881,7 +881,6 @@ void NewFileIntroSamusDriftingInit(void)
     
     DMA3_COPY_32(sIntroBslSpaceBgPal, PALRAM_BASE + 0x100, 8 * PAL_ROW_SIZE / 4);
     
-    //WRITE_16(PALRAM_BASE, 0); // Set backdrop color to black
     SET_BACKDROP_COLOR(COLOR_BLACK);
 
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
@@ -978,7 +977,6 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
 
     DMA3_COPY_32(sIntroSamusHelmetCloseupPal, PALRAM_BASE, 4 * PAL_ROW_SIZE / 4);
     
-    //WRITE_16(PALRAM_BASE, 0);
     SET_BACKDROP_COLOR(COLOR_BLACK);
 
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
@@ -1002,7 +1000,6 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     gBg3YPosition = 0;
     
     WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
-    
     WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
     WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 30, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_256x256));
     WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
@@ -1058,7 +1055,6 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     DMA3_COPY_32(sPal_609020, PALRAM_BASE, 16 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sPal_598a8c, PALRAM_BASE + 0x1E0, PAL_ROW_SIZE / 4);
     
-    //WRITE_16(PALRAM_BASE, 0);
     SET_BACKDROP_COLOR(COLOR_BLACK);
     
     WRITE_16(REG_BG0HOFS, 0);
