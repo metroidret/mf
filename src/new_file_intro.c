@@ -454,7 +454,7 @@ boolu32 unk_87920(void)
  * @brief 87970 | 94 | V-blank for the new file intro Samus ship flying cutscene
  * 
  */
-void NewFileIntroSamusShipFlyingVblank(void) 
+static void NewFileIntroSamusShipFlyingVblank(void) 
 {
     DMA3_COPY_32(gOamData, OAM_BASE, 256);
 
@@ -932,7 +932,7 @@ void NewFileIntroSamusDriftingInit(void)
  * @brief 884ac | c8 | V-blank for the 'Samus losing conciousness' cutscene
  * 
  */
-void NewFileIntroSamusLosingConsciousnessVblank(void)
+static void NewFileIntroSamusLosingConsciousnessVblank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
