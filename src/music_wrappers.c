@@ -280,10 +280,9 @@ void CheckPlayNewMusicTrack(void)
  * @param musicTrack Music track to play
  * @param priority Priority of the music
  */
-#ifdef NON_MATCHING
 void PlayMusic(u16 musicTrack, u8 priority)
 {
-    // https://decomp.me/scratch/MkOwb
+    // TODO: Remove goto statements
 
     const u8 *pHeader;
     u32 flag1;
@@ -301,18 +300,19 @@ void PlayMusic(u16 musicTrack, u8 priority)
     {
         if (gMusicInfo.unk_20 == 0)
         {
-            if (musicTrack != gMusicInfo.musicTrack ||
-                !(sMusicTrackDataRom[0].pTrack->flags & 2))
-            {
-                if (sMusicTrackDataRom[1].pTrack->unk_1E & 2)
-                    flag1 = FALSE;
-                else
-                    flag1 = TRUE;
-            }
+            if (musicTrack == gMusicInfo.musicTrack && (sMusicTrackDataRom[0].pTrack->flags & 2))
+                goto exit;
+
+            if (sMusicTrackDataRom[1].pTrack->unk_1E & 2)
+                flag1 = FALSE;
+            else
+                flag1 = TRUE;
         }
-        else if (musicTrack != gMusicInfo.unk_1E ||
-            !(sMusicTrackDataRom[1].pTrack->flags & 2))
+        else
         {
+            if (musicTrack == gMusicInfo.unk_1E && (sMusicTrackDataRom[1].pTrack->flags & 2))
+                goto exit;
+
             if (sMusicTrackDataRom[0].pTrack->unk_1E & 2)
                 flag1 = TRUE;
             else
@@ -352,22 +352,16 @@ void PlayMusic(u16 musicTrack, u8 priority)
             }
         }
     }
-    else if (musicTrack == gMusicInfo.musicTrack)
-    {
-        if (sMusicTrackDataRom[0].pTrack->unk_1E & 2)
-        {
-            StopMusicOrSound(sMusicTrackDataRom[0].pTrack);
-            goto block_26;
-        }
-        
-        if (!(sMusicTrackDataRom[0].pTrack->flags & 2))
-        {
-            goto block_26;
-        }
-    }
     else
     {
-block_26:
+        if (musicTrack == gMusicInfo.musicTrack)
+        {
+            if (sMusicTrackDataRom[0].pTrack->unk_1E & 2)
+                StopMusicOrSound(sMusicTrackDataRom[0].pTrack);
+            else if (sMusicTrackDataRom[0].pTrack->flags & 2)
+                goto exit;
+        }
+
         pTrack1 = sMusicTrackDataRom[0].pTrack;
         pTrack0 = sMusicTrackDataRom[1].pTrack;
 
@@ -384,221 +378,10 @@ block_32:
             InitTrack(pTrack1, pHeader);
         }
     }
-    
+
+exit:
     gMusicInfo.occupied = FALSE;
 }
-#else // !NON_MATCHING
-NAKED_FUNCTION
-void PlayMusic(u16 musicTrack, u8 priority)
-{
-    asm(" \n\
-    push    {r4, r5, r6, r7, r14} \n\
-    lsl     r0, r0, #0x10 \n\
-    lsr     r5, r0, #0x10 \n\
-    lsl     r1, r1, #0x18 \n\
-    lsr     r3, r1, #0x18 \n\
-    ldr     r2, _08003594 @ =gMusicInfo \n\
-    ldrb    r0, [r2, #1] \n\
-    cmp     r0, #0 \n\
-    beq     _0800354c \n\
-    b       _080036b0 \n\
-_0800354c: \n\
-    mov     r0, #1 \n\
-    strb    r0, [r2, #1] \n\
-    mov     r0, r2 \n\
-    add     r0, #0x21 \n\
-    strb    r3, [r0] \n\
-    ldr     r0, _08003598 @ =sSoundDataEntries \n\
-    lsl     r1, r5, #3 \n\
-    add     r0, r1, r0 \n\
-    ldr     r6, [r0] \n\
-    mov     r7, r1 \n\
-    cmp     r3, #0 \n\
-    beq     _08003630 \n\
-    mov     r0, r2 \n\
-    add     r0, #0x20 \n\
-    ldrb    r0, [r0] \n\
-    cmp     r0, #0 \n\
-    bne     _080035a0 \n\
-    ldr     r3, _0800359c @ =sMusicTrackDataRom \n\
-    ldrh    r2, [r2, #0x1C] \n\
-    cmp     r5, r2 \n\
-    bne     _08003584 \n\
-    ldr     r0, [r3] \n\
-    ldrb    r1, [r0] \n\
-    mov     r0, #2 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    beq     _08003584 \n\
-    b       _080036aa \n\
-_08003584: \n\
-    ldr     r0, [r3, #0xC] \n\
-    ldrb    r1, [r0, #0x1E] \n\
-    mov     r0, #2 \n\
-    and     r0, r1 \n\
-    mov     r1, #1 \n\
-    cmp     r0, #0 \n\
-    beq     _080035c4 \n\
-    b       _080035c8 \n\
-    .align 2, 0 \n\
-_08003594: .4byte gMusicInfo \n\
-_08003598: .4byte sSoundDataEntries \n\
-_0800359c: .4byte sMusicTrackDataRom \n\
-_080035a0: \n\
-    ldr     r3, _080035ec @ =sMusicTrackDataRom \n\
-    ldrh    r2, [r2, #0x1E] \n\
-    cmp     r5, r2 \n\
-    bne     _080035b4 \n\
-    ldr     r0, [r3, #0xC] \n\
-    ldrb    r1, [r0] \n\
-    mov     r0, #2 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    bne     _080036aa \n\
-_080035b4: \n\
-    ldr     r0, [r3] \n\
-    ldrb    r1, [r0, #0x1E] \n\
-    mov     r0, #2 \n\
-    and     r0, r1 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r0, r0, #0x18 \n\
-    neg     r0, r0 \n\
-    lsr     r1, r0, #0x1F \n\
-_080035c4: \n\
-    cmp     r1, #0 \n\
-    bne     _080035f4 \n\
-_080035c8: \n\
-    ldr     r4, [r3] \n\
-    ldr     r3, [r3, #0xC] \n\
-    ldrb    r1, [r4] \n\
-    mov     r0, #0x1A \n\
-    and     r0, r1 \n\
-    cmp     r0, #2 \n\
-    bne     _080035dc \n\
-    ldr     r0, [r4, #0x10] \n\
-    cmp     r6, r0 \n\
-    beq     _080036aa \n\
-_080035dc: \n\
-    ldr     r2, _080035f0 @ =gMusicInfo \n\
-    mov     r1, r2 \n\
-    add     r1, #0x20 \n\
-    mov     r0, #0 \n\
-    strb    r0, [r1] \n\
-    strh    r5, [r2, #0x1C] \n\
-    b       _08003614 \n\
-    .align 2, 0 \n\
-_080035ec: .4byte sMusicTrackDataRom \n\
-_080035f0: .4byte gMusicInfo \n\
-_080035f4: \n\
-    ldr     r4, [r3, #0xC] \n\
-    ldr     r3, [r3] \n\
-    ldrb    r1, [r4] \n\
-    mov     r0, #0x1A \n\
-    and     r0, r1 \n\
-    cmp     r0, #2 \n\
-    bne     _08003608 \n\
-    ldr     r0, [r4, #0x10] \n\
-    cmp     r6, r0 \n\
-    beq     _080036aa \n\
-_08003608: \n\
-    ldr     r2, _0800362c @ =gMusicInfo \n\
-    mov     r1, r2 \n\
-    add     r1, #0x20 \n\
-    mov     r0, #1 \n\
-    strb    r0, [r1] \n\
-    strh    r5, [r2, #0x1E] \n\
-_08003614: \n\
-    ldrb    r0, [r3] \n\
-    cmp     r0, #1 \n\
-    bls     _0800369c \n\
-    ldrb    r1, [r3, #0x1E] \n\
-    mov     r0, #2 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    bne     _0800369c \n\
-    mov     r0, r3 \n\
-    bl      StopMusicOrSound \n\
-    b       _0800369c \n\
-    .align 2, 0 \n\
-_0800362c: .4byte gMusicInfo \n\
-_08003630: \n\
-    ldrh    r2, [r2, #0x1C] \n\
-    cmp     r5, r2 \n\
-    bne     _0800365e \n\
-    ldr     r0, _08003650 @ =sMusicTrackDataRom \n\
-    ldr     r2, [r0] \n\
-    ldrb    r1, [r2, #0x1E] \n\
-    mov     r3, #2 \n\
-    mov     r0, r3 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    beq     _08003654 \n\
-    mov     r0, r2 \n\
-    bl      StopMusicOrSound \n\
-    b       _0800365e \n\
-    .align 2, 0 \n\
-_08003650: .4byte sMusicTrackDataRom \n\
-_08003654: \n\
-    ldrb    r1, [r2] \n\
-    mov     r0, r3 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    bne     _080036aa \n\
-_0800365e: \n\
-    ldr     r0, _080036b8 @ =sMusicTrackDataRom \n\
-    ldr     r4, [r0] \n\
-    ldr     r3, [r0, #0xC] \n\
-    ldrb    r1, [r4] \n\
-    mov     r0, #0x1A \n\
-    and     r0, r1 \n\
-    cmp     r0, #2 \n\
-    bne     _08003674 \n\
-    ldr     r0, [r4, #0x10] \n\
-    cmp     r6, r0 \n\
-    beq     _080036aa \n\
-_08003674: \n\
-    ldrb    r0, [r3] \n\
-    cmp     r0, #1 \n\
-    bls     _0800368a \n\
-    ldrb    r1, [r3, #0x1E] \n\
-    mov     r0, #2 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    bne     _0800368a \n\
-    mov     r0, r3 \n\
-    bl      StopMusicOrSound \n\
-_0800368a: \n\
-    ldr     r0, _080036bc @ =sSoundDataEntries \n\
-    add     r0, r7, r0 \n\
-    ldr     r6, [r0] \n\
-    ldr     r2, _080036c0 @ =gMusicInfo \n\
-    mov     r1, r2 \n\
-    add     r1, #0x20 \n\
-    mov     r0, #0 \n\
-    strb    r0, [r1] \n\
-    strh    r5, [r2, #0x1C] \n\
-_0800369c: \n\
-    ldr     r1, _080036c0 @ =gMusicInfo \n\
-    mov     r0, #0 \n\
-    strb    r0, [r1, #1] \n\
-    mov     r0, r4 \n\
-    mov     r1, r6 \n\
-    bl      InitTrack \n\
-_080036aa: \n\
-    ldr     r1, _080036c0 @ =gMusicInfo \n\
-    mov     r0, #0 \n\
-    strb    r0, [r1, #1] \n\
-_080036b0: \n\
-    pop     {r4, r5, r6, r7} \n\
-    pop     {r0} \n\
-    bx      r0 \n\
-    .align 2, 0 \n\
-_080036b8: .4byte sMusicTrackDataRom \n\
-_080036bc: .4byte sSoundDataEntries \n\
-_080036c0: .4byte gMusicInfo \n\
-    ");
-}
-#endif // NON_MATCHING
 
 /**
  * @brief 36c4 | 2c | To document

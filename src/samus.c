@@ -7527,11 +7527,8 @@ void SamusInit(void)
  * @brief c594 | 44c | Updates the OAM data for Samus
  * 
  */
-#ifdef NON_MATCHING
 void SamusDraw(void)
 {
-    // https://decomp.me/scratch/dmRGB
-
     u8 priority;
     u8 oamSlot;
     u16* dst;
@@ -7574,8 +7571,8 @@ void SamusDraw(void)
         part = *src++;
         nextSlot += LOW_BYTE(part);
 
-        xPosition = SUB_PIXEL_TO_PIXEL(gSamusEnvironmentalEffects[i].xPosition) - SUB_PIXEL_TO_PIXEL(gBg1XPosition);
-        yPosition = SUB_PIXEL_TO_PIXEL(gSamusEnvironmentalEffects[i].yPosition) - SUB_PIXEL_TO_PIXEL(gBg1YPosition) + SUB_PIXEL_TO_PIXEL(EIGHTH_BLOCK_SIZE);
+        xPosition = SUB_PIXEL_TO_PIXEL_(gSamusEnvironmentalEffects[i].xPosition) - SUB_PIXEL_TO_PIXEL_(gBg1XPosition);
+        yPosition = SUB_PIXEL_TO_PIXEL_(gSamusEnvironmentalEffects[i].yPosition) - SUB_PIXEL_TO_PIXEL_(gBg1YPosition) + SUB_PIXEL_TO_PIXEL_(EIGHTH_BLOCK_SIZE);
 
         for (; currSlot < nextSlot; currSlot++)
         {
@@ -7597,8 +7594,8 @@ void SamusDraw(void)
         }
     }
 
-    xPosition = SUB_PIXEL_TO_PIXEL(gSamusData.xPosition) - SUB_PIXEL_TO_PIXEL(gBg1XPosition);
-    yPosition = SUB_PIXEL_TO_PIXEL(gSamusData.yPosition) - SUB_PIXEL_TO_PIXEL(gBg1YPosition) + SUB_PIXEL_TO_PIXEL(EIGHTH_BLOCK_SIZE);
+    xPosition = SUB_PIXEL_TO_PIXEL_(gSamusData.xPosition) - SUB_PIXEL_TO_PIXEL_(gBg1XPosition);
+    yPosition = SUB_PIXEL_TO_PIXEL_(gSamusData.yPosition) - SUB_PIXEL_TO_PIXEL_(gBg1YPosition) + SUB_PIXEL_TO_PIXEL_(EIGHTH_BLOCK_SIZE);
 
     switch (gSamusData.pose)
     {
@@ -7607,18 +7604,18 @@ void SamusDraw(void)
         case SPOSE_ROLLING:
         case SPOSE_UNMORPHING:
             if (gSamusData.slopeType != SLOPE_NONE)
-                yPosition += SUB_PIXEL_TO_PIXEL(EIGHTH_BLOCK_SIZE);
+                do { yPosition += SUB_PIXEL_TO_PIXEL_(EIGHTH_BLOCK_SIZE); } while (0);
             break;
 
         default:
             if (gSamusData.slopeType & KEY_RIGHT)
-                xPosition += SUB_PIXEL_TO_PIXEL(EIGHTH_BLOCK_SIZE);
+                xPosition += SUB_PIXEL_TO_PIXEL_(EIGHTH_BLOCK_SIZE);
             else if (gSamusData.slopeType & KEY_LEFT)
-                xPosition -= SUB_PIXEL_TO_PIXEL(EIGHTH_BLOCK_SIZE);
+                xPosition -= SUB_PIXEL_TO_PIXEL_(EIGHTH_BLOCK_SIZE);
             else
                 break;
 
-            yPosition += SUB_PIXEL_TO_PIXEL(PIXEL_SIZE);
+            yPosition += SUB_PIXEL_TO_PIXEL_(PIXEL_SIZE);
             break;
     }
 
@@ -7673,7 +7670,8 @@ void SamusDraw(void)
     if (gSamusGraphicsInfo.unk_26 & 0x1000)
     {
         src = gSamusGraphicsInfo.pArmCannonOamFrame;
-        nextSlot += *src++;
+        part = *src++;
+        nextSlot += LOW_BYTE(part);
 
         for (; currSlot < nextSlot; currSlot++)
         {
@@ -7701,12 +7699,15 @@ void SamusDraw(void)
 
         if (gUnk_300144e != 0 || ppc >= 0)
         {
+            // Written this way to produce matching ASM
+            gSamusGraphicsInfo.unk_26 = gSamusGraphicsInfo.unk_26;
+
             src = gSamusGraphicsInfo.pSamusOamFrame;
             nextSlot += *src++;
 
             ppc = MOD_AND(ppc, 64);
-            xPosition = SUB_PIXEL_TO_PIXEL(gPrevious64Positions[0][ppc]) - SUB_PIXEL_TO_PIXEL(gBg1XPosition);
-            yPosition = SUB_PIXEL_TO_PIXEL(gPrevious64Positions[1][ppc]) - SUB_PIXEL_TO_PIXEL(gBg1YPosition) + SUB_PIXEL_TO_PIXEL(EIGHTH_BLOCK_SIZE);
+            xPosition = SUB_PIXEL_TO_PIXEL_(gPrevious64Positions[0][ppc]) - SUB_PIXEL_TO_PIXEL_(gBg1XPosition);
+            yPosition = SUB_PIXEL_TO_PIXEL_(gPrevious64Positions[1][ppc]) - SUB_PIXEL_TO_PIXEL_(gBg1YPosition) + SUB_PIXEL_TO_PIXEL_(EIGHTH_BLOCK_SIZE);
 
             for (; currSlot < nextSlot; currSlot++)
             {
@@ -7733,535 +7734,3 @@ void SamusDraw(void)
 
     gNextOamSlot = nextSlot;
 }
-#else // !NON_MATCHING
-NAKED_FUNCTION
-void SamusDraw(void)
-{
-    asm(" \n\
-    push    {r4, r5, r6, r7, r14} \n\
-    mov     r7, r10 \n\
-    mov     r6, r9 \n\
-    mov     r5, r8 \n\
-    push    {r5, r6, r7} \n\
-    add     sp, #-0x14 \n\
-    mov     r0, #2 \n\
-    str     r0, [sp] \n\
-    ldr     r0, =gSamusData \n\
-    ldrb    r1, [r0, #1] \n\
-    cmp     r1, #0x3E \n\
-    bne     _0800c5c0 \n\
-    mov     r1, #0 \n\
-    str     r1, [sp] \n\
-    ldr     r0, =gNextOamSlot \n\
-    strb    r1, [r0] \n\
-    b       _0800c5cc \n\
-    .pool \n\
-_0800c5c0: \n\
-    ldr     r0, =gSamusOnTopOfBackgrounds \n\
-    ldrb    r0, [r0] \n\
-    cmp     r0, #0 \n\
-    beq     _0800c5cc \n\
-    mov     r0, #1 \n\
-    str     r0, [sp] \n\
-_0800c5cc: \n\
-    ldr     r1, =gNextOamSlot \n\
-    ldrb    r0, [r1] \n\
-    cmp     r0, #0x6A \n\
-    bls     _0800c5d8 \n\
-    mov     r0, #0x6A \n\
-    strb    r0, [r1] \n\
-_0800c5d8: \n\
-    ldr     r5, =gOamData \n\
-    ldr     r2, =gNextOamSlot \n\
-    ldrb    r1, [r2] \n\
-    lsl     r0, r1, #3 \n\
-    add     r5, r0, r5 \n\
-    mov     r7, r1 \n\
-    mov     r6, r7 \n\
-    mov     r1, #0 \n\
-    ldr     r0, =gSamusEnvironmentalEffects \n\
-    str     r0, [sp, #0xC] \n\
-    str     r0, [sp, #4] \n\
-    ldr     r2, [sp] \n\
-    str     r2, [sp, #8] \n\
-_0800c5f2: \n\
-    lsl     r1, r1, #0x10 \n\
-    asr     r2, r1, #0xC \n\
-    ldr     r0, [sp, #4] \n\
-    add     r3, r2, r0 \n\
-    ldrb    r0, [r3] \n\
-    str     r1, [sp, #0x10] \n\
-    cmp     r0, #0 \n\
-    beq     _0800c69c \n\
-    ldr     r0, [sp, #0xC] \n\
-    add     r0, #0xC \n\
-    add     r0, r2, r0 \n\
-    ldr     r4, [r0] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    add     r0, r7, r0 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r7, r0, #0x18 \n\
-    ldrh    r1, [r3, #8] \n\
-    lsr     r1, r1, #2 \n\
-    ldr     r2, =gBg1XPosition \n\
-    ldrh    r0, [r2] \n\
-    lsr     r0, r0, #2 \n\
-    sub     r1, r1, r0 \n\
-    lsl     r1, r1, #0x10 \n\
-    lsr     r1, r1, #0x10 \n\
-    mov     r8, r1 \n\
-    ldrh    r1, [r3, #0xA] \n\
-    lsr     r1, r1, #2 \n\
-    ldr     r2, =gBg1YPosition \n\
-    ldrh    r0, [r2] \n\
-    lsr     r0, r0, #2 \n\
-    sub     r1, r1, r0 \n\
-    add     r1, #2 \n\
-    lsl     r1, r1, #0x10 \n\
-    lsr     r1, r1, #0x10 \n\
-    mov     r12, r1 \n\
-    cmp     r6, r7 \n\
-    bcs     _0800c69c \n\
-    mov     r1, r8 \n\
-    lsl     r0, r1, #0x10 \n\
-    asr     r0, r0, #0x10 \n\
-    mov     r9, r0 \n\
-    ldr     r2, [sp, #8] \n\
-    lsl     r2, r2, #2 \n\
-    mov     r8, r2 \n\
-    ldr     r0, =0x1FF \n\
-    mov     r10, r0 \n\
-_0800c650: \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    lsl     r3, r6, #3 \n\
-    ldr     r1, =gOamData \n\
-    add     r3, r3, r1 \n\
-    add     r0, r12 \n\
-    strb    r0, [r3] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    mov     r2, r9 \n\
-    add     r1, r0, r2 \n\
-    mov     r0, r10 \n\
-    and     r1, r0 \n\
-    ldrh    r2, [r3, #2] \n\
-    ldr     r0, =0xFFFFFE00 \n\
-    and     r0, r2 \n\
-    orr     r0, r1 \n\
-    strh    r0, [r3, #2] \n\
-    ldrh    r0, [r4] \n\
-    strh    r0, [r5] \n\
-    add     r4, #2 \n\
-    ldrb    r1, [r3, #5] \n\
-    mov     r0, #0xD \n\
-    neg     r0, r0 \n\
-    and     r0, r1 \n\
-    mov     r1, r8 \n\
-    orr     r0, r1 \n\
-    strb    r0, [r3, #5] \n\
-    add     r5, #4 \n\
-    add     r0, r6, #1 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r6, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcc     _0800c650 \n\
-_0800c69c: \n\
-    ldr     r2, [sp, #0x10] \n\
-    mov     r1, #0x80 \n\
-    lsl     r1, r1, #9 \n\
-    add     r0, r2, r1 \n\
-    lsr     r1, r0, #0x10 \n\
-    asr     r0, r0, #0x10 \n\
-    cmp     r0, #1 \n\
-    ble     _0800c5f2 \n\
-    ldr     r2, =gSamusData \n\
-    ldrh    r0, [r2, #0x16] \n\
-    lsr     r0, r0, #2 \n\
-    ldr     r2, =gBg1XPosition \n\
-    ldrh    r1, [r2] \n\
-    lsr     r1, r1, #2 \n\
-    sub     r0, r0, r1 \n\
-    lsl     r0, r0, #0x10 \n\
-    lsr     r0, r0, #0x10 \n\
-    mov     r8, r0 \n\
-    ldr     r1, =gSamusData \n\
-    ldrh    r0, [r1, #0x18] \n\
-    lsr     r0, r0, #2 \n\
-    ldr     r2, =gBg1YPosition \n\
-    ldrh    r1, [r2] \n\
-    lsr     r1, r1, #2 \n\
-    sub     r0, r0, r1 \n\
-    add     r0, #2 \n\
-    lsl     r0, r0, #0x10 \n\
-    lsr     r0, r0, #0x10 \n\
-    mov     r12, r0 \n\
-    ldr     r1, =gSamusData \n\
-    ldrb    r0, [r1, #1] \n\
-    cmp     r0, #0xF \n\
-    bgt     _0800c718 \n\
-    cmp     r0, #0xC \n\
-    blt     _0800c718 \n\
-    ldrh    r0, [r1, #0x1E] \n\
-    cmp     r0, #0 \n\
-    beq     _0800c756 \n\
-    mov     r2, r12 \n\
-    lsl     r0, r2, #0x10 \n\
-    mov     r1, #0x80 \n\
-    lsl     r1, r1, #0xA \n\
-    add     r0, r0, r1 \n\
-    b       _0800c752 \n\
-    .pool \n\
-_0800c718: \n\
-    ldr     r2, =gSamusData \n\
-    ldrh    r1, [r2, #0x1E] \n\
-    mov     r0, #0x10 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    beq     _0800c734 \n\
-    mov     r1, r8 \n\
-    lsl     r0, r1, #0x10 \n\
-    mov     r2, #0x80 \n\
-    lsl     r2, r2, #0xA \n\
-    b       _0800c742 \n\
-    .pool \n\
-_0800c734: \n\
-    mov     r0, #0x20 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    beq     _0800c756 \n\
-    mov     r1, r8 \n\
-    lsl     r0, r1, #0x10 \n\
-    ldr     r2, =0xFFFE0000 \n\
-_0800c742: \n\
-    add     r0, r0, r2 \n\
-    lsr     r0, r0, #0x10 \n\
-    mov     r8, r0 \n\
-    mov     r1, r12 \n\
-    lsl     r0, r1, #0x10 \n\
-    mov     r2, #0x80 \n\
-    lsl     r2, r2, #9 \n\
-    add     r0, r0, r2 \n\
-_0800c752: \n\
-    lsr     r0, r0, #0x10 \n\
-    mov     r12, r0 \n\
-_0800c756: \n\
-    ldr     r0, =gSamusGraphicsInfo \n\
-    ldrh    r1, [r0, #0x26] \n\
-    mov     r0, #0x80 \n\
-    lsl     r0, r0, #6 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    beq     _0800c7d0 \n\
-    ldr     r1, =gSamusGraphicsInfo \n\
-    ldr     r4, [r1, #0x28] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    add     r0, r7, r0 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r7, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcs     _0800c7d0 \n\
-    mov     r2, r8 \n\
-    lsl     r0, r2, #0x10 \n\
-    asr     r0, r0, #0x10 \n\
-    mov     r10, r0 \n\
-    ldr     r0, [sp] \n\
-    lsl     r0, r0, #2 \n\
-    mov     r9, r0 \n\
-_0800c784: \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    lsl     r3, r6, #3 \n\
-    ldr     r1, =gOamData \n\
-    add     r3, r3, r1 \n\
-    add     r0, r12 \n\
-    strb    r0, [r3] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    mov     r2, r10 \n\
-    add     r1, r0, r2 \n\
-    ldr     r0, =0x1FF \n\
-    and     r1, r0 \n\
-    ldrh    r2, [r3, #2] \n\
-    ldr     r0, =0xFFFFFE00 \n\
-    and     r0, r2 \n\
-    orr     r0, r1 \n\
-    strh    r0, [r3, #2] \n\
-    ldrh    r0, [r4] \n\
-    strh    r0, [r5] \n\
-    add     r4, #2 \n\
-    ldrb    r1, [r3, #5] \n\
-    mov     r0, #0xD \n\
-    neg     r0, r0 \n\
-    and     r0, r1 \n\
-    mov     r1, r9 \n\
-    orr     r0, r1 \n\
-    strb    r0, [r3, #5] \n\
-    add     r5, #4 \n\
-    add     r0, r6, #1 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r6, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcc     _0800c784 \n\
-_0800c7d0: \n\
-    ldr     r2, =gSamusGraphicsInfo \n\
-    ldr     r4, [r2] \n\
-    ldrb    r0, [r4] \n\
-    add     r0, r7, r0 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r7, r0, #0x18 \n\
-    add     r4, #2 \n\
-    cmp     r6, r7 \n\
-    bcs     _0800c83c \n\
-    mov     r1, r8 \n\
-    lsl     r0, r1, #0x10 \n\
-    asr     r0, r0, #0x10 \n\
-    mov     r10, r0 \n\
-    ldr     r2, [sp] \n\
-    lsl     r2, r2, #2 \n\
-    mov     r9, r2 \n\
-_0800c7f0: \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    lsl     r3, r6, #3 \n\
-    ldr     r1, =gOamData \n\
-    add     r3, r3, r1 \n\
-    add     r0, r12 \n\
-    strb    r0, [r3] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    mov     r2, r10 \n\
-    add     r1, r0, r2 \n\
-    ldr     r0, =0x1FF \n\
-    and     r1, r0 \n\
-    ldrh    r2, [r3, #2] \n\
-    ldr     r0, =0xFFFFFE00 \n\
-    and     r0, r2 \n\
-    orr     r0, r1 \n\
-    strh    r0, [r3, #2] \n\
-    ldrh    r0, [r4] \n\
-    strh    r0, [r5] \n\
-    add     r4, #2 \n\
-    ldrb    r1, [r3, #5] \n\
-    mov     r0, #0xD \n\
-    neg     r0, r0 \n\
-    and     r0, r1 \n\
-    mov     r1, r9 \n\
-    orr     r0, r1 \n\
-    strb    r0, [r3, #5] \n\
-    add     r5, #4 \n\
-    add     r0, r6, #1 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r6, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcc     _0800c7f0 \n\
-_0800c83c: \n\
-    ldr     r2, =gSamusGraphicsInfo \n\
-    ldrh    r1, [r2, #0x26] \n\
-    mov     r0, #0x80 \n\
-    lsl     r0, r0, #5 \n\
-    and     r0, r1 \n\
-    cmp     r0, #0 \n\
-    beq     _0800c8b8 \n\
-    ldr     r4, [r2, #0x28] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    add     r0, r7, r0 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r7, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcs     _0800c8b8 \n\
-    mov     r1, r8 \n\
-    lsl     r0, r1, #0x10 \n\
-    asr     r0, r0, #0x10 \n\
-    mov     r9, r0 \n\
-    ldr     r2, [sp] \n\
-    lsl     r2, r2, #2 \n\
-    mov     r8, r2 \n\
-    ldr     r0, =0x1FF \n\
-    mov     r10, r0 \n\
-_0800c86c: \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    lsl     r3, r6, #3 \n\
-    ldr     r1, =gOamData \n\
-    add     r3, r3, r1 \n\
-    add     r0, r12 \n\
-    strb    r0, [r3] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    mov     r2, r9 \n\
-    add     r1, r0, r2 \n\
-    mov     r0, r10 \n\
-    and     r1, r0 \n\
-    ldrh    r2, [r3, #2] \n\
-    ldr     r0, =0xFFFFFE00 \n\
-    and     r0, r2 \n\
-    orr     r0, r1 \n\
-    strh    r0, [r3, #2] \n\
-    ldrh    r0, [r4] \n\
-    strh    r0, [r5] \n\
-    add     r4, #2 \n\
-    ldrb    r1, [r3, #5] \n\
-    mov     r0, #0xD \n\
-    neg     r0, r0 \n\
-    and     r0, r1 \n\
-    mov     r1, r8 \n\
-    orr     r0, r1 \n\
-    strb    r0, [r3, #5] \n\
-    add     r5, #4 \n\
-    add     r0, r6, #1 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r6, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcc     _0800c86c \n\
-_0800c8b8: \n\
-    ldr     r2, =gSamusEcho \n\
-    ldrb    r0, [r2] \n\
-    cmp     r0, #0 \n\
-    beq     _0800c99a \n\
-    ldr     r0, =gPreviousPositionCounter \n\
-    ldrb    r1, [r2, #2] \n\
-    lsl     r1, r1, #2 \n\
-    ldrh    r0, [r0] \n\
-    sub     r0, r0, r1 \n\
-    sub     r0, #3 \n\
-    lsl     r0, r0, #0x10 \n\
-    lsr     r1, r0, #0x10 \n\
-    ldr     r0, =0x300144E \n\
-    ldrb    r0, [r0] \n\
-    lsl     r0, r0, #0x18 \n\
-    asr     r0, r0, #0x18 \n\
-    cmp     r0, #0 \n\
-    bne     _0800c8e2 \n\
-    lsl     r0, r1, #0x10 \n\
-    cmp     r0, #0 \n\
-    blt     _0800c99a \n\
-_0800c8e2: \n\
-    ldr     r2, =gSamusGraphicsInfo \n\
-    ldr     r4, [r2] \n\
-    ldrb    r0, [r4] \n\
-    add     r0, r7, r0 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r7, r0, #0x18 \n\
-    add     r4, #2 \n\
-    mov     r2, #0x3F \n\
-    ldr     r3, =gPrevious64Positions \n\
-    and     r2, r1 \n\
-    lsl     r2, r2, #1 \n\
-    add     r0, r2, r3 \n\
-    ldrh    r0, [r0] \n\
-    lsr     r0, r0, #2 \n\
-    mov     r9, r0 \n\
-    ldr     r0, =gBg1XPosition \n\
-    ldrh    r0, [r0] \n\
-    mov     r8, r0 \n\
-    mov     r1, r8 \n\
-    lsr     r1, r1, #2 \n\
-    mov     r0, r9 \n\
-    sub     r0, r0, r1 \n\
-    lsl     r0, r0, #0x10 \n\
-    lsr     r0, r0, #0x10 \n\
-    mov     r8, r0 \n\
-    add     r3, #0x80 \n\
-    add     r2, r2, r3 \n\
-    ldrh    r0, [r2] \n\
-    lsr     r0, r0, #2 \n\
-    ldr     r2, =gBg1YPosition \n\
-    ldrh    r1, [r2] \n\
-    lsr     r1, r1, #2 \n\
-    sub     r0, r0, r1 \n\
-    add     r0, #2 \n\
-    lsl     r0, r0, #0x10 \n\
-    lsr     r0, r0, #0x10 \n\
-    mov     r12, r0 \n\
-    cmp     r6, r7 \n\
-    bcs     _0800c98e \n\
-    mov     r1, r8 \n\
-    lsl     r0, r1, #0x10 \n\
-    asr     r0, r0, #0x10 \n\
-    mov     r9, r0 \n\
-    ldr     r2, [sp] \n\
-    lsl     r2, r2, #2 \n\
-    mov     r8, r2 \n\
-    ldr     r0, =0x1FF \n\
-    mov     r10, r0 \n\
-_0800c942: \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    lsl     r3, r6, #3 \n\
-    ldr     r1, =gOamData \n\
-    add     r3, r3, r1 \n\
-    add     r0, r12 \n\
-    strb    r0, [r3] \n\
-    ldrh    r0, [r4] \n\
-    add     r4, #2 \n\
-    strh    r0, [r5] \n\
-    add     r5, #2 \n\
-    mov     r2, r9 \n\
-    add     r1, r0, r2 \n\
-    mov     r0, r10 \n\
-    and     r1, r0 \n\
-    ldrh    r2, [r3, #2] \n\
-    ldr     r0, =0xFFFFFE00 \n\
-    and     r0, r2 \n\
-    orr     r0, r1 \n\
-    strh    r0, [r3, #2] \n\
-    ldrh    r0, [r4] \n\
-    strh    r0, [r5] \n\
-    add     r4, #2 \n\
-    ldrb    r1, [r3, #5] \n\
-    mov     r0, #0xD \n\
-    neg     r0, r0 \n\
-    and     r0, r1 \n\
-    mov     r1, r8 \n\
-    orr     r0, r1 \n\
-    strb    r0, [r3, #5] \n\
-    add     r5, #4 \n\
-    add     r0, r6, #1 \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r6, r0, #0x18 \n\
-    cmp     r6, r7 \n\
-    bcc     _0800c942 \n\
-_0800c98e: \n\
-    ldr     r2, =gSamusEcho \n\
-    ldrb    r0, [r2, #2] \n\
-    add     r0, #1 \n\
-    mov     r1, #3 \n\
-    and     r0, r1 \n\
-    strb    r0, [r2, #2] \n\
-_0800c99a: \n\
-    ldr     r0, =gNextOamSlot \n\
-    strb    r7, [r0] \n\
-    add     sp, #0x14 \n\
-    pop     {r3, r4, r5} \n\
-    mov     r8, r3 \n\
-    mov     r9, r4 \n\
-    mov     r10, r5 \n\
-    pop     {r4, r5, r6, r7} \n\
-    pop     {r0} \n\
-    bx      r0 \n\
-    .pool \n\
-    ");
-}
-#endif // NON_MATCHING

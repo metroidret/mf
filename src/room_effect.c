@@ -525,13 +525,16 @@ bools32 RoomEffectCheckRoomIsDark(void)
  *
  * @return s32 bool
  */
-#ifdef NON_MATCHING
 bools32 RoomEffectFade(u8 arg0)
 {
-    // https://decomp.me/scratch/2Y7in
+    // TODO: Remove goto statements
 
     bools32 result;
-    u8 tmp;
+    s32 tmp;
+    u8 eva;
+    struct IoRegisters *pIR;
+    struct DefaultTransparency *pDT;
+
 
     result = 0;
 
@@ -663,324 +666,33 @@ bools32 RoomEffectFade(u8 arg0)
         case 7:
             if (gUnk_3004e42 != 0)
             {
-                if (gIoRegisters.bldalpha_eva < gDefaultTransparency.evaCoef)
-                {
-                    tmp = gIoRegisters.bldalpha_eva + 1;
-                    goto block_55;
-                }
+                pIR = &gIoRegisters;
+                pDT = &gDefaultTransparency;
+                eva = pIR->bldalpha_eva;
+
+                if (eva >= pDT->evaCoef)
+                    break;
+
+                tmp = eva + 1;
             }
-            else if (gIoRegisters.bldalpha_eva != 0)
+            else
             {
-                tmp = gIoRegisters.bldalpha_eva - 1;
-            block_55:
-                gIoRegisters.bldalpha_eva = tmp;
-                gWrittenToBldalpha = C_16_2_8(gIoRegisters.bldalpha_evb, gIoRegisters.bldalpha_eva);
+                eva = gIoRegisters.bldalpha_eva;
+
+                if (eva == 0)
+                    break;
+
+                tmp = eva - 1;
             }
+
+            gIoRegisters.bldalpha_eva = tmp;
+            gWrittenToBldalpha = C_16_2_8(gIoRegisters.bldalpha_evb, gIoRegisters.bldalpha_eva);
 
             break;
     }
 
     return result;
 }
-#else  // !NON_MATCHING
-NAKED_FUNCTION
-bools32 RoomEffectFade(u8 arg0)
-{
-    asm(" \n\
-    push    {r4, r5, r6, r7, r14} \n\
-    lsl     r0, r0, #0x18 \n\
-    lsr     r2, r0, #0x18 \n\
-    mov     r6, #0 \n\
-    ldr     r0, _08062e10 @ =gWrittenToBldalpha \n\
-    ldrh    r1, [r0] \n\
-    mov     r7, r0 \n\
-    cmp     r1, #0 \n\
-    bne     _08062e0a \n\
-    ldr     r0, _08062e14 @ =gCurrentPowerBomb \n\
-    ldrb    r0, [r0] \n\
-    cmp     r0, #0 \n\
-    beq     _08062e18 \n\
-_08062e0a: \n\
-    mov     r0, #0 \n\
-    b       _08062ffe \n\
-    .align 2, 0 \n\
-_08062e10: .4byte gWrittenToBldalpha \n\
-_08062e14: .4byte gCurrentPowerBomb \n\
-_08062e18: \n\
-    sub     r0, r2, #1 \n\
-    cmp     r0, #6 \n\
-    bls     _08062e20 \n\
-    b       _08062ffc \n\
-_08062e20: \n\
-    lsl     r0, r0, #2 \n\
-    ldr     r1, _08062e2c @ =_08062e30 \n\
-    add     r0, r0, r1 \n\
-    ldr     r0, [r0] \n\
-    mov     r15, r0 \n\
-    .align 2, 0 \n\
-_08062e2c: .4byte _08062e30 \n\
-_08062e30: @ jump table \n\
-    .4byte _08062ee2 @ case 0 \n\
-    .4byte _08062f00 @ case 1 \n\
-    .4byte _08062f1c @ case 2 \n\
-    .4byte _08062ea2 @ case 3 \n\
-    .4byte _08062e4c @ case 4 \n\
-    .4byte _08062f62 @ case 5 \n\
-    .4byte _08062fba @ case 6 \n\
-_08062e4c: @ case 4 \n\
-    mov     r6, #1 \n\
-    ldr     r0, _08062e68 @ =gDefaultTransparency \n\
-    ldr     r1, _08062e6c @ =gIoRegisters \n\
-    ldrb    r2, [r1, #5] \n\
-    ldrb    r4, [r0, #1] \n\
-    mov     r3, r2 \n\
-    mov     r5, r0 \n\
-    mov     r12, r1 \n\
-    cmp     r4, r3 \n\
-    beq     _08062e78 \n\
-    cmp     r4, r3 \n\
-    bcs     _08062e70 \n\
-    sub     r0, r2, #1 \n\
-    b       _08062e74 \n\
-    .align 2, 0 \n\
-_08062e68: .4byte gDefaultTransparency \n\
-_08062e6c: .4byte gIoRegisters \n\
-_08062e70: \n\
-    add     r0, r2, #1 \n\
-    mov     r1, r12 \n\
-_08062e74: \n\
-    strb    r0, [r1, #5] \n\
-    mov     r6, #0 \n\
-_08062e78: \n\
-    mov     r2, r12 \n\
-    ldrb    r0, [r2, #4] \n\
-    ldrb    r2, [r5, #2] \n\
-    mov     r1, r0 \n\
-    cmp     r2, r1 \n\
-    beq     _08062e98 \n\
-    cmp     r2, r1 \n\
-    bcs     _08062e90 \n\
-    sub     r0, #1 \n\
-    mov     r1, r12 \n\
-    strb    r0, [r1, #4] \n\
-    b       _08062e96 \n\
-_08062e90: \n\
-    add     r0, #1 \n\
-    mov     r2, r12 \n\
-    strb    r0, [r2, #4] \n\
-_08062e96: \n\
-    mov     r6, #0 \n\
-_08062e98: \n\
-    mov     r0, r12 \n\
-    ldrb    r1, [r0, #5] \n\
-    lsl     r1, r1, #8 \n\
-    ldrb    r0, [r0, #4] \n\
-    b       _08062ff8 \n\
-_08062ea2: @ case 3 \n\
-    ldr     r0, _08062eb4 @ =gIoRegisters \n\
-    ldrb    r2, [r0, #5] \n\
-    mov     r12, r0 \n\
-    cmp     r2, #0xF \n\
-    bhi     _08062eb8 \n\
-    add     r0, r2, #1 \n\
-    mov     r1, r12 \n\
-    strb    r0, [r1, #5] \n\
-    b       _08062ec4 \n\
-    .align 2, 0 \n\
-_08062eb4: .4byte gIoRegisters \n\
-_08062eb8: \n\
-    mov     r2, r12 \n\
-    ldrb    r0, [r2, #4] \n\
-    cmp     r0, #0 \n\
-    beq     _08062f5e \n\
-    mov     r0, #0x10 \n\
-    strb    r0, [r2, #5] \n\
-_08062ec4: \n\
-    mov     r1, r12 \n\
-    ldrb    r0, [r1, #4] \n\
-    mov     r1, r0 \n\
-    cmp     r1, #0 \n\
-    beq     _08062ed6 \n\
-    sub     r0, #1 \n\
-    mov     r2, r12 \n\
-    strb    r0, [r2, #4] \n\
-    b       _08062eda \n\
-_08062ed6: \n\
-    mov     r0, r12 \n\
-    strb    r1, [r0, #4] \n\
-_08062eda: \n\
-    mov     r2, r12 \n\
-    ldrb    r1, [r2, #5] \n\
-    lsl     r1, r1, #8 \n\
-    b       _08062ff6 \n\
-_08062ee2: @ case 0 \n\
-    ldr     r2, _08062efc @ =gIoRegisters \n\
-    ldrb    r1, [r2, #5] \n\
-    cmp     r1, #2 \n\
-    bhi     _08062eec \n\
-    b       _08062ffc \n\
-_08062eec: \n\
-    sub     r1, #2 \n\
-    strb    r1, [r2, #5] \n\
-    mov     r0, #0x10 \n\
-    sub     r0, r0, r1 \n\
-    strb    r0, [r2, #4] \n\
-    ldrb    r1, [r2, #5] \n\
-    lsl     r1, r1, #8 \n\
-    b       _08062ff6 \n\
-    .align 2, 0 \n\
-_08062efc: .4byte gIoRegisters \n\
-_08062f00: @ case 1 \n\
-    ldr     r2, _08062f18 @ =gIoRegisters \n\
-    ldrb    r1, [r2, #5] \n\
-    cmp     r1, #0xF \n\
-    bhi     _08062f5e \n\
-    add     r1, #1 \n\
-    strb    r1, [r2, #5] \n\
-    mov     r0, #0x10 \n\
-    sub     r0, r0, r1 \n\
-    strb    r0, [r2, #4] \n\
-    ldrb    r1, [r2, #5] \n\
-    lsl     r1, r1, #8 \n\
-    b       _08062ff6 \n\
-    .align 2, 0 \n\
-_08062f18: .4byte gIoRegisters \n\
-_08062f1c: @ case 2 \n\
-    ldr     r0, _08062f30 @ =gIoRegisters \n\
-    ldrb    r2, [r0, #5] \n\
-    mov     r12, r0 \n\
-    cmp     r2, #0xF \n\
-    bhi     _08062f34 \n\
-    add     r0, r2, #1 \n\
-    mov     r1, r12 \n\
-    strb    r0, [r1, #5] \n\
-    b       _08062f40 \n\
-    .align 2, 0 \n\
-_08062f30: .4byte gIoRegisters \n\
-_08062f34: \n\
-    mov     r2, r12 \n\
-    ldrb    r0, [r2, #4] \n\
-    cmp     r0, #0 \n\
-    beq     _08062f5e \n\
-    mov     r0, #0x10 \n\
-    strb    r0, [r2, #5] \n\
-_08062f40: \n\
-    mov     r1, r12 \n\
-    ldrb    r0, [r1, #4] \n\
-    mov     r1, r0 \n\
-    cmp     r1, #0 \n\
-    beq     _08062f52 \n\
-    sub     r0, #1 \n\
-    mov     r2, r12 \n\
-    strb    r0, [r2, #4] \n\
-    b       _08062f56 \n\
-_08062f52: \n\
-    mov     r0, r12 \n\
-    strb    r1, [r0, #4] \n\
-_08062f56: \n\
-    mov     r2, r12 \n\
-    ldrb    r1, [r2, #5] \n\
-    lsl     r1, r1, #8 \n\
-    b       _08062ff6 \n\
-_08062f5e: \n\
-    mov     r6, #1 \n\
-    b       _08062ffc \n\
-_08062f62: @ case 5 \n\
-    mov     r6, #1 \n\
-    ldr     r0, _08062f80 @ =gDefaultTransparency \n\
-    ldr     r1, _08062f84 @ =gIoRegisters \n\
-    ldrb    r2, [r1, #5] \n\
-    ldrb    r4, [r0, #1] \n\
-    mov     r3, r2 \n\
-    mov     r5, r0 \n\
-    mov     r12, r1 \n\
-    cmp     r4, r3 \n\
-    beq     _08062f90 \n\
-    cmp     r4, r3 \n\
-    bcs     _08062f88 \n\
-    sub     r0, r2, #1 \n\
-    b       _08062f8c \n\
-    .align 2, 0 \n\
-_08062f80: .4byte gDefaultTransparency \n\
-_08062f84: .4byte gIoRegisters \n\
-_08062f88: \n\
-    add     r0, r2, #1 \n\
-    mov     r1, r12 \n\
-_08062f8c: \n\
-    strb    r0, [r1, #5] \n\
-    mov     r6, #0 \n\
-_08062f90: \n\
-    mov     r2, r12 \n\
-    ldrb    r0, [r2, #4] \n\
-    ldrb    r2, [r5, #2] \n\
-    mov     r1, r0 \n\
-    cmp     r2, r1 \n\
-    beq     _08062fb0 \n\
-    cmp     r2, r1 \n\
-    bcs     _08062fa8 \n\
-    sub     r0, #1 \n\
-    mov     r1, r12 \n\
-    strb    r0, [r1, #4] \n\
-    b       _08062fae \n\
-_08062fa8: \n\
-    add     r0, #1 \n\
-    mov     r2, r12 \n\
-    strb    r0, [r2, #4] \n\
-_08062fae: \n\
-    mov     r6, #0 \n\
-_08062fb0: \n\
-    mov     r0, r12 \n\
-    ldrb    r1, [r0, #5] \n\
-    lsl     r1, r1, #8 \n\
-    ldrb    r0, [r0, #4] \n\
-    b       _08062ff8 \n\
-_08062fba: @ case 6 \n\
-    ldr     r0, _08062fd4 @ =gUnk_3004e42 \n\
-    ldrb    r0, [r0] \n\
-    cmp     r0, #0 \n\
-    beq     _08062fe0 \n\
-    ldr     r0, _08062fd8 @ =gIoRegisters \n\
-    ldr     r1, _08062fdc @ =gDefaultTransparency \n\
-    ldrb    r2, [r0, #4] \n\
-    mov     r12, r0 \n\
-    ldrb    r1, [r1, #2] \n\
-    cmp     r2, r1 \n\
-    bcs     _08062ffc \n\
-    add     r0, r2, #1 \n\
-    b       _08062fec \n\
-    .align 2, 0 \n\
-_08062fd4: .4byte gUnk_3004e42 \n\
-_08062fd8: .4byte gIoRegisters \n\
-_08062fdc: .4byte gDefaultTransparency \n\
-_08062fe0: \n\
-    ldr     r0, _08063004 @ =gIoRegisters \n\
-    ldrb    r2, [r0, #4] \n\
-    mov     r12, r0 \n\
-    cmp     r2, #0 \n\
-    beq     _08062ffc \n\
-    sub     r0, r2, #1 \n\
-_08062fec: \n\
-    mov     r1, r12 \n\
-    strb    r0, [r1, #4] \n\
-    ldrb    r1, [r1, #5] \n\
-    lsl     r1, r1, #8 \n\
-    mov     r2, r12 \n\
-_08062ff6: \n\
-    ldrb    r0, [r2, #4] \n\
-_08062ff8: \n\
-    orr     r0, r1 \n\
-    strh    r0, [r7] \n\
-_08062ffc: \n\
-    mov     r0, r6 \n\
-_08062ffe: \n\
-    pop     {r4, r5, r6, r7} \n\
-    pop     {r1} \n\
-    bx      r1 \n\
-    .align 2, 0 \n\
-_08063004: .4byte gIoRegisters \n\
-    ");
-}
-#endif // NON_MATCHING
 
 /**
  * @brief 63008 | 68 | To document
