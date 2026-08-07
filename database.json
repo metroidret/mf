@@ -26577,10 +26577,18 @@
     "size": 2
   },
   {
-    "path": "Blob_74a7d8_74e620.bin",
-    "count": "0x3E48",
+    "path": "Blob_74a7d8_74b0b0.bin",
+    "count": "0x8D8",
     "addr": {
       "us": "0x74A7D8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_74dc48_74e620.bin",
+    "count": "0x9D8",
+    "addr": {
+      "us": "0x74DC48"
     },
     "size": 1
   },

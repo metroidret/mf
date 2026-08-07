@@ -50,6 +50,7 @@ extern union NonGameplayRam gNonGameplayRam;
 #define IN_GAME_DATA gNonGameplayRam.inGame
 #define TITLE_SCREEN_DATA gNonGameplayRam.titleScreen
 #define SA_X_CLOSE_UP_DATA gNonGameplayRam.saXCloseUp
+#define ENDING_DATA gNonGameplayRam.ending
 
 extern u8 gCommonSpriteGfxBackup[0x4000];
 extern u8 gRoomSpriteGfxBackup[0x4000];

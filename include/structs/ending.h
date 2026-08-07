@@ -3,6 +3,13 @@
 
 #include "types.h"
 
+#include "constants/ending.h"
+
+struct CreditsEntry {
+    CreditLineType type;
+    u8 text[35];
+};
+
 struct EndingData {
     u8 unk_0;
     u8 stage;

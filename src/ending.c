@@ -18,6 +18,177 @@ extern void EndingImageVBlank(void);
 extern void SamusPosingVBlank(void);
 extern void SamusPosingHBlankCode(void);
 
+extern struct CreditsEntry sCredits[240];
+
+/**
+ * @brief a22e0 | 26c | Displays a credit line
+ * 
+ * @param line Line
+ * @return u32 Height of line in tiles
+ */
+u32 CreditsDisplayLine(u32 line)
+{
+    struct CreditsEntry* pCredits;
+    s32 i;
+    u32 lineHeight;
+
+    pCredits = sCredits;
+    pCredits += line;
+
+    for (i = 0; i < ARRAY_SIZE(ENDING_DATA.creditLineTilemap_1); i++)
+    {
+        ENDING_DATA.creditLineTilemap_1[i] = 0;
+        ENDING_DATA.creditLineTilemap_2[i] = 0;
+    }
+
+    i = 0;
+    
+    switch (pCredits->type)
+    {
+        case CREDIT_LINE_TYPE_BLUE:
+            while (TRUE)
+            {
+                if (pCredits->text[i] == 0)
+                {
+                    break;
+                }
+            
+                if (pCredits->text[i] >= 'A' && pCredits->text[i] <= 'Z')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = pCredits->text[i] + 0xFC0;
+                }
+                else if (pCredits->text[i] == '.')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x101B;
+                }
+                else if (pCredits->text[i] == ',')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x101C;
+                }
+                else if (pCredits->text[i] == '&')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x101D;
+                }
+
+                i++;
+            }
+        
+            lineHeight = 1;
+            break;
+        
+        case CREDIT_LINE_TYPE_RED:
+            while (TRUE)
+            {
+                if (pCredits->text[i] == 0)
+                {
+                    break;
+                }
+
+                if (pCredits->text[i] >= 'A' && pCredits->text[i] <= 'Z')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = pCredits->text[i] + 0x1FC0;
+                }
+                else if (pCredits->text[i] == '.')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x201B;
+                }
+                else if (pCredits->text[i] == ',')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x201C;
+                }
+                else if (pCredits->text[i] == '&')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x201D;
+                }
+
+                i++;
+            }
+            
+            lineHeight = 1;
+            break;
+        
+        case CREDIT_LINE_TYPE_END:
+            lineHeight = 9;
+            break;
+        
+        case CREDIT_LINE_TYPE_ALL_RIGHTS:
+            for (i = 8; i < 22; i++)
+                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0x98;
+
+            lineHeight = 1;
+            break;
+
+        case CREDIT_LINE_TYPE_BLANK:
+            lineHeight = 1;
+            break;
+        
+        case CREDIT_LINE_TYPE_THE_COPYRIGHT:
+            for (i = 6; i < 24; i++)
+                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0xBA;
+        
+            lineHeight = 1;
+            break;
+        
+        case CREDIT_LINE_TYPE_SCENARIO:
+            for (i = 4; i < 26; i++)
+                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0xDC;
+        
+            lineHeight = 1;
+            break;
+        
+        case CREDIT_LINE_TYPE_RESERVED:
+            for (i = 6; i < 24; i++)
+                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0xFA;
+        
+            lineHeight = 1;
+            break;
+        
+        case CREDIT_LINE_TYPE_WHITE_BIG:
+            while (TRUE)
+            {
+                if (pCredits->text[i] == 0)
+                {
+                    break;
+                }
+            
+                if (pCredits->text[i] >= 'A' && pCredits->text[i] <= 'Z')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = pCredits->text[i] + 0xFFDF;
+                    ENDING_DATA.creditLineTilemap_2[i] = pCredits->text[i] + 0xFFFF;
+                }
+                else if (pCredits->text[i] >= 'a' && pCredits->text[i] <= 'z')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = pCredits->text[i] + 0xFFFF;
+                    ENDING_DATA.creditLineTilemap_2[i] = pCredits->text[i] + 0x1F;
+                }
+                else if (pCredits->text[i] == '.')
+                {
+                    ENDING_DATA.creditLineTilemap_2[i] = 0x5B;
+                }
+                else if (pCredits->text[i] == ',')
+                {
+                    ENDING_DATA.creditLineTilemap_2[i] = 0x5C;
+                }
+                else if (pCredits->text[i] == '-')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x3A;
+                }
+                else if (pCredits->text[i] == '+')
+                {
+                    ENDING_DATA.creditLineTilemap_1[i] = 0x7A;
+                    ENDING_DATA.creditLineTilemap_2[i] = 0x9A;
+                }
+
+                i++;
+            }
+
+            lineHeight = 2;
+            break;
+    } // End switch
+    
+    return lineHeight;
+}
+
 /**
  * @brief a254c | 170 | To document
  * 
