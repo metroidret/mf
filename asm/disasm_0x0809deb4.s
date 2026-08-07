@@ -8004,8 +8004,8 @@ _080A1D64: .4byte 0x04000054
 _080A1D68: .4byte gWrittenToBldy
 _080A1D6C: .4byte 0x03001226
 
-	thumb_func_start SamusPosingVblank
-SamusPosingVblank: @ 0x080A1D70
+	thumb_func_start SamusPosingVBlank
+SamusPosingVBlank: @ 0x080A1D70
 	ldr r1, _080A1DA8 @ =0x040000D4
 	ldr r0, _080A1DAC @ =gOamData
 	str r0, [r1]
@@ -8044,8 +8044,8 @@ _080A1DBC: .4byte 0x03001226
 _080A1DC0: .4byte 0x000001FF
 _080A1DC4: .4byte 0x0300122E
 
-	thumb_func_start EndingImageVblank
-EndingImageVblank: @ 0x080A1DC8
+	thumb_func_start EndingImageVBlank
+EndingImageVBlank: @ 0x080A1DC8
 	push {r4, r5, lr}
 	ldr r4, _080A1E38 @ =0x040000D4
 	ldr r0, _080A1E3C @ =gOamData
@@ -8116,8 +8116,8 @@ _080A1E58: .4byte 0x03001226
 _080A1E5C: .4byte 0x000001FF
 _080A1E60: .4byte gBg1YPosition
 
-	thumb_func_start SamusPosingHblankCode
-SamusPosingHblankCode: @ 0x080A1E64
+	thumb_func_start SamusPosingHBlankCode
+SamusPosingHBlankCode: @ 0x080A1E64
 	ldr r0, _080A1E80 @ =0x04000006
 	ldr r2, _080A1E84 @ =gNonGameplayRam
 	ldrh r0, [r0]
@@ -8969,148 +8969,4 @@ _080A2544:
 	pop {r4, r5, r6}
 	pop {r1}
 	bx r1
-
-	thumb_func_start SamusPosingInit
-SamusPosingInit: @ 0x080A254C
-	push {r4, r5, r6, lr}
-	ldr r0, _080A2634 @ =unk_a1cfc
-	bl CallbackSetVBlank
-	movs r5, #0x80
-	lsls r5, r5, #0x13
-	movs r6, #0
-	strh r6, [r5]
-	ldr r0, _080A2638 @ =0x0874EB50
-	movs r1, #0xc0
-	lsls r1, r1, #0x13
-	bl LZ77UncompVram
-	ldr r0, _080A263C @ =0x087535E0
-	ldr r1, _080A2640 @ =0x0600E800
-	bl LZ77UncompVram
-	ldr r0, _080A2644 @ =0x08753FF8
-	ldr r1, _080A2648 @ =0x06008000
-	bl LZ77UncompVram
-	ldr r0, _080A264C @ =0x08754D4C
-	ldr r1, _080A2650 @ =0x06009000
-	bl LZ77UncompVram
-	ldr r0, _080A2654 @ =0x0875DB50
-	ldr r1, _080A2658 @ =0x0600F800
-	bl LZ77UncompVram
-	ldr r0, _080A265C @ =0x0875ED6C
-	ldr r1, _080A2660 @ =0x06010000
-	bl LZ77UncompVram
-	ldr r4, _080A2664 @ =0x040000D4
-	ldr r0, _080A2668 @ =0x08749600
-	str r0, [r4]
-	movs r0, #0xa0
-	lsls r0, r0, #0x13
-	str r0, [r4, #4]
-	ldr r0, _080A266C @ =0x80000060
-	str r0, [r4, #8]
-	ldr r0, [r4, #8]
-	ldr r0, _080A2670 @ =0x087496C0
-	str r0, [r4]
-	ldr r0, _080A2674 @ =0x050000C0
-	str r0, [r4, #4]
-	ldr r0, _080A2678 @ =0x800000A0
-	str r0, [r4, #8]
-	ldr r0, [r4, #8]
-	ldr r0, _080A267C @ =0x08749A80
-	str r0, [r4]
-	ldr r0, _080A2680 @ =0x05000200
-	str r0, [r4, #4]
-	ldr r0, _080A2684 @ =0x80000100
-	str r0, [r4, #8]
-	ldr r0, [r4, #8]
-	ldr r1, _080A2688 @ =0x04000008
-	ldr r2, _080A268C @ =0x00001F08
-	adds r0, r2, #0
-	strh r0, [r1]
-	adds r1, #2
-	subs r2, #0xff
-	adds r0, r2, #0
-	strh r0, [r1]
-	adds r1, #2
-	ldr r2, _080A2690 @ =0x00001D02
-	adds r0, r2, #0
-	strh r0, [r1]
-	movs r1, #0xa8
-	lsls r1, r1, #5
-	adds r0, r1, #0
-	strh r0, [r5]
-	ldr r1, _080A2694 @ =0x04000050
-	ldr r2, _080A2698 @ =0x00001FDF
-	adds r0, r2, #0
-	strh r0, [r1]
-	ldr r0, _080A269C @ =0x03001226
-	strh r6, [r0]
-	ldr r0, _080A26A0 @ =0x083C94D0
-	str r0, [r4]
-	ldr r5, _080A26A4 @ =0x03001528
-	str r5, [r4, #4]
-	ldr r0, _080A26A8 @ =0x80000040
-	str r0, [r4, #8]
-	ldr r0, [r4, #8]
-	adds r1, r5, #0
-	subs r1, #0xa4
-	movs r0, #0
-	strh r0, [r1, #2]
-	strh r0, [r1, #4]
-	strh r0, [r1, #6]
-	adds r1, #0x98
-	ldrb r0, [r1]
-	adds r0, #1
-	strb r0, [r1]
-	ldr r0, _080A26AC @ =SamusPosingVblank
-	bl CallbackSetVBlank
-	ldr r0, _080A26B0 @ =SamusPosingHblankCode
-	str r0, [r4]
-	movs r1, #0xe6
-	lsls r1, r1, #1
-	adds r0, r5, r1
-	str r0, [r4, #4]
-	ldr r0, _080A26B4 @ =0x80000020
-	str r0, [r4, #8]
-	ldr r0, [r4, #8]
-	ldr r2, _080A26B8 @ =0x000001CD
-	adds r0, r5, r2
-	bl CallbackSetHBlank
-	movs r0, #0
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_080A2634: .4byte unk_a1cfc
-_080A2638: .4byte 0x0874EB50
-_080A263C: .4byte 0x087535E0
-_080A2640: .4byte 0x0600E800
-_080A2644: .4byte 0x08753FF8
-_080A2648: .4byte 0x06008000
-_080A264C: .4byte 0x08754D4C
-_080A2650: .4byte 0x06009000
-_080A2654: .4byte 0x0875DB50
-_080A2658: .4byte 0x0600F800
-_080A265C: .4byte 0x0875ED6C
-_080A2660: .4byte 0x06010000
-_080A2664: .4byte 0x040000D4
-_080A2668: .4byte 0x08749600
-_080A266C: .4byte 0x80000060
-_080A2670: .4byte 0x087496C0
-_080A2674: .4byte 0x050000C0
-_080A2678: .4byte 0x800000A0
-_080A267C: .4byte 0x08749A80
-_080A2680: .4byte 0x05000200
-_080A2684: .4byte 0x80000100
-_080A2688: .4byte 0x04000008
-_080A268C: .4byte 0x00001F08
-_080A2690: .4byte 0x00001D02
-_080A2694: .4byte 0x04000050
-_080A2698: .4byte 0x00001FDF
-_080A269C: .4byte 0x03001226
-_080A26A0: .4byte 0x083C94D0
-_080A26A4: .4byte 0x03001528
-_080A26A8: .4byte 0x80000040
-_080A26AC: .4byte SamusPosingVblank
-_080A26B0: .4byte SamusPosingHblankCode
-_080A26B4: .4byte 0x80000020
-_080A26B8: .4byte 0x000001CD
 

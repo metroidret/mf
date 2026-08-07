@@ -14,7 +14,54 @@ extern void EndingImageDisplayLinePermanently(s32);
 extern void EndingImageLoadTextOam(s32);
 extern void EndingImageUpdateLettersSpawnDelay(s32);
 extern void unk_a1cfc(void);
-extern void EndingImageVblank(void);
+extern void EndingImageVBlank(void);
+extern void SamusPosingVBlank(void);
+extern void SamusPosingHBlankCode(void);
+
+/**
+ * @brief a254c | 170 | To document
+ * 
+ */
+u32 SamusPosingInit(void)
+{
+    CallbackSetVBlank(unk_a1cfc);
+
+    WRITE_16(REG_DISPCNT, 0);
+
+    LZ77UncompVram((void*)0x0874eb50, VRAM_BASE);
+    LZ77UncompVram((void*)0x087535e0, VRAM_BASE + 0xE800);
+    LZ77UncompVram((void*)0x08753ff8, VRAM_BASE + 0x8000);
+    LZ77UncompVram((void*)0x08754d4c, VRAM_BASE + 0x9000);
+    LZ77UncompVram((void*)0x0875db50, VRAM_BASE + 0xF800);
+    LZ77UncompVram((void*)0x0875ed6c, VRAM_OBJ);
+
+    DMA3_COPY_16(0x08749600, PALRAM_BASE, 96);
+    DMA3_COPY_16(0x087496c0, PALRAM_BASE + 0xC0, 160);
+    DMA3_COPY_16(0x08749a80, PALRAM_OBJ, 256);
+
+    WRITE_16(REG_BG0CNT, 0x1F08);
+    WRITE_16(REG_BG1CNT, 0x1E09);
+    WRITE_16(REG_BG2CNT, 0x1D02);
+    WRITE_16(REG_DISPCNT, 0x1500);
+    WRITE_16(REG_BLDCNT, 0x1FDF);
+
+    gBg0YPosition = 0;
+
+    DMA3_COPY_16(0x083c94d0, gNonGameplayRam.ending.unk_A4, 64);
+
+    gNonGameplayRam.ending.unk_2 = 0;
+    gNonGameplayRam.ending.unk_4 = 0;
+    gNonGameplayRam.ending.currentCreditLine = 0;
+    gNonGameplayRam.ending.unk_98++;
+    
+    CallbackSetVBlank(SamusPosingVBlank);
+
+    DMA3_COPY_16(SamusPosingHBlankCode, &gNonGameplayRam.ending.unk_270, 32);
+
+    CallbackSetHBlank(&gNonGameplayRam.ending.unk_270[1]);
+
+    return 0;
+}
 
 /**
  * @brief a26bc | 58 | To document
@@ -324,7 +371,7 @@ boolu32 SamusPosingTransforming(void)
     }
     
     if (gNonGameplayRam.ending.unk_96)
-        gNonGameplayRam.ending.unk_6++;
+        gNonGameplayRam.ending.currentCreditLine++;
 
     dst = (u16*)&gOamData;
     nextSlot = 0;
@@ -495,14 +542,14 @@ boolu32 EndingImageInit(void)
     gNonGameplayRam.ending.unk_8 = 128;
     gNonGameplayRam.ending.unk_2 = 0;
     gNonGameplayRam.ending.unk_4 = 0;
-    gNonGameplayRam.ending.unk_6 = 0;
+    gNonGameplayRam.ending.currentCreditLine = 0;
     gNonGameplayRam.ending.unk_98++;
 
     value = 31;
     for (i = 31; i >= 0; i--)
-        gNonGameplayRam.ending.unk_A[i] = value;
+        gNonGameplayRam.ending.creditLineTilemap_1[i] = value;
 
-    CallbackSetVBlank(EndingImageVblank);
+    CallbackSetVBlank(EndingImageVBlank);
 
     return FALSE;    
 }
