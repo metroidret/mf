@@ -26,7 +26,7 @@ struct EndingData {
     u8 unk_97;
     u8 unk_98;
     u8 unk_99;
-    u8 unk_9A;
+    u8 completionPercentage;
     u8 unk_9B;
     u8 unk_9C;
     u8 unk_9D;

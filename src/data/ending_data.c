@@ -7,6 +7,16 @@
 
 #include "constants/ending.h"
 
+const u16 sPal_7478A0[16 * 3] = INCBIN_U16("data/ending/7478a0.pal");
+
+const u32 sCreditsCharacterGfx[1280] = INCBIN_U32("data/ending/credits_character.gfx");
+const u32 sCreditsCopyrightText1_Gfx[112] = INCBIN_U32("data/ending/copyright_text_1.gfx");
+const u32 sCreditsCopyrightText2_Gfx[144] = INCBIN_U32("data/ending/copyright_text_2.gfx");
+const u32 sCreditsCopyrightText3_Gfx[176] = INCBIN_U32("data/ending/copyright_text_3.gfx");
+const u32 sCreditsCopyrightText4_Gfx[144] = INCBIN_U32("data/ending/copyright_text_4.gfx");
+
+static const u8 sBlob_749600_749800[] = INCBIN_U8("data/Blob_749600_749800.bin");
+
 const u16 sPreResultsSamusWithoutHelmetBgPal[160] = INCBIN_U16("data/ending/samus_without_helmet_bg.pal");
 const u16 sPreResultsSamusSuitlessBgPal[160] = INCBIN_U16("data/ending/samus_suitless_bg.pal");
 const u16 sPreResultsSamusObjPal[256] = INCBIN_U16("data/ending/samus_obj.pal");

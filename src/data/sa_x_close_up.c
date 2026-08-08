@@ -9,4 +9,4 @@ const u32 sSaXCloseUpTileTable2[305] = INCBIN_U32("data/sa_x_close_up/second.tt.
 
 const u8 sSaXCloseUpDurations[2] = { 25, 60 };
 
-static const u8 sBlob_73421e_749800[] = INCBIN_U8("data/Blob_73421e_749800.bin");
+static const u8 sBlob_73421e_7478a0[] = INCBIN_U8("data/Blob_73421e_7478a0.bin");

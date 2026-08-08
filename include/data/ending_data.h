@@ -3,6 +3,14 @@
 
 #include "macros.h"
 
+extern const u16 sPal_7478A0[16 * 3];
+
+extern const u32 sCreditsCharacterGfx[1280];
+extern const u32 sCreditsCopyrightText1_Gfx[112];
+extern const u32 sCreditsCopyrightText2_Gfx[144];
+extern const u32 sCreditsCopyrightText3_Gfx[176];
+extern const u32 sCreditsCopyrightText4_Gfx[144];
+
 extern const u16 sPreResultsSamusWithoutHelmetBgPal[160];
 extern const u16 sPreResultsSamusSuitlessBgPal[160];
 extern const u16 sPreResultsSamusObjPal[256];

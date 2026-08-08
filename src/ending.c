@@ -8,12 +8,14 @@
 #include "data/ending_data.h"
 
 #include "structs/ending.h"
+#include "structs/samus.h"
 
 extern void EndingDrawIgtAndCompletionPercentage(void);
 extern void EndingImageDisplayLinePermanently(s32);
 extern void EndingImageLoadTextOam(s32);
 extern void EndingImageUpdateLettersSpawnDelay(s32);
 extern void unk_a1cfc(void);
+extern void CreditsVBlank(void);
 extern void EndingImageVBlank(void);
 extern void SamusPosingVBlank(void);
 extern void SamusPosingHBlankCode(void);
@@ -41,6 +43,91 @@ static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
     CreditsFadeIn,
     EndingImage
 };
+
+/**
+ * @brief a1e8c | 260 | To document
+ * 
+ */
+void CreditsInit(void)
+{
+    s32 minutes;
+    s32 missileTanks;
+    s32 energyTanks;
+    s32 powerBombTanks;
+
+    WRITE_16(REG_IME, FALSE);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
+    WRITE_16(REG_IME, TRUE);
+    
+    CallbackSetVBlank(unk_a1cfc);
+
+    WRITE_16(REG_DISPCNT, 0);
+    
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+    
+    ClearGfxRam();
+    
+    DMA3_COPY_16(sCreditsCharacterGfx, VRAM_BASE, 0x400);
+    DMA3_COPY_16(sCreditsCharacterGfx + 0x800, VRAM_BASE + 0x800, 0x400);
+    DMA3_COPY_16(sCreditsCharacterGfx + 0x1000, VRAM_BASE + 0x1000, 0x200);
+    DMA3_COPY_16(sCreditsCopyrightText1_Gfx, VRAM_BASE + 0x1400, 0xE0);
+    DMA3_COPY_16(sCreditsCopyrightText2_Gfx, VRAM_BASE + 0x1800, 0x120);
+    DMA3_COPY_16(sCreditsCopyrightText3_Gfx, VRAM_BASE + 0x1C00, 0x160);
+    DMA3_COPY_16(sCreditsCopyrightText4_Gfx, VRAM_BASE + 0x2000, 0x120);
+    DMA3_COPY_16(sPal_7478A0, PALRAM_BASE, 0x30);
+    
+    WRITE_16(REG_BG0CNT, 0x1000);
+    WRITE_16(REG_DISPCNT, 0x1100);
+    
+    gNextOamSlot = 0;
+    ResetFreeOam();
+    
+    gBg0XPosition = 0;
+    gBg0YPosition = 0;
+    gBg1XPosition = 0;
+    gBg1YPosition = 0;
+    gBg2XPosition = 0;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+    
+    ENDING_DATA.unk_8 = 128;
+    
+    minutes = gInGameTimer.hours * 60 + gInGameTimer.minutes;
+    if (minutes < 120)
+        ENDING_DATA.unk_99 = 2;
+    else if (minutes < 240)
+        ENDING_DATA.unk_99 = 1;
+    
+    energyTanks = (gEquipment.maxEnergy - 99) / 100;
+    if (energyTanks < 0)
+        energyTanks = 0;
+    
+    missileTanks = (gEquipment.maxMissiles - 10) / 5;
+    if (missileTanks < 0)
+        missileTanks = 0;
+    
+    powerBombTanks = (gEquipment.maxPowerBombs - 10) / 2;
+    if (powerBombTanks < 0)
+        powerBombTanks = 0;
+    
+    ENDING_DATA.completionPercentage = energyTanks + missileTanks + powerBombTanks;
+    if (ENDING_DATA.completionPercentage > 100)
+        ENDING_DATA.completionPercentage = 100;
+    
+    PlayMusic(0x55, 0xE);
+    CallbackSetVBlank(CreditsVBlank);
+}
 
 /**
  * @brief a20ec | 1f4 | To document
@@ -745,7 +832,7 @@ boolu32 EndingImageInit(void)
 
     WRITE_16(REG_DISPCNT, 0);
     
-    if (gNonGameplayRam.ending.unk_9A > 99)
+    if (gNonGameplayRam.ending.completionPercentage > 99)
     {
         ending = 3;
 
