@@ -44,6 +44,64 @@ static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
     EndingImage
 };
 
+
+/**
+ * @brief a1cfc | c | To document
+ * 
+ */
+void unk_a1cfc(void)
+{
+    UpdateAudio();
+}
+
+/**
+ * @brief a1d08 | 68 | To document
+ * 
+ */
+void CreditsVBlank(void)
+{
+    if (ENDING_DATA.unk_0)
+    {
+        DMA3_COPY_16(ENDING_DATA.creditLineTilemap_1, VRAM_BASE + ENDING_DATA.unk_8C, 32);
+        DMA3_COPY_16(ENDING_DATA.creditLineTilemap_2, VRAM_BASE + ENDING_DATA.unk_90, 32);
+    }
+
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+    WRITE_16(REG_BG0VOFS, MOD_AND(gBg0YPosition / 16, 512));
+}
+
+/**
+ * @brief a1d70 | 58 | To document
+ * 
+ */
+void SamusPosingVBlank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
+
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+    WRITE_16(REG_BG0VOFS, MOD_AND(gBg0YPosition / 16, 512));
+    WRITE_16(REG_BG2VOFS, MOD_AND(gBg2YPosition / 16, 512));
+}
+
+/**
+ * @brief a1dc8 | 9c | To document
+ * 
+ */
+void EndingImageVBlank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
+
+    if (ENDING_DATA.unk_0)
+    {
+        DMA3_COPY_16(ENDING_DATA.creditLineTilemap_1, VRAM_BASE + ENDING_DATA.unk_8C, 32);
+        DMA3_COPY_16(ENDING_DATA.creditLineTilemap_1, VRAM_BASE + ENDING_DATA.unk_90, 32);
+    }
+    
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+    WRITE_16(REG_BG0VOFS, MOD_AND(gBg0YPosition / 16, 512));
+    WRITE_16(REG_BG1VOFS, MOD_AND(gBg1YPosition / 16, 512));
+}
+
 /**
  * @brief a1e64 | 28 | To document
  * 
