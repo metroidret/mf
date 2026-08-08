@@ -21,7 +21,7 @@ void RoomEffectLockHatchesWithTimer(u8 hatchesToLock);
 void RoomEffectRecoveringSuitInit(void);
 
 void RoomEffectSetCurrentNavigationRoom(u8 room);
-bools32 RoomEffectDetermineNavigationRoomHatchesToLock();
+bools32 RoomEffectDetermineNavigationRoomHatchesToLock(void);
 
 void RoomEffectCheckSetCurrentEventBased(void);
 void RoomEffectSetCurrentEventBased(u8 effect);

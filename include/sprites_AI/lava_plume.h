@@ -1,9 +1,9 @@
 #ifndef LAVA_PLUME_AI_H
-#define LAVA_PLUME_H
+#define LAVA_PLUME_AI_H
 
 #include "types.h"
 
-void LavePlume(void);
-void LavePlumeWarning(void);
+void LavaPlume(void);
+void LavaPlumeWarning(void);
 
-#endif /* LAVA_PLUME_H */
+#endif /* LAVA_PLUME_AI_H */

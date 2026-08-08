@@ -236,7 +236,7 @@ void LavaPlume(void)
     }
 }
 
-void LavePlumeWarning(void)
+void LavaPlumeWarning(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = DELTA_TIME;
 

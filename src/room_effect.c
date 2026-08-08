@@ -828,7 +828,7 @@ void RoomEffectSetCurrentNavigationRoom(u8 room)
  *
  * @return s32 bool, true if not in a navigation room
  */
-bools32 RoomEffectDetermineNavigationRoomHatchesToLock()
+bools32 RoomEffectDetermineNavigationRoomHatchesToLock(void)
 {
     bools32 leftHatch;
     bools32 rightHatch;
