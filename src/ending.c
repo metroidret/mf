@@ -14,11 +14,8 @@ extern void EndingDrawIgtAndCompletionPercentage(void);
 extern void EndingImageDisplayLinePermanently(s32);
 extern void EndingImageLoadTextOam(s32);
 extern void EndingImageUpdateLettersSpawnDelay(s32);
-extern void unk_a1cfc(void);
-extern void CreditsVBlank(void);
-extern void EndingImageVBlank(void);
-extern void SamusPosingVBlank(void);
-extern void SamusPosingHBlankCode(void);
+void CreditsInit(void);
+boolu32 CreditsProcess(void);
 
 u32 CreditsDisplayLine(u32 line);
 boolu32 SamusPosingInit(void);
@@ -44,6 +41,51 @@ static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
     EndingImage
 };
 
+
+/**
+ * @brief a1c84 | 78 | Main handler for the credits
+ * 
+ */
+boolu32 CreditsHandler(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    ENDING_DATA.unk_0 = 0;
+    gNextOamSlot = 0;
+
+    switch (gSubGameMode1)
+    {
+        case 0:
+            CreditsInit();
+            gSubGameMode1++;
+            break;
+
+        case 1:
+            if (gWrittenToBldy)
+            {
+                gWrittenToBldy--;
+            }
+            else
+            {
+                WRITE_16(REG_BLDCNT, 0);
+                gSubGameMode1++;
+            }
+            break;
+
+        case 2:
+            if (CreditsProcess())
+                gSubGameMode1++;
+            break;
+
+        case 3:
+            finished = TRUE;
+            break;
+    }
+
+    return finished;
+}
 
 /**
  * @brief a1cfc | c | To document
