@@ -45,6 +45,18 @@ static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
 };
 
 /**
+ * @brief a1e64 | 28 | To document
+ * 
+ */
+void SamusPosingHBlankCode(void)
+{
+    u16 index;
+
+    index = MOD_AND(READ_16(REG_VCOUNT) + ENDING_DATA.currentCreditLine, 128);
+    WRITE_16(REG_BG0HOFS, ENDING_DATA.unk_A4[index]);
+}
+
+/**
  * @brief a1e8c | 260 | To document
  * 
  */
@@ -462,7 +474,7 @@ u32 SamusPosingInit(void)
 
     DMA3_COPY_16(SamusPosingHBlankCode, &gNonGameplayRam.ending.unk_270, 32);
 
-    CallbackSetHBlank(&gNonGameplayRam.ending.unk_270[1]);
+    CallbackSetHBlank(gNonGameplayRam.ending.unk_270 + 1);
 
     return 0;
 }

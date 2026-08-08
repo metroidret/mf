@@ -8116,23 +8116,3 @@ _080A1E58: .4byte 0x03001226
 _080A1E5C: .4byte 0x000001FF
 _080A1E60: .4byte gBg1YPosition
 
-	thumb_func_start SamusPosingHBlankCode
-SamusPosingHBlankCode: @ 0x080A1E64
-	ldr r0, _080A1E80 @ =0x04000006
-	ldr r2, _080A1E84 @ =gNonGameplayRam
-	ldrh r0, [r0]
-	ldrh r1, [r2, #6]
-	adds r0, r0, r1
-	movs r1, #0x7f
-	ands r0, r1
-	ldr r1, _080A1E88 @ =0x04000010
-	adds r2, #0xa4
-	adds r0, r0, r2
-	ldrb r0, [r0]
-	strh r0, [r1]
-	bx lr
-	.align 2, 0
-_080A1E80: .4byte 0x04000006
-_080A1E84: .4byte gNonGameplayRam
-_080A1E88: .4byte 0x04000010
-

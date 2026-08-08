@@ -41,7 +41,7 @@ struct EndingData {
     u8 padding4[2];
     u16* oamFramePointers[10]; // 1F8
     u8 unk_220[0x50];
-    u8 unk_270[10]; // FIXME find actual length
+    u8 unk_270[64]; // FIXME find actual length
 };
 
 #endif /* ENDING_STRUCT_H */
