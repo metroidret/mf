@@ -1032,5 +1032,6 @@ SECTIONS {
         src/particle.o(.data);
         src/projectile.o(.data);
         src/new_file_intro.o(.data);
+        src/ending.o(.data);
     } >rom
 }

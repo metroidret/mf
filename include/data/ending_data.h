@@ -18,6 +18,8 @@ extern const u16 sEnding_3_Pal[256];
 extern const u16 sEnding_4_Pal[256];
 extern const u16 sResultsTextPal[64];
 
+extern const struct CreditsEntry sCredits[310];
+
 extern const u32* const sPreResultsSamusBgGfxPointers1[4];
 extern const u32* const sPreResultsSamusBgGfxPointers2[4];
 extern const u32* const sPreResultsSamusBgGfxPointers3[4];

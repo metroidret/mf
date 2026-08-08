@@ -18,7 +18,153 @@ extern void EndingImageVBlank(void);
 extern void SamusPosingVBlank(void);
 extern void SamusPosingHBlankCode(void);
 
-extern struct CreditsEntry sCredits[240];
+u32 CreditsDisplayLine(u32 line);
+boolu32 SamusPosingInit(void);
+boolu32 CreditsFadeIn(void);
+boolu32 SamusPosing(void);
+boolu32 SamusPosingTransforming(void);
+boolu32 EndingImageInit(void);
+boolu32 EndingImage(void);
+
+static boolu32 (*sSamusPosingFunctionPointers[7]) (void) = {
+    SamusPosingInit,
+    CreditsFadeIn,
+    SamusPosing,
+    SamusPosing,
+    SamusPosing,
+    SamusPosing,
+    SamusPosingTransforming
+};
+
+static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
+    EndingImageInit,
+    CreditsFadeIn,
+    EndingImage
+};
+
+/**
+ * @brief a20ec | 1f4 | To document
+ * 
+ * @return boolu32 Finished
+ */
+boolu32 CreditsProcess(void)
+{
+    u32 lineHeight;
+    u32 temp_r3;
+    s32 var_r0;
+    boolu32 finished;
+    s32 i;
+
+    finished = FALSE;
+    
+    switch (ENDING_DATA.stage)
+    {
+        case 0:
+            if (ENDING_DATA.unk_8 > 127)
+            {
+                //ENDING_DATA.unk_8 &= 127;
+                ENDING_DATA.unk_8 = MOD_AND(ENDING_DATA.unk_8, 128);
+                
+                if (ENDING_DATA.unk_2 == ENDING_DATA.unk_4)
+                {
+                    lineHeight = CreditsDisplayLine(ENDING_DATA.currentCreditLine);
+                    
+                    if (lineHeight == 9)
+                    {
+                        ENDING_DATA.stage++;
+                    }
+                    else
+                    {
+                        temp_r3 = ENDING_DATA.unk_4 << 6;
+                        var_r0 = temp_r3 + 0x500;
+                        
+                        if (var_r0 > 0x7FF)
+                            //var_r0 &= 0x7FF;
+                            var_r0 = MOD_AND(var_r0, 0x800);
+                        
+                        ENDING_DATA.unk_8C = var_r0 + 0x8000;
+                        var_r0 = temp_r3 + 0x540;
+                        
+                        if (var_r0 > 0x7FF)
+                            //var_r0 &= 0x7FF;
+                            var_r0 = MOD_AND(var_r0, 0x800);
+                        
+                        ENDING_DATA.unk_90 = var_r0 + 0x8000;
+                        ENDING_DATA.unk_4 += lineHeight;
+                        ENDING_DATA.currentCreditLine++;
+                        ENDING_DATA.unk_0++;
+                    }
+                }
+                
+                ENDING_DATA.unk_2++;
+            }
+            
+            ENDING_DATA.unk_8 += 9;
+            gBg0YPosition += 9;
+            break;
+        
+        case 1:
+            for (i = 0; i < ARRAY_SIZE(ENDING_DATA.creditLineTilemap_1); i++)
+            {
+                ENDING_DATA.creditLineTilemap_1[i] = 0;
+                ENDING_DATA.creditLineTilemap_2[i] = 0;
+            }
+
+            if (ENDING_DATA.timer++ > 512)
+            {
+                WRITE_16(REG_BLDCNT, 0x1FDF);
+                gWrittenToBldy = 0;
+                ENDING_DATA.timer = 0;
+                ENDING_DATA.stage++;
+            }
+            break;
+        
+        case 2:
+        case 5:
+        case 8:
+            if (gWrittenToBldy < 16)
+            {
+                if (MOD_AND(ENDING_DATA.timer++, 2))
+                    gWrittenToBldy++;
+            }
+            else
+            {
+                WRITE_16(REG_DISPCNT, 0);
+                ENDING_DATA.timer = 0;
+                ENDING_DATA.stage++;
+            }
+            break;
+        
+        case 3:
+            if (sSamusPosingFunctionPointers[ENDING_DATA.unk_98]())
+                ENDING_DATA.stage++;
+
+            gBg2YPosition += 4;
+            break;
+        
+        case 4:
+        case 7:
+            WRITE_16(REG_BLDCNT, 0x1FDF);
+            gWrittenToBldy = 0;
+            ENDING_DATA.timer = 0;
+            ENDING_DATA.unk_97 = 0;
+            ENDING_DATA.unk_98 = 0;
+            ENDING_DATA.stage++;
+            break;
+        
+        case 6:
+            if (sEndingImageFunctionPointers[ENDING_DATA.unk_98]())
+                ENDING_DATA.stage++;
+            break;
+        
+        case 9:
+            finished++;
+            FadeMusic(0x1E);
+            break;
+    }
+    
+    return finished;
+}
 
 /**
  * @brief a22e0 | 26c | Displays a credit line
@@ -28,7 +174,7 @@ extern struct CreditsEntry sCredits[240];
  */
 u32 CreditsDisplayLine(u32 line)
 {
-    struct CreditsEntry* pCredits;
+    const struct CreditsEntry* pCredits;
     s32 i;
     u32 lineHeight;
 
