@@ -10,16 +10,11 @@
 #include "structs/ending.h"
 #include "structs/samus.h"
 
-extern void EndingDrawIgtAndCompletionPercentage(void);
-extern void EndingImageDisplayLinePermanently(s32);
-extern void EndingImageLoadTextOam(s32);
-extern void EndingImageUpdateLettersSpawnDelay(s32);
 void CreditsInit(void);
 boolu32 CreditsProcess(void);
-
 u32 CreditsDisplayLine(u32 line);
 boolu32 SamusPosingInit(void);
-boolu32 CreditsFadeIn(void);
+boolu32 EndingFadeIn(void);
 boolu32 SamusPosing(void);
 boolu32 SamusPosingTransforming(void);
 boolu32 EndingImageInit(void);
@@ -27,7 +22,7 @@ boolu32 EndingImage(void);
 
 static boolu32 (*sSamusPosingFunctionPointers[7]) (void) = {
     SamusPosingInit,
-    CreditsFadeIn,
+    EndingFadeIn,
     SamusPosing,
     SamusPosing,
     SamusPosing,
@@ -37,7 +32,7 @@ static boolu32 (*sSamusPosingFunctionPointers[7]) (void) = {
 
 static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
     EndingImageInit,
-    CreditsFadeIn,
+    EndingFadeIn,
     EndingImage
 };
 
@@ -45,6 +40,7 @@ static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
 /**
  * @brief a1c84 | 78 | Main handler for the credits
  * 
+ * @return boolu32 Finished
  */
 boolu32 CreditsHandler(void)
 {
@@ -88,16 +84,16 @@ boolu32 CreditsHandler(void)
 }
 
 /**
- * @brief a1cfc | c | To document
+ * @brief a1cfc | c | VBlank for the ending/credits init functions
  * 
  */
-void unk_a1cfc(void)
+void EndingInitFunctionsVBlank(void)
 {
     UpdateAudio();
 }
 
 /**
- * @brief a1d08 | 68 | To document
+ * @brief a1d08 | 68 | VBlank for the credits roll
  * 
  */
 void CreditsVBlank(void)
@@ -113,7 +109,7 @@ void CreditsVBlank(void)
 }
 
 /**
- * @brief a1d70 | 58 | To document
+ * @brief a1d70 | 58 | VBlank for Samus posing after credits
  * 
  */
 void SamusPosingVBlank(void)
@@ -126,7 +122,7 @@ void SamusPosingVBlank(void)
 }
 
 /**
- * @brief a1dc8 | 9c | To document
+ * @brief a1dc8 | 9c | VBlank for the ending image display
  * 
  */
 void EndingImageVBlank(void)
@@ -145,7 +141,7 @@ void EndingImageVBlank(void)
 }
 
 /**
- * @brief a1e64 | 28 | To document
+ * @brief a1e64 | 28 | HBlank code for Samus posing after credits
  * 
  */
 void SamusPosingHBlankCode(void)
@@ -157,7 +153,7 @@ void SamusPosingHBlankCode(void)
 }
 
 /**
- * @brief a1e8c | 260 | To document
+ * @brief a1e8c | 260 | Setup for the credits roll
  * 
  */
 void CreditsInit(void)
@@ -172,7 +168,7 @@ void CreditsInit(void)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
     
-    CallbackSetVBlank(unk_a1cfc);
+    CallbackSetVBlank(EndingInitFunctionsVBlank);
 
     WRITE_16(REG_DISPCNT, 0);
     
@@ -242,7 +238,7 @@ void CreditsInit(void)
 }
 
 /**
- * @brief a20ec | 1f4 | To document
+ * @brief a20ec | 1f4 | Processes the credits and ending sequence
  * 
  * @return boolu32 Finished
  */
@@ -535,12 +531,13 @@ u32 CreditsDisplayLine(u32 line)
 }
 
 /**
- * @brief a254c | 170 | To document
+ * @brief a254c | 170 | Setup for Samus posing after the credits
  * 
+ * @return boolu32 Always false
  */
-u32 SamusPosingInit(void)
+boolu32 SamusPosingInit(void)
 {
-    CallbackSetVBlank(unk_a1cfc);
+    CallbackSetVBlank(EndingInitFunctionsVBlank);
 
     WRITE_16(REG_DISPCNT, 0);
 
@@ -576,14 +573,15 @@ u32 SamusPosingInit(void)
 
     CallbackSetHBlank(gNonGameplayRam.ending.unk_270 + 1);
 
-    return 0;
+    return FALSE;
 }
 
 /**
- * @brief a26bc | 58 | To document
+ * @brief a26bc | 58 | Handles fading in Samus posing and ending image
  * 
+ * @return boolu32 Always false
  */
-boolu32 CreditsFadeIn(void)
+boolu32 EndingFadeIn(void)
 {
     if (gWrittenToBldy)
     {
@@ -603,8 +601,9 @@ boolu32 CreditsFadeIn(void)
 }
 
 /**
- * @brief a2714 | 1d8 | To document
+ * @brief a2714 | 1d8 | Processes Samus posing after the credits
  * 
+ * @return boolu32 Always false
  */
 boolu32 SamusPosing(void)
 {
@@ -710,10 +709,11 @@ boolu32 SamusPosing(void)
 /**
  * @brief a28ec | 448 | To document
  * 
+ * @return boolu32 finished
  */
 boolu32 SamusPosingTransforming(void) 
 {
-    boolu32 ended;
+    boolu32 finished;
     u16* src;
     u16* dst;
     u16 part;
@@ -722,7 +722,7 @@ boolu32 SamusPosingTransforming(void)
     void* temp1;
     u32 temp2;
 
-    ended = FALSE;
+    finished = FALSE;
     
     switch (gNonGameplayRam.ending.timer++) 
     {
@@ -869,7 +869,7 @@ boolu32 SamusPosingTransforming(void)
             break;
 
         case CONVERT_SECONDS(6 + 5.f / 6):
-            ended = TRUE;
+            finished = TRUE;
             break;
     }
 
@@ -922,12 +922,13 @@ boolu32 SamusPosingTransforming(void)
     gNextOamSlot = nextSlot;
     ResetFreeOam();
     
-    return ended;
+    return finished;
 }
 
 /**
- * @brief a2d34 | 378 | To document
+ * @brief a2d34 | 378 | Setup for the ending image
  * 
+ * @return boolu32 Always false
  */
 boolu32 EndingImageInit(void) 
 {
@@ -940,7 +941,7 @@ boolu32 EndingImageInit(void)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, 1);
 
-    CallbackSetVBlank(unk_a1cfc);
+    CallbackSetVBlank(EndingInitFunctionsVBlank);
 
     WRITE_16(REG_DISPCNT, 0);
     
@@ -1071,12 +1072,13 @@ boolu32 EndingImageInit(void)
 }
 
 /**
- * @brief a30ac | 380 | To document
+ * @brief a30ac | 380 | Processes the ending image display
  * 
+ * @return boolu32 Finished
  */
 boolu32 EndingImage(void) 
 {
-    boolu32 ended;
+    boolu32 finished;
     s32 i;
     u16* src;
     u16* dst;
@@ -1085,7 +1087,7 @@ boolu32 EndingImage(void)
     s32 nextSlot;
     u16 part;
     
-    ended = FALSE;
+    finished = FALSE;
     
     switch (gLanguage) 
     {
@@ -1150,7 +1152,7 @@ boolu32 EndingImage(void)
             break;
         
         case CONVERT_SECONDS(27 + 11.f / 15):
-            ended++;
+            finished++;
             break;
     }
     
@@ -1269,6 +1271,6 @@ boolu32 EndingImage(void)
                 
     ResetFreeOam();
     
-    return ended;
+    return finished;
 }
 
