@@ -1374,8 +1374,8 @@ const u8 sTilemap_75de04[764] = INCBIN_U8("data/ending/75de04.tm.lz");
 const u8 sTilemap_75e100[788] = INCBIN_U8("data/ending/75e100.tm.lz");
 const u8 sTilemap_75e414[744] = INCBIN_U8("data/ending/75e414.tm.lz");
 const u8 sTilemap_75e6fc[660] = INCBIN_U8("data/ending/75e6fc.tm.lz");
-const u8 sTilemap_75E990[516] = INCBIN_U8("data/ending/tilemap_75e990.tm.lz");
-const u8 sTilemap_75EB94[472] = INCBIN_U8("data/ending/tilemap_75eb94.tm.lz");
+const u8 sTilemap_75E990[516] = INCBIN_U8("data/ending/75e990.tm.lz");
+const u8 sTilemap_75EB94[472] = INCBIN_U8("data/ending/75eb94.tm.lz");
 
 const u32 sPreResultsSamusObjGfx[2887] = INCBIN_U32("data/ending/samus_obj.gfx.lz");
 

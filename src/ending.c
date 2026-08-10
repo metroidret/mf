@@ -4,6 +4,7 @@
 #include "syscalls.h"
 
 #include "constants/game_state.h"
+#include "constants/audio.h"
 
 #include "data/ending_data.h"
 #include "data/animated_graphics_data.h"
@@ -36,7 +37,6 @@ static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
     EndingFadeIn,
     EndingImage
 };
-
 
 /**
  * @brief a1c84 | 78 | Main handler for the credits
@@ -186,8 +186,8 @@ void CreditsInit(void)
     DMA3_COPY_16(sCreditsCopyrightText4_Gfx, VRAM_BASE + 0x2000, 0x120);
     DMA3_COPY_16(sPal_7478A0, PALRAM_BASE, 0x30);
     
-    WRITE_16(REG_BG0CNT, 0x1000);
-    WRITE_16(REG_DISPCNT, 0x1100);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 16, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_OBJ);
     
     gNextOamSlot = 0;
     ResetFreeOam();
@@ -234,7 +234,7 @@ void CreditsInit(void)
     if (ENDING_DATA.completionPercentage > 100)
         ENDING_DATA.completionPercentage = 100;
     
-    PlayMusic(0x55, 0xE);
+    PlayMusic(MUSIC_ENDING, 14);
     CallbackSetVBlank(CreditsVBlank);
 }
 
@@ -258,7 +258,6 @@ boolu32 CreditsProcess(void)
         case 0:
             if (ENDING_DATA.unk_8 > 127)
             {
-                //ENDING_DATA.unk_8 &= 127;
                 ENDING_DATA.unk_8 = MOD_AND(ENDING_DATA.unk_8, 128);
                 
                 if (ENDING_DATA.unk_2 == ENDING_DATA.unk_4)
@@ -271,18 +270,16 @@ boolu32 CreditsProcess(void)
                     }
                     else
                     {
-                        temp_r3 = ENDING_DATA.unk_4 << 6;
+                        temp_r3 = ENDING_DATA.unk_4 * 0x40;
                         var_r0 = temp_r3 + 0x500;
                         
                         if (var_r0 > 0x7FF)
-                            //var_r0 &= 0x7FF;
                             var_r0 = MOD_AND(var_r0, 0x800);
                         
                         ENDING_DATA.unk_8C = var_r0 + 0x8000;
                         var_r0 = temp_r3 + 0x540;
                         
                         if (var_r0 > 0x7FF)
-                            //var_r0 &= 0x7FF;
                             var_r0 = MOD_AND(var_r0, 0x800);
                         
                         ENDING_DATA.unk_90 = var_r0 + 0x8000;
@@ -308,7 +305,11 @@ boolu32 CreditsProcess(void)
 
             if (ENDING_DATA.timer++ > 512)
             {
-                WRITE_16(REG_BLDCNT, 0x1FDF);
+                WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_BG2_FIRST_TARGET_PIXEL | 
+                    BLDCNT_BG3_FIRST_TARGET_PIXEL | BLDCNT_OBJ_FIRST_TARGET_PIXEL | BLDCNT_BRIGHTNESS_DECREASE_EFFECT | 
+                    BLDCNT_BG0_SECOND_TARGET_PIXEL | BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL | 
+                    BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
+
                 gWrittenToBldy = 0;
                 ENDING_DATA.timer = 0;
                 ENDING_DATA.stage++;
@@ -318,7 +319,7 @@ boolu32 CreditsProcess(void)
         case 2:
         case 5:
         case 8:
-            if (gWrittenToBldy < 16)
+            if (gWrittenToBldy < BLDY_MAX_VALUE)
             {
                 if (MOD_AND(ENDING_DATA.timer++, 2))
                     gWrittenToBldy++;
@@ -340,7 +341,11 @@ boolu32 CreditsProcess(void)
         
         case 4:
         case 7:
-            WRITE_16(REG_BLDCNT, 0x1FDF);
+            WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_BG2_FIRST_TARGET_PIXEL | 
+                BLDCNT_BG3_FIRST_TARGET_PIXEL | BLDCNT_OBJ_FIRST_TARGET_PIXEL | BLDCNT_BRIGHTNESS_DECREASE_EFFECT | 
+                BLDCNT_BG0_SECOND_TARGET_PIXEL | BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL | 
+                BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
+
             gWrittenToBldy = 0;
             ENDING_DATA.timer = 0;
             ENDING_DATA.unk_97 = 0;
@@ -355,7 +360,7 @@ boolu32 CreditsProcess(void)
         
         case 9:
             finished++;
-            FadeMusic(0x1E);
+            FadeMusic(CONVERT_SECONDS(0.5f));
             break;
     }
     
@@ -455,7 +460,7 @@ u32 CreditsDisplayLine(u32 line)
         
         case CREDIT_LINE_TYPE_ALL_RIGHTS:
             for (i = 8; i < 22; i++)
-                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0x98;
+                ENDING_DATA.creditLineTilemap_1[i] = i + 0x98;
 
             lineHeight = 1;
             break;
@@ -466,21 +471,21 @@ u32 CreditsDisplayLine(u32 line)
         
         case CREDIT_LINE_TYPE_THE_COPYRIGHT:
             for (i = 6; i < 24; i++)
-                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0xBA;
+                ENDING_DATA.creditLineTilemap_1[i] = i + 0xBA;
         
             lineHeight = 1;
             break;
         
         case CREDIT_LINE_TYPE_SCENARIO:
             for (i = 4; i < 26; i++)
-                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0xDC;
+                ENDING_DATA.creditLineTilemap_1[i] = i + 0xDC;
         
             lineHeight = 1;
             break;
         
         case CREDIT_LINE_TYPE_RESERVED:
             for (i = 6; i < 24; i++)
-                gNonGameplayRam.ending.creditLineTilemap_1[i] = i + 0xFA;
+                ENDING_DATA.creditLineTilemap_1[i] = i + 0xFA;
         
             lineHeight = 1;
             break;
@@ -526,7 +531,7 @@ u32 CreditsDisplayLine(u32 line)
 
             lineHeight = 2;
             break;
-    } // End switch
+    }
     
     return lineHeight;
 }
@@ -563,18 +568,18 @@ boolu32 SamusPosingInit(void)
 
     gBg0YPosition = 0;
 
-    DMA3_COPY_16(sSamusPosingSineTable, gNonGameplayRam.ending.unk_A4, 64);
+    DMA3_COPY_16(sSamusPosingSineTable, ENDING_DATA.unk_A4, 64);
 
-    gNonGameplayRam.ending.unk_2 = 0;
-    gNonGameplayRam.ending.unk_4 = 0;
-    gNonGameplayRam.ending.currentCreditLine = 0;
-    gNonGameplayRam.ending.unk_98++;
+    ENDING_DATA.unk_2 = 0;
+    ENDING_DATA.unk_4 = 0;
+    ENDING_DATA.currentCreditLine = 0;
+    ENDING_DATA.unk_98++;
     
     CallbackSetVBlank(SamusPosingVBlank);
 
-    DMA3_COPY_16(SamusPosingHBlankCode, &gNonGameplayRam.ending.unk_270, 32);
+    DMA3_COPY_16(SamusPosingHBlankCode, &ENDING_DATA.unk_270, 32);
 
-    CallbackSetHBlank(gNonGameplayRam.ending.unk_270 + 1);
+    CallbackSetHBlank(ENDING_DATA.unk_270 + 1);
 
     return FALSE;
 }
@@ -588,16 +593,16 @@ boolu32 EndingFadeIn(void)
 {
     if (gWrittenToBldy)
     {
-        if (gNonGameplayRam.ending.unk_97 & 1)
+        if (ENDING_DATA.unk_97 & 1)
             gWrittenToBldy--;
         
-        gNonGameplayRam.ending.unk_97++;
+        ENDING_DATA.unk_97++;
     }
     else
     {
         WRITE_16(REG_BLDCNT, 0);
-        gNonGameplayRam.ending.unk_98++;
-        gNonGameplayRam.ending.unk_97 = 0;
+        ENDING_DATA.unk_98++;
+        ENDING_DATA.unk_97 = 0;
     }
     
     return FALSE;
@@ -615,12 +620,12 @@ boolu32 SamusPosing(void)
     void* temp1;
     u32 temp2;
 
-    switch (gNonGameplayRam.ending.timer++)
+    switch (ENDING_DATA.timer++)
     {
         case 0:
-            index = gNonGameplayRam.ending.unk_98 - 2;
+            index = ENDING_DATA.unk_98 - 2;
             
-            if (gNonGameplayRam.ending.unk_98 & 1)
+            if (ENDING_DATA.unk_98 & 1)
                 offset = 0x8000;
             else 
                 offset = 0xA800;
@@ -629,9 +634,9 @@ boolu32 SamusPosing(void)
             break;
         
         case CONVERT_SECONDS(1.f / 60):
-            index = gNonGameplayRam.ending.unk_98 - 2;
+            index = ENDING_DATA.unk_98 - 2;
 
-            if (gNonGameplayRam.ending.unk_98 & 1)
+            if (ENDING_DATA.unk_98 & 1)
                 offset = 0x9000;
             else 
                 offset = 0xB800;
@@ -640,9 +645,9 @@ boolu32 SamusPosing(void)
             break;
         
         case CONVERT_SECONDS(1.f / 30):
-            index = gNonGameplayRam.ending.unk_98 - 2;
+            index = ENDING_DATA.unk_98 - 2;
 
-            if (gNonGameplayRam.ending.unk_98 & 1)
+            if (ENDING_DATA.unk_98 & 1)
                 offset = 0xF800;
             else 
                 offset = 0xF000;
@@ -659,7 +664,7 @@ boolu32 SamusPosing(void)
             temp2 = BLDALPHA_MAX_VALUE;
             WRITE_16(temp1, temp2);
             
-            if (gNonGameplayRam.ending.unk_98 & 1)
+            if (ENDING_DATA.unk_98 & 1)
                 WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | 
                     BLDCNT_BG0_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL);
             else
@@ -667,13 +672,13 @@ boolu32 SamusPosing(void)
                     BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL);
             
             WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
-            gNonGameplayRam.ending.unk_2 = 1;
+            ENDING_DATA.unk_2 = 1;
             break;
         
         case CONVERT_SECONDS(1 + 2.f / 3):
             WRITE_16(REG_BLDCNT, 0);
             
-            if (gNonGameplayRam.ending.unk_98 & 1) 
+            if (ENDING_DATA.unk_98 & 1) 
             {
                 WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
                 WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
@@ -686,16 +691,16 @@ boolu32 SamusPosing(void)
                 WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 30, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
             }
         
-            gNonGameplayRam.ending.unk_2 = 0;
-            gNonGameplayRam.ending.timer = 0;
-            gNonGameplayRam.ending.unk_97 = 0;
-            gNonGameplayRam.ending.unk_98++;
+            ENDING_DATA.unk_2 = 0;
+            ENDING_DATA.timer = 0;
+            ENDING_DATA.unk_97 = 0;
+            ENDING_DATA.unk_98++;
             break;
     }
     
-    if (gNonGameplayRam.ending.unk_2 == 1 && gNonGameplayRam.ending.unk_97++ > 1) 
+    if (ENDING_DATA.unk_2 == 1 && ENDING_DATA.unk_97++ > 1) 
     {
-        gNonGameplayRam.ending.unk_97 = 0;
+        ENDING_DATA.unk_97 = 0;
             
         if (gWrittenToBldalpha_Eva)
             gWrittenToBldalpha_Eva--;
@@ -710,7 +715,7 @@ boolu32 SamusPosing(void)
 }
 
 /**
- * @brief a28ec | 448 | To document
+ * @brief a28ec | 448 | Processes Samus transforming her suit after the credits
  * 
  * @return boolu32 finished
  */
@@ -727,7 +732,7 @@ boolu32 SamusPosingTransforming(void)
 
     finished = FALSE;
     
-    switch (gNonGameplayRam.ending.timer++) 
+    switch (ENDING_DATA.timer++) 
     {
         case CONVERT_SECONDS(5.f / 6):
             gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
@@ -740,21 +745,21 @@ boolu32 SamusPosingTransforming(void)
             
             WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | 
                 BLDCNT_BG2_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
-            gNonGameplayRam.ending.unk_9B = 1;
-            gNonGameplayRam.ending.unk_9D = 1;
-            gNonGameplayRam.ending.unk_A0 = (u16*)&sOamFrame_749c80;
-            gNonGameplayRam.ending.unk_2 = 1;
+            ENDING_DATA.unk_9B = 1;
+            ENDING_DATA.unk_9D = 1;
+            ENDING_DATA.unk_A0 = (u16*)&sOamFrame_749c80;
+            ENDING_DATA.unk_2 = 1;
             break;
 
         case CONVERT_SECONDS(1 + 2.f / 3):
             WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_OBJ);
             WRITE_16(REG_BLDCNT, 0);
-            gNonGameplayRam.ending.unk_9D = 0;
-            gNonGameplayRam.ending.unk_2 = 0;
+            ENDING_DATA.unk_9D = 0;
+            ENDING_DATA.unk_2 = 0;
             break;
 
         case CONVERT_SECONDS(1 + 41.f / 60):
-            if (gNonGameplayRam.ending.unk_99)
+            if (ENDING_DATA.unk_99)
             {
                 LZ77UncompVram(sTilemap_753E80, VRAM_BASE + 0xF800);
                 WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
@@ -763,86 +768,86 @@ boolu32 SamusPosingTransforming(void)
 
         //case CONVERT_SECONDS(1 + 5.f / 6): // No match
         case CONVERT_SECONDS(11.f / 6):
-            if (gNonGameplayRam.ending.unk_99)
+            if (ENDING_DATA.unk_99)
             {
                 WRITE_16(REG_IME, 0);
                 WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) | DSTAT_IF_HBLANK);
                 WRITE_16(REG_IE, READ_16(REG_IE) | IF_HBLANK);
                 WRITE_16(REG_IME, 1);
-                gNonGameplayRam.ending.unk_96 = 1;
+                ENDING_DATA.unk_96 = 1;
             }
             break;
 
         case CONVERT_SECONDS(2 + 1.f / 3):
-            if (gNonGameplayRam.ending.unk_99)
+            if (ENDING_DATA.unk_99)
             {
                 WRITE_16(REG_WIN0H, 0);
                 WRITE_16(REG_WIN0V, 0);
                 WRITE_16(REG_WININ, 0);
                 WRITE_16(REG_WINOUT, WIN0_BG1 | WIN0_BG2 | WIN0_COLOR_EFFECT | WIN1_BG0 | WIN1_BG1 | WIN1_COLOR_EFFECT);
                 WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ | DCNT_WIN0 | DCNT_WINOBJ);
-                gNonGameplayRam.ending.unk_9C = 2;
+                ENDING_DATA.unk_9C = 2;
             }
             break;
 
         case CONVERT_SECONDS(2 + 21.f / 60):
-            if (gNonGameplayRam.ending.unk_99 == 1)
+            if (ENDING_DATA.unk_99 == 1)
             {
                 LZ77UncompVram(sPreResultsSamusWithoutHelmetBgGfx1, VRAM_BASE + 0x8000);
             }
-            else if (gNonGameplayRam.ending.unk_99)
+            else if (ENDING_DATA.unk_99)
             {
                 LZ77UncompVram(sPreResultsSamusSuitlessBgGfx1, VRAM_BASE + 0x8000);
             }
             break;
         
         case CONVERT_SECONDS(2 + 22.f / 60):
-            if (gNonGameplayRam.ending.unk_99 == 1)
+            if (ENDING_DATA.unk_99 == 1)
             {
                 LZ77UncompVram(sPreResultsSamusWithoutHelmetBgGfx2, VRAM_BASE + 0x9000);
             }
-            else if (gNonGameplayRam.ending.unk_99)
+            else if (ENDING_DATA.unk_99)
             {
                 LZ77UncompVram(sPreResultsSamusSuitlessBgGfx2, VRAM_BASE + 0x9000);
             }
             break;
 
         case CONVERT_SECONDS(2 + 23.f / 60):
-            if (gNonGameplayRam.ending.unk_99 == 1)
+            if (ENDING_DATA.unk_99 == 1)
             {
                 LZ77UncompVram(sTilemap_75E990, VRAM_BASE + 0xF000);
             }
-            else if (gNonGameplayRam.ending.unk_99) 
+            else if (ENDING_DATA.unk_99) 
             {
                 LZ77UncompVram(sTilemap_75EB94, VRAM_BASE + 0xF000);
             }
             break;
 
         case CONVERT_SECONDS(2 + 24.f / 60):
-            if (gNonGameplayRam.ending.unk_99 == 1)
+            if (ENDING_DATA.unk_99 == 1)
             {
                 DMA3_COPY_16(&sPreResultsSamusWithoutHelmetBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
             }
-            else if (gNonGameplayRam.ending.unk_99)
+            else if (ENDING_DATA.unk_99)
             {
                 DMA3_COPY_16(&sPreResultsSamusSuitlessBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
             }
             break;
         
         case CONVERT_SECONDS(2 + 5.f / 6):
-            if (gNonGameplayRam.ending.unk_99 == 1) 
+            if (ENDING_DATA.unk_99 == 1) 
             {
-                gNonGameplayRam.ending.unk_A0 = (u16*)&sOamFrame_749d18;
+                ENDING_DATA.unk_A0 = (u16*)&sOamFrame_749d18;
             } 
-            else if (gNonGameplayRam.ending.unk_99)
+            else if (ENDING_DATA.unk_99)
             {
-                gNonGameplayRam.ending.unk_A0 = (u16*)&sOamFrame_749d3e;
+                ENDING_DATA.unk_A0 = (u16*)&sOamFrame_749d3e;
                 WRITE_16(REG_BG1HOFS, 4);
             }
             break;
 
         case CONVERT_SECONDS(3 + 2.f / 3):
-            if (gNonGameplayRam.ending.unk_99)
+            if (ENDING_DATA.unk_99)
             {
                 gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
                 gWrittenToBldalpha_Evb = 0;
@@ -855,19 +860,19 @@ boolu32 SamusPosingTransforming(void)
                 WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_OBJ_FIRST_TARGET_PIXEL | 
                     BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG1_SECOND_TARGET_PIXEL | BLDCNT_BG2_SECOND_TARGET_PIXEL);
                 WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ | DCNT_WIN0 | DCNT_WINOBJ);
-                gNonGameplayRam.ending.unk_2 = 1;
-                gNonGameplayRam.ending.unk_97 = 0;
+                ENDING_DATA.unk_2 = 1;
+                ENDING_DATA.unk_97 = 0;
             }
             break;
         
         case CONVERT_SECONDS(4 + 1.f / 2):
-            if (gNonGameplayRam.ending.unk_99)
+            if (ENDING_DATA.unk_99)
             {
                 WRITE_16(REG_DISPCNT, DCNT_BG1 | DCNT_BG2);
                 WRITE_16(REG_BLDCNT, 0);
-                gNonGameplayRam.ending.unk_9B = 0;
-                gNonGameplayRam.ending.unk_2 = 0;
-                gNonGameplayRam.ending.unk_96 = 0;
+                ENDING_DATA.unk_9B = 0;
+                ENDING_DATA.unk_2 = 0;
+                ENDING_DATA.unk_96 = 0;
             }
             break;
 
@@ -876,9 +881,9 @@ boolu32 SamusPosingTransforming(void)
             break;
     }
 
-    if (gNonGameplayRam.ending.unk_2 == 1 && gNonGameplayRam.ending.unk_97++ > 1) 
+    if (ENDING_DATA.unk_2 == 1 && ENDING_DATA.unk_97++ > 1) 
     {
-        gNonGameplayRam.ending.unk_97 = 0;
+        ENDING_DATA.unk_97 = 0;
             
         if (gWrittenToBldalpha_Eva)
             gWrittenToBldalpha_Eva--;
@@ -889,15 +894,15 @@ boolu32 SamusPosingTransforming(void)
         WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
     }
     
-    if (gNonGameplayRam.ending.unk_96)
-        gNonGameplayRam.ending.currentCreditLine++;
+    if (ENDING_DATA.unk_96)
+        ENDING_DATA.currentCreditLine++;
 
     dst = (u16*)&gOamData;
     nextSlot = 0;
 
-    if (gNonGameplayRam.ending.unk_9B)
+    if (ENDING_DATA.unk_9B)
     {
-        src = gNonGameplayRam.ending.unk_A0;
+        src = ENDING_DATA.unk_A0;
         part = *src++;
         nextSlot = (u8)part;
         
@@ -907,7 +912,7 @@ boolu32 SamusPosingTransforming(void)
             *dst++ = part;
 
             gOamData[currSlot].split.y = part + 0x4C;
-            gOamData[currSlot].split.objMode = gNonGameplayRam.ending.unk_9C;
+            gOamData[currSlot].split.objMode = ENDING_DATA.unk_9C;
 
             part = *src++;
             *dst++ = part;
@@ -916,7 +921,7 @@ boolu32 SamusPosingTransforming(void)
 
             *dst = *src++;
             
-            gOamData[currSlot].split.priority = gNonGameplayRam.ending.unk_9D;
+            gOamData[currSlot].split.priority = ENDING_DATA.unk_9D;
 
             dst += 2;
         }
@@ -948,18 +953,18 @@ boolu32 EndingImageInit(void)
 
     WRITE_16(REG_DISPCNT, 0);
     
-    if (gNonGameplayRam.ending.completionPercentage > 99)
+    if (ENDING_DATA.completionPercentage > 99)
     {
         ending = 3;
 
-        if (gNonGameplayRam.ending.unk_99 == 2)
+        if (ENDING_DATA.unk_99 == 2)
         {
             ending = 4;
         }
     }
     else
     {
-        ending = gNonGameplayRam.ending.unk_99;
+        ending = ENDING_DATA.unk_99;
     }
 
     switch (ending)
@@ -1059,15 +1064,15 @@ boolu32 EndingImageInit(void)
     WRITE_16(REG_BG3HOFS, 0);
     WRITE_16(REG_BG3VOFS, 0);
 
-    gNonGameplayRam.ending.unk_8 = 128;
-    gNonGameplayRam.ending.unk_2 = 0;
-    gNonGameplayRam.ending.unk_4 = 0;
-    gNonGameplayRam.ending.currentCreditLine = 0;
-    gNonGameplayRam.ending.unk_98++;
+    ENDING_DATA.unk_8 = 128;
+    ENDING_DATA.unk_2 = 0;
+    ENDING_DATA.unk_4 = 0;
+    ENDING_DATA.currentCreditLine = 0;
+    ENDING_DATA.unk_98++;
 
     value = 31;
     for (i = 31; i >= 0; i--)
-        gNonGameplayRam.ending.creditLineTilemap_1[i] = value;
+        ENDING_DATA.creditLineTilemap_1[i] = value;
 
     CallbackSetVBlank(EndingImageVBlank);
 
@@ -1101,27 +1106,27 @@ boolu32 EndingImage(void)
         
         case LANGUAGE_ITALIAN:
         default:
-            if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6 + 1.f / 4)) 
+            if (ENDING_DATA.timer == CONVERT_SECONDS(6 + 1.f / 4)) 
             {
                 EndingImageDisplayLinePermanently(2);
             } 
-            else if (gNonGameplayRam.ending.timer == CONVERT_SECONDS(6 + 1.f / 3)) 
+            else if (ENDING_DATA.timer == CONVERT_SECONDS(6 + 1.f / 3)) 
             {
                 EndingImageLoadTextOam(2);
             }
             break;
     }
     
-    switch (gNonGameplayRam.ending.timer++) 
+    switch (ENDING_DATA.timer++) 
     {
         case 0:
             EndingDrawIgtAndCompletionPercentage();
-            gNonGameplayRam.ending.unk_2 = 1;
+            ENDING_DATA.unk_2 = 1;
             break;
         
         case CONVERT_SECONDS(1.f / 2):
             EndingImageLoadTextOam(0);
-            gNonGameplayRam.ending.unk_97 = 1;
+            ENDING_DATA.unk_97 = 1;
             break;
         
         //case CONVERT_SECONDS(1 + 5.f / 6): // No match
@@ -1151,7 +1156,7 @@ boolu32 EndingImage(void)
         
         case CONVERT_SECONDS(22 + 14.f / 15):
             if (!(gChangedInput & (KEY_A | KEY_B | KEY_START)))
-                gNonGameplayRam.ending.timer--;
+                ENDING_DATA.timer--;
             break;
         
         case CONVERT_SECONDS(27 + 11.f / 15):
@@ -1159,35 +1164,35 @@ boolu32 EndingImage(void)
             break;
     }
     
-    if (gNonGameplayRam.ending.unk_2 == 1) 
+    if (ENDING_DATA.unk_2 == 1) 
     {
-        if (gNonGameplayRam.ending.unk_8 > 127) 
+        if (ENDING_DATA.unk_8 > 127) 
         {
-            gNonGameplayRam.ending.unk_8 = MOD_AND(gNonGameplayRam.ending.unk_8, 128);
-            gNonGameplayRam.ending.unk_8C = ((u16)-64 - gNonGameplayRam.ending.unk_4 * 64);
-            gNonGameplayRam.ending.unk_90 = ((u16)-128 - gNonGameplayRam.ending.unk_4 * 64);
-            gNonGameplayRam.ending.unk_4 = MOD_AND(gNonGameplayRam.ending.unk_4 + 1, 32);
-            gNonGameplayRam.ending.unk_0++;
+            ENDING_DATA.unk_8 = MOD_AND(ENDING_DATA.unk_8, 128);
+            ENDING_DATA.unk_8C = ((u16)-64 - ENDING_DATA.unk_4 * 64);
+            ENDING_DATA.unk_90 = ((u16)-128 - ENDING_DATA.unk_4 * 64);
+            ENDING_DATA.unk_4 = MOD_AND(ENDING_DATA.unk_4 + 1, 32);
+            ENDING_DATA.unk_0++;
         }
 
         gBg0YPosition -= 6;
         gBg1YPosition -= 6;
-        gNonGameplayRam.ending.unk_8 += 6;
+        ENDING_DATA.unk_8 += 6;
         
         if (!gBg0YPosition || (gBg0YPosition & 0x8000))
         {
             gBg0YPosition = 0;
-            gNonGameplayRam.ending.unk_2 = 0;
+            ENDING_DATA.unk_2 = 0;
         }
     }
     
-    if (gNonGameplayRam.ending.unk_97 == 1) 
+    if (ENDING_DATA.unk_97 == 1) 
     {
-        for (currSlot = 6; currSlot < gNonGameplayRam.ending.unk_9B; currSlot++)
+        for (currSlot = 6; currSlot < ENDING_DATA.unk_9B; currSlot++)
             EndingImageUpdateLettersSpawnDelay(currSlot);
     }
 
-    if (gNonGameplayRam.ending.timer <= CONVERT_SECONDS(23) && (gNonGameplayRam.ending.timer < CONVERT_SECONDS(13 + 1.f / 2) || 
+    if (ENDING_DATA.timer <= CONVERT_SECONDS(23) && (ENDING_DATA.timer < CONVERT_SECONDS(13 + 1.f / 2) || 
         !(gButtonInput & (KEY_L | KEY_R))))  
     {
         dst = (u16*)&gOamData;
@@ -1197,31 +1202,31 @@ boolu32 EndingImage(void)
 
         EMPTY_DO_WHILE
         
-        for (i = 0; i < gNonGameplayRam.ending.unk_9B; i++) 
+        for (i = 0; i < ENDING_DATA.unk_9B; i++) 
         {
-            if (gNonGameplayRam.ending.unk_124[i] <= 1)
+            if (ENDING_DATA.unk_124[i] <= 1)
                 continue;
             
-            if (gNonGameplayRam.ending.unk_160[i] <= 63)
-                gNonGameplayRam.ending.unk_160[i]++;
+            if (ENDING_DATA.unk_160[i] <= 63)
+                ENDING_DATA.unk_160[i]++;
                 
             palette = 0;
             
             if (i > 5) 
             {                    
-                if (gNonGameplayRam.ending.unk_160[i] < 4)
+                if (ENDING_DATA.unk_160[i] < 4)
                     palette = 3;
-                else if (gNonGameplayRam.ending.unk_160[i] < 8)
+                else if (ENDING_DATA.unk_160[i] < 8)
                     palette = 2;
-                else if (gNonGameplayRam.ending.unk_160[i] < 12)
+                else if (ENDING_DATA.unk_160[i] < 12)
                     palette = 1;
             } 
             else if (i == 5) 
             {
-                if (gNonGameplayRam.ending.unk_160[i] > 63)
-                    gNonGameplayRam.ending.unk_160[i] = palette;
+                if (ENDING_DATA.unk_160[i] > 63)
+                    ENDING_DATA.unk_160[i] = palette;
                     
-                switch (gNonGameplayRam.ending.unk_160[i] / 8)
+                switch (ENDING_DATA.unk_160[i] / 8)
                 {
                     case 0:
                     case 7:
@@ -1244,7 +1249,7 @@ boolu32 EndingImage(void)
                 }
             }
 
-            src = gNonGameplayRam.ending.oamFramePointers[i];
+            src = ENDING_DATA.oamFramePointers[i];
             part = *src++;
             nextSlot += MOD_AND(part, 0x100);
             
@@ -1253,12 +1258,12 @@ boolu32 EndingImage(void)
                 part = *src++;
                 *dst++ = part;
 
-                gOamData[currSlot].split.y = part + gNonGameplayRam.ending.oamYPositions[i];
+                gOamData[currSlot].split.y = part + ENDING_DATA.oamYPositions[i];
 
                 part = *src++;
                 *dst++ = part;
 
-                gOamData[currSlot].split.x = MOD_AND(part + gNonGameplayRam.ending.oamXPositions[i], 0x200);
+                gOamData[currSlot].split.x = MOD_AND(part + ENDING_DATA.oamXPositions[i], 0x200);
 
                 *dst++ = *src++;
                 

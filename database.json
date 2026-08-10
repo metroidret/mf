@@ -26849,7 +26849,7 @@
     "size": 1
   },
   {
-    "path": "ending/tilemap_75e990.tm.lz",
+    "path": "ending/75e990.tm.lz",
     "count": "0x204",
     "addr": {
       "us": "0x75E990"
@@ -26857,14 +26857,13 @@
     "size": 1
   },
   {
-    "path": "ending/tilemap_75eb94.tm.lz",
+    "path": "ending/75eb94.tm.lz",
     "count": "0x1D8",
     "addr": {
       "us": "0x75EB94"
     },
     "size": 1
   },
-  
   {
     "path": "ending/samus_obj.gfx.lz",
     "count": "0xB47",
