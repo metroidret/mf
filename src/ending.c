@@ -6,6 +6,7 @@
 #include "constants/game_state.h"
 
 #include "data/ending_data.h"
+#include "data/animated_graphics_data.h"
 
 #include "structs/ending.h"
 #include "structs/samus.h"
@@ -541,26 +542,28 @@ boolu32 SamusPosingInit(void)
 
     WRITE_16(REG_DISPCNT, 0);
 
-    LZ77UncompVram((void*)0x0874eb50, VRAM_BASE);
-    LZ77UncompVram((void*)0x087535e0, VRAM_BASE + 0xE800);
-    LZ77UncompVram((void*)0x08753ff8, VRAM_BASE + 0x8000);
-    LZ77UncompVram((void*)0x08754d4c, VRAM_BASE + 0x9000);
-    LZ77UncompVram((void*)0x0875db50, VRAM_BASE + 0xF800);
-    LZ77UncompVram((void*)0x0875ed6c, VRAM_OBJ);
+    LZ77UncompVram(sPreResultsSpaceBgGfx, VRAM_BASE);
+    LZ77UncompVram(sTilemap_7535e0, VRAM_BASE + 0xE800);
+    LZ77UncompVram(sPreResultsSamusSuitedGfx1, VRAM_BASE + 0x8000);
+    LZ77UncompVram(sPreResultsSamusSuitedGfx2, VRAM_BASE + 0x9000);
+    LZ77UncompVram(sTilemap_75db50, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sPreResultsSamusObjGfx, VRAM_OBJ);
 
-    DMA3_COPY_16(0x08749600, PALRAM_BASE, 96);
-    DMA3_COPY_16(0x087496c0, PALRAM_BASE + 0xC0, 160);
-    DMA3_COPY_16(0x08749a80, PALRAM_OBJ, 256);
+    DMA3_COPY_16(sPal_749600, PALRAM_BASE, PAL_ROW * 6);
+    DMA3_COPY_16(sPal_7496c0, PALRAM_BASE + PAL_ROW_SIZE * 6, PAL_ROW * 10);
+    DMA3_COPY_16(sPreResultsSamusObjPal, PALRAM_OBJ, PAL_ROW * 16);
 
-    WRITE_16(REG_BG0CNT, 0x1F08);
-    WRITE_16(REG_BG1CNT, 0x1E09);
-    WRITE_16(REG_BG2CNT, 0x1D02);
-    WRITE_16(REG_DISPCNT, 0x1500);
-    WRITE_16(REG_BLDCNT, 0x1FDF);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 30, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 29, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
+    WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_BG2_FIRST_TARGET_PIXEL | BLDCNT_BG3_FIRST_TARGET_PIXEL | 
+        BLDCNT_OBJ_FIRST_TARGET_PIXEL | BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_BG0_SECOND_TARGET_PIXEL | BLDCNT_BG1_SECOND_TARGET_PIXEL | 
+        BLDCNT_BG2_SECOND_TARGET_PIXEL | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
 
     gBg0YPosition = 0;
 
-    DMA3_COPY_16(0x083c94d0, gNonGameplayRam.ending.unk_A4, 64);
+    DMA3_COPY_16(sSamusPosingSineTable, gNonGameplayRam.ending.unk_A4, 64);
 
     gNonGameplayRam.ending.unk_2 = 0;
     gNonGameplayRam.ending.unk_4 = 0;
@@ -644,7 +647,7 @@ boolu32 SamusPosing(void)
             else 
                 offset = 0xF000;
                 
-            LZ77UncompVram(sPreResultsSamusBgGfxPointers3[index], VRAM_BASE + offset);
+            LZ77UncompVram(sPreResultsSamusBgTilemapPointers[index], VRAM_BASE + offset);
             break;
         
         case CONVERT_SECONDS(5.f / 6):

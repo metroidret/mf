@@ -7,7 +7,9 @@
 
 #include "constants/ending.h"
 
-const u16 sPal_7478A0[16 * 3] = INCBIN_U16("data/ending/7478a0.pal");
+#include "gba/memory.h"
+
+const u16 sPal_7478A0[PAL_ROW * 3] = INCBIN_U16("data/ending/7478a0.pal");
 
 const u32 sCreditsCharacterGfx[1280] = INCBIN_U32("data/ending/credits_character.gfx");
 const u32 sCreditsCopyrightText1_Gfx[112] = INCBIN_U32("data/ending/copyright_text_1.gfx");
@@ -15,11 +17,12 @@ const u32 sCreditsCopyrightText2_Gfx[144] = INCBIN_U32("data/ending/copyright_te
 const u32 sCreditsCopyrightText3_Gfx[176] = INCBIN_U32("data/ending/copyright_text_3.gfx");
 const u32 sCreditsCopyrightText4_Gfx[144] = INCBIN_U32("data/ending/copyright_text_4.gfx");
 
-static const u8 sBlob_749600_749800[] = INCBIN_U8("data/Blob_749600_749800.bin");
+const u16 sPal_749600[PAL_ROW * 6] = INCBIN_U16("data/ending/749600.pal");
+const u16 sPal_7496c0[PAL_ROW * 10] = INCBIN_U16("data/ending/7496c0.pal");
 
-const u16 sPreResultsSamusWithoutHelmetBgPal[160] = INCBIN_U16("data/ending/samus_without_helmet_bg.pal");
-const u16 sPreResultsSamusSuitlessBgPal[160] = INCBIN_U16("data/ending/samus_suitless_bg.pal");
-const u16 sPreResultsSamusObjPal[256] = INCBIN_U16("data/ending/samus_obj.pal");
+const u16 sPreResultsSamusWithoutHelmetBgPal[PAL_ROW * 10] = INCBIN_U16("data/ending/samus_without_helmet_bg.pal");
+const u16 sPreResultsSamusSuitlessBgPal[PAL_ROW * 10] = INCBIN_U16("data/ending/samus_suitless_bg.pal");
+const u16 sPreResultsSamusObjPal[PAL_ROW * 16] = INCBIN_U16("data/ending/samus_obj.pal");
 
 const u16 sOamFrame_749c80[OAM_DATA_SIZE(25)] = {
     25,
@@ -68,12 +71,12 @@ const u16 sOamFrame_749d3e[OAM_DATA_SIZE(4)] = {
     OAM_ENTRY(34, 52, OAM_DIMS_16x32, OAM_NO_FLIP, 0x2d2, 1, 0),
 };
 
-const u16 sEnding_0_Pal[256] = INCBIN_U16("data/ending/ending_0.pal");
-const u16 sEnding_1_Pal[256] = INCBIN_U16("data/ending/ending_1.pal");
-const u16 sEnding_2_Pal[256] = INCBIN_U16("data/ending/ending_2.pal");
-const u16 sEnding_3_Pal[256] = INCBIN_U16("data/ending/ending_3.pal");
-const u16 sEnding_4_Pal[256] = INCBIN_U16("data/ending/ending_4.pal");
-const u16 sResultsTextPal[64] = INCBIN_U16("data/ending/results_text.pal");
+const u16 sEnding_0_Pal[PAL_ROW * 16] = INCBIN_U16("data/ending/ending_0.pal");
+const u16 sEnding_1_Pal[PAL_ROW * 16] = INCBIN_U16("data/ending/ending_1.pal");
+const u16 sEnding_2_Pal[PAL_ROW * 16] = INCBIN_U16("data/ending/ending_2.pal");
+const u16 sEnding_3_Pal[PAL_ROW * 16] = INCBIN_U16("data/ending/ending_3.pal");
+const u16 sEnding_4_Pal[PAL_ROW * 16] = INCBIN_U16("data/ending/ending_4.pal");
+const u16 sResultsTextPal[PAL_ROW * 4] = INCBIN_U16("data/ending/results_text.pal");
 
 static const u8 sBlob_74a7d8_74b0b0[] = INCBIN_U8("data/Blob_74a7d8_74b0b0.bin");
 
@@ -1323,43 +1326,58 @@ const struct CreditsEntry sCredits[310] = {
 static const u8 sBlob_74dc48_74e620[] = INCBIN_U8("data/Blob_74dc48_74e620.bin");
 
 const u32* const sPreResultsSamusBgGfxPointers1[4] = {
-    (const u32*)0x8755720,
-    (const u32*)0x87571c0,
-    (const u32*)0x8758db4,
-    (const u32*)0x875a828
+    sPreResultsSamusSuitedGfx3,
+    sPreResultsSamusSuitedGfx5,
+    sPreResultsSamusSuitedGfx7,
+    sPreResultsSamusSuitedGfx9
 };
 
 const u32* const sPreResultsSamusBgGfxPointers2[4] = {
-    (const u32*)0x8756470,
-    (const u32*)0x8757f00,
-    (const u32*)0x8759c00,
-    (const u32*)0x875b694
+    sPreResultsSamusSuitedGfx4,
+    sPreResultsSamusSuitedGfx6,
+    sPreResultsSamusSuitedGfx8,
+    sPreResultsSamusSuitedGfx10
 };
 
-const u32* const sPreResultsSamusBgGfxPointers3[4] = {
-    (const u32*)0x875de04,
-    (const u32*)0x875e100,
-    (const u32*)0x875e414,
-    (const u32*)0x875e6fc
+const u8* const sPreResultsSamusBgTilemapPointers[4] = {
+    sTilemap_75de04,
+    sTilemap_75e100,
+    sTilemap_75e414,
+    sTilemap_75e6fc
 };
 
-static const u8 sBlob_74e650_753e80[] = INCBIN_U8("data/Blob_74e650_753e80.bin");
+static const u8 sBlob_74e650_74eb50[] = INCBIN_U8("data/Blob_74e650_74eb50.bin");
 
-const u8 sTilemap_753E80[374] = INCBIN_U8("data/ending/tilemap_753e80.tm.lz");
+const u32 sPreResultsSpaceBgGfx[4772] = INCBIN_U32("data/ending/space_bg.gfx.lz");
 
-static const u8 sBlob_753ff6_75be54[] = INCBIN_U8("data/Blob_753ff6_75be54.bin");
+const u8 sTilemap_7535e0[2208] = INCBIN_U8("data/ending/7535e0.tm.lz");
+const u8 sTilemap_753E80[376] = INCBIN_U8("data/ending/753e80.tm.lz");
+
+const u32 sPreResultsSamusSuitedGfx1[853] = INCBIN_U32("data/ending/samus_suited_1.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx2[629] = INCBIN_U32("data/ending/samus_suited_2.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx3[852] = INCBIN_U32("data/ending/samus_suited_3.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx4[852] = INCBIN_U32("data/ending/samus_suited_4.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx5[848] = INCBIN_U32("data/ending/samus_suited_5.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx6[941] = INCBIN_U32("data/ending/samus_suited_6.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx7[915] = INCBIN_U32("data/ending/samus_suited_7.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx8[778] = INCBIN_U32("data/ending/samus_suited_8.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx9[923] = INCBIN_U32("data/ending/samus_suited_9.gfx.lz");
+const u32 sPreResultsSamusSuitedGfx10[496] = INCBIN_U32("data/ending/samus_suited_10.gfx.lz");
 
 const u32 sPreResultsSamusWithoutHelmetBgGfx1[897] = INCBIN_U32("data/ending/samus_without_helmet_bg_1.gfx.lz");
 const u32 sPreResultsSamusWithoutHelmetBgGfx2[124] = INCBIN_U32("data/ending/samus_without_helmet_bg_2.gfx.lz");
 const u32 sPreResultsSamusSuitlessBgGfx1[710] = INCBIN_U32("data/ending/samus_suitless_bg_1.gfx.lz");
 const u32 sPreResultsSamusSuitlessBgGfx2[124] = INCBIN_U32("data/ending/samus_suitless_bg_2.gfx.lz");
 
-static const u8 sBlob_75db50_75e990[] = INCBIN_U8("data/Blob_75db50_75e990.bin");
-
+const u8 sTilemap_75db50[692] = INCBIN_U8("data/ending/75db50.tm.lz");
+const u8 sTilemap_75de04[764] = INCBIN_U8("data/ending/75de04.tm.lz");
+const u8 sTilemap_75e100[788] = INCBIN_U8("data/ending/75e100.tm.lz");
+const u8 sTilemap_75e414[744] = INCBIN_U8("data/ending/75e414.tm.lz");
+const u8 sTilemap_75e6fc[660] = INCBIN_U8("data/ending/75e6fc.tm.lz");
 const u8 sTilemap_75E990[516] = INCBIN_U8("data/ending/tilemap_75e990.tm.lz");
-const u8 sTilemap_75EB94[474] = INCBIN_U8("data/ending/tilemap_75eb94.tm.lz");
+const u8 sTilemap_75EB94[472] = INCBIN_U8("data/ending/tilemap_75eb94.tm.lz");
 
-static const u8 sBlob_75ed6e_761a88[] = INCBIN_U8("data/Blob_75ed6e_761a88.bin");
+const u32 sPreResultsSamusObjGfx[2887] = INCBIN_U32("data/ending/samus_obj.gfx.lz");
 
 const u32 sEnding_0_GfxTop[5628] = INCBIN_U32("data/ending/ending_0_top.gfx.lz");
 const u32 sEnding_0_GfxBottom[3191] = INCBIN_U32("data/ending/ending_0_bottom.gfx.lz");
