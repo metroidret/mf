@@ -219,7 +219,7 @@ static u16* sMonologueTextPointersSpanish[19] = {
 	(u16*)0x872ee1c
 };
 
-static u8 sBlob_79e868_79ecc8[] = INCBIN_U8("data/Blob_79e868_79ecc8.bin");
+static u8 sBlob_79e868_79eca0[] = INCBIN_U8("data/Blob_79e868_79eca0.bin");
 
 /**
  * @brief 87610 | f8 | Handler for intro
