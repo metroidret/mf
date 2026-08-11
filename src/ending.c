@@ -15,21 +15,21 @@
 void CreditsInit(void);
 boolu32 CreditsProcess(void);
 u32 CreditsDisplayLine(u32 line);
-boolu32 SamusPosingInit(void);
+boolu32 EndingSamusPosingInit(void);
 boolu32 EndingFadeIn(void);
-boolu32 SamusPosing(void);
-boolu32 SamusPosingTransforming(void);
+boolu32 EndingSamusPosing(void);
+boolu32 EndingSamusPosingTransforming(void);
 boolu32 EndingImageInit(void);
 boolu32 EndingImage(void);
 
-static boolu32 (*sSamusPosingFunctionPointers[7]) (void) = {
-    SamusPosingInit,
+static boolu32 (*sEndingSamusPosingFunctionPointers[7]) (void) = {
+    EndingSamusPosingInit,
     EndingFadeIn,
-    SamusPosing,
-    SamusPosing,
-    SamusPosing,
-    SamusPosing,
-    SamusPosingTransforming
+    EndingSamusPosing,
+    EndingSamusPosing,
+    EndingSamusPosing,
+    EndingSamusPosing,
+    EndingSamusPosingTransforming
 };
 
 static boolu32 (*sEndingImageFunctionPointers[3]) (void) = {
@@ -113,7 +113,7 @@ void CreditsVBlank(void)
  * @brief a1d70 | 58 | VBlank for Samus posing after credits
  * 
  */
-void SamusPosingVBlank(void)
+void EndingSamusPosingVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
@@ -145,7 +145,7 @@ void EndingImageVBlank(void)
  * @brief a1e64 | 28 | HBlank code for Samus posing after credits
  * 
  */
-void SamusPosingHBlankCode(void)
+void EndingSamusPosingHBlankCode(void)
 {
     u16 index;
 
@@ -333,7 +333,7 @@ boolu32 CreditsProcess(void)
             break;
         
         case 3:
-            if (sSamusPosingFunctionPointers[ENDING_DATA.unk_98]())
+            if (sEndingSamusPosingFunctionPointers[ENDING_DATA.unk_98]())
                 ENDING_DATA.stage++;
 
             gBg2YPosition += 4;
@@ -541,7 +541,7 @@ u32 CreditsDisplayLine(u32 line)
  * 
  * @return boolu32 Always false
  */
-boolu32 SamusPosingInit(void)
+boolu32 EndingSamusPosingInit(void)
 {
     CallbackSetVBlank(EndingInitFunctionsVBlank);
 
@@ -568,16 +568,16 @@ boolu32 SamusPosingInit(void)
 
     gBg0YPosition = 0;
 
-    DMA3_COPY_16(sSamusPosingSineTable, ENDING_DATA.unk_A4, 64);
+    DMA3_COPY_16(sEndingSamusPosingSineTable, ENDING_DATA.unk_A4, 64);
 
     ENDING_DATA.unk_2 = 0;
     ENDING_DATA.unk_4 = 0;
     ENDING_DATA.currentCreditLine = 0;
     ENDING_DATA.unk_98++;
     
-    CallbackSetVBlank(SamusPosingVBlank);
+    CallbackSetVBlank(EndingSamusPosingVBlank);
 
-    DMA3_COPY_16(SamusPosingHBlankCode, &ENDING_DATA.unk_270, 32);
+    DMA3_COPY_16(EndingSamusPosingHBlankCode, &ENDING_DATA.unk_270, 32);
 
     CallbackSetHBlank(ENDING_DATA.unk_270 + 1);
 
@@ -613,7 +613,7 @@ boolu32 EndingFadeIn(void)
  * 
  * @return boolu32 Always false
  */
-boolu32 SamusPosing(void)
+boolu32 EndingSamusPosing(void)
 {
     u32 index;
     u32 offset;
@@ -719,7 +719,7 @@ boolu32 SamusPosing(void)
  * 
  * @return boolu32 finished
  */
-boolu32 SamusPosingTransforming(void) 
+boolu32 EndingSamusPosingTransforming(void) 
 {
     boolu32 finished;
     u16* src;
@@ -826,22 +826,22 @@ boolu32 SamusPosingTransforming(void)
         case CONVERT_SECONDS(2 + 24.f / 60):
             if (ENDING_DATA.unk_99 == 1)
             {
-                DMA3_COPY_16(&sPreResultsSamusWithoutHelmetBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
+                DMA3_COPY_16(sPreResultsSamusWithoutHelmetBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
             }
             else if (ENDING_DATA.unk_99)
             {
-                DMA3_COPY_16(&sPreResultsSamusSuitlessBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
+                DMA3_COPY_16(sPreResultsSamusSuitlessBgPal, PALRAM_BASE + 6 * PAL_ROW_SIZE, 10 * PAL_ROW);
             }
             break;
         
         case CONVERT_SECONDS(2 + 5.f / 6):
             if (ENDING_DATA.unk_99 == 1) 
             {
-                ENDING_DATA.unk_A0 = (u16*)&sOamFrame_749d18;
+                ENDING_DATA.unk_A0 = (u16*)sOamFrame_749d18;
             } 
             else if (ENDING_DATA.unk_99)
             {
-                ENDING_DATA.unk_A0 = (u16*)&sOamFrame_749d3e;
+                ENDING_DATA.unk_A0 = (u16*)sOamFrame_749d3e;
                 WRITE_16(REG_BG1HOFS, 4);
             }
             break;

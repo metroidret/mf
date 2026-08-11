@@ -22,7 +22,7 @@ const u8 sScroll_Empty[11] = {
 
 static const u8 sBlob_3c923b_3c94d0[] = INCBIN_U8("data/Blob_3c923b_3c94d0.bin");
 
-const s8 sSamusPosingSineTable[128] = {
+const s8 sEndingSamusPosingSineTable[128] = {
     0,
     6,
     12,
