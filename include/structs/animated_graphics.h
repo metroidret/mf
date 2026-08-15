@@ -15,8 +15,21 @@ struct AnimatedPaletteTiming {
     s8 row2;
 };
 
+struct HatchFlashAnimation {
+    u8 coloredAnimTimer;
+    s8 coloredAnimState;
+    u8 unlockedAnimTimer;
+    s8 unlockedAnimState;
+};
+
+extern u8 gUseAlternateAnimatedTilesetFlags[5];
+
 extern struct AnimatedPaletteTiming gAnimatedPaletteTiming;
 
+extern struct HatchFlashAnimation gHatchFlashAnimation;
+
 extern struct AnimatedPaletteAndTileset gAnimatedPaletteAndTileset;
+
+extern u8 gDisableAnimatedGraphicsTimer;
 
 #endif /* ANIMATED_GRAPHICS_STRUCT_H */

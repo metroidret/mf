@@ -13,6 +13,11 @@ SECTIONS {
     ewram (NOLOAD) : ALIGN(4) {
         . = 0x0001c000; gCommonSpriteGfxBackup = .;
         . = 0x00020000; gRoomSpriteGfxBackup = .;
+        . = 0x00026000; gDecompClipdataMap = .;
+        . = 0x00029000; gDecompBg0Map = .;
+        . = 0x0002c000; gDecompBg1Map = .;
+        . = 0x0002f000; gDecompBg2Map = .;
+        . = 0x00032000; gDecompBg3Map = .;
         . = 0x00035400; gBackgroundPalette = .;
         . = 0x00035d20; gMakeSolidBlocks = .;
     } >ewram
@@ -41,11 +46,14 @@ SECTIONS {
         . = 0x00000022; gDisableMusicFlag = .;
         . = 0x00000024; gSkipDoorTransition = .;
         . = 0x00000025; gDisableSoftReset = .;
+        . = 0x00000026; gCollectingTankFlag = .;
+        . = 0x00000027; gDisableAnimatedGraphicsTimer = .;
         . = 0x0000002a; gDisableDoorsAndTanks = .;
         . = 0x0000002b; gDisablePauseFlag = .;
         . = 0x0000002c; gCurrentArea = .;
         . = 0x0000002d; gCurrentRoom = .;
         . = 0x0000002e; gLastDoorUsed = .;
+        . = 0x0000002f; gLastDoorProperties = .;
         . = 0x00000030; gDisplayLocationName = .;
         . = 0x00000044; gEffectYPosition = .;
         . = 0x00000046; gDoorUnlockTimer = .;
@@ -59,6 +67,8 @@ SECTIONS {
         . = 0x00000050; gUnk_3000050 = .;
         . = 0x00000052; gSpritesetNumber = .;
         . = 0x00000053; gCurrentClipdataAffectingAction = .;
+        . = 0x00000054; gSpritesetEntryUsed = .;
+        . = 0x00000058; gUseAlternateAnimatedTilesetFlags = .;
         . = 0x00000060; gSoundEventCounter = .;
         . = 0x00000062; gPreviousSoundEvent = .;
         . = 0x00000064; gUnk_3000064 = .;
@@ -73,6 +83,7 @@ SECTIONS {
         . = 0x000000f0; gScreenShakeY = .;
         . = 0x000000f4; gScreenShakeX = .;
         . = 0x00000110; gCurrentPowerBomb = .;
+        . = 0x00000124; gCamera = .;
         . = 0x00000138; gInGameTimer = .;
         . = 0x0000013c; gMaxInGameTimeFlag = .;
         . = 0x00000140; gSpriteData = .;
@@ -238,7 +249,11 @@ SECTIONS {
         . = 0x00004dec; gHatchData = .;
         . = 0x00004e04; gHatchDoorIds = .;
         . = 0x00004e0c; gDoorPositionStart = .;
+        . = 0x00004e10; gUnk_3004e10 = .;
         . = 0x00004e18; gBg3Movement = .;
+        . = 0x00004e20; gUnk_3004e20 = .;
+        . = 0x00004e28; gTilesetTransparentColor = .;
+        . = 0x00004e30; gUnk_3004e30 = .;
         . = 0x00004e38; gSamusDoorPositionOffset = .;
         . = 0x00004e3a; gUnk_3004e3a = .;
         . = 0x00004e3b; gLockedHatches = .;
@@ -250,10 +265,18 @@ SECTIONS {
         . = 0x00004e48; gUnk_3004e48 = .;
         . = 0x00004e4c; gUnk_3004e4c = .;
         . = 0x00004e58; gColorFading = .;
+        . = 0x00004e60; gBrokenBlocks = .;
+        . = 0x00004ee0; gUnk_3004ee0 = .;
         . = 0x00004fa0; gEventBasedEffectInfo = .;
+        . = 0x00004fa8; gBombChains = .;
+        . = 0x00004fb8; gActiveBombChainTypes = .;
         . = 0x00004fbc; gDefaultTransparency = .;
         . = 0x00004fc0; gAnimatedPaletteTiming = .;
+        . = 0x00004fc4; gHatchFlashAnimation = .;
         . = 0x00004fc8; gAnimatedPaletteAndTileset = .;
+        . = 0x00004fcc; gScrollCounter = .;
+        . = 0x00004fd0; gHorizontalTilemap = .;
+        . = 0x00005138; gVerticalTilemap = .;
         . = 0x00005318; gClipdataCodePointer = .;
 
         . = 0x00005408; *libgcc.a:dp-bit.o(.bss);
@@ -413,9 +436,7 @@ SECTIONS {
         src/x_parasite_util.o(.text);
         src/screen_shake.o(.text);
         src/room_effect.o(.text);
-
-        asm/disasm_0x080645c4.o(.text);
-
+        src/room.o(.text);
         src/power_bomb_explosion.o(.text);
 
         src/gadora_hatch.o(.text);
@@ -591,6 +612,7 @@ SECTIONS {
         src/data/sprites/x_parasite.o(.rodata);
         src/data/clipdata_data.o(.rodata);
         src/data/rooms_data.o(.rodata);
+        src/data/empty_data.o(.rodata);
         src/data/connection_data.o(.rodata);
         src/data/animated_graphics_data.o(.rodata);
         src/data/demo_data.o(.rodata);

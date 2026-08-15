@@ -104,10 +104,10 @@ enum HatchLockType {
 };
 
 enum HatchState {
-    HATCH_STATE_0,
-    HATCH_STATE_1, // Unlocked and waiting to open?
-    HATCH_STATE_2,
-    HATCH_STATE_3,
+    HATCH_STATE_CLOSED,
+    HATCH_STATE_OPENING,
+    HATCH_STATE_OPENED,
+    HATCH_STATE_CLOSING,
 
     HATCH_STATE_COUNT
 };

@@ -49,7 +49,6 @@ extern u8 gUnk_3000b85;
 extern u8 gEventCounter;
 extern u8 gPreviousNavigationConversation;
 extern u8 gPreviousCutscene;
-extern u8 gPreviousCutscene;
 extern s8 gRoomEventTrigger;
 
 extern u16 gSoundEventCounter;

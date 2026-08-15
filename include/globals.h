@@ -68,7 +68,7 @@ extern u16 gFrameCounter16Bit;
 extern s8 gPauseScreenFlag;
 extern u8 gCurrentCutscene;
 extern s8 gIsLoadingFile;
-extern s8 gUnk_3000be3;
+extern bools8 gUnk_3000be3;
 extern u8 gUnk_3000b8f;
 extern u8 gUnk_3000064;
 
@@ -81,6 +81,7 @@ extern u8 gNotPressingUp;
 extern u16 gButtonInputCopy;
 extern u16 gChangedInput;
 extern u8 gDisableSoftReset;
+extern boolu8 gCollectingTankFlag;
 
 extern u16 gBg0XPosition;
 extern u16 gBg0YPosition;
@@ -221,7 +222,6 @@ extern u16 gWrittenToMosaic_H;
 extern u16 gWrittenToMosaic_L;
 
 extern u8 gDisableDoorsAndTanks;
-extern u8 gColorFading;
 
 enum GameMode {
     GAME_MODE_TITLE,
@@ -265,18 +265,12 @@ extern s8 gUnk_3004e3a;
 extern u8 gUnk_3004e42;
 
 struct Unk_3004e44 {
-    s8 unk_0;
+    u8 unk_0_L:4;
+    u8 unk_0_H:4;
     u8 unk_1;
 };
 
 extern struct Unk_3004e44 gUnk_3004e44;
-
-struct Unk_3004e4c {
-    u8 unk_0[8]; // Padding
-    s16 unk_8;
-};
-
-extern struct Unk_3004e4c gUnk_3004e4c;
 
 struct EventBasedEffectInfo {
     u16 stage;

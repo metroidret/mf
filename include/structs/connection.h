@@ -112,6 +112,7 @@ extern u8 gPreviousArea;
 extern u8 gDestinationRoom;
 extern u8 gCurrentRoom;
 extern u8 gLastDoorUsed;
+extern u8 gLastDoorProperties;
 extern u8 gCurrentNavigationRoom;
 
 #define MAX_AMOUNT_OF_HATCHES 6

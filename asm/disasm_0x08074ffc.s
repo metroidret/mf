@@ -6417,7 +6417,7 @@ _080782F2:
 	mov r2, sb
 	orrs r0, r2
 	strb r0, [r1]
-	bl unk_65618
+	bl RoomGetClosedNavigationHatches
 	adds r4, r0, #0
 	ldr r0, _080783E0 @ =gPauseScreenFlag
 	ldrb r0, [r0]

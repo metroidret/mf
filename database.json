@@ -12729,12 +12729,12 @@
     "size": 2
   },
   {
-    "path": "Blob_3be740_3bf5c0.bin",
-    "count": "0xE80",
+    "path": "common/common_tilemap.tt",
+    "count": "0x740",
     "addr": {
       "us": "0x3BE740"
     },
-    "size": 1
+    "size": 2
   },
   {
     "path": "rooms/destroyed_docking_bay_animated.pal",
@@ -12749,14 +12749,6 @@
     "count": "0x34",
     "addr": {
       "us": "0x3BF850"
-    },
-    "size": 1
-  },
-  {
-    "path": "Blob_3c88a4_3c88f0.bin",
-    "count": "0x4C",
-    "addr": {
-      "us": "0x3C88A4"
     },
     "size": 1
   },

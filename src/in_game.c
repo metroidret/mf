@@ -121,11 +121,11 @@ u32 InGameHandler(void)
     if (gSubGameMode1 == SUB_GAME_MODE_SA_X_ELEVATOR || gSubGameMode1 == SUB_GAME_MODE_DYING || gSaXElevatorData.unk_0 != 0)
     {
         ResetFreeOam();
-        UpdateRoom();
+        RoomUpdate();
     }
     else if (gSubGameMode1 != 0)
     {
-        UpdateAnimatedGraphicsAndPalette();
+        RoomUpdateAnimatedGraphicsAndPalette();
         SpriteUpdate();
 
         if (!gDisableDrawingSamusAndScrollingFlag)
@@ -153,7 +153,7 @@ u32 InGameHandler(void)
         ProjectileDrawAll_True();
         
         ResetFreeOam();
-        UpdateRoom();
+        RoomUpdate();
         SamusCallCheckPlayLowHealthSound();
     }
 
@@ -447,7 +447,7 @@ void InitAndLoadGenerics(void)
             break;
     }
 
-    LoadRoom();
+    RoomLoad();
 
     for (;;)
     {

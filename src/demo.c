@@ -10,6 +10,7 @@
 #include "constants/samus.h"
 
 #include "structs/audio.h"
+#include "structs/color_effects.h"
 #include "structs/connection.h"
 #include "structs/demo.h"
 #include "structs/event.h"
@@ -175,7 +176,7 @@ void DemoEnd(void)
 
         gSubGameMode2 = 0x1;
     }
-    else if (gColorFading == 0x10)
+    else if (gColorFading.type == 0x10)
     {
         gMusicInfo.priority = 0x10;
         gDemoState = DEMO_STATE_NONE;

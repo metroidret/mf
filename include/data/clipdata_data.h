@@ -6,6 +6,8 @@
 
 extern const u16 sClipdataTilemapBehaviorTypes[CLIPDATA_TILEMAP_COUNT];
 
+extern const u16 sCommonTilemap[1856];
+
 extern const u8 sClipdataTilemapCollisionTypes[CLIPDATA_TILEMAP_COUNT];
 
 #endif /* CLIPDATA_DATA_H */

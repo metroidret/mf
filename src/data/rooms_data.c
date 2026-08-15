@@ -21877,5 +21877,3 @@ const struct RoomEntryRom sTest3RoomEntries[4] = {
 		.musicTrack = MUSIC_NONE
 	}
 };
-
-static const u8 sBlob_3c88a4_3c88f0[] = INCBIN_U8("data/Blob_3c88a4_3c88f0.bin");

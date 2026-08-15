@@ -10112,7 +10112,7 @@ unk_6e31c: @ 0x0806E31C
 	ldr r5, _0806E398 @ =0x02032000
 	movs r0, #0
 	adds r2, r5, #0
-	bl RleDecompress
+	bl RoomRleDecompress
 	ldr r2, _0806E39C @ =0x06003000
 	movs r3, #0x80
 	lsls r3, r3, #5
@@ -10556,7 +10556,7 @@ _0806E728:
 	ldr r4, _0806E75C @ =0x02032000
 	movs r0, #0
 	adds r2, r4, #0
-	bl RleDecompress
+	bl RoomRleDecompress
 	ldr r2, _0806E760 @ =0x06003000
 	movs r3, #0x80
 	lsls r3, r3, #5

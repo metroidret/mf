@@ -18,6 +18,7 @@
 
 #include "structs/animated_graphics.h"
 #include "structs/clipdata.h"
+#include "structs/color_effects.h"
 #include "structs/connection.h"
 #include "structs/display.h"
 #include "structs/escape.h"
@@ -277,13 +278,14 @@ void RoomEffectSetTransparency(void)
     WRITE_16(REG_BLDALPHA, C_16_2_8(gIoRegisters.bldalpha_evb, gIoRegisters.bldalpha_eva));
 
     gWrittenToBldalpha = 0;
-    gUnk_3004e44.unk_0 = 0;
+    gUnk_3004e44.unk_0_L = 0;
+    gUnk_3004e44.unk_0_H = 0;
     gUnk_3004e44.unk_1 = 0;
 
     if (gCurrentRoomEntry.bg0Prop == BG_PROP_DISABLE_TRANSPARENCY)
-        gUnk_3004e44.unk_0 = 1;
+        gUnk_3004e44.unk_0_L = 1;
 
-    if (gColorFading == 0xD)
+    if (gColorFading.type == 0xD)
     {
         gWindow1Border.left = DIV_SHIFT(gSamusData.xPosition - gBg1XPosition, 4);
         if (gWindow1Border.left > SCREEN_SIZE_X)
@@ -705,7 +707,7 @@ void RoomEffectStartHatchLockAnimation(u8 hatch, u8 arg1, u8 newState)
 {
     u8 state;
 
-    state = arg1 == 2 ? HATCH_STATE_1 : HATCH_STATE_3;
+    state = arg1 == 2 ? HATCH_STATE_OPENING : HATCH_STATE_CLOSING;
 
     gHatchData[hatch].state = state;
     gHatchData[hatch].currentAnimation = 4; // TODO: Enum
@@ -736,9 +738,9 @@ void RoomEffectLockHatches(u8 hatchesToLock)
             gHatchData[i].lockType = HATCH_LOCK_CAN_LOCK;
 
             if (gHatchDoorIds[i] != gLastDoorUsed)
-                RoomEffectStartHatchLockAnimation(i, 0, HATCH_STATE_0);
+                RoomEffectStartHatchLockAnimation(i, 0, HATCH_STATE_CLOSED);
             else
-                RoomEffectStartHatchLockAnimation(i, 2, HATCH_STATE_3);
+                RoomEffectStartHatchLockAnimation(i, 2, HATCH_STATE_CLOSING);
         }
     }
 }
@@ -764,9 +766,9 @@ void RoomEffectLockHatchesWithTimer(u8 hatchesToLock)
             gHatchData[i].lockType = HATCH_LOCK_CAN_LOCK;
 
             if (gHatchDoorIds[i] != gLastDoorUsed)
-                RoomEffectStartHatchLockAnimation(i, 0, HATCH_STATE_0);
+                RoomEffectStartHatchLockAnimation(i, 0, HATCH_STATE_CLOSED);
             else
-                RoomEffectStartHatchLockAnimation(i, 2, HATCH_STATE_3);
+                RoomEffectStartHatchLockAnimation(i, 2, HATCH_STATE_CLOSING);
         }
     }
 }
@@ -932,11 +934,11 @@ bools32 RoomEffectDetermineNavigationRoomHatchesToLock(void)
 
                     if (gHatchDoorIds[i] != gLastDoorUsed)
                     {
-                        RoomEffectStartHatchLockAnimation(i, 0, HATCH_STATE_0);
+                        RoomEffectStartHatchLockAnimation(i, 0, HATCH_STATE_CLOSED);
                     }
                     else
                     {
-                        gHatchData[i].state = HATCH_STATE_3;
+                        gHatchData[i].state = HATCH_STATE_CLOSING;
                         gHatchData[i].currentAnimation = 0;
                     }
                 }
@@ -1033,7 +1035,7 @@ void RoomEffectSetupCurrentEventBased(void)
             break;
 
         case EVENT_EFFECT_POWER_OUTAGE_MISSILES:
-            gUnk_3004e44.unk_0 &= -0x10;
+            gUnk_3004e44.unk_0_L = 0;
 
         case EVENT_EFFECT_POWER_OUTAGE_YAKUZA:
             gIoRegisters.bldalpha_evb = 0x10;
@@ -1364,7 +1366,7 @@ void RoomEffectProcessEventBased(void)
 
                 if (RoomEffectFade(5) != 0)
                 {
-                    gUnk_3004e44.unk_0 = (-0x10 & gUnk_3004e44.unk_0) | 1;
+                    gUnk_3004e44.unk_0_L = 1;
                     action = 3;
                 }
             }
@@ -1639,7 +1641,7 @@ void RoomEffectCheckUnlockProximityHatches(void)
 
             if (nearHatch)
             {
-                gHatchData[idx].state = HATCH_STATE_1;
+                gHatchData[idx].state = HATCH_STATE_OPENING;
                 gHatchData[idx].currentAnimation = 0;
                 gHatchData[idx].locked = 0;
                 gLockedHatches ^= 1 << idx;
