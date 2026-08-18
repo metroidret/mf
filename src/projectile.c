@@ -45,8 +45,6 @@ static Func_T sProcessProjectileFunctionPointers[PROJ_TYPE_END] = {
     [PROJ_TYPE_DIFFUSION_FLAKE] = ProjectileDiffusionFlakeHandler
 };
 
-static u8 sBlob_79c2c8_79c3fc[] = INCBIN_U8("data/Blob_79c2c8_79c3fc.bin");
-
 /**
  * @brief 8116c | 50 | Checks if the number of projectiles currently existing is under the specified limit
  * 

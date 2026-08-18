@@ -7,6 +7,7 @@
 
 #include "data/new_file_intro_data.h"
 #include "data/generic_data.h"
+#include "data/menus/title_screen.h"
 
 extern void unk_99940(void); // For V-blank callback
 
@@ -27,6 +28,21 @@ static u16* sMonologueTextPointersGerman[19];
 static u16* sMonologueTextPointersFrench[19];
 static u16* sMonologueTextPointersItalian[19];
 static u16* sMonologueTextPointersSpanish[19];
+
+const u8* sTitleScreenDebugTextPointer = {
+    sTitleScreenDebugText,
+};
+
+const struct FrameData* sData_79C2CC[6] = {
+    (struct FrameData*)0x08597ec0,
+    (struct FrameData*)0x08597ed0,
+    (struct FrameData*)0x08597ee0,
+    (struct FrameData*)0x08597ef0,
+    (struct FrameData*)0x08597ee0,
+    (struct FrameData*)0x08597ed0
+};
+
+static u8 sBlob_79c2e4_79c3fc[] = INCBIN_U8("data/Blob_79c2e4_79c3fc.bin");
 
 static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx0,
@@ -1489,7 +1505,47 @@ void NewFileIntroProcessFlyingSamusShip(struct SpecialCutsceneOam *pOam)
 
 
 
-
+void NewFileIntroProcessHorizontalParticle(struct SpecialCutsceneOam *pOam)
+{
+    s32 rng;
+    
+    if (pOam->stage == 0)
+    {
+        rng = SpecialCutsceneGetRandomNumber() & 7;
+        pOam->unk_8 = rng + 1;
+        rng = SpecialCutsceneGetRandomNumber() & 3;
+        pOam->unk_4 = rng;
+        pOam->pOam = (struct FrameData*)sData_79C2CC[pOam->unk_4];
+        pOam->spawnX = pOam->xPosition;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->unk_A++;
+        pOam->xPosition = ((pOam->unk_8 * pOam->unk_A) >> 4) + pOam->spawnX;
+        
+        pOam->timer++;
+        if (pOam->timer == 8)
+        {
+            pOam->timer = 0;
+            
+            if (pOam->unk_4 < 5)
+                pOam->unk_4++;
+            else
+                pOam->unk_4 = 0;
+            
+            pOam->pOam = (struct FrameData*)sData_79C2CC[pOam->unk_4];
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+        }
+    }
+    
+    if (pOam->xPosition >= 240 || pOam->yPosition >= 160)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
 
 
 
