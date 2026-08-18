@@ -7,7 +7,7 @@ struct SpecialCutsceneOam {
     s16 spawnX;
     s16 spawnY;
     s16 unk_4;
-    u16 scaling;
+    s16 scaling;
     s16 unk_8;
     u16 unk_A;
     s16 xPosition;                // 0xC

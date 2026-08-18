@@ -8,6 +8,7 @@
 #include "data/new_file_intro_data.h"
 #include "data/generic_data.h"
 #include "data/menus/title_screen.h"
+#include "data/sprite_data.h"
 
 extern void unk_99940(void); // For V-blank callback
 
@@ -1547,6 +1548,377 @@ void NewFileIntroProcessHorizontalParticle(struct SpecialCutsceneOam *pOam)
     }
 }
 
+
+
+void unk_89090(struct SpecialCutsceneOam *pOam) 
+{
+    pOam->animationDurationCounter++;
+    if (pOam->animationDurationCounter == 25)
+    {
+        pOam->animationDurationCounter = 0;
+        gBg3XPosition--;
+    }
+}
+
+
+
+void NewFileIntroProcessSamusFainting(struct SpecialCutsceneOam* pOam)
+{
+    u8 rng1;
+    u8 rng2;
+
+    rng1 = sRandomNumberTable[MOD_AND(gFrameCounter16Bit, 32)] / 2;
+    rng2 = sRandomNumberTable[MOD_AND(gFrameCounter16Bit + 7, 32)] / 2;
+
+    if (!pOam->unk_8)
+    {
+        pOam->timer++;
+        if (pOam->timer)
+        {
+            pOam->timer = 0;
+            if (pOam->yPosition < 16)
+            {
+                pOam->yPosition += rng2;
+                if (pOam->yPosition > 15)
+                {
+                    pOam->yPosition = 16;
+                    pOam->unk_8 = 1;
+                }
+            }
+        }
+    }
+    else
+    {
+        pOam->timer++;
+        if (pOam->timer)
+        {
+            pOam->timer = 0;
+            if (pOam->yPosition > 0)
+            {
+                pOam->yPosition -= rng2;
+                if (pOam->yPosition <= 0)
+                {
+                    pOam->yPosition = 0;
+                    pOam->unk_8 = 0;
+                }
+            }
+        }
+    }
+
+    if (!pOam->unk_4)
+    {
+        pOam->unk_A++;
+        if (pOam->unk_A)
+        {
+            pOam->unk_A = 0;
+            if (pOam->xPosition < 16)
+            {
+                pOam->xPosition += rng1;
+                if (pOam->xPosition > 15)
+                {
+                    pOam->xPosition = 16;
+                    pOam->unk_4 = 1;
+                }
+            }
+        }
+    }
+    else
+    {
+        pOam->unk_A++;
+        if (pOam->unk_A)
+        {
+            pOam->unk_A = 0;
+            if (pOam->xPosition > 0)
+            {
+                pOam->xPosition -= rng1;
+                if (pOam->xPosition <= 0)
+                {
+                    pOam->xPosition = 0;
+                    pOam->unk_4 = 0;
+                }
+            }
+        }
+    }
+
+    gBg2XPosition = pOam->xPosition;
+    gBg2YPosition = pOam->yPosition;
+}
+
+
+
+void NewFileIntroProcessSamusDrifting(struct SpecialCutsceneOam* pOam)
+{
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->unk_A = 0;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->xPosition = pOam->spawnX + (pOam->unk_A >> 1);
+        pOam->yPosition = pOam->spawnY + (pOam->unk_A >> 2);
+
+        pOam->timer++;
+        if (pOam->timer == 2)
+        {
+            pOam->timer = 0;
+            pOam->scaling++;
+        }
+    }
+
+    if (pOam->xPosition > 280 || pOam->yPosition > 180)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+
+
+void NewFileIntroProcessSamusDriftingIntoAsteroids(struct SpecialCutsceneOam *pOam)
+{
+    struct FrameData* frame;
+
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->unk_A = 0;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->rotation -= 4;
+        pOam->scaling -= 8;
+        pOam->stage = 2;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->timer++;
+        pOam->yPosition = (sSineTable[pOam->timer] >> 7) + pOam->spawnY;
+        
+        if (pOam->timer > 52)
+        {
+            pOam->unk_4++;
+            if (pOam->unk_4 == 12)
+            {
+                pOam->rotation--;
+                pOam->xPosition--;
+                pOam->unk_4 = 0;
+            }
+            
+            pOam->unk_8++;
+            if (pOam->unk_8 == 10)
+            {
+                pOam->unk_8 = 0;
+                pOam->scaling--;
+            }
+        }
+        
+        if (pOam->timer > 127)
+        {
+            pOam->unk_8 = 0;
+            pOam->unk_A = 0;
+            pOam->unk_4 = 0;
+            pOam->timer = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        pOam->timer++;
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A >> 2);
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 3) + (sSineTable[pOam->timer] >> 7);
+        pOam->unk_4++;
+        
+        if (pOam->unk_4 == 12)
+        {
+            pOam->rotation--;
+            pOam->unk_4 = 0;
+        }
+        
+        pOam->unk_8++;
+        if (pOam->unk_8 == 2)
+        {
+            pOam->unk_8 = 0;
+            pOam->scaling--;
+        }
+        
+        if (pOam->timer == 0)
+        {
+            pOam->unk_8 = 0;
+            pOam->unk_A = 0;
+            pOam->unk_4 = 0;
+            pOam->timer = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 3;
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        pOam->timer++;
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A >> 2);
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 3);
+        pOam->unk_4++;
+        
+        if (pOam->unk_4 == 12)
+        {
+            pOam->rotation--;
+            pOam->unk_4 = 0;
+        }
+        
+        pOam->unk_8++;
+        if (pOam->unk_8 == 1)
+        {
+            pOam->unk_8 = 0;
+            pOam->scaling--;
+        }
+        
+        if (pOam->timer == 0)
+        {
+            pOam->unk_8 = 0;
+            pOam->unk_A = 0;
+            pOam->unk_4 = 0;
+            pOam->timer = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 4;
+        }
+        
+        if (pOam->scaling < 3)
+        {
+            pOam->unk_8 = 0;
+            pOam->unk_A = 0;
+            pOam->unk_4 = 0;
+            pOam->timer = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 5;
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->timer++;
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A >> 1);
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 2);
+        pOam->unk_4++;
+        
+        if (pOam->unk_4 == 12)
+        {
+            pOam->rotation--;
+            pOam->unk_4 = 0;
+        }
+        
+        pOam->unk_8++;
+        if (pOam->unk_8 == 1)
+        {
+            pOam->unk_8 = 0;
+            pOam->scaling--;
+        }
+
+        if (pOam->scaling < 3)
+        {
+            pOam->unk_8 = 0;
+            pOam->unk_A = 0;
+            pOam->unk_4 = 0;
+            pOam->timer = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 5;
+        }
+    }
+    else if (pOam->stage == 5)
+    {
+        pOam->unk_A = 0;
+        pOam->scaling = Q_8_8(1);
+        pOam->animationDurationCounter = 0;
+        pOam->currentAnimationFrame = 0;
+        pOam->unk_18_1 = 0;
+        pOam->pOam = (struct FrameData*)0x08598000;
+        pOam->stage = 6;
+        INTRO_DATA.subStage = 6;
+    }
+    else if (pOam->stage == 6)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+
+
+void unk_89488(struct SpecialCutsceneOam *pOam) 
+{
+    if (pOam->stage == 0)
+    {
+        NewFileIntroSetupOam(32, pOam->xPosition + 122, pOam->yPosition, FALSE);
+        NewFileIntroSetupOam(33, pOam->xPosition + 50, pOam->yPosition + 1, FALSE);
+        NewFileIntroSetupOam(34, pOam->xPosition + 36, pOam->yPosition, FALSE);
+        NewFileIntroSetupOam(35, pOam->xPosition, pOam->yPosition, FALSE);
+        pOam->type = 0;
+    }
+}
+
+
+
+void NewFileIntroProcessSidewaysBslShip(struct SpecialCutsceneOam* pOam)
+{
+    if (pOam->stage == 0)
+    {
+        pOam->timer++;
+        if (pOam->timer == 20)
+        {
+            pOam->spawnX++;
+            pOam->timer = 0;
+
+            if (pOam->unk_A == 4)
+                pOam->unk_A = 0;
+
+            if (pOam->unk_A < 2)
+                pOam->yPosition++;
+            else if (pOam->unk_A < 4)
+                pOam->yPosition--;
+                
+            pOam->unk_A++;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->unk_A = 0;
+        pOam->stage = 2;
+    }
+    else if (pOam->stage == 2)
+    {
+        pOam->timer++;
+        if (pOam->timer == 2)
+        {
+            pOam->unk_A++;
+            pOam->timer = 0;
+        }
+
+        pOam->xPosition = (((900 - pOam->spawnX) * pOam->unk_A) >> 12) + pOam->spawnX;
+        pOam->yPosition = (((pOam->unk_4 - pOam->spawnY) * pOam->unk_A) >> 11) + pOam->spawnY;
+
+        if (pOam->xPosition > 320)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 3;
+        }
+    }
+}
 
 
 
