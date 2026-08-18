@@ -22,6 +22,8 @@ static boolu32 NewFileIntroSamusShipFlying(void);
 static void NewFileIntroSamusFaintingInit(void);
 static boolu32 NewFileIntroSamusFaintingProcess(void);
 static boolu32 NewFileIntroSamusFainting(void);
+void unk_89ab0(void);
+void NewFileIntroProcessTextCursor(struct SpecialCutsceneOam* pOam);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -1921,5 +1923,197 @@ void NewFileIntroProcessSidewaysBslShip(struct SpecialCutsceneOam* pOam)
 }
 
 
+
+void NewFileIntroProcessDepthParticle(struct SpecialCutsceneOam* pOam)
+{
+    s32 x;
+    s32 y;
+    s32 divisor;
+    
+    pOam->unk_4 = pOam->unk_A;
+
+    if (pOam->stage == 0)
+    {
+        pOam->spawnX = (pOam->xPosition - 0x78) * 100;
+        pOam->spawnY = (pOam->yPosition - 0x50) * 100;
+        pOam->stage = 1;
+    }
+    else
+    {
+        if ((s16)pOam->unk_A < 100)
+        {
+            if ((s16)pOam->unk_A == 25)
+                pOam->pOam = (struct FrameData*)sOam_597ed0;
+            else if ((s16)pOam->unk_A == 50)
+                pOam->pOam = (struct FrameData*)sOam_597ee0;
+            else if ((s16)pOam->unk_A == 70)
+                pOam->pOam = (struct FrameData*)sOam_597ef0;
+
+            divisor = -pOam->unk_4 + 100;
+            x = pOam->spawnX / divisor;
+            pOam->xPosition = x + 120;
+            y = pOam->spawnY / divisor + 80;
+            pOam->yPosition = y;
+
+            if ((u16)(x + 128) > 256 || (s16)y > 168 || (s16)y < -8)
+            {
+                pOam->type = 0;
+                pOam->unk_18_0 = 0;
+            }
+        }
+        else
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+    
+    pOam->unk_A++;
+}
+
+
+
+u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descendingSearchOrder)
+{
+    s8 slot;
+
+    if (!descendingSearchOrder)
+    {
+        for (slot = 0; slot < 20; slot++)
+        {
+            if (gNonGameplayRam.intro.unk_21C[slot].type == 0)
+                break;
+        }
+        
+        if (slot > 19)
+            return 20;
+    }
+    else
+    {
+        for (slot = 19; slot >= 0; slot--)
+        {
+            if (gNonGameplayRam.intro.unk_21C[slot].type == 0)
+                break;
+        }
+        
+        if (slot < 0)
+            return 20;
+    }
+    
+    DMA3_FILL_32(0, &gNonGameplayRam.intro.unk_21C[slot], 36);
+
+    gNonGameplayRam.intro.unk_21C[slot].xPosition = xPosition;
+    gNonGameplayRam.intro.unk_21C[slot].yPosition = yPosition;
+    gNonGameplayRam.intro.unk_21C[slot].type = type;
+    gNonGameplayRam.intro.unk_21C[slot].unk_18_0 = 1;
+
+    if (type == 1)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_18_0 = 0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessBslShip;
+    }
+    else if (type == 2)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].scaling = Q_8_8(1);
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597f50;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessFlyingSamusShip;
+    }
+    else if (type == 3)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_1A_2 = 3;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597ec0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessHorizontalParticle;
+    }
+    else if (type == 4)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_18_0 = 0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = unk_89090;
+    }
+    else if (type == 10)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_18_0 = 0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSamusFainting;
+    }
+    else if (type == 20)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].scaling = Q_8_8(1);
+        gNonGameplayRam.intro.unk_21C[slot].unk_18_1 = 3;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597f50;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSamusDrifting;
+    }
+    else if (type == 30)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].spawnX = xPosition;
+        gNonGameplayRam.intro.unk_21C[slot].spawnY = yPosition;
+        gNonGameplayRam.intro.unk_21C[slot].scaling = Q_8_8(1);
+        gNonGameplayRam.intro.unk_21C[slot].unk_18_1 = 1;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597f88;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSamusDriftingIntoAsteroids;
+    }
+    else if (type == 31)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_18_0 = 0;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597f88;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = unk_89488;
+    }
+    else if (type == 32)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_4 = -40;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597fe0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+    }
+    else if (type == 33)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_4 = -30;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597fd0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+    }
+    else if (type == 34)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_4 = -20;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597fc0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+    }
+    else if (type == 35)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_4 = -10;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597fb0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+    }
+    else if (type == 36)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].unk_1A_2 = 2;
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08597ec0;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessDepthParticle;
+    }
+    else if (type == 200)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08613180;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = NewFileIntroProcessTextCursor;
+    }
+    else if (type == 201)
+    {
+        gNonGameplayRam.intro.unk_21C[slot].pOam = (struct FrameData*)0x08613180;
+        gNonGameplayRam.intro.unk_21C[slot].pFunction = unk_89ab0;
+    }
+    
+    return slot;
+}
+
+
+void unk_89a74(u8 type, s16 xPos, s16 yPos, s16 arg3) 
+{
+    u8 slot;
+    
+    slot = NewFileIntroSetupOam(type, xPos, yPos, TRUE);
+    gNonGameplayRam.intro.unk_21C[slot].unk_8 = arg3;
+}
+
+
+
+void unk_89ab0(void) 
+{
+    return;
+}
 
 

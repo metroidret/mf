@@ -1,5 +1,41 @@
-#include "data/new_file_intro_data.h"
 #include "macros.h"
+#include "oam.h"
+
+#include "data/new_file_intro_data.h"
+
+const struct FrameData sOam_597ec0[2] = {
+    [0] = {
+        .pFrame = (u16*)0x08597708,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_597ed0[2] = {
+    [0] = {
+        .pFrame = (u16*)0x08597710,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_597ee0[2] = {
+    [0] = {
+        .pFrame = (u16*)0x08597718,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_597ef0[2] = {
+    [0] = {
+        .pFrame = (u16*)0x08597720,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+static const u8 sBlob_597f00_5980b0[] = INCBIN_U8("data/Blob_597f00_5980b0.bin");
 
 const u16 sIntroSamusShipPal[16 * 5] = INCBIN_U16("data/new_file_intro/samus_ship.pal");
 const u16 sPal_598150[16 * 2] = INCBIN_U16("data/new_file_intro/598150.pal"); // Loaded to PALRAM but not used?

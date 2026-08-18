@@ -7,31 +7,10 @@
 #include "structs/menus/title_screen.h"
 #include "structs/sa_x_close_up.h"
 #include "structs/ending.h"
+#include "structs/intro.h"
 
 struct InGameData {
     u8 clipdataCode[640];
-};
-
-struct IntroData {
-    u16* pText;
-    u8 padding1[4];
-    u16 stage;
-    u16 unk_A;
-    u16 unk_C;
-    u16 unk_E;
-    u8 padding2[256];
-    u8 unk_110;
-    u8 padding3[253];
-    u16 unk_20E;
-    u16 timer;
-    u8 unk_212;
-    u8 unk_213;
-    u8 subStage;
-    u8 unk_215;
-    u8 padding4[2];
-    u8 unk_218;
-    u8 padding_219[3];
-    u32 unk_21C;
 };
 
 union NonGameplayRam {
@@ -51,7 +30,6 @@ extern union NonGameplayRam gNonGameplayRam;
 #define TITLE_SCREEN_DATA gNonGameplayRam.titleScreen
 #define SA_X_CLOSE_UP_DATA gNonGameplayRam.saXCloseUp
 #define ENDING_DATA gNonGameplayRam.ending
-#define INTRO_DATA gNonGameplayRam.intro
 
 extern u8 gCommonSpriteGfxBackup[0x4000];
 extern u8 gRoomSpriteGfxBackup[0x4000];

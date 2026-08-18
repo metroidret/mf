@@ -3,6 +3,11 @@
 
 #include "types.h"
 
+extern const struct FrameData sOam_597ec0[2];
+extern const struct FrameData sOam_597ed0[2];
+extern const struct FrameData sOam_597ee0[2];
+extern const struct FrameData sOam_597ef0[2];
+
 extern const u16 sIntroSamusShipPal[16 * 5];
 extern const u16 sPal_598150[16 * 2];
 
