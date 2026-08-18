@@ -1403,3 +1403,95 @@ void NewFileIntroProcessBslShip(struct SpecialCutsceneOam *pOam)
     gBg2XPosition = pOam->xPosition;
     gBg2YPosition = pOam->yPosition;
 }
+
+
+void NewFileIntroProcessFlyingSamusShip(struct SpecialCutsceneOam *pOam)
+{
+    // https://decomp.me/scratch/4Tgpa
+
+    s32 temp1;
+    s32 temp2;
+    s32 temp3;
+    s32 temp4;
+    // FIXME: Fake match
+    register s32 zero asm("r3");
+
+    zero = 0;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->unk_4 = pOam->xPosition;
+        pOam->unk_8 = pOam->yPosition;
+        pOam->timer = 64;
+        pOam->stage = 2;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->timer++;
+        pOam->scaling -= 2;
+
+        if (pOam->timer == 128)
+        {
+            pOam->stage = 2;
+            pOam->scaling = 0x100;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        pOam->spawnX = zero;
+        pOam->spawnY = 8;
+        pOam->unk_4 = pOam->xPosition;
+        pOam->unk_8 = pOam->yPosition;
+        pOam->stage = 3;
+    }
+    else if (pOam->stage == 3)
+    {
+        pOam->timer += 2;
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->timer++;
+        pOam->unk_A++;
+        if (pOam->unk_A == 180)
+        {
+            pOam->unk_A = zero;
+            pOam->stage = 5;
+        }
+    }
+    else if (pOam->stage == 5)
+    {
+        pOam->spawnX = 280 - pOam->xPosition;
+        pOam->spawnY = 60;
+        pOam->unk_4 = pOam->xPosition + pOam->spawnX;
+        pOam->unk_8 = pOam->yPosition;
+        pOam->timer = 128;
+        pOam->stage = 6;
+    }
+    else if (pOam->stage == 6)
+    {
+        pOam->timer++;
+        if (pOam->timer == 0)
+        {
+            pOam->type = zero;
+            pOam->unk_18_0 = 0;
+        }
+    }
+    
+    temp1 = pOam->spawnX * sSineTable[pOam->timer + 64];
+    temp2 = pOam->spawnY * sSineTable[pOam->timer];
+    
+    temp3 = temp1 * sSineTable[64] - temp2 * sSineTable[0];
+    temp4 = temp1 * sSineTable[0] + temp2 * sSineTable[64];
+    
+    pOam->xPosition = (temp3 >> 16) + pOam->unk_4;
+    pOam->yPosition = (temp4 >> 16) + pOam->unk_8;
+}
+
+
+
+
+
+
+
+
+
