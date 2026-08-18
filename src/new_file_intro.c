@@ -3,9 +3,16 @@
 
 #include "constants/game_state.h"
 
+#include "structs/cutscene.h"
+
 #include "data/new_file_intro_data.h"
+#include "data/generic_data.h"
 
 extern void unk_99940(void); // For V-blank callback
+
+extern u8 SpecialCutsceneGetRandomNumber(void);
+extern u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descendingSearchOrder);
+boolu32 NewFileIntroSamusDrifting(void);
 
 static void NewFileIntroSamusShipFlyingInit(void);
 static boolu32 NewFileIntroSamusShipFlyingProcess(void);
@@ -235,15 +242,15 @@ boolu32 IntroHandler(void)
     {
         if (gSubGameMode1 == 3)
         {
-            if (gNonGameplayRam.intro.unk_20E != 0)
-                gNonGameplayRam.intro.unk_20E = 0;
+            if (INTRO_DATA.unk_20E != 0)
+                INTRO_DATA.unk_20E = 0;
         }
         else if (gSubGameMode1 != 0 && gSubGameMode1 != 3)
         {
             if (READ_16(REG_BLDCNT) & BLDCNT_ALPHA_BLENDING_EFFECT)
                 WRITE_16(REG_BLDCNT, BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_SCREEN_FIRST_TARGET);
             
-            gNonGameplayRam.intro.unk_20E = 0;
+            INTRO_DATA.unk_20E = 0;
             gSubGameMode1 = 3;
             FadeAllSounds(20);
             FadeMusic(20);
@@ -268,7 +275,7 @@ boolu32 IntroHandler(void)
             break;
         
         case 3:
-            if (gNonGameplayRam.intro.unk_20E == 0)
+            if (INTRO_DATA.unk_20E == 0)
             {
                 if (gWrittenToBldy < BLDY_MAX_VALUE)
                     gWrittenToBldy++;
@@ -276,7 +283,7 @@ boolu32 IntroHandler(void)
                     result = TRUE;
             }
             else
-                gNonGameplayRam.intro.unk_20E--;
+                INTRO_DATA.unk_20E--;
             
             SpecialCutsceneDrawAllOam(); 
     }
@@ -307,10 +314,10 @@ boolu32 NewFileIntroHandler(void)
             break;
 
         case 1:
-            gNonGameplayRam.intro.timer++;
-            if (gNonGameplayRam.intro.timer >= 100)
+            INTRO_DATA.timer++;
+            if (INTRO_DATA.timer >= 100)
             {
-                gNonGameplayRam.intro.timer = 0;
+                INTRO_DATA.timer = 0;
                 gSubGameMode1 = 2;
             }
             break;
@@ -363,40 +370,40 @@ boolu32 NewFileIntroHandler(void)
         case 11:
             if (NewFileIntroLandingOnBsl())
             {
-                gNonGameplayRam.intro.unk_20E = 0;
+                INTRO_DATA.unk_20E = 0;
                 gSubGameMode1 = 12;
             }
             break;
         
         case 12:
-            gNonGameplayRam.intro.unk_20E++;
+            INTRO_DATA.unk_20E++;
             if (gWrittenToBldy < BLDY_MAX_VALUE)
             {
-                if (gNonGameplayRam.intro.unk_20E == 1)
+                if (INTRO_DATA.unk_20E == 1)
                 {
-                    gNonGameplayRam.intro.unk_20E = 0;
+                    INTRO_DATA.unk_20E = 0;
                     gWrittenToBldy++;
                 }
             }
             else
             {
-                if (gNonGameplayRam.intro.unk_20E == 1)
+                if (INTRO_DATA.unk_20E == 1)
                 {
                     Sram_ProcessIntroSave(0);
                 }
-                else if (gNonGameplayRam.intro.unk_20E == 2)
+                else if (INTRO_DATA.unk_20E == 2)
                 {
                     Sram_ProcessIntroSave(1);
                 } 
-                else if (gNonGameplayRam.intro.unk_20E == 3)
+                else if (INTRO_DATA.unk_20E == 3)
                 {
                     Sram_ProcessIntroSave(2);
                 }
-                else if (gNonGameplayRam.intro.unk_20E == 4)
+                else if (INTRO_DATA.unk_20E == 4)
                 {
                     Sram_ProcessIntroSave(3);
-                    gNonGameplayRam.intro.timer = 0;
-                    gNonGameplayRam.intro.unk_20E = 0;
+                    INTRO_DATA.timer = 0;
+                    INTRO_DATA.unk_20E = 0;
                     result = TRUE;
                 }
             }
@@ -541,7 +548,7 @@ static void NewFileIntroSamusShipFlyingInit(void)
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
 
-    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
     WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
 
     CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
@@ -557,53 +564,53 @@ static boolu32 NewFileIntroSamusShipFlyingProcess(void)
 
     result = FALSE;
 
-    if (*gNonGameplayRam.intro.pText == 0xfc00 && gChangedInput & KEY_A && gNonGameplayRam.intro.unk_218 == 0)
-        gNonGameplayRam.intro.unk_218 = 1;
+    if (*INTRO_DATA.pText == 0xfc00 && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
+        INTRO_DATA.unk_218 = 1;
     
-    gNonGameplayRam.intro.timer++;
+    INTRO_DATA.timer++;
 
-    switch (gNonGameplayRam.intro.unk_214)
+    switch (INTRO_DATA.subStage)
     {
         case 0:
-            if ((SpecialCutsceneGetRandomNumber() << 24) >= 0 && gNonGameplayRam.intro.unk_215 < 12)
+            if ((SpecialCutsceneGetRandomNumber() << 24) >= 0 && INTRO_DATA.unk_215 < 12)
                 NewFileIntroSetupOam(3, 0, (u8)SpecialCutsceneGetRandomNumber(), 1);
 
-            if (gNonGameplayRam.intro.timer == 99)
+            if (INTRO_DATA.timer == 99)
             {
                 WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG0);
             }
-            else if (gNonGameplayRam.intro.timer == 100)
+            else if (INTRO_DATA.timer == 100)
             {
-                gNonGameplayRam.intro.timer = 0;
-                gNonGameplayRam.intro.unk_212 = 0;
-                gNonGameplayRam.intro.unk_E = 0;
-                gNonGameplayRam.intro.unk_C = 0;
-                gNonGameplayRam.intro.pText = sMonologueTextPointers[gLanguage][10];
-                gNonGameplayRam.intro.unk_214 = 1;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.unk_212 = 0;
+                INTRO_DATA.unk_E = 0;
+                INTRO_DATA.unk_C = 0;
+                INTRO_DATA.pText = sMonologueTextPointers[gLanguage][10];
+                INTRO_DATA.subStage = 1;
             }
             break;
         
         case 1:
-            if ((SpecialCutsceneGetRandomNumber() << 24) >= 0 && gNonGameplayRam.intro.unk_215 < 12)
+            if ((SpecialCutsceneGetRandomNumber() << 24) >= 0 && INTRO_DATA.unk_215 < 12)
                 NewFileIntroSetupOam(3, 0, (u8)SpecialCutsceneGetRandomNumber(), 1);
 
-            gNonGameplayRam.intro.timer = 0;
+            INTRO_DATA.timer = 0;
             
-            if (gNonGameplayRam.intro.unk_218 == 2 || gNonGameplayRam.intro.unk_218 == 4)
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
             {
-                gNonGameplayRam.intro.unk_218 = 0;
+                INTRO_DATA.unk_218 = 0;
             }
-            else if (gNonGameplayRam.intro.unk_218 == 3)
+            else if (INTRO_DATA.unk_218 == 3)
             {
-                gNonGameplayRam.intro.unk_218 = 0;
-                gNonGameplayRam.intro.unk_214 = 2;
+                INTRO_DATA.unk_218 = 0;
+                INTRO_DATA.subStage = 2;
             }
             break;
 
         case 2:
-            if (gNonGameplayRam.intro.timer == 30)
+            if (INTRO_DATA.timer == 30)
             {
-                gNonGameplayRam.intro.timer = 0;
+                INTRO_DATA.timer = 0;
                 gWrittenToBldy = BLDY_MAX_VALUE;
                 result = TRUE;
             }
@@ -626,25 +633,25 @@ static boolu32 NewFileIntroSamusShipFlying(void)
 
     result = FALSE;
 
-    switch (gNonGameplayRam.intro.stage)
+    switch (INTRO_DATA.stage)
     {
         case 0:
             NewFileIntroSamusShipFlyingInit();
-            gNonGameplayRam.intro.stage = 1;
+            INTRO_DATA.stage = 1;
             break;
 
         case 1:
             SpecialCutsceneFadeIn();
             if (!gWrittenToBldy)
-                gNonGameplayRam.intro.stage = 2;
+                INTRO_DATA.stage = 2;
             break;
 
         case 2:
             if (NewFileIntroSamusShipFlyingProcess())
             {
-                gNonGameplayRam.intro.stage = 3;
-                gNonGameplayRam.intro.timer = 0;
-                gNonGameplayRam.intro.unk_214 = 0;   
+                INTRO_DATA.stage = 3;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 0;   
             }
             break;
 
@@ -653,9 +660,9 @@ static boolu32 NewFileIntroSamusShipFlying(void)
                 gWrittenToBldy++;
             else 
             {
-                gNonGameplayRam.intro.unk_213 = 0;
-                gNonGameplayRam.intro.unk_214 = 0;
-                gNonGameplayRam.intro.stage = 0;
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.subStage = 0;
+                INTRO_DATA.stage = 0;
                 result = TRUE;
             }
             
@@ -718,7 +725,7 @@ static void NewFileIntroSamusFaintingInit(void)
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, VRAM_SIZE / 24 );
 
-    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
 
@@ -739,54 +746,54 @@ static boolu32 NewFileIntroSamusFaintingProcess(void)
 
     finished = FALSE;
     
-    if ((*gNonGameplayRam.intro.pText == 0xFC00) && (gChangedInput & KEY_A) && (gNonGameplayRam.intro.unk_218 == 0))
-        gNonGameplayRam.intro.unk_218 = 1;
+    if ((*INTRO_DATA.pText == 0xFC00) && (gChangedInput & KEY_A) && (INTRO_DATA.unk_218 == 0))
+        INTRO_DATA.unk_218 = 1;
     
-    gNonGameplayRam.intro.timer += 1;
+    INTRO_DATA.timer += 1;
     
-    switch (gNonGameplayRam.intro.unk_214) 
+    switch (INTRO_DATA.subStage) 
     {
         case 0:
-            if (gNonGameplayRam.intro.timer == 1)
+            if (INTRO_DATA.timer == 1)
             {
                 WRITE_16(REG_BLDCNT, BLDCNT_OBJ_SECOND_TARGET_PIXEL | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_FIRST_TARGET_PIXEL);
                 NewFileIntroSetupOam(10, (s16)gBg2XPosition, (s16)gBg2YPosition, 1);
             }
-            else if (gNonGameplayRam.intro.timer == 59)
+            else if (INTRO_DATA.timer == 59)
             {
                 WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG0);
             }
-            else if (gNonGameplayRam.intro.timer == 60)
+            else if (INTRO_DATA.timer == 60)
             {
-                gNonGameplayRam.intro.timer = 0;
-                gNonGameplayRam.intro.unk_212 = 0;
-                gNonGameplayRam.intro.unk_E = 0;
-                gNonGameplayRam.intro.unk_C = 0;
-                gNonGameplayRam.intro.pText = sMonologueTextPointers[gLanguage][11];
-                gNonGameplayRam.intro.unk_214 = 1;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.unk_212 = 0;
+                INTRO_DATA.unk_E = 0;
+                INTRO_DATA.unk_C = 0;
+                INTRO_DATA.pText = sMonologueTextPointers[gLanguage][11];
+                INTRO_DATA.subStage = 1;
             }
             break;
         
         case 1:
-            gNonGameplayRam.intro.timer = 0;
+            INTRO_DATA.timer = 0;
 
-            if (gNonGameplayRam.intro.unk_218 == 2 || gNonGameplayRam.intro.unk_218 == 4)
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
             {
-                gNonGameplayRam.intro.unk_218 = 0;
+                INTRO_DATA.unk_218 = 0;
             }
-            else if (gNonGameplayRam.intro.unk_218 == 3)
+            else if (INTRO_DATA.unk_218 == 3)
             {
-                gNonGameplayRam.intro.unk_218 = 0;
-                gNonGameplayRam.intro.unk_214 = 2;
+                INTRO_DATA.unk_218 = 0;
+                INTRO_DATA.subStage = 2;
                 gWrittenToBldy = 16;
             }
             break;
         
         case 2:
-            if (gNonGameplayRam.intro.timer == 30) 
+            if (INTRO_DATA.timer == 30) 
             {
                 WRITE_16(REG_BLDCNT, BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_SCREEN_FIRST_TARGET);
-                gNonGameplayRam.intro.timer = 0;
+                INTRO_DATA.timer = 0;
                 finished = TRUE;
             }
             break;
@@ -809,25 +816,25 @@ static boolu32 NewFileIntroSamusFainting(void)
 
     finished = FALSE;
 
-    switch (gNonGameplayRam.intro.stage)
+    switch (INTRO_DATA.stage)
     {
         case 0:
             NewFileIntroSamusFaintingInit();
-            gNonGameplayRam.intro.stage = 2;
+            INTRO_DATA.stage = 2;
             break;
 
         case 1:
             SpecialCutsceneFadeIn();
             if (!gWrittenToBldy)
-                gNonGameplayRam.intro.stage = 2;
+                INTRO_DATA.stage = 2;
             break;
 
         case 2:
             if (NewFileIntroSamusFaintingProcess())
             {
-                gNonGameplayRam.intro.stage = 3;
-                gNonGameplayRam.intro.timer = 0;
-                gNonGameplayRam.intro.unk_214 = 0;
+                INTRO_DATA.stage = 3;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 0;
             }
             break;
 
@@ -838,9 +845,9 @@ static boolu32 NewFileIntroSamusFainting(void)
             }
             else 
             {
-                gNonGameplayRam.intro.unk_213 = 0;
-                gNonGameplayRam.intro.unk_214 = 0;
-                gNonGameplayRam.intro.stage = 0;
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.subStage = 0;
+                INTRO_DATA.stage = 0;
                 finished = TRUE;
             }
             
@@ -919,7 +926,7 @@ void NewFileIntroSamusDriftingInit(void)
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
-    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
@@ -947,9 +954,9 @@ static void NewFileIntroSamusLosingConsciousnessVblank(void)
     WRITE_16(REG_BG3HOFS, gBg3XPosition);
     WRITE_16(REG_BG3VOFS, gBg3YPosition);
     
-    if (gNonGameplayRam.intro.unk_110 == 1)
+    if (INTRO_DATA.unk_110 == 1)
     {
-        gNonGameplayRam.intro.unk_110 = 0;
+        INTRO_DATA.unk_110 = 0;
         DMA3_COPY_32(sIntroSamusCloseupGrayscalePal, PALRAM_BASE, 4 * PAL_ROW_SIZE / 4);
     }
 }
@@ -1010,7 +1017,7 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
-    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
@@ -1091,7 +1098,7 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
     
-    gNonGameplayRam.intro.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
@@ -1104,3 +1111,295 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
 
 
 
+boolu32 NewFileIntroSamusDriftingProcess(void)
+{
+    boolu32 finished;
+    s16 x;
+    s16 y;
+
+    finished = FALSE;
+    
+    if (*INTRO_DATA.pText == 0xFC00 && gChangedInput & KEY_A && !INTRO_DATA.unk_218)
+        INTRO_DATA.unk_218 = 1;
+    
+    INTRO_DATA.timer++;
+    
+    switch (INTRO_DATA.subStage)
+    {
+        case 0:
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+                NewFileIntroSetupOam(3, 0, SpecialCutsceneGetRandomNumber(), TRUE);
+            
+            if (INTRO_DATA.timer != 149) // Why?
+            {
+                if (INTRO_DATA.timer == 150)
+                {
+                    INTRO_DATA.timer = 0;
+                    INTRO_DATA.subStage = 1;
+                    gWrittenToBldy = 16;
+                }
+            }
+            break;
+        
+        case 1:
+            NewFileIntroSamusLosingConsciousnessInit();
+            INTRO_DATA.timer = 0;
+            INTRO_DATA.subStage = 2;
+            break;
+        
+        case 2:
+            if (INTRO_DATA.timer == 1)
+            {
+                WRITE_16(0x04000050, 0x1844);
+                NewFileIntroSetupOam(10, gBg2XPosition, gBg2YPosition, TRUE);
+                gWrittenToBldy = 0;
+            }
+            else if (INTRO_DATA.timer == 118)
+            {
+                break;
+            }
+            else if (INTRO_DATA.timer == 120)
+            {
+                WRITE_16(0x04000000, READ_16(0x04000000) & 0xFBFF);
+                WRITE_16(0x04000050, 0xFF);
+                INTRO_DATA.unk_110 = 1;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 3;
+            }
+            break;
+
+        case 3:
+            if (INTRO_DATA.timer == 60)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 4;
+                gWrittenToBldy = 16;
+            }
+            break;
+        
+        case 4:
+            NewFileIntroSamusDriftingIntoAsteroidsInit();
+            INTRO_DATA.timer = 0;
+            INTRO_DATA.subStage = 5;
+            break;
+        
+        case 5:
+            INTRO_DATA.timer = 0;
+            
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+            {
+                x = SpecialCutsceneGetRandomNumber();
+                y = SpecialCutsceneGetRandomNumber();
+                NewFileIntroSetupOam(36, x, y, TRUE);
+            }
+            break;
+        
+        case 6:
+            WRITE_16(0x04000050, 0xBF);
+            
+            if (gWrittenToBldy < 16) 
+            {
+                if (INTRO_DATA.timer == 3)
+                {
+                    INTRO_DATA.timer = 0;
+                    gWrittenToBldy++;
+                }
+            } 
+            else if (INTRO_DATA.timer == 10) 
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 7;
+                finished = TRUE;
+            }
+            
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+            {
+                x = SpecialCutsceneGetRandomNumber();
+                y = SpecialCutsceneGetRandomNumber();
+                NewFileIntroSetupOam(36, x, y, TRUE);
+            }
+            break;
+        
+        case 7:
+            if (gWrittenToBldy) 
+            {
+                if (INTRO_DATA.timer == 6) 
+                {
+                    INTRO_DATA.timer = 0;
+                    gWrittenToBldy--;
+                }
+            } 
+            else 
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 8;
+            }
+
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+            {
+                x = SpecialCutsceneGetRandomNumber();
+                y = SpecialCutsceneGetRandomNumber();
+                NewFileIntroSetupOam(36, x, y, TRUE);
+            }
+            break;
+        
+        case 8:
+            INTRO_DATA.timer = 0;
+            
+            if (INTRO_DATA.unk_218 == 1)
+            {
+                SpecialCutsceneDestroyOamOfType(201);
+                INTRO_DATA.subStage = 9;
+            }
+            
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+            {
+                x = SpecialCutsceneGetRandomNumber();
+                y = SpecialCutsceneGetRandomNumber();
+                NewFileIntroSetupOam(36, x, y, TRUE);
+            }
+            break;
+        
+        case 9:
+            finished = TRUE;
+            break;
+    }
+    
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    IntroProcessText();
+    
+    return finished;
+}
+
+
+boolu32 NewFileIntroSamusDrifting(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    switch (INTRO_DATA.stage)
+    {
+        case 0:
+            NewFileIntroSamusDriftingInit();
+            gNonGameplayRam.intro.stage = 2;
+            break;
+
+        case 1:
+            SpecialCutsceneFadeIn();
+            if (!gWrittenToBldy)
+                INTRO_DATA.stage = 2;
+            break;
+
+        case 2:
+            if (NewFileIntroSamusDriftingProcess())
+            {
+                INTRO_DATA.stage = 3;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 0;
+            }
+            break;
+
+        case 3:
+            if (gWrittenToBldy < 16)
+            {
+                gWrittenToBldy++;
+            }
+            else 
+            {
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.subStage = 0;
+                INTRO_DATA.stage = 0;
+                finished = TRUE;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+
+    return finished;
+}
+
+
+void NewFileIntroProcessBslShip(struct SpecialCutsceneOam *pOam)
+{
+    s32 sine1;
+    s32 sine2;
+    
+    pOam->unk_4 = pOam->xPosition;
+    
+    if (pOam->stage == 0) 
+    {
+        pOam->stage = 2;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->unk_A++;
+        pOam->xPosition = (((60 - pOam->spawnX) * pOam->unk_A) >> 10) + pOam->spawnX;
+        pOam->yPosition = (((10 - pOam->spawnY) * pOam->unk_A) >> 10) + pOam->spawnY;
+        
+        if (pOam->xPosition > 39) 
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        pOam->unk_A++;
+        if (pOam->unk_A == 1) 
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = 0;
+            pOam->spawnY = 4;
+            pOam->unk_8 = pOam->yPosition;
+            pOam->timer = 128;
+            pOam->stage = 3;
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        sine1 = pOam->spawnX * sSineTable[pOam->timer + 64];
+        sine2 = pOam->spawnY * sSineTable[pOam->timer];
+        pOam->yPosition = ((sSineTable[0] * sine1 + sSineTable[64] * sine2) >> 16) + pOam->unk_8;
+        pOam->timer++;
+        
+        if (pOam->unk_A != 60) // Why?
+        {
+            if (pOam->unk_A == 200)
+            {
+                pOam->unk_A = 0;
+                pOam->stage = 4;
+            } 
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->stage = 5;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+    } 
+    else if (pOam->stage == 5)
+    {    
+        pOam->unk_A++;
+        pOam->xPosition = (((520 - pOam->spawnX) * pOam->unk_A) >> 10) + pOam->spawnX;
+        pOam->yPosition = (((100 - pOam->spawnY) * pOam->unk_A) >> 10) + pOam->spawnY;
+
+        if (pOam->xPosition >= 520)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 6;
+        }
+    }
+    
+    gBg2XPosition = pOam->xPosition;
+    gBg2YPosition = pOam->yPosition;
+}

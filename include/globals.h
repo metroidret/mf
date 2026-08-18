@@ -26,7 +26,7 @@ struct IntroData {
     u16 timer;
     u8 unk_212;
     u8 unk_213;
-    u8 unk_214;
+    u8 subStage;
     u8 unk_215;
     u8 padding4[2];
     u8 unk_218;
@@ -51,6 +51,7 @@ extern union NonGameplayRam gNonGameplayRam;
 #define TITLE_SCREEN_DATA gNonGameplayRam.titleScreen
 #define SA_X_CLOSE_UP_DATA gNonGameplayRam.saXCloseUp
 #define ENDING_DATA gNonGameplayRam.ending
+#define INTRO_DATA gNonGameplayRam.intro
 
 extern u8 gCommonSpriteGfxBackup[0x4000];
 extern u8 gRoomSpriteGfxBackup[0x4000];
