@@ -506,10 +506,10 @@ enum SpritePose {
 // Represents a 100% drop change for a sprite
 #define SPRITE_DROP_MAX_PROB (1024)
 
-// Maximum value for a sprite rng
-#define SPRITE_RNG_MAX (16)
-// Computes a probability for the sprite rng value [0;16[
-#define SPRITE_RNG_PROB(prob) ((s32)((prob) * SPRITE_RNG_MAX))
+// Number of possible values for sprite rng
+#define SPRITE_RNG_COUNT (16)
+// Computes a probability for the sprite rng value (ranges from 0-15)
+#define SPRITE_RNG_PROB(prob) ((s32)((prob) * SPRITE_RNG_COUNT))
 
 #define SPRITE_ISFT_POWER_BOMB_STUNNED (1 << 7)
 
