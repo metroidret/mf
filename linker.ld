@@ -414,6 +414,10 @@ SECTIONS {
 
         asm/disasm_0x0804d038.o(.text);
 
+        src/sprites_AI/metroid.o(.text);
+
+        asm/disasm_0x0804f518.o(.text);
+
         src/sprites_AI/zozoro.o(.text);
 
         asm/disasm_0x080507F4.o(.text);
@@ -598,6 +602,8 @@ SECTIONS {
         src/data/sprites/mimic.o(.rodata);
         src/data/sprites/flashing_number.o(.rodata);
         src/data/sprites/zebesian_aqua.o(.rodata);
+
+        src/data/sprites/metroid.o(.rodata);
 
         src/data/sprites/zozoro.o(.rodata);
         src/data/sprites/electric_water_damage_box2.o(.rodata);

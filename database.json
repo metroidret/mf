@@ -12561,10 +12561,34 @@
     "size": 2
   },
   {
-    "path": "Blob_38188c_386718.bin",
-    "count": "0x4E8C",
+    "path": "Blob_38188c_38475c.bin",
+    "count": "0x2ED0",
     "addr": {
       "us": "0x38188C"
+    },
+    "size": 1
+  },
+    {
+    "path": "sprites/metroid.gfx",
+    "count": "0x200",
+    "addr": {
+      "us": "0x38499C"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/metroid.pal",
+    "count": "0x10",
+    "addr": {
+      "us": "0x38519C"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_38537c_386718.bin",
+    "count": "0x139C",
+    "addr": {
+      "us": "0x38537C"
     },
     "size": 1
   },

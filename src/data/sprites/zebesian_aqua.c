@@ -833,4 +833,4 @@ const struct FrameData sZebesianAquaOam_Unused_38184c[8] = {
     [7] = FRAME_DATA_TERMINATOR
 };
 
-static const u8 sBlob_38188c_386718[] = INCBIN_U8("data/Blob_38188c_386718.bin");
+static const u8 sBlob_38188c_38475c[] = INCBIN_U8("data/Blob_38188c_38475c.bin");
