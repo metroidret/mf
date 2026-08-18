@@ -824,5 +824,3 @@ const struct FrameData sFlashingNumberOam_Sector6[] = {
     },
     [8] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_37faf8_386718[] = INCBIN_U8("data/Blob_37faf8_386718.bin");

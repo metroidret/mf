@@ -410,8 +410,9 @@ SECTIONS {
         src/sprites_AI/puyo.o(.text);
         src/sprites_AI/mimic.o(.text);
         src/sprites_AI/flashing_number.o(.text);
+        src/sprites_AI/zebesian_aqua.o(.text);
 
-        asm/disasm_0x0804C744.o(.text);
+        asm/disasm_0x0804d038.o(.text);
 
         src/sprites_AI/zozoro.o(.text);
 
@@ -596,6 +597,7 @@ SECTIONS {
         src/data/sprites/puyo.o(.rodata);
         src/data/sprites/mimic.o(.rodata);
         src/data/sprites/flashing_number.o(.rodata);
+        src/data/sprites/zebesian_aqua.o(.rodata);
 
         src/data/sprites/zozoro.o(.rodata);
         src/data/sprites/electric_water_damage_box2.o(.rodata);
