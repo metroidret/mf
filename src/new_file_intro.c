@@ -10,12 +10,11 @@
 #include "data/menus/title_screen.h"
 #include "data/sprite_data.h"
 
-extern void unk_99940(void); // For V-blank callback
+void unk_99940(void); // For V-blank callback
 
-extern u8 SpecialCutsceneGetRandomNumber(void);
-extern u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descendingSearchOrder);
+u8 SpecialCutsceneGetRandomNumber(void);
+u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descendingSearchOrder);
 boolu32 NewFileIntroSamusDrifting(void);
-
 static void NewFileIntroSamusShipFlyingInit(void);
 static boolu32 NewFileIntroSamusShipFlyingProcess(void);
 static boolu32 NewFileIntroSamusShipFlying(void);
@@ -37,12 +36,12 @@ const u8* sTitleScreenDebugTextPointer = {
 };
 
 const struct FrameData* sData_79C2CC[6] = {
-    (struct FrameData*)0x08597ec0,
-    (struct FrameData*)0x08597ed0,
-    (struct FrameData*)0x08597ee0,
-    (struct FrameData*)0x08597ef0,
-    (struct FrameData*)0x08597ee0,
-    (struct FrameData*)0x08597ed0
+    sOam_597ec0,
+    sOam_597ed0,
+    sOam_597ee0,
+    sOam_597ef0,
+    sOam_597ee0,
+    sOam_597ed0
 };
 
 static u8 sBlob_79c2e4_79c3fc[] = INCBIN_U8("data/Blob_79c2e4_79c3fc.bin");
@@ -507,9 +506,7 @@ static void NewFileIntroSamusShipFlyingInit(void)
     DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
 
     for (i = 0; i < 8; i++)
-    {
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
-    }
     
     DMA3_COPY_32(sIntroSamusShipPal, PALRAM_OBJ, 5 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sPal_598150, PALRAM_OBJ + 0x100, 2 * PAL_ROW_SIZE / 4);
@@ -556,9 +553,7 @@ static void NewFileIntroSamusShipFlyingInit(void)
     NewFileIntroSetupOam(4, 0, 0, 1);
 
     for (i = 0; i < 10; i++)
-    {
-        NewFileIntroSetupOam(3, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
-    }
+        NewFileIntroSetupOam(3, SpecialCutsceneGetRandomNumber(), SpecialCutsceneGetRandomNumber(), 1);
 
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -589,8 +584,8 @@ static boolu32 NewFileIntroSamusShipFlyingProcess(void)
     switch (INTRO_DATA.subStage)
     {
         case 0:
-            if ((SpecialCutsceneGetRandomNumber() << 24) >= 0 && INTRO_DATA.unk_215 < 12)
-                NewFileIntroSetupOam(3, 0, (u8)SpecialCutsceneGetRandomNumber(), 1);
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+                NewFileIntroSetupOam(3, 0, SpecialCutsceneGetRandomNumber(), 1);
 
             if (INTRO_DATA.timer == 99)
             {
@@ -608,8 +603,8 @@ static boolu32 NewFileIntroSamusShipFlyingProcess(void)
             break;
         
         case 1:
-            if ((SpecialCutsceneGetRandomNumber() << 24) >= 0 && INTRO_DATA.unk_215 < 12)
-                NewFileIntroSetupOam(3, 0, (u8)SpecialCutsceneGetRandomNumber(), 1);
+            if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 12)
+                NewFileIntroSetupOam(3, 0, SpecialCutsceneGetRandomNumber(), 1);
 
             INTRO_DATA.timer = 0;
             
@@ -936,7 +931,7 @@ void NewFileIntroSamusDriftingInit(void)
     NewFileIntroSetupOam(4, 0, 0, 1);
     
     for (i = 0; i < 10; i++)
-        NewFileIntroSetupOam(3, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
+        NewFileIntroSetupOam(3, SpecialCutsceneGetRandomNumber(), SpecialCutsceneGetRandomNumber(), 1);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -1110,7 +1105,7 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     NewFileIntroSetupOam(31, 140, 80, 0);
     
     for (i = 0; i < 4; i++)
-        NewFileIntroSetupOam(36, (u8)SpecialCutsceneGetRandomNumber(), (u8)SpecialCutsceneGetRandomNumber(), 1);
+        NewFileIntroSetupOam(36, SpecialCutsceneGetRandomNumber(), SpecialCutsceneGetRandomNumber(), 1);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -1350,8 +1345,8 @@ boolu32 NewFileIntroSamusDrifting(void)
  */
 void NewFileIntroProcessBslShip(struct SpecialCutsceneOam *pOam)
 {
-    s32 sine1;
-    s32 sine2;
+    s32 cos;
+    s32 sin;
     
     pOam->unk_4 = pOam->xPosition;
     
@@ -1390,9 +1385,9 @@ void NewFileIntroProcessBslShip(struct SpecialCutsceneOam *pOam)
     }
     else if (pOam->stage == 3)
     {
-        sine1 = pOam->spawnX * sSineTable[pOam->timer + 64];
-        sine2 = pOam->spawnY * sSineTable[pOam->timer];
-        pOam->yPosition = ((sSineTable[0] * sine1 + sSineTable[64] * sine2) >> 16) + pOam->unk_8;
+        cos = pOam->spawnX * COS(pOam->timer);
+        sin = pOam->spawnY * SIN(pOam->timer);
+        pOam->yPosition = ((SIN(0) * cos + COS(0) * sin) >> 16) + pOam->unk_8;
         pOam->timer++;
         
         if (pOam->unk_A != 60) // Why?
@@ -1435,16 +1430,13 @@ void NewFileIntroProcessBslShip(struct SpecialCutsceneOam *pOam)
  */
 void NewFileIntroProcessFlyingSamusShip(struct SpecialCutsceneOam *pOam)
 {
-    // https://decomp.me/scratch/4Tgpa
-
-    s32 sine1;
-    s32 sine2;
+    s32 rotation;
+    s32 cos;
+    s32 sin;
     s32 x;
     s32 y;
-    // FIXME: Fake match
-    register s32 zero asm("r3");
 
-    zero = 0;
+    rotation = 0;
     
     if (pOam->stage == 0)
     {
@@ -1466,7 +1458,7 @@ void NewFileIntroProcessFlyingSamusShip(struct SpecialCutsceneOam *pOam)
     }
     else if (pOam->stage == 2)
     {
-        pOam->spawnX = zero;
+        pOam->spawnX = 0;
         pOam->spawnY = 8;
         pOam->unk_4 = pOam->xPosition;
         pOam->unk_8 = pOam->yPosition;
@@ -1482,7 +1474,7 @@ void NewFileIntroProcessFlyingSamusShip(struct SpecialCutsceneOam *pOam)
         pOam->unk_A++;
         if (pOam->unk_A == 180)
         {
-            pOam->unk_A = zero;
+            pOam->unk_A = 0;
             pOam->stage = 5;
         }
     }
@@ -1500,16 +1492,16 @@ void NewFileIntroProcessFlyingSamusShip(struct SpecialCutsceneOam *pOam)
         pOam->timer++;
         if (pOam->timer == 0)
         {
-            pOam->type = zero;
+            pOam->type = 0;
             pOam->unk_18_0 = 0;
         }
     }
     
-    sine1 = pOam->spawnX * sSineTable[pOam->timer + 64];
-    sine2 = pOam->spawnY * sSineTable[pOam->timer];
+    cos = pOam->spawnX * COS(pOam->timer);
+    sin = pOam->spawnY * SIN(pOam->timer);
     
-    x = sine1 * sSineTable[64] - sine2 * sSineTable[0];
-    y = sine1 * sSineTable[0] + sine2 * sSineTable[64];
+    x = cos * COS(rotation) - sin * SIN(0);
+    y = cos * SIN(0) + sin * COS(rotation);
     
     pOam->xPosition = (x >> 16) + pOam->unk_4;
     pOam->yPosition = (y >> 16) + pOam->unk_8;
@@ -1554,7 +1546,7 @@ void NewFileIntroProcessHorizontalParticle(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (pOam->xPosition >= 240 || pOam->yPosition >= 160)
+    if (pOam->xPosition >= SCREEN_SIZE_X || pOam->yPosition >= SCREEN_SIZE_Y)
     {
         pOam->type = 0;
         pOam->unk_18_0 = 0;
@@ -1689,7 +1681,7 @@ void NewFileIntroProcessSamusDrifting(struct SpecialCutsceneOam* pOam)
         }
     }
 
-    if (pOam->xPosition > 280 || pOam->yPosition > 180)
+    if (pOam->xPosition > (SCREEN_SIZE_X + 40) || pOam->yPosition > (SCREEN_SIZE_Y + 20))
     {
         pOam->type = 0;
         pOam->unk_18_0 = 0;
@@ -1718,7 +1710,7 @@ void NewFileIntroProcessSamusDriftingIntoAsteroids(struct SpecialCutsceneOam *pO
     else if (pOam->stage == 1)
     {
         pOam->timer++;
-        pOam->yPosition = (sSineTable[pOam->timer] >> 7) + pOam->spawnY;
+        pOam->yPosition = (SIN(pOam->timer) >> 7) + pOam->spawnY;
         
         if (pOam->timer > 52)
         {
@@ -1737,7 +1729,7 @@ void NewFileIntroProcessSamusDriftingIntoAsteroids(struct SpecialCutsceneOam *pO
                 pOam->scaling--;
             }
         }
-        
+
         if (pOam->timer > 127)
         {
             pOam->unk_8 = 0;
@@ -1753,7 +1745,7 @@ void NewFileIntroProcessSamusDriftingIntoAsteroids(struct SpecialCutsceneOam *pO
     {
         pOam->timer++;
         pOam->xPosition = pOam->spawnX - (pOam->unk_A >> 2);
-        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 3) + (sSineTable[pOam->timer] >> 7);
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 3) + (SIN(pOam->timer) >> 7);
         pOam->unk_4++;
         
         if (pOam->unk_4 == 12)
@@ -2006,9 +1998,9 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
 
     if (!descendingSearchOrder)
     {
-        for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.unk_21C); slot++)
+        for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
         {
-            if (INTRO_DATA.unk_21C[slot].type == 0)
+            if (INTRO_DATA.oam[slot].type == 0)
                 break;
         }
         
@@ -2017,9 +2009,9 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
     }
     else
     {
-        for (slot = ARRAY_SIZE(INTRO_DATA.unk_21C) - 1; slot >= 0; slot--)
+        for (slot = ARRAY_SIZE(INTRO_DATA.oam) - 1; slot >= 0; slot--)
         {
-            if (INTRO_DATA.unk_21C[slot].type == 0)
+            if (INTRO_DATA.oam[slot].type == 0)
                 break;
         }
         
@@ -2027,101 +2019,101 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
             return 20;
     }
     
-    DMA3_FILL_32(0, &INTRO_DATA.unk_21C[slot], 36);
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], 36);
 
-    INTRO_DATA.unk_21C[slot].xPosition = xPosition;
-    INTRO_DATA.unk_21C[slot].yPosition = yPosition;
-    INTRO_DATA.unk_21C[slot].type = type;
-    INTRO_DATA.unk_21C[slot].unk_18_0 = 1;
+    INTRO_DATA.oam[slot].xPosition = xPosition;
+    INTRO_DATA.oam[slot].yPosition = yPosition;
+    INTRO_DATA.oam[slot].type = type;
+    INTRO_DATA.oam[slot].unk_18_0 = 1;
 
     if (type == 1)
     {
-        INTRO_DATA.unk_21C[slot].unk_18_0 = 0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessBslShip;
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslShip;
     }
     else if (type == 2)
     {
-        INTRO_DATA.unk_21C[slot].scaling = Q_8_8(1);
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597f50;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessFlyingSamusShip;
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1);
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f50;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessFlyingSamusShip;
     }
     else if (type == 3)
     {
-        INTRO_DATA.unk_21C[slot].unk_1A_2 = 3;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597ec0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessHorizontalParticle;
+        INTRO_DATA.oam[slot].unk_1A_2 = 3;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597ec0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHorizontalParticle;
     }
     else if (type == 4)
     {
-        INTRO_DATA.unk_21C[slot].unk_18_0 = 0;
-        INTRO_DATA.unk_21C[slot].pFunction = unk_89090;
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_89090;
     }
     else if (type == 10)
     {
-        INTRO_DATA.unk_21C[slot].unk_18_0 = 0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSamusFainting;
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusFainting;
     }
     else if (type == 20)
     {
-        INTRO_DATA.unk_21C[slot].scaling = Q_8_8(1);
-        INTRO_DATA.unk_21C[slot].unk_18_1 = 3;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597f50;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSamusDrifting;
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1);
+        INTRO_DATA.oam[slot].unk_18_1 = 3;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f50;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusDrifting;
     }
     else if (type == 30)
     {
-        INTRO_DATA.unk_21C[slot].spawnX = xPosition;
-        INTRO_DATA.unk_21C[slot].spawnY = yPosition;
-        INTRO_DATA.unk_21C[slot].scaling = Q_8_8(1);
-        INTRO_DATA.unk_21C[slot].unk_18_1 = 1;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597f88;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSamusDriftingIntoAsteroids;
+        INTRO_DATA.oam[slot].spawnX = xPosition;
+        INTRO_DATA.oam[slot].spawnY = yPosition;
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1);
+        INTRO_DATA.oam[slot].unk_18_1 = 1;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f88;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusDriftingIntoAsteroids;
     }
     else if (type == 31)
     {
-        INTRO_DATA.unk_21C[slot].unk_18_0 = 0;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597f88;
-        INTRO_DATA.unk_21C[slot].pFunction = unk_89488;
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f88;
+        INTRO_DATA.oam[slot].pFunction = unk_89488;
     }
     else if (type == 32)
     {
-        INTRO_DATA.unk_21C[slot].unk_4 = -40;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597fe0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+        INTRO_DATA.oam[slot].unk_4 = -40;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fe0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 33)
     {
-        INTRO_DATA.unk_21C[slot].unk_4 = -30;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597fd0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+        INTRO_DATA.oam[slot].unk_4 = -30;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fd0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 34)
     {
-        INTRO_DATA.unk_21C[slot].unk_4 = -20;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597fc0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+        INTRO_DATA.oam[slot].unk_4 = -20;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fc0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 35)
     {
-        INTRO_DATA.unk_21C[slot].unk_4 = -10;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597fb0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
+        INTRO_DATA.oam[slot].unk_4 = -10;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fb0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 36)
     {
-        INTRO_DATA.unk_21C[slot].unk_1A_2 = 2;
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08597ec0;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessDepthParticle;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597ec0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessDepthParticle;
     }
     else if (type == 200)
     {
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08613180;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessTextCursor;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08613180;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
     }
     else if (type == 201)
     {
-        INTRO_DATA.unk_21C[slot].pOam = (struct FrameData*)0x08613180;
-        INTRO_DATA.unk_21C[slot].pFunction = NewFileIntroProcessOam_Empty;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08613180;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessOam_Empty;
     }
     
     return slot;
@@ -2136,7 +2128,7 @@ void unk_89a74(u8 type, s16 xPos, s16 yPos, s16 arg3)
     u8 slot;
     
     slot = NewFileIntroSetupOam(type, xPos, yPos, TRUE);
-    INTRO_DATA.unk_21C[slot].unk_8 = arg3;
+    INTRO_DATA.oam[slot].unk_8 = arg3;
 }
 
  /**

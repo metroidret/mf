@@ -3,9 +3,31 @@
 
 #include "data/new_file_intro_data.h"
 
+static const u16 sOamFrame_597708[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 128, 4, 0),
+};
+
+static const u16 sOamFrame_597710[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 129, 4, 0),
+};
+
+static const u16 sOamFrame_597718[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 130, 4, 0),
+};
+
+static const u16 sOamFrame_597720[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 131, 4, 0),
+};
+
+static const u8 sBlob_597728_597ec0[] = INCBIN_U8("data/Blob_597728_597ec0.bin");
+
 const struct FrameData sOam_597ec0[2] = {
     [0] = {
-        .pFrame = (u16*)0x08597708,
+        .pFrame = sOamFrame_597708,
         .timer = 4
     },
     [1] = FRAME_DATA_TERMINATOR
@@ -13,7 +35,7 @@ const struct FrameData sOam_597ec0[2] = {
 
 const struct FrameData sOam_597ed0[2] = {
     [0] = {
-        .pFrame = (u16*)0x08597710,
+        .pFrame = sOamFrame_597710,
         .timer = 4
     },
     [1] = FRAME_DATA_TERMINATOR
@@ -21,7 +43,7 @@ const struct FrameData sOam_597ed0[2] = {
 
 const struct FrameData sOam_597ee0[2] = {
     [0] = {
-        .pFrame = (u16*)0x08597718,
+        .pFrame = sOamFrame_597718,
         .timer = 4
     },
     [1] = FRAME_DATA_TERMINATOR
@@ -29,7 +51,7 @@ const struct FrameData sOam_597ee0[2] = {
 
 const struct FrameData sOam_597ef0[2] = {
     [0] = {
-        .pFrame = (u16*)0x08597720,
+        .pFrame = sOamFrame_597720,
         .timer = 4
     },
     [1] = FRAME_DATA_TERMINATOR
