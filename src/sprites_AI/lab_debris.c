@@ -25,6 +25,11 @@ enum LabDebrisPose {
 #define LAB_DEBRIS_PARTICLE_TIMER work2
 #define LAB_DEBRIS_FALL_SPEED_IDX work4
 
+/**
+ * @brief 4f518 | 60 | Sets collision for lab debris based on which piece it is
+ * 
+ * @param clipAction Clipdata affecting action
+ */
 void LabDebrisSetCollision(u8 clipAction)
 {
     u16 yPosition;
@@ -49,6 +54,10 @@ void LabDebrisSetCollision(u8 clipAction)
     }
 }
 
+/**
+ * @brief 4f578 | 9c | Initializes lab debris
+ * 
+ */
 void LabDebrisInit(void)
 {
     if (!EventCheckOn_RestrictedLabExplosion())
@@ -84,6 +93,10 @@ void LabDebrisInit(void)
     LabDebrisSetCollision(CAA_MAKE_SOLID);
 }
 
+/**
+ * @brief 4f614 | 5c | Handles lab debris being idle
+ * 
+ */
 void LabDebrisIdle(void)
 {
     if ((u8)EventCheckOn_Escape() == ESCAPE_RESTRICTED_LAB)
@@ -102,6 +115,10 @@ void LabDebrisIdle(void)
     }
 }
 
+/**
+ * @brief 4f670 | 1d4 | Handles lab debris falling
+ * 
+ */
 void LabDebrisFalling(void)
 {
     u16 yPosition;
@@ -239,6 +256,10 @@ void LabDebrisFalling(void)
     }
 }
 
+/**
+ * @brief 4f844 | 4c | Handles lab debris crumbling
+ * 
+ */
 void LabDebrisCrumbling(void)
 {
     u8 index;
@@ -259,6 +280,10 @@ void LabDebrisCrumbling(void)
     }
 }
 
+/**
+ * @brief 4f890 | 48 | Lab debris AI
+ * 
+ */
 void LabDebris(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
