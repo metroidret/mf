@@ -271,5 +271,3 @@ const struct FrameData sMetroidOam_Unused_38536c[2] = {
     },
     [1] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_38537c_386718[] = INCBIN_U8("data/Blob_38537c_386718.bin");

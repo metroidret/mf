@@ -415,8 +415,9 @@ SECTIONS {
         asm/disasm_0x0804d038.o(.text);
 
         src/sprites_AI/metroid.o(.text);
+        src/sprites_AI/lab_debris.o(.text);
 
-        asm/disasm_0x0804f518.o(.text);
+        asm/disasm_0x0804f8d8.o(.text);
 
         src/sprites_AI/zozoro.o(.text);
 
@@ -604,6 +605,7 @@ SECTIONS {
         src/data/sprites/zebesian_aqua.o(.rodata);
 
         src/data/sprites/metroid.o(.rodata);
+        src/data/sprites/lab_debris.o(.rodata);
 
         src/data/sprites/zozoro.o(.rodata);
         src/data/sprites/electric_water_damage_box2.o(.rodata);

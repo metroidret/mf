@@ -12568,7 +12568,7 @@
     },
     "size": 1
   },
-    {
+  {
     "path": "sprites/metroid.gfx",
     "count": "0x200",
     "addr": {
@@ -12585,10 +12585,26 @@
     "size": 2
   },
   {
-    "path": "Blob_38537c_386718.bin",
-    "count": "0x139C",
+    "path": "sprites/lab_debris.gfx",
+    "count": "0x200",
     "addr": {
       "us": "0x38537C"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/lab_debris.pal",
+    "count": "0x10",
+    "addr": {
+      "us": "0x385B7C"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_385cac_386718.bin",
+    "count": "0xA6C",
+    "addr": {
+      "us": "0x385cac"
     },
     "size": 1
   },

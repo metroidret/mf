@@ -55,7 +55,7 @@ void MetroidInit(void)
     gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(.0625);
 
     gCurrentSprite.animationDurationCounter = 0;
-    gCurrentSprite.currentAnimationFrame = gSpriteRandomNumber & 3;
+    gCurrentSprite.currentAnimationFrame = MOD_AND(gSpriteRandomNumber, 4);
     prop = gCurrentSprite.spritesetSlotAndProperties & SSP_PROPERTY_MASK;
 
     if (EventCheckOn_RestrictedLabExplosion())
@@ -205,7 +205,7 @@ void MetroidFloatingInTube(void)
         yDistance = sMetroidBackgroundFloatingYSpeeds[index];
         if (yDistance == SHORT_MAX)
         {
-            if (gSpriteRandomNumber < 4)
+            if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_DOWN;
     
             gCurrentSprite.METROID_Y_VEL_IDX = 0;
@@ -245,7 +245,7 @@ void MetroidFloatingInTube(void)
         xDistance = sMetroidBackgroundFloatingXSpeeds[index];
         if (xDistance == SHORT_MAX)
         {
-            if (gSpriteRandomNumber < 4)
+            if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
 
             gCurrentSprite.METROID_X_VEL_IDX = 0;
@@ -304,7 +304,7 @@ void MetroidFloatingInTube(void)
         yDistance = sMetroidFloatingYSpeeds[index];
         if (yDistance == SHORT_MAX)
         {
-            if (gSpriteRandomNumber < 4)
+            if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_DOWN;
 
             gCurrentSprite.METROID_Y_VEL_IDX = 0;
@@ -345,7 +345,7 @@ void MetroidFloatingInTube(void)
         xDistance = sMetroidFloatingXSpeeds[index];
         if (xDistance == SHORT_MAX)
         {
-            if (gSpriteRandomNumber < 4)
+            if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
 
             gCurrentSprite.METROID_X_VEL_IDX = 0;
