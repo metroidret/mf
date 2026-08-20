@@ -129,5 +129,3 @@ const struct FrameData sLabDebrisOam_Unused_385c9c[2] = {
     },
     [1] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_385cac_386718[] = INCBIN_U8("data/Blob_385cac_386718.bin");

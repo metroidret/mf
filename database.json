@@ -12601,12 +12601,20 @@
     "size": 2
   },
   {
-    "path": "Blob_385cac_386718.bin",
-    "count": "0xA6C",
+    "path": "sprites/powamp.gfx",
+    "count": "0x200",
     "addr": {
-      "us": "0x385cac"
+      "us": "0x385CAC"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "sprites/powamp.pal",
+    "count": "0x10",
+    "addr": {
+      "us": "0x3864AC"
+    },
+    "size": 2
   },
   {
     "path": "sprites/zozoro.gfx",
