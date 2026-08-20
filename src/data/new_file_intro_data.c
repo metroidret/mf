@@ -1,5 +1,63 @@
-#include "data/new_file_intro_data.h"
 #include "macros.h"
+#include "oam.h"
+
+#include "data/new_file_intro_data.h"
+
+static const u16 sOamFrame_597708[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 128, 4, 0),
+};
+
+static const u16 sOamFrame_597710[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 129, 4, 0),
+};
+
+static const u16 sOamFrame_597718[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 130, 4, 0),
+};
+
+static const u16 sOamFrame_597720[OAM_DATA_SIZE(1)] = {
+    1,
+    OAM_ENTRY(-4, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 131, 4, 0),
+};
+
+static const u8 sBlob_597728_597ec0[] = INCBIN_U8("data/Blob_597728_597ec0.bin");
+
+const struct FrameData sOam_597ec0[2] = {
+    [0] = {
+        .pFrame = sOamFrame_597708,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_597ed0[2] = {
+    [0] = {
+        .pFrame = sOamFrame_597710,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_597ee0[2] = {
+    [0] = {
+        .pFrame = sOamFrame_597718,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_597ef0[2] = {
+    [0] = {
+        .pFrame = sOamFrame_597720,
+        .timer = 4
+    },
+    [1] = FRAME_DATA_TERMINATOR
+};
+
+static const u8 sBlob_597f00_5980b0[] = INCBIN_U8("data/Blob_597f00_5980b0.bin");
 
 const u16 sIntroSamusShipPal[16 * 5] = INCBIN_U16("data/new_file_intro/samus_ship.pal");
 const u16 sPal_598150[16 * 2] = INCBIN_U16("data/new_file_intro/598150.pal"); // Loaded to PALRAM but not used?
