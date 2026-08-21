@@ -71,9 +71,9 @@ void ChozoStatueInit(void)
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.drawDistanceTop = 48;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(3.0f);
     gCurrentSprite.hitboxBottom = 0;
 
@@ -147,9 +147,9 @@ void FakeChozoBallInit(void)
     gCurrentSprite.drawOrder = 5;
     gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
-    gCurrentSprite.drawDistanceTop = 48;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(2.8125f);
     gCurrentSprite.hitboxBottom = -BLOCK_TO_SUB_PIXEL(1.8125f);
 

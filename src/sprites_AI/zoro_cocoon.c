@@ -52,9 +52,9 @@ void ZoroCocoonSetHitboxesAndDrawDistances(void)
         }
     }
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 }
 
 /**
@@ -209,9 +209,9 @@ void ZoroHuskSetOam(void)
  */
 void ZoroHuskInit(void)
 {
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;

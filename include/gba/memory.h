@@ -11,7 +11,26 @@
 
 #define PALRAM_BASE (void *)0x05000000
 #define PALRAM_OBJ (void *)0x05000200
-#define PALRAM_SIZE 0x400
+/**
+ * @brief Number of colors in a palette row
+ */
+#define PAL_ROW 16
+/**
+ * @brief Size of a palette row in bytes
+ */
+#define PAL_ROW_SIZE (PAL_ROW * 2)
+/**
+ * @brief Number of colors in a full palette (16 rows)
+ */
+#define COLORS_IN_PAL (16 * PAL_ROW)
+/**
+ * @brief Size of a full palette (16 rows) in bytes
+ */
+#define PAL_SIZE (COLORS_IN_PAL * 2)
+/**
+ * @brief Size of both full palettes (BG and OBJ) in bytes
+ */
+#define PALRAM_SIZE (PAL_SIZE * 2)
 
 #define VRAM_BASE (void *)0x06000000
 #define VRAM_OBJ (void *)0x06010000

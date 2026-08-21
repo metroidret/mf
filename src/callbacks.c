@@ -13,7 +13,7 @@ void CallbackCallVblank(void)
     if (gVBlankCallback)
         gVBlankCallback();
 
-    write16(REG_IF, read16(REG_IF) | IF_VBLANK);
+    WRITE_16(REG_IF, READ_16(REG_IF) | IF_VBLANK);
     gVBlankRequestFlag = TRUE;
 }
 
@@ -42,7 +42,7 @@ void CallbackCallHBlank(void)
     if (gHBlankCallback)
         gHBlankCallback();
 
-    write16(REG_IF, read16(REG_IF) | IF_HBLANK);
+    WRITE_16(REG_IF, READ_16(REG_IF) | IF_HBLANK);
 }
 
 /**
@@ -70,7 +70,7 @@ void CallbackCallVCount(void)
     if (gVCountCallback)
         gVCountCallback();
 
-    write16(REG_IF, read16(REG_IF) | IF_VCOUNT);
+    WRITE_16(REG_IF, READ_16(REG_IF) | IF_VCOUNT);
 }
 
 /**

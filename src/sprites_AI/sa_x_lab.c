@@ -76,7 +76,7 @@ void SaXLabCoveredByMetroids(void)
 
     if (gCurrentSprite.work1 == 70)
     {
-        gPreventMovementTimer = 1000;
+        gPreventMovementTimer = SAMUS_ITEM_PMT;
         EventCheckAdvance(EVENT_60_SECONDS_TO_DETACHMENT);
         TrySpawnMessageBanner(0xA);
     }

@@ -132,7 +132,7 @@ void GadoraDeath(void)
     xPosition = gCurrentSprite.xPosition;
 
     // Free hatch linked to the gadora
-    UpdateGadoraHatch(xPosition, yPosition, TRUE);
+    GadoraHatchUpdate(xPosition, yPosition, TRUE);
 }
 
 /**
@@ -185,7 +185,7 @@ void GadoraInit(void)
         xPosition = gCurrentSprite.xPosition;
 
         // Lock hatch linked to the gadora
-        UpdateGadoraHatch(xPosition, yPosition, FALSE);
+        GadoraHatchUpdate(xPosition, yPosition, FALSE);
 
         // Spawn roots
         SpriteSpawnSecondary(SSPRITE_GADORA_ROOTS, 0, gCurrentSprite.spritesetGfxSlot, gCurrentSprite.primarySpriteRamSlot,
@@ -211,9 +211,9 @@ void GadoraInit(void)
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
     }
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -(BLOCK_SIZE * 2);
     gCurrentSprite.hitboxBottom = BLOCK_SIZE * 2;
@@ -492,9 +492,9 @@ void GadoraEye(void)
 
         gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
 
-        gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE - QUARTER_BLOCK_SIZE);
-        gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE - QUARTER_BLOCK_SIZE);
-        gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(QUARTER_BLOCK_SIZE + QUARTER_BLOCK_SIZE / 2);
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.75f);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.75f);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.375f);
 
         gCurrentSprite.hitboxTop = -(BLOCK_SIZE - QUARTER_BLOCK_SIZE);
         gCurrentSprite.hitboxBottom = BLOCK_SIZE - QUARTER_BLOCK_SIZE;
@@ -576,9 +576,9 @@ void GadoraRoots(void)
     {
         gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
 
-        gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-        gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-        gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
         gCurrentSprite.hitboxTop = -PIXEL_SIZE;
         gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -638,9 +638,9 @@ void GadoraBeam(void)
             gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
             gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.hitboxTop = -(BLOCK_SIZE - PIXEL_SIZE);
             gCurrentSprite.hitboxBottom = BLOCK_SIZE + PIXEL_SIZE;

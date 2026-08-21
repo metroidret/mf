@@ -22,9 +22,9 @@ void CoreAbilityBeforeVariaCoreInit(void)
     gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -32;
     gCurrentSprite.hitboxBottom = 32;
     gCurrentSprite.hitboxLeft = -32;
@@ -201,9 +201,9 @@ void CoreXShellBeforeVariaCore(void)
         gCurrentSprite.drawOrder = 5;
         gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
         gCurrentSprite.health = 4096; // Hardcoded health
-        gCurrentSprite.drawDistanceTop = 24;
-        gCurrentSprite.drawDistanceBottom = 24;
-        gCurrentSprite.drawDistanceHorizontal = 24;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
         gCurrentSprite.hitboxTop = -80;
         gCurrentSprite.hitboxBottom = 80;
         gCurrentSprite.hitboxLeft = -80;
@@ -252,43 +252,35 @@ void CoreXShellBeforeVariaCore(void)
         }
         else if (gCurrentSprite.work1 == 121)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 0 * 0x200, VRAM_OBJ + 0x5800 + 0 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 0 * 0x200, VRAM_OBJ + 0x5800 + 0 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 122)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 1 * 0x200, VRAM_OBJ + 0x5800 + 1 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 1 * 0x200, VRAM_OBJ + 0x5800 + 1 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 123)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 2 * 0x200, VRAM_OBJ + 0x5800 + 2 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 2 * 0x200, VRAM_OBJ + 0x5800 + 2 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 124)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 3 * 0x200, VRAM_OBJ + 0x5800 + 3 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 3 * 0x200, VRAM_OBJ + 0x5800 + 3 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 125)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 4 * 0x200, VRAM_OBJ + 0x5800 + 4 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 4 * 0x200, VRAM_OBJ + 0x5800 + 4 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 126)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 5 * 0x200, VRAM_OBJ + 0x5800 + 5 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 5 * 0x200, VRAM_OBJ + 0x5800 + 5 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 127)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 6 * 0x200, VRAM_OBJ + 0x5800 + 6 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 6 * 0x200, VRAM_OBJ + 0x5800 + 6 * 0x200, 0x200 / 2)
         }
         else if (gCurrentSprite.work1 == 128)
         {
-            DMA_SET(3, sVariaXAfterDownloadingGfx + 7 * 0x200, VRAM_OBJ + 0x5800 + 7 * 0x200,
-                C_32_2_16(DMA_ENABLE, 0x200 / 2))
+            DMA3_COPY_16(sVariaXAfterDownloadingGfx + 7 * 0x200, VRAM_OBJ + 0x5800 + 7 * 0x200, 0x200 / 2)
         }
     }
 
@@ -307,9 +299,9 @@ void CoreXStaticBeforeVariaCore(void)
     {
         gCurrentSprite.drawOrder = 4;
         gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
-        gCurrentSprite.drawDistanceTop = 16;
-        gCurrentSprite.drawDistanceBottom = 16;
-        gCurrentSprite.drawDistanceHorizontal = 16;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
         gCurrentSprite.hitboxTop = -4;
         gCurrentSprite.hitboxBottom = 4;
         gCurrentSprite.hitboxLeft = -4;

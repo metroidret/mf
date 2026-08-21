@@ -88,7 +88,7 @@ void EventSet(u8 event)
                 gEquipment.securityHatchLevel = gSecurityHatchLevelBackup;
                 gSecurityHatchLevelBackup = SECURITY_LEVEL_NO_HATCHES;
 
-                gCurrentEventBasedEffect = 0x2;
+                gCurrentEventBasedEffect = EVENT_EFFECT_2;
             }
 
             i = TRUE;
@@ -128,7 +128,7 @@ void EventSet(u8 event)
             gEquipment.weaponsStatus |= sAbilityRamValues[i].weaponStatus;
 
             if (sAbilityRamValues[i].isSuit)
-                RecoveringSuitInit();
+                RoomEffectRecoveringSuitInit();
             else
                 gEquipment.suitMiscStatus |= sAbilityRamValues[i].suitStatus;
 
@@ -146,7 +146,7 @@ u8 EventCheckPlayCutsceneDuringTransition(u8 dstRoom)
 
     cutscene = 0x0;
     
-    if (gSamusData.pose != SPOSE_USING_AN_ELEVATOR)
+    if (gSamusData.pose != SPOSE_USING_ELEVATOR)
     {
         if (gEventCounter == EVENT_60_SECONDS_TO_DETACHMENT && dstRoom == 0x4D && gCurrentArea == AREA_MAIN_DECK)
         {
@@ -193,7 +193,7 @@ u8 EventCheckPlayCutsceneDuringTransition(u8 dstRoom)
                 {
                     EventSet(gEventCounter + 1);
                     gPreviousNavigationConversation = -2;
-                    gUnk_03000B85 = 0;
+                    gUnk_3000b85 = 0;
                 }
 
                 if (sMonologueEvents[i].soundEventAtStart != SOUND_EVENT_FIRST_CONVERSATION_STARTED)
@@ -219,7 +219,7 @@ u8 EventCheckPlayCutsceneDuringTransition(u8 dstRoom)
 }
 
 /**
- * @brief 74cf4 | 60 | Checks to update the event/sub event after a cutscene
+ * @brief 74cf4 | 60 | Checks to update the event/sound event after a cutscene
  * 
  */
 void EventCheckUpdateAfterCutscene(void)
@@ -242,7 +242,7 @@ void EventCheckUpdateAfterCutscene(void)
         return;
     }
 
-    // Check update sub event
+    // Check update sound event
     for (i = 0; i < ARRAY_SIZE(sMonologueEvents); i++)
     {
         if (gCurrentCutscene != sMonologueEvents[i].cutscene)
@@ -271,7 +271,7 @@ void EventCheckRoomHasEventTrigger(u8 room)
     counter = 0;
     while (TRUE)
     {
-        if (sEventLocationAndNavigationInfo[i].navRoom == NAV_ROOM_MAIN_DECK_ROOM_0 &&
+        if (sEventLocationAndNavigationInfo[i].navRoom == NAV_ROOM_NONE &&
             !sEventLocationAndNavigationInfo[i].download &&
             gCurrentArea == sEventLocationAndNavigationInfo[i].area &&
             room == sEventLocationAndNavigationInfo[i].room)
@@ -333,7 +333,7 @@ void EventCheckRoomEventTrigger(void)
         // Clear
         gRoomEventTrigger = EVENT_NONE;
 
-        // Set sub event
+        // Set sound event
         if (gEventCounter == EVENT_RESTRICTED_LABORATORY_EXPLOSION)
         {
             SoundPlay(0xFA);
@@ -356,7 +356,7 @@ void EventCheckRoomEventTrigger(void)
 }
 
 /**
- * @brief 74eac | 84 | Checks to update the event/sub event for a navigation conversation
+ * @brief 74eac | 84 | Checks to update the event/sound event for a navigation conversation
  * 
  * @return u8 bool, downloading map
  */
@@ -367,7 +367,7 @@ u8 EventCheckSetNavigationRoomEvent(void)
 
     downloadMap = FALSE;
 
-    if (sEventLocationAndNavigationInfo[gEventCounter + 1].navRoom != NAV_ROOM_MAIN_DECK_ROOM_0)
+    if (sEventLocationAndNavigationInfo[gEventCounter + 1].navRoom != NAV_ROOM_NONE)
     {
         if (sNavigationRoomLocations[sEventLocationAndNavigationInfo[gEventCounter + 1].navRoom][0] == gCurrentArea ||
             sNavigationRoomLocations[sEventLocationAndNavigationInfo[gEventCounter + 1].navRoom][0] == UCHAR_MAX)
@@ -395,7 +395,7 @@ u8 EventCheckSetNavigationRoomEvent(void)
 }
 
 /**
- * @brief 74f30 | 40 | Checks to update the event/sub event for a download
+ * @brief 74f30 | 40 | Checks to update the event/sound event for a download
  * 
  * @param setEvent Set event
  * @return u8 bool, was downloaded
@@ -418,7 +418,7 @@ u8 EventCheckDownloadedDataItem(u8 setEvent)
 }
 
 /**
- * @brief 74f70 | 8c | Checks to update the event/sub event for security level unlock
+ * @brief 74f70 | 8c | Checks to update the event/sound event for security level unlock
  * 
  * @param unlock Unlock security level
  * @return u8 Current security level
@@ -453,7 +453,7 @@ u8 EventCheckUnlockSecurityLevel(u8 unlock)
         if (unlock && gEventCounter + 1 == sSecurityUnlockEvents[i].nextEvent)
         {
             EventSet(gEventCounter + 1);
-            SetCurrentEventBasedEffect(0x2);
+            RoomEffectSetCurrentEventBased(EVENT_EFFECT_2);
         }
     }
     else

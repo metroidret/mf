@@ -48,9 +48,9 @@ void GateInit(void)
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.drawDistanceTop = 64;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(4);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.0625f);
     gCurrentSprite.hitboxBottom = 0;
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.0625f);
@@ -188,9 +188,9 @@ void GateSwitchInit(void)
     gCurrentSprite.drawOrder = 3;
     gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
     gCurrentSprite.samusCollision = SSC_SOLID;
-    gCurrentSprite.drawDistanceTop = 64;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 40;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(4);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
     gCurrentSprite.hitboxTop = -(BLOCK_SIZE * 4);
     gCurrentSprite.hitboxBottom = -(BLOCK_SIZE * 3);
     gCurrentSprite.pose = SPRITE_POSE_IDLE;

@@ -71,9 +71,9 @@ void GeemerSetHitbox(void)
         }
     }
 
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 }
 
 void GeemerSetCrawlingGraphics(void)
@@ -781,9 +781,9 @@ void GeemerFlashingLight(void)
     {
         gCurrentSprite.drawOrder = 3;
         gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
-        gCurrentSprite.drawDistanceTop = 3;
-        gCurrentSprite.drawDistanceBottom = 3;
-        gCurrentSprite.drawDistanceHorizontal = 3;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.1875f);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.1875f);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.1875f);
         gCurrentSprite.pOam = sGeemerFlashingLightOam_Idle;
         gCurrentSprite.animationDurationCounter = 0;
         gCurrentSprite.currentAnimationFrame = 0;

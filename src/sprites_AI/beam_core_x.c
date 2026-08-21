@@ -56,9 +56,9 @@ void BeamCoreXTransformationInit(void)
     gCurrentSprite.bgPriority = 2;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.5f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.5f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.5f);
@@ -219,7 +219,7 @@ void BeamCoreXRestingAtTarget(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_SAMUS_COLLIDING)
     {
-        gPreventMovementTimer = 1000;
+        gPreventMovementTimer = SAMUS_ITEM_PMT;
         gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
         gCurrentSprite.pose = 0x5f;
         gCurrentSprite.ignoreSamusCollisionTimer = 1;
@@ -347,7 +347,7 @@ void BeamCoreXFlee(void)
     {
         EventCheckAdvance(EVENT_SA_X_DEFEATED);
         gCurrentSprite.status = 0;
-        unk_372c(60, MUSIC_2E, 10);
+        unk_372c(60, MUSIC_OPERATIONS_DECK, 10);
     }
 }
 
@@ -358,9 +358,9 @@ void BeamCoreXShellInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.drawOrder = 4;
     gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
-    gCurrentSprite.drawDistanceTop = 24;
-    gCurrentSprite.drawDistanceBottom = 24;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -BLOCK_SIZE;
     gCurrentSprite.hitboxBottom = BLOCK_SIZE;
     gCurrentSprite.hitboxLeft = -BLOCK_SIZE;
@@ -420,9 +420,9 @@ void BeamCoreXEyeInit(void)
     gCurrentSprite.scaling = Q_8_8(1);
     gCurrentSprite.drawOrder = 3;
     gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 8;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.625f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.625f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.625f);
@@ -468,10 +468,10 @@ void BeamCoreXEyeTransformation(void)
 
 void BeamCoreXEyeHandleRotation(void)
 {
-    #ifndef BUGFIX
+#ifndef BUGFIX
     u8 intensity;
     s32 targetRotation;
-    #endif // !BUGFIX
+#endif // !BUGFIX
 
     u8 primary;
     u8 shellSlot;
@@ -488,9 +488,9 @@ void BeamCoreXEyeHandleRotation(void)
     s16 yOffset;
     s16 xOffset;
 
-    #ifndef BUGFIX
+#ifndef BUGFIX
     intensity = Q_8_8(1.f / 128);
-    #endif // !BUGFIX
+#endif // !BUGFIX
 
     primary = gCurrentSprite.primarySpriteRamSlot;
     shellSlot = gCurrentSprite.roomSlot;
@@ -501,9 +501,9 @@ void BeamCoreXEyeHandleRotation(void)
     spriteY = gSpriteData[primary].yPosition;
     spriteX = gSpriteData[primary].xPosition;
 
-    #ifdef BUGFIX
+#ifdef BUGFIX
     oamRotation = SpriteUtilMakeSpriteRotateTowardsTarget(oamRotation, targetY, targetX, spriteY, spriteX);
-    #else // !BUGFIX
+#else // !BUGFIX
     // OVERSIGHT: This is copied from SpriteUtilMakeSpriteRotateTowardsTarget
     if (targetY < spriteY)
     {
@@ -607,7 +607,7 @@ void BeamCoreXEyeHandleRotation(void)
         else if ((u16)(oamRotation - Q_8_8(3.f / 8) - 1) >= Q_8_8(0.5f))
             oamRotation -= intensity;
     }
-    #endif
+#endif
 
     gCurrentSprite.work1 = oamRotation;
     gSpriteData[shellSlot].rotation = oamRotation;
@@ -765,19 +765,19 @@ void BeamCoreXEyeOpened(void)
             xFlip = 0;
 
         if (rotation > Q_8_8(1.f / 16) && rotation <= Q_8_8(3.f / 16))
-            direction = ACD_DIAGONALLY_DOWN;
+            direction = ACD_DIAGONAL_DOWN;
         else if (rotation > Q_8_8(3.f / 16) && rotation <= Q_8_8(5.f / 16))
             direction = ACD_DOWN;
         else if (rotation > Q_8_8(5.f / 16) && rotation <= Q_8_8(7.f / 16))
-            direction = ACD_DIAGONALLY_DOWN;
+            direction = ACD_DIAGONAL_DOWN;
         else if (rotation > Q_8_8(7.f / 16) && rotation <= Q_8_8(9.f / 16))
             direction = ACD_FORWARD;
         else if (rotation > Q_8_8(9.f / 16) && rotation <= Q_8_8(11.f / 16))
-            direction = ACD_DIAGONALLY_UP;
+            direction = ACD_DIAGONAL_UP;
         else if (rotation > Q_8_8(11.f / 16) && rotation <= Q_8_8(13.f / 16))
             direction = ACD_UP;
         else if (rotation > Q_8_8(13.f / 16) && rotation <= Q_8_8(15.f / 16))
-            direction = ACD_DIAGONALLY_UP;
+            direction = ACD_DIAGONAL_UP;
         else
             direction = ACD_FORWARD;
 
@@ -873,9 +873,9 @@ void BeamCoreXGlowingInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.drawOrder = 2;
     gCurrentSprite.frozenPaletteRowOffset = 3;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 8;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.0625f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.0625f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.0625f);
@@ -1044,9 +1044,9 @@ void CoreXChargeBeamInit(void)
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_DIES_WHEN_HIT;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.1875f);
@@ -1056,10 +1056,10 @@ void CoreXChargeBeamInit(void)
     {
         switch (gCurrentSprite.work0)
         {
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 gCurrentSprite.status |= SPRITE_STATUS_Y_FLIP;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 gCurrentSprite.pOam = sChargeBeamOam_SingleDiagonal;
                 break;
 
@@ -1083,10 +1083,10 @@ void CoreXChargeBeamInit(void)
 
         switch (gCurrentSprite.work0)
         {
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 gCurrentSprite.status |= SPRITE_STATUS_Y_FLIP;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 gCurrentSprite.pOam = sChargeBeamOam_DoubleDiagonal;
                 break;
 
@@ -1166,9 +1166,9 @@ void CoreXWideBeamInit(void)
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_DIES_WHEN_HIT;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.25f);
@@ -1177,12 +1177,12 @@ void CoreXWideBeamInit(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentSprite.status |= SPRITE_STATUS_Y_FLIP;
             gCurrentSprite.pOam = sWideBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentSprite.pOam = sWideBeamOam_Diagonal;
             break;
 
@@ -1240,9 +1240,9 @@ void CoreXPlasmaBeaminit(void)
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.1875f);
@@ -1251,12 +1251,12 @@ void CoreXPlasmaBeaminit(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentSprite.status |= SPRITE_STATUS_Y_FLIP;
             gCurrentSprite.pOam = sPlasmaBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentSprite.pOam = sPlasmaBeamOam_Diagonal;
             break;
 
@@ -1321,9 +1321,9 @@ void CoreXWaveIceBeamInit(void)
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.25f);
@@ -1332,7 +1332,7 @@ void CoreXWaveIceBeamInit(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentSprite.status |= SPRITE_STATUS_Y_FLIP;
             if (gCurrentSprite.spriteId == SSPRITE_BEAM_CORE_X_ICE_BEAM)
                 gCurrentSprite.pOam = sIceBeamOam_Diagonal;
@@ -1340,7 +1340,7 @@ void CoreXWaveIceBeamInit(void)
                 gCurrentSprite.pOam = sWaveBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (gCurrentSprite.spriteId == SSPRITE_BEAM_CORE_X_ICE_BEAM)
                 gCurrentSprite.pOam = sIceBeamOam_Diagonal;
             else
@@ -1392,6 +1392,6 @@ void CoreXWaveIceBeam(void)
             break;
     }
 
-    // Possibly a leftover when converting Samus's wave beam subroutine to core-X
+    // Possibly a leftover when converting Samus's wave beam handler to core-X
     gCurrentSprite.work1++;
 }

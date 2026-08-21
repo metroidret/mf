@@ -7,7 +7,7 @@
 
 #include "data/sprite_data.h"
 #include "data/generic_data.h"
-#include "data/engine_pointers.h"
+#include "data/sprite_pointers.h"
 
 #include "structs/connection.h"
 #include "structs/sprite_debris.h"
@@ -54,7 +54,7 @@ void SpriteUpdate(void)
                 // Copy to current sprite
                 gCurrentSprite = gSpriteData[i];
 
-                // Update rng and stun
+                // Update RNG and stun
                 SpriteUpdateRandomNumber(i);
                 SpriteUtilUpdateStunTimer();
 
@@ -91,7 +91,7 @@ void SpriteUpdate(void)
                 // Copy to current sprite
                 gCurrentSprite = gSpriteData[i];
 
-                // Update rng and stun
+                // Update RNG and stun
                 SpriteUpdateRandomNumber(i);
                 SpriteUtilUpdateStunTimer();
 
@@ -117,9 +117,9 @@ void SpriteUpdate(void)
         return;
     }
 
-    if (gSubGameMode1 == SUB_GAME_MODE_FREE_MOVEMENT)
+    if (gSubGameMode1 == SUB_GAME_MODE_NO_CLIP)
     {
-        // In free movement, update all sprites without checking for collision
+        // During no-clip, update all sprites without checking for collision
         for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
         {
             if (!(gSpriteData[i].status & SPRITE_STATUS_EXISTS))
@@ -128,7 +128,7 @@ void SpriteUpdate(void)
             // Copy to current sprite
             gCurrentSprite = gSpriteData[i];
 
-            // Update rng and stun
+            // Update RNG and stun
             SpriteUpdateRandomNumber(i);
             SpriteUtilUpdateStunTimer();
 
@@ -162,7 +162,7 @@ void SpriteUpdate(void)
         // Copy to current sprite
         gCurrentSprite = gSpriteData[i];
 
-        // Update rng
+        // Update RNG
         SpriteUpdateRandomNumber(i);
 
         if (gCurrentSprite.pose == 0)
@@ -778,7 +778,7 @@ void SpriteLoadAllData(void)
     if (gPauseScreenFlag != 0)
         return;
 
-    if (gUnk_03000be3 == 0 && !gIsLoadingFile)
+    if (gUnk_3000be3 == 0 && !gIsLoadingFile)
     {
         // Reset sprite global data
         gAtmosphericStabilizersOnline = 0;
@@ -828,11 +828,9 @@ void SpriteLoadSpriteset(void)
     s32 gfxSlot;
 
     // Loads debug sprite graphics
-    DMA_SET(3, sSpritesGraphicsPointers[PSPRITE_UNUSED_16 - 0x10], VRAM_OBJ + 0x7800,
-        C_32_2_16(DMA_ENABLE, sSpritesGraphicsLength[PSPRITE_UNUSED_16 - 0x10] / 2));
+    DMA3_COPY_16(sSpritesGraphicsPointers[PSPRITE_UNUSED_16 - 0x10], VRAM_OBJ + 0x7800, sSpritesGraphicsLength[PSPRITE_UNUSED_16 - 0x10] / 2);
 
-    DMA_SET(3, sSpritesPalettePointers[PSPRITE_UNUSED_16 - 0x10], PALRAM_OBJ + 0x1E0,
-        C_32_2_16(DMA_ENABLE, 16));
+    DMA3_COPY_16(sSpritesPalettePointers[PSPRITE_UNUSED_16 - 0x10], PALRAM_OBJ + 0x1E0, 16);
 
     // Clear sprite ids and graphics slots
     for (i = 0; i < MAX_AMOUNT_OF_SPRITE_TYPES; i++)
@@ -883,12 +881,10 @@ void SpriteLoadSpriteset(void)
         spriteId -= 0x10;
 
         // Load graphics
-        DMA_SET(3, sSpritesGraphicsPointers[spriteId], VRAM_OBJ + 0x4000 + gfxSlot * 2048,
-            C_32_2_16(DMA_ENABLE, sSpritesGraphicsLength[spriteId] / 2));
+        DMA3_COPY_16(sSpritesGraphicsPointers[spriteId], VRAM_OBJ + 0x4000 + gfxSlot * 2048, sSpritesGraphicsLength[spriteId] / 2);
 
-        // Load palete
-        DMA_SET(3, sSpritesPalettePointers[spriteId], PALRAM_OBJ + 0x100 + gfxSlot * 16 * sizeof(u16),
-            C_32_2_16(DMA_ENABLE, sSpritesGraphicsLength[spriteId] / 2048 * 16));
+        // Load palette
+        DMA3_COPY_16(sSpritesPalettePointers[spriteId], PALRAM_OBJ + 0x100 + gfxSlot * 16 * sizeof(u16), sSpritesGraphicsLength[spriteId] / 2048 * 16);
     }
 }
 
@@ -903,8 +899,7 @@ void SpriteLoadGfx(u8 spriteId, u8 gfxRow, u8 srcOffset)
 {
     spriteId -= 0x10;
     
-    DMA_SET(3, sSpritesGraphicsPointers[spriteId] + srcOffset * 0x200,
-        VRAM_BASE + 0x14000 + gfxRow * 0x800 + srcOffset * 0x200, C_32_2_16(DMA_ENABLE, 0x200 / 2));
+    DMA3_COPY_16(sSpritesGraphicsPointers[spriteId] + srcOffset * 0x200, VRAM_BASE + 0x14000 + gfxRow * 0x800 + srcOffset * 0x200, 0x200 / 2);
 }
 
 /**
@@ -918,7 +913,7 @@ void SpriteLoadPal(u8 spriteId, u8 gfxRow, u8 length)
 {
     spriteId -= 0x10;
 
-    DMA_SET(3, sSpritesPalettePointers[spriteId], PALRAM_OBJ + 0x100 + gfxRow * 16 * sizeof(u16), C_32_2_16(DMA_ENABLE, length * 16));
+    DMA3_COPY_16(sSpritesPalettePointers[spriteId], PALRAM_OBJ + 0x100 + gfxRow * 16 * sizeof(u16), length * 16);
 }
 
 /**

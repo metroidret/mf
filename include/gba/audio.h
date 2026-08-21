@@ -26,6 +26,7 @@
 #define REG_FIFO_A (REG_BASE + 0xA0)
 #define REG_FIFO_B (REG_BASE + 0xA4)
 
+#define SOUNDCNT_ENVELOPE_INCREASE (1 << 11)
 #define SOUNDCNT_RESTART_SOUND (1 << 15)
 
 #endif /* GBA_AUDIO_H */

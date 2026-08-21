@@ -16,11 +16,11 @@ void TitleScreenProcessLanguage(struct TitleScreenObject* pObject);
 void unk_86e94(struct TitleScreenObject* pObject);
 void TitleScreenDrawAllObjects(void);
 void TitleScreenDrawObject(struct TitleScreenObject* pObject);
-void TitleScreenCallObjectsSubroutine(void);
+void TitleScreenCallObjectsHandler(void);
 void TitleScreenProcessCopyright(struct TitleScreenObject* pObject);
 void TitleScreenInit(void);
 s32 TitleScreenSpawningIn(void);
-s32 TitleScreenSubroutine(void);
+s32 TitleScreenHandler(void);
 void TitleScreenDrawDebugText(const u8* src, u16* dst, u8 palette);
 
 #endif /* TITLE_SCREEN_H */

@@ -24,28 +24,26 @@
 #include "structs/projectile.h"
 
 static Func_T sProcessProjectileFunctionPointers[PROJ_TYPE_END] = {
-    [PROJ_TYPE_NORMAL_BEAM] = ProjectileNormalBeamSubroutine,
-    [PROJ_TYPE_CHARGE_BEAM] = ProjectileChargeBeamSubroutine,
-    [PROJ_TYPE_WIDE_BEAM] = ProjectileWideBeamSubroutine,
-    [PROJ_TYPE_PLASMA_BEAM] = ProjectilePlasmaBeamSubroutine,
-    [PROJ_TYPE_WAVE_BEAM] = ProjectileWaveBeamSubroutine,
-    [PROJ_TYPE_CHARGED_NORMAL_BEAM] = ProjectileChargedNormalBeamSubroutine,
-    [PROJ_TYPE_CHARGED_CHARGE_BEAM] = ProjectileChargedChargeBeamSubroutine,
-    [PROJ_TYPE_CHARGED_WIDE_BEAM] = ProjectileChargedWideBeamSubroutine,
-    [PROJ_TYPE_CHARGED_PLASMA_BEAM] = ProjectileChargedPlasmaBeamSubroutine,
-    [PROJ_TYPE_CHARGED_WAVE_BEAM] = ProjectileChargedWaveBeamSubroutine,
-    [PROJ_TYPE_NORMAL_MISSILE] = ProjectileNormalMissileSubroutine,
-    [PROJ_TYPE_SUPER_MISSILE] = ProjectileSuperMissileSubroutine,
-    [PROJ_TYPE_ICE_MISSILE] = ProjectileIceMissileSubroutine,
-    [PROJ_TYPE_DIFFUSION_MISSILE] = ProjectileDiffusionMissileSubroutine,
-    [PROJ_TYPE_CHARGED_DIFFUSION_MISSILE] = ProjectileDiffusionMissileSubroutine,
-    [PROJ_TYPE_FLARE] = ProjectileFlareSubroutine,
-    [PROJ_TYPE_BOMB] = ProjectileBombSubroutine,
-    [PROJ_TYPE_POWER_BOMB] = ProjectilePowerBombSubroutine,
-    [PROJ_TYPE_DIFFUSION_FLAKE] = ProjectileDiffusionFlakeSubroutine
+    [PROJ_TYPE_NORMAL_BEAM] = ProjectileNormalBeamHandler,
+    [PROJ_TYPE_CHARGE_BEAM] = ProjectileChargeBeamHandler,
+    [PROJ_TYPE_WIDE_BEAM] = ProjectileWideBeamHandler,
+    [PROJ_TYPE_PLASMA_BEAM] = ProjectilePlasmaBeamHandler,
+    [PROJ_TYPE_WAVE_BEAM] = ProjectileWaveBeamHandler,
+    [PROJ_TYPE_CHARGED_NORMAL_BEAM] = ProjectileChargedNormalBeamHandler,
+    [PROJ_TYPE_CHARGED_CHARGE_BEAM] = ProjectileChargedChargeBeamHandler,
+    [PROJ_TYPE_CHARGED_WIDE_BEAM] = ProjectileChargedWideBeamHandler,
+    [PROJ_TYPE_CHARGED_PLASMA_BEAM] = ProjectileChargedPlasmaBeamHandler,
+    [PROJ_TYPE_CHARGED_WAVE_BEAM] = ProjectileChargedWaveBeamHandler,
+    [PROJ_TYPE_NORMAL_MISSILE] = ProjectileNormalMissileHandler,
+    [PROJ_TYPE_SUPER_MISSILE] = ProjectileSuperMissileHandler,
+    [PROJ_TYPE_ICE_MISSILE] = ProjectileIceMissileHandler,
+    [PROJ_TYPE_DIFFUSION_MISSILE] = ProjectileDiffusionMissileHandler,
+    [PROJ_TYPE_CHARGED_DIFFUSION_MISSILE] = ProjectileDiffusionMissileHandler,
+    [PROJ_TYPE_FLARE] = ProjectileFlareHandler,
+    [PROJ_TYPE_BOMB] = ProjectileBombHandler,
+    [PROJ_TYPE_POWER_BOMB] = ProjectilePowerBombHandler,
+    [PROJ_TYPE_DIFFUSION_FLAKE] = ProjectileDiffusionFlakeHandler
 };
-
-static u8 sBlob_79c2c8_79ecc8[] = INCBIN_U8("data/Blob_79c2c8_79ecc8.bin");
 
 /**
  * @brief 8116c | 50 | Checks if the number of projectiles currently existing is under the specified limit
@@ -178,7 +176,7 @@ void ProjectileUpdate(void)
         return;
 
     // Update arm cannon position offset fields
-    CallUpdateArmCannonOffset();
+    SamusCheckUpdateArmCannonOffset();
 
     // Samus position is in sub pixels, the offsets are in pixels, and the final result is in sub pixels
     gArmCannonY = PIXEL_TO_SUB_PIXEL(SUB_PIXEL_TO_PIXEL(gSamusData.yPosition) + gSamusGraphicsInfo.armCannonYOffset);
@@ -681,33 +679,33 @@ void ProjectileLoadEyeCoreXGraphics(void)
 
     if (spriteId == PSPRITE_WAVE_BEAM_CORE_X)
     {
-        DMA_SET(3, sWaveBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWaveBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWaveBeamPal, PALRAM_OBJ + 12 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sWaveBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWaveBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWaveBeamPal, PALRAM_OBJ + 12 * 32, 5 * sizeof(u16) / 2);
     }
     else if (spriteId == PSPRITE_PLASMA_BEAM_CORE_X)
     {
-        DMA_SET(3, sPlasmaBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sPlasmaBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sPlasmaBeamPal, PALRAM_OBJ + 12 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sPlasmaBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sPlasmaBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sPlasmaBeamPal, PALRAM_OBJ + 12 * 32, 5 * sizeof(u16) / 2);
     }
     else if (spriteId == PSPRITE_WIDE_BEAM_CORE_X)
     {
-        DMA_SET(3, sWideBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWideBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWideBeamPal, PALRAM_OBJ + 12 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sWideBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWideBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWideBeamPal, PALRAM_OBJ + 12 * 32, 5 * sizeof(u16) / 2);
     }
     else if (spriteId == PSPRITE_CHARGE_BEAM_CORE_X)
     {
-        DMA_SET(3, sChargeBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sChargeBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sChargeBeamPal, PALRAM_OBJ + 12 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sChargeBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sChargeBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sChargeBeamPal, PALRAM_OBJ + 12 * 32, 5 * sizeof(u16) / 2);
     }
     else
     {
-        DMA_SET(3, sIceBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sIceBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sIceBeamPal, PALRAM_OBJ + 12 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sIceBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 0x18), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sIceBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 0x19), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sIceBeamPal, PALRAM_OBJ + 12 * 32, 5 * sizeof(u16) / 2);
     }
 }
 
@@ -717,39 +715,39 @@ void ProjectileLoadBeamGraphics(void)
 
     if (beamStatus & BF_ICE_BEAM)
     {
-        DMA_SET(3, sIceBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sIceBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sIceBeamPal, PALRAM_OBJ + 2 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sIceBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sIceBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sIceBeamPal, PALRAM_OBJ + 2 * 32, 5 * sizeof(u16) / 2);
     }
     else if (beamStatus & BF_WAVE_BEAM)
     {
-        DMA_SET(3, sWaveBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWaveBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWaveBeamPal, PALRAM_OBJ + 2 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sWaveBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWaveBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWaveBeamPal, PALRAM_OBJ + 2 * 32, 5 * sizeof(u16) / 2);
     }
     else if (beamStatus & BF_PLASMA_BEAM)
     {
-        DMA_SET(3, sPlasmaBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sPlasmaBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sPlasmaBeamPal, PALRAM_OBJ + 2 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sPlasmaBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sPlasmaBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sPlasmaBeamPal, PALRAM_OBJ + 2 * 32, 5 * sizeof(u16) / 2);
     }
     else if (beamStatus & BF_WIDE_BEAM)
     {
-        DMA_SET(3, sWideBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWideBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sWideBeamPal, PALRAM_OBJ + 2 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sWideBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWideBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sWideBeamPal, PALRAM_OBJ + 2 * 32, 5 * sizeof(u16) / 2);
     }
     else if (beamStatus & BF_CHARGE_BEAM)
     {
-        DMA_SET(3, sChargeBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sChargeBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sChargeBeamPal, PALRAM_OBJ + 2 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sChargeBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sChargeBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sChargeBeamPal, PALRAM_OBJ + 2 * 32, 5 * sizeof(u16) / 2);
     }
     else
     {
-        DMA_SET(3, sNormalBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sNormalBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), C_32_2_16(DMA_ENABLE, 0x14 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sNormalBeamPal, PALRAM_OBJ + 2 * 32, C_32_2_16(DMA_ENABLE, 5 * sizeof(u16) / 2));
+        DMA3_COPY_16(sNormalBeamGfx_Top, VRAM_OBJ_ADDR_COORDS(0, 4), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sNormalBeamGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0, 5), 0x14 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sNormalBeamPal, PALRAM_OBJ + 2 * 32, 5 * sizeof(u16) / 2);
     }
 }
 
@@ -759,23 +757,23 @@ void ProjectileLoadMissileGraphics(void)
 
     if (weaponsStatus & MBF_DIFFUSION_MISSILES)
     {
-        DMA_SET(3, sDiffusionMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sDiffusionMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
+        DMA3_COPY_16(sDiffusionMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), 4 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sDiffusionMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), 4 * VRAM_TILE_SIZE / 2);
     }
     else if (weaponsStatus & MBF_ICE_MISSILES)
     {
-        DMA_SET(3, sIceMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sIceMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
+        DMA3_COPY_16(sIceMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), 4 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sIceMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), 4 * VRAM_TILE_SIZE / 2);
     }
     else if (weaponsStatus & MBF_SUPER_MISSILES)
     {
-        DMA_SET(3, sSuperMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sSuperMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
+        DMA3_COPY_16(sSuperMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), 4 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sSuperMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), 4 * VRAM_TILE_SIZE / 2);
     }
     else if (weaponsStatus & MBF_MISSILES)
     {
-        DMA_SET(3, sNormalMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
-        DMA_SET(3, sNormalMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), C_32_2_16(DMA_ENABLE, 4 * VRAM_TILE_SIZE / 2));
+        DMA3_COPY_16(sNormalMissileGfx_Top, VRAM_OBJ_ADDR_COORDS(0x1c, 4), 4 * VRAM_TILE_SIZE / 2);
+        DMA3_COPY_16(sNormalMissileGfx_Bottom, VRAM_OBJ_ADDR_COORDS(0x1c, 5), 4 * VRAM_TILE_SIZE / 2);
     }
 }
 
@@ -818,7 +816,7 @@ void ProjectileMove(u8 distance)
             gCurrentProjectile.yPosition += distance;
             return;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             distance = distance * 3 / 4;
 
             gCurrentProjectile.yPosition -= distance;
@@ -829,7 +827,7 @@ void ProjectileMove(u8 distance)
                 gCurrentProjectile.xPosition -= distance;
             break;
 
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             distance = distance * 3 / 4;
 
             gCurrentProjectile.yPosition += distance;
@@ -970,8 +968,8 @@ u32 ProjectileCheckVerticalCollisionAtPosition(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_UP:
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_UP:
+        case ACD_DIAGONAL_DOWN:
             if (result == COLLISION_PASS_THROUGH_BOTTOM)
                 result = COLLISION_AIR;
             break;
@@ -1026,7 +1024,7 @@ void ProjectileMovePart(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
             {
                 if (gCurrentProjectile.part == 1)
@@ -1055,7 +1053,7 @@ void ProjectileMovePart(void)
             }
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
             {
                 if (gCurrentProjectile.part == 1)
@@ -1124,7 +1122,7 @@ void ProjectileMoveWaveBeamParts(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
             {
                 if (part == 1)
@@ -1153,7 +1151,7 @@ void ProjectileMoveWaveBeamParts(void)
             }
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
             {
                 if (part == 1)
@@ -1222,7 +1220,7 @@ void ProjectileMoveWaveBeamParts_Unused(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
             {
                 if (part == 1)
@@ -1251,7 +1249,7 @@ void ProjectileMoveWaveBeamParts_Unused(void)
             }
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
             {
                 if (part == 1)
@@ -1322,7 +1320,7 @@ void ProjectileSetMissileTrail(u8 particle, u8 delay)
                 y -= movement;
                 break;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 y += movement * 3 / 4;
                 if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
                     x -= movement * 3 / 4;
@@ -1330,7 +1328,7 @@ void ProjectileSetMissileTrail(u8 particle, u8 delay)
                     x += movement * 3 / 4;
                 break;
 
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 y -= movement * 3 / 4;
                 if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
                 {
@@ -1380,7 +1378,7 @@ void ProjectileSetBeamTrail(u8 particle, u8 delay)
                 y -= movement;
                 break;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 y += movement * 3 / 4;
                 if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
                     x -= movement * 3 / 4;
@@ -1388,7 +1386,7 @@ void ProjectileSetBeamTrail(u8 particle, u8 delay)
                     x += movement * 3 / 4;
                 break;
 
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 y -= movement * 3 / 4;
                 if (gCurrentProjectile.status & PROJ_STATUS_X_FLIP)
                 {
@@ -3381,8 +3379,8 @@ void ProjectileChargedNormalBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.25f);
@@ -3391,10 +3389,10 @@ void ProjectileChargedNormalBeamInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentProjectile.pOam = sChargedNormalBeamOam_Diagonal;
             break;
 
@@ -3412,7 +3410,7 @@ void ProjectileChargedNormalBeamInit(void)
     }
 }
 
-void ProjectileChargedNormalBeamSubroutine(void)
+void ProjectileChargedNormalBeamHandler(void)
 {
     gCurrentClipdataAffectingAction = CAA_BEAM;
 
@@ -3451,8 +3449,8 @@ void ProjectileNormalBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.125f);
@@ -3461,10 +3459,10 @@ void ProjectileNormalBeamInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentProjectile.pOam = sNormalBeamOam_Diagonal;
             break;
 
@@ -3482,7 +3480,7 @@ void ProjectileNormalBeamInit(void)
     }
 }
 
-void ProjectileNormalBeamSubroutine(void)
+void ProjectileNormalBeamHandler(void)
 {
     gCurrentClipdataAffectingAction = CAA_BEAM;
 
@@ -3524,18 +3522,18 @@ void ProjectileMissileInit(u8 type)
 
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.status &= ~PROJ_STATUS_NOT_DRAWN;
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.movementStage++;
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (type == 0)
                 gCurrentProjectile.pOam = sNormalSuperMissileOam_Diagonal;
             else if (type == 1)
@@ -3600,7 +3598,7 @@ void ProjectileMoveTumblingMissile(void)
     }
 }
 
-void ProjectileNormalMissileSubroutine(void)
+void ProjectileNormalMissileHandler(void)
 {
     gCurrentClipdataAffectingAction = CAA_MISSILE;
 
@@ -3642,7 +3640,7 @@ void ProjectileNormalMissileSubroutine(void)
     }
 }
 
-void ProjectileSuperMissileSubroutine(void)
+void ProjectileSuperMissileHandler(void)
 {
     gCurrentClipdataAffectingAction = CAA_MISSILE;
 
@@ -3684,7 +3682,7 @@ void ProjectileSuperMissileSubroutine(void)
     }
 }
 
-void ProjectileIceMissileSubroutine(void)
+void ProjectileIceMissileHandler(void)
 {
     gCurrentClipdataAffectingAction = CAA_MISSILE;
 
@@ -3726,7 +3724,7 @@ void ProjectileIceMissileSubroutine(void)
     }
 }
 
-void ProjectileDiffusionMissileSubroutine(void)
+void ProjectileDiffusionMissileHandler(void)
 {
     u16 y;
     u16 x;
@@ -3807,7 +3805,7 @@ void ProjectileDiffusionMissileSubroutine(void)
     }
 }
 
-void ProjectileDiffusionFlakeSubroutine(void)
+void ProjectileDiffusionFlakeHandler(void)
 {
     s16 distance;
     u32 angle;
@@ -3822,8 +3820,8 @@ void ProjectileDiffusionFlakeSubroutine(void)
         gCurrentProjectile.movementStage++;
         gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT | PROJ_STATUS_ABOVE_BG1;
         gCurrentProjectile.status &= ~PROJ_STATUS_NOT_DRAWN;
-        gCurrentProjectile.drawDistanceY = 16;
-        gCurrentProjectile.drawDistanceX = 16;
+        gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+        gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
         gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
         gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.25f);
         gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.25f);
@@ -3949,8 +3947,8 @@ void ProjectileBombInit(void)
     gCurrentProjectile.pOam = sBombOam_Slow;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 8;
-    gCurrentProjectile.drawDistanceX = 8;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(.5f);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(.5f);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.5f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.4375f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.5f);
@@ -3961,7 +3959,7 @@ void ProjectileBombInit(void)
     gCurrentProjectile.movementStage++;
 }
 
-void ProjectileBombSubroutine(void)
+void ProjectileBombHandler(void)
 {
     switch (gCurrentProjectile.movementStage)
     {
@@ -4063,8 +4061,8 @@ void ProjectilePowerBombInit(void)
     gCurrentProjectile.pOam = sPowerBombOam_Slow;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 8;
-    gCurrentProjectile.drawDistanceX = 8;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(.5f);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(.5f);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.25f);
@@ -4086,7 +4084,7 @@ void ProjectilePowerBombInit(void)
     gCurrentPowerBomb.powerBombPlaced = TRUE;
 }
 
-void ProjectilePowerBombSubroutine(void)
+void ProjectilePowerBombHandler(void)
 {
     switch (gCurrentProjectile.movementStage)
     {
@@ -4122,8 +4120,8 @@ void ProjectileChargedChargeBeamInit(void)
 {
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.1875f);
@@ -4135,10 +4133,10 @@ void ProjectileChargedChargeBeamInit(void)
 
         switch (gCurrentProjectile.direction)
         {
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 gCurrentProjectile.pOam = sChargedChargeBeamOam_SingleDiagonal;
                 break;
 
@@ -4162,10 +4160,10 @@ void ProjectileChargedChargeBeamInit(void)
 
         switch (gCurrentProjectile.direction)
         {
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 gCurrentProjectile.pOam = sChargedChargeBeamOam_DoubleDiagonal;
                 break;
 
@@ -4184,7 +4182,7 @@ void ProjectileChargedChargeBeamInit(void)
     }
 }
 
-void ProjectileChargedChargeBeamSubroutine(void)
+void ProjectileChargedChargeBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0)
     {
@@ -4244,8 +4242,8 @@ void ProjectileChargeBeamInit(void)
 {
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.1875f);
@@ -4257,10 +4255,10 @@ void ProjectileChargeBeamInit(void)
 
         switch (gCurrentProjectile.direction)
         {
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 gCurrentProjectile.pOam = sChargeBeamOam_SingleDiagonal;
                 break;
 
@@ -4284,10 +4282,10 @@ void ProjectileChargeBeamInit(void)
 
         switch (gCurrentProjectile.direction)
         {
-            case ACD_DIAGONALLY_DOWN:
+            case ACD_DIAGONAL_DOWN:
                 gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
 
-            case ACD_DIAGONALLY_UP:
+            case ACD_DIAGONAL_UP:
                 gCurrentProjectile.pOam = sChargeBeamOam_DoubleDiagonal;
                 break;
 
@@ -4306,7 +4304,7 @@ void ProjectileChargeBeamInit(void)
     }
 }
 
-void ProjectileChargeBeamSubroutine(void)
+void ProjectileChargeBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0)
     {
@@ -4367,8 +4365,8 @@ void ProjectileChargedWideBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.3125f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.3125f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.3125f);
@@ -4377,12 +4375,12 @@ void ProjectileChargedWideBeamInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             gCurrentProjectile.pOam = sChargedWideBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentProjectile.pOam = sChargedWideBeamOam_Diagonal;
             break;
 
@@ -4400,7 +4398,7 @@ void ProjectileChargedWideBeamInit(void)
     }
 }
 
-void ProjectileChargedWideBeamSubroutine(void)
+void ProjectileChargedWideBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0 && gCurrentProjectile.movementStage < WIDE_PLASMA_BEAM_STAGE_FINISHED_SPREADING)
         ProjectileMovePart();
@@ -4444,8 +4442,8 @@ void ProjectileWideBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.25f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.25f);
@@ -4454,12 +4452,12 @@ void ProjectileWideBeamInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             gCurrentProjectile.pOam = sWideBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentProjectile.pOam = sWideBeamOam_Diagonal;
             break;
 
@@ -4477,7 +4475,7 @@ void ProjectileWideBeamInit(void)
     }
 }
 
-void ProjectileWideBeamSubroutine(void)
+void ProjectileWideBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0 && gCurrentProjectile.movementStage < WIDE_PLASMA_BEAM_STAGE_FINISHED_SPREADING)
         ProjectileMovePart();
@@ -4520,8 +4518,8 @@ void ProjectileChargedPlasmaBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.3125f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.3125f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.3125f);
@@ -4531,12 +4529,12 @@ void ProjectileChargedPlasmaBeamInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             gCurrentProjectile.pOam = sChargedPlasmaBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentProjectile.pOam = sChargedPlasmaBeamOam_Diagonal;
             break;
 
@@ -4554,7 +4552,7 @@ void ProjectileChargedPlasmaBeamInit(void)
     }
 }
 
-void ProjectileChargedPlasmaBeamSubroutine(void)
+void ProjectileChargedPlasmaBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0 && gCurrentProjectile.movementStage < WIDE_PLASMA_BEAM_STAGE_FINISHED_SPREADING)
         ProjectileMovePart();
@@ -4598,8 +4596,8 @@ void ProjectilePlasmaBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.1875f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.1875f);
@@ -4608,12 +4606,12 @@ void ProjectilePlasmaBeamInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             gCurrentProjectile.pOam = sPlasmaBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             gCurrentProjectile.pOam = sPlasmaBeamOam_Diagonal;
             break;
 
@@ -4631,7 +4629,7 @@ void ProjectilePlasmaBeamInit(void)
     }
 }
 
-void ProjectilePlasmaBeamSubroutine(void)
+void ProjectilePlasmaBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0 && gCurrentProjectile.movementStage < WIDE_PLASMA_BEAM_STAGE_FINISHED_SPREADING)
         ProjectileMovePart();
@@ -4693,13 +4691,13 @@ void ProjectileChargedWaveBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT | PROJ_STATUS_ABOVE_BG1;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.status &= ~PROJ_STATUS_NOT_DRAWN;
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             if (equippedBeams & BF_ICE_BEAM)
                 gCurrentProjectile.pOam = sChargedIceBeamOam_Diagonal;
@@ -4707,7 +4705,7 @@ void ProjectileChargedWaveBeamInit(void)
                 gCurrentProjectile.pOam = sChargedWaveBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (equippedBeams & BF_ICE_BEAM)
                 gCurrentProjectile.pOam = sChargedIceBeamOam_Diagonal;
             else
@@ -4734,7 +4732,7 @@ void ProjectileChargedWaveBeamInit(void)
     }
 }
 
-void ProjectileChargedWaveBeamSubroutine(void)
+void ProjectileChargedWaveBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0)
         ProjectileMoveWaveBeamParts();
@@ -4792,13 +4790,13 @@ void ProjectileWaveBeamInit(void)
     gCurrentProjectile.status |= PROJ_STATUS_CAN_AFFECT_ENVIRONMENT | PROJ_STATUS_ABOVE_BG1;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.status &= ~PROJ_STATUS_NOT_DRAWN;
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             if (equippedBeams & BF_ICE_BEAM)
                 gCurrentProjectile.pOam = sIceBeamOam_Diagonal;
@@ -4806,7 +4804,7 @@ void ProjectileWaveBeamInit(void)
                 gCurrentProjectile.pOam = sWaveBeamOam_Diagonal;
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (equippedBeams & BF_ICE_BEAM)
                 gCurrentProjectile.pOam = sIceBeamOam_Diagonal;
             else
@@ -4833,7 +4831,7 @@ void ProjectileWaveBeamInit(void)
     }
 }
 
-void ProjectileWaveBeamSubroutine(void)
+void ProjectileWaveBeamHandler(void)
 {
     if (gCurrentProjectile.part != 0)
         ProjectileMoveWaveBeamParts();
@@ -4867,22 +4865,22 @@ void ProjectileFlareLoadGraphics(u8 stage)
 {
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_UP:
-        case ACD_DIAGONALLY_DOWN:
-            DMA_SET(3, sFlareDiagonalGfx_Top + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 4), C_32_2_16(DMA_ENABLE, 8 * VRAM_TILE_SIZE / 2));
-            DMA_SET(3, sFlareDiagonalGfx_Bottom + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 5), C_32_2_16(DMA_ENABLE, 8 * VRAM_TILE_SIZE / 2));
+        case ACD_DIAGONAL_UP:
+        case ACD_DIAGONAL_DOWN:
+            DMA3_COPY_16(sFlareDiagonalGfx_Top + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 4), 8 * VRAM_TILE_SIZE / 2);
+            DMA3_COPY_16(sFlareDiagonalGfx_Bottom + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 5), 8 * VRAM_TILE_SIZE / 2);
             break;
 
         case ACD_UP:
         case ACD_DOWN:
-            DMA_SET(3, sFlareVerticalGfx_Top + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 4), C_32_2_16(DMA_ENABLE, 8 * VRAM_TILE_SIZE / 2));
-            DMA_SET(3, sFlareVerticalGfx_Bottom + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 5), C_32_2_16(DMA_ENABLE, 8 * VRAM_TILE_SIZE / 2));
+            DMA3_COPY_16(sFlareVerticalGfx_Top + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 4), 8 * VRAM_TILE_SIZE / 2);
+            DMA3_COPY_16(sFlareVerticalGfx_Bottom + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 5), 8 * VRAM_TILE_SIZE / 2);
             break;
 
         case ACD_FORWARD:
         default:
-            DMA_SET(3, sFlareHorizontalGfx_Top + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 4), C_32_2_16(DMA_ENABLE, 8 * VRAM_TILE_SIZE / 2));
-            DMA_SET(3, sFlareHorizontalGfx_Bottom + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 5), C_32_2_16(DMA_ENABLE, 8 * VRAM_TILE_SIZE / 2));
+            DMA3_COPY_16(sFlareHorizontalGfx_Top + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 4), 8 * VRAM_TILE_SIZE / 2);
+            DMA3_COPY_16(sFlareHorizontalGfx_Bottom + stage * 8 * VRAM_TILE_SIZE, VRAM_OBJ_ADDR_COORDS(0x14, 5), 8 * VRAM_TILE_SIZE / 2);
             break;
     }
 }
@@ -4892,8 +4890,8 @@ void ProjectileFlareInit(void)
     gCurrentProjectile.pOam = sFlareOam;
     gCurrentProjectile.animationDurationCounter = 0;
     gCurrentProjectile.currentAnimationFrame = 0;
-    gCurrentProjectile.drawDistanceY = 16;
-    gCurrentProjectile.drawDistanceX = 16;
+    gCurrentProjectile.drawDistanceY = BLOCK_TO_PIXEL(1);
+    gCurrentProjectile.drawDistanceX = BLOCK_TO_PIXEL(1);
     gCurrentProjectile.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.0f);
     gCurrentProjectile.hitboxBottom = BLOCK_TO_SUB_PIXEL(1.0f);
     gCurrentProjectile.hitboxLeft = -BLOCK_TO_SUB_PIXEL(1.0f);
@@ -4904,10 +4902,10 @@ void ProjectileFlareInit(void)
 
     switch (gCurrentProjectile.direction)
     {
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             break;
 
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             gCurrentProjectile.status |= PROJ_STATUS_Y_FLIP;
             break;
 
@@ -4926,7 +4924,7 @@ void ProjectileFlareInit(void)
     SoundPlay(SOUND_FLARE_FIRE);
 }
 
-void ProjectileFlareSubroutine(void)
+void ProjectileFlareHandler(void)
 {
     gCurrentClipdataAffectingAction = CAA_BEAM;
     ProjectileCheckVerticalCollisionAtPosition();

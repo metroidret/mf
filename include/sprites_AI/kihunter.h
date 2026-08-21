@@ -8,7 +8,7 @@ u8 KihunterGroundDetectSamus(void);
 void KihunterTurningIntoX(void);
 void KihunterGroundInit(void);
 void KihunterGroundJumpWarningInit(void);
-void KihhunterGroundJumpInit(void);
+void KihunterGroundJumpInit(void);
 void KihunterGroundLandingInit(void);
 void KihunterIdleInit(void);
 void KihunterFallingInit(void);

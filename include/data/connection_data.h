@@ -8,6 +8,14 @@
 
 #include "structs/connection.h"
 #include "structs/clipdata.h"
+#include "structs/escape.h"
+
+extern const u8 sDimLightingEvents[4][DIM_EVENT_FIELD_COUNT];
+
+extern const struct NavigationRoomHatchLockEvent sNavigationRoomHatchLockEvents[89];
+extern const struct HatchLockEvent sHatchLockEvents[75];
+
+extern const struct EscapeDigits sEscapeDigits_9Minutes;
 
 extern const u8 sAreaConnections[36][AREA_CONNECTION_FIELD_COUNT];
 extern const struct ElevatorRoomPair sElevatorRoomPairs[ELEVATOR_END];

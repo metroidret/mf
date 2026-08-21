@@ -4,6 +4,7 @@
 
 #include "data/sprites/sa_x.h"
 
+#include "constants/audio.h"
 #include "constants/clipdata.h"
 #include "constants/event.h"
 #include "constants/sprite.h"
@@ -785,5 +786,5 @@ void SaXNoc(void)
     SaXUpdateGraphics();
 
     if (gCurrentSprite.status & SPRITE_STATUS_SAMUS_DETECTED)
-        PlayMusic(0x17, 0x9);
+        PlayMusic(MUSIC_SA_X_CHASE, 0x9);
 }

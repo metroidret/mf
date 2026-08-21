@@ -1,4 +1,6 @@
 #include "data/generic_data.h"
+#include "gba/memory.h"
+#include "structs/save_file.h"
 
 const s16 sSineTable[Q_8_8(1.f) + PI / 2] = {
     Q_8_8(0),           // sin(0*(π/128))
@@ -323,4 +325,21 @@ const s16 sSineTable[Q_8_8(1.f) + PI / 2] = {
     Q_8_8(0.99609375),  // sin(319*(π/128))
 };
 
-static const u8 sBlob_a5224_289970[] = INCBIN_U8("data/Blob_a5224_289970.bin");
+static const u8 sBlob_a5224_a5258[] = INCBIN_U8("data/Blob_a5224_a5258.bin");
+
+const void* const sSaveDataSramPointers[3] = {
+    SRAM_BASE + 0x200 + sizeof(struct SaveFile) * 0,
+    SRAM_BASE + 0x200 + sizeof(struct SaveFile) * 2,
+    SRAM_BASE + 0x200 + sizeof(struct SaveFile) * 4
+};
+
+const void* const sSaveDataSramBackupPointers[3] = {
+    SRAM_BASE + 0x200 + sizeof(struct SaveFile) * 1,
+    SRAM_BASE + 0x200 + sizeof(struct SaveFile) * 3,
+    SRAM_BASE + 0x200 + sizeof(struct SaveFile) * 5
+};
+
+const void* const sUnk_a5270[2] = {
+    SRAM_BASE + 0x7040,
+    SRAM_BASE + 0x7080
+};

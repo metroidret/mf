@@ -774,5 +774,3 @@ const struct FrameData sTitleScreenOam_5976f0[3] = {
     },
     [2] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_597708_79a29c[] = INCBIN_U8("data/Blob_597708_79a29c.bin");

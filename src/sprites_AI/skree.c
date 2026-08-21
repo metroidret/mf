@@ -43,9 +43,9 @@ void SkreeInit(void)
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
     gCurrentSprite.work0 = 0;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(QUARTER_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.25f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
     gCurrentSprite.hitboxTop = -(BLOCK_SIZE + QUARTER_BLOCK_SIZE);
     gCurrentSprite.hitboxBottom = 0;

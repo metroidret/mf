@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-u32 InGameSubroutine(void);
+u32 InGameHandler(void);
 void InGameSetVblank(void);
 void TransferSamusGraphics(s32 updatePalette);
 void VBlankCodeInGameLoad(void);

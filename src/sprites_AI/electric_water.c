@@ -19,9 +19,9 @@ void ElectricWaterDamageInit(void)
 {
     gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.drawDistanceTop = 48;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(2.0f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.5f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.5f);
@@ -86,9 +86,9 @@ void ElectricWaterDamageStopping(void)
 void ElectricWireInit(void)
 {
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 48;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.75f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(1.5f);
     gCurrentSprite.animationDurationCounter = 0;
@@ -134,8 +134,8 @@ void ElectricWaterInit(void)
     gCurrentSprite.xPosition += HALF_BLOCK_SIZE;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 0;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
     gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_SUB_PIXEL(2.0f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.0f);
     gCurrentSprite.hitboxBottom = 0;

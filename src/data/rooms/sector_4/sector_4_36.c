@@ -1,0 +1,84 @@
+#include "data/rooms/sector_4_rooms_data.h"
+#include "macros.h"
+
+const u8 sSector4_36_Scrolls[SCROLL_DATA_SIZE(2)] = {
+	36, // Room
+	2, // Number of scrolls
+	
+	// Scroll 0
+	2, 31, // X bounds
+	2, 11, // Y bounds
+	UCHAR_MAX, UCHAR_MAX, // Breakable block position
+	UCHAR_MAX, // Breakable block direction
+	UCHAR_MAX, // Breakable block Y bound extension
+
+	// Scroll 1
+	17, 31, // X bounds
+	10, 21, // Y bounds
+	UCHAR_MAX, UCHAR_MAX, // Breakable block position
+	UCHAR_MAX, // Breakable block direction
+	UCHAR_MAX, // Breakable block Y bound extension
+};
+
+const u8 sSector4_36_Clipdata[148] = {
+    34, // Room width
+    24, // Room height
+    _INCBIN_U8("data/rooms/sector_4/sector_4_36_clipdata.rle")
+};
+
+const u8 sSector4_36_Spriteset2[ENEMY_ROOM_DATA_ARRAY_SIZE(9)] = {
+	3, 18, SPRITESET_IDX(2),
+	4, 4, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(6),
+	4, 28, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(6),
+	6, 14, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(0),
+	7, 20, SSP_HIDDEN_ON_ROOM_LOAD | SSP_X_ABSORBABLE_BY_SAMUS | SPRITESET_IDX(7),
+	12, 13, SSP_X_UNABSORBABLE_BY_SAMUS | SPRITESET_IDX(8),
+	13, 16, SSP_X_UNABSORBABLE_BY_SAMUS | SPRITESET_IDX(8),
+	13, 23, SSP_X_ABSORBABLE_BY_SAMUS | SPRITESET_IDX(10),
+	ROOM_SPRITE_DATA_TERMINATOR
+};
+
+const u8 sSector4_36_Bg2[146] = {
+    34, // Room width
+    24, // Room height
+    _INCBIN_U8("data/rooms/sector_4/sector_4_36_bg2.rle")
+};
+
+const u8 sSector4_36_Spriteset1[ENEMY_ROOM_DATA_ARRAY_SIZE(14)] = {
+	3, 8, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(11),
+	3, 12, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(11),
+	3, 18, SPRITESET_IDX(2),
+	3, 24, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(11),
+	4, 5, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(6),
+	4, 28, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(6),
+	6, 14, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(0),
+	6, 22, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(11),
+	7, 20, SSP_HIDDEN_ON_ROOM_LOAD | SSP_X_ABSORBABLE_BY_SAMUS | SPRITESET_IDX(7),
+	8, 11, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(11),
+	8, 17, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(11),
+	12, 13, SSP_X_UNABSORBABLE_BY_SAMUS | SPRITESET_IDX(8),
+	13, 16, SSP_X_UNABSORBABLE_BY_SAMUS | SPRITESET_IDX(8),
+	ROOM_SPRITE_DATA_TERMINATOR
+};
+
+const u8 sSector4_36_Bg1[549] = {
+    34, // Room width
+    24, // Room height
+    _INCBIN_U8("data/rooms/sector_4/sector_4_36_bg1.rle")
+};
+
+const u8 sSector4_36_Spriteset0[ENEMY_ROOM_DATA_ARRAY_SIZE(12)] = {
+	1, 9, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(5),
+	1, 25, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(5),
+	3, 18, SPRITESET_IDX(2),
+	4, 5, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(6),
+	4, 28, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(6),
+	6, 14, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(0),
+	7, 20, SSP_HIDDEN_ON_ROOM_LOAD | SSP_X_ABSORBABLE_BY_SAMUS | SPRITESET_IDX(7),
+	12, 13, SSP_X_UNABSORBABLE_BY_SAMUS | SPRITESET_IDX(8),
+	13, 12, SSP_UNINFECTED_OR_BOSS | SPRITESET_IDX(4),
+	13, 16, SSP_X_UNABSORBABLE_BY_SAMUS | SPRITESET_IDX(8),
+	13, 23, SSP_X_ABSORBABLE_BY_SAMUS | SPRITESET_IDX(10),
+	ROOM_SPRITE_DATA_TERMINATOR
+};
+

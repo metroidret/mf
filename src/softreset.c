@@ -37,27 +37,27 @@ void Softreset_Empty(void)
  */
 void SoftReset(void)
 {
-    write16(REG_IME, FALSE);
+    WRITE_16(REG_IME, FALSE);
 
-    write16(REG_DISPSTAT, read16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
-    write16(REG_IE, read16(REG_IE) & ~IF_HBLANK);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
 
-    write16(REG_IME, TRUE);
+    WRITE_16(REG_IME, TRUE);
 
     HazeTransferAndDeactivate();
 
     SET_BACKDROP_COLOR(COLOR_BLACK);
 
-    write16(REG_DISPCNT, 0);
-    write16(REG_BLDY, 16);
-    write16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET |BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BRIGHTNESS_INCREASE_EFFECT);
+    WRITE_16(REG_DISPCNT, 0);
+    WRITE_16(REG_BLDY, 16);
+    WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET |BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BRIGHTNESS_INCREASE_EFFECT);
 
-    unk_3114();
+    RestartSound();
 
-    write16(REG_IME, FALSE);
+    WRITE_16(REG_IME, FALSE);
 
-    DMA_FILL_32(3, 0, EWRAM_BASE, EWRAM_SIZE);
-    DMA_FILL_32(3, 0, IWRAM_BASE, IWRAM_SIZE - 0x200);
+    DMA3_FILL_32(0, EWRAM_BASE, EWRAM_SIZE);
+    DMA3_FILL_32(0, IWRAM_BASE, IWRAM_SIZE - 0x200);
 
     ClearGfxRam();
     LoadInterruptCode();
@@ -65,14 +65,14 @@ void SoftReset(void)
 
     Sram_ReadAll();
 
-    write16(REG_IME, TRUE);
+    WRITE_16(REG_IME, TRUE);
     InitializeAudio();
 
     gMainGameMode = GAME_MODE_TITLE;
     gSubGameMode1 = 0;
     gSubGameMode2 = 0;
     gRebootGame = FALSE;
-    gUnk_03000B8F = 0;
+    gUnk_3000b8f = 0;
     
     gButtonInput = KEY_NONE;
     gButtonInputCopy = KEY_NONE;

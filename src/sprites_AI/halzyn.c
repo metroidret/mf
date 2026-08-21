@@ -30,9 +30,9 @@ void HalzynInit(void)
 
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(QUARTER_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.25f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.pOam = sHalzynOam_Swinging;
     gCurrentSprite.animationDurationCounter = 0;
@@ -436,9 +436,9 @@ void HalzynWingInit(void)
 
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + QUARTER_BLOCK_SIZE / 2);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.125f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
 

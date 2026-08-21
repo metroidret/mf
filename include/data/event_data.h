@@ -14,7 +14,7 @@ extern const u8 sNumberOfTanksPerArea[AREA_NORMAL_COUNT + 1][TANK_COUNT];
 extern const u8 sObtainItemEvents[ABILITY_COUNT_END + 1];
 extern const struct AbilityRamValue sAbilityRamValues[ABILITY_COUNT_END];
 
-extern const u8 sNavigationRoomLocations[NAV_ROOM_END + 1][2];
+extern const u8 sNavigationRoomLocations[NAV_ROOM_COUNT][2];
 extern const u8 sNavigationTargetLocationAreas[NAV_TARGET_LOC_END];
 
 extern const u8 sEvent_576073[AREA_END];

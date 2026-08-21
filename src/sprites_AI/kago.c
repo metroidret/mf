@@ -94,7 +94,7 @@ void KagoInit(void)
     {
         gCurrentSprite.properties |= SP_SOLID_FOR_PROJECTILES;
         gCurrentSprite.samusCollision = SSC_SOLID;
-        gCurrentSprite.drawDistanceBottom = 0;
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
         gCurrentSprite.hitboxBottom = 16;
         gCurrentSprite.pOam = sKagoOam_IdleShort;
     }
@@ -103,7 +103,7 @@ void KagoInit(void)
         gCurrentSprite.properties &= ~SP_SOLID_FOR_PROJECTILES;
         gCurrentSprite.samusCollision = SSC_HURTS_SAMUS_SOLID;
         gCurrentSprite.frozenPaletteRowOffset = 1;
-        gCurrentSprite.drawDistanceBottom = 0x38;
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(3.5f);
         gCurrentSprite.hitboxBottom = 0xc0;
         gCurrentSprite.pOam = sKagoOam_IdleTallVerySlow;
     }
@@ -119,8 +119,8 @@ void KagoInit(void)
     gCurrentSprite.drawOrder = 12;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 32;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.875f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.75f);
     gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(0.75f);
@@ -214,9 +214,9 @@ void KagoInsectInit(void)
     gCurrentSprite.pOam = sKagoInsectOam_Midair;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 8;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.625f);
     gCurrentSprite.hitboxBottom = -BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.3125f);

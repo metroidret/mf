@@ -2,6 +2,1561 @@
 #include "constants/event.h"
 #include "macros.h"
 
+const u8 sDimLightingEvents[4][DIM_EVENT_FIELD_COUNT] = {
+    {
+        [DIM_EVENT_FIELD_EVENT] = EVENT_ENTERED_NAVIGATION_ROOM_POWER_OUTAGE,
+        [DIM_EVENT_FIELD_FLAG] = TRUE
+    },
+    {
+        [DIM_EVENT_FIELD_EVENT] = EVENT_MORPH_BALL_ABILITY_RECOVERED,
+        [DIM_EVENT_FIELD_FLAG] = FALSE
+    },
+    {
+        [DIM_EVENT_FIELD_EVENT] = EVENT_POWER_OUTAGE,
+        [DIM_EVENT_FIELD_FLAG] = TRUE
+    },
+    {
+        [DIM_EVENT_FIELD_EVENT] = EVENT_AUXILARY_POWER_ENGAGED,
+        [DIM_EVENT_FIELD_FLAG] = FALSE
+    }
+};
+
+
+#define NAV_HATCHES(flags)                 \
+    .room1LeftHatch   = ((flags) >>  0) & 1, \
+    .room1RightHatch  = ((flags) >>  1) & 1, \
+    .room2LeftHatch   = ((flags) >>  2) & 1, \
+    .room2RightHatch  = ((flags) >>  3) & 1, \
+    .room3LeftHatch   = ((flags) >>  4) & 1, \
+    .room3RightHatch  = ((flags) >>  5) & 1, \
+    .room4LeftHatch   = ((flags) >>  6) & 1, \
+    .room4RightHatch  = ((flags) >>  7) & 1, \
+    .room5LeftHatch   = ((flags) >>  8) & 1, \
+    .room5RightHatch  = ((flags) >>  9) & 1, \
+    .room6LeftHatch   = ((flags) >> 10) & 1, \
+    .room6RightHatch  = ((flags) >> 11) & 1, \
+    .room7LeftHatch   = ((flags) >> 12) & 1, \
+    .room7RightHatch  = ((flags) >> 13) & 1, \
+    .room8LeftHatch   = ((flags) >> 14) & 1, \
+    .room8RightHatch  = ((flags) >> 15) & 1, \
+    .room9LeftHatch   = ((flags) >> 16) & 1, \
+    .room9RightHatch  = ((flags) >> 17) & 1, \
+    .room10LeftHatch  = ((flags) >> 18) & 1, \
+    .room10RightHatch = ((flags) >> 19) & 1, \
+    .room11LeftHatch  = ((flags) >> 20) & 1, \
+    .room11RightHatch = ((flags) >> 21) & 1,
+
+#define NAV_HATCH(room, side) (1 << ((room - 1) * 2 + side))
+
+#define HATCH_LEFT 0
+#define HATCH_RIGHT 1
+
+const struct NavigationRoomHatchLockEvent sNavigationRoomHatchLockEvents[89] = {
+    {
+        .event = EVENT_NONE,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_BEFORE_QUARANTINE_BAY,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_QUARANTINE_BAY_HORNOAD_DEAD,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_QUARANTINE_BAY,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_BEFORE_ELEVATOR,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_1,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_MISSILE_DATA_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_MISSILE_DATA_DOWNLOADED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_NAVIGATION_ROOM_POWER_OUTAGE,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_MORPH_BALL_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_MORPH_BALL,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SA_X_ELEVATOR_CUTSCENE_ENDS,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_SRX,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_CHARGE_BEAM_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ALL_STABILIZERS_ONLINE,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_SRX,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_TRO,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SECURITY_LEVEL_1_UNLOCKED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ENTERING_BOMB_DATA_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_HIGH_JUMP_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ESCAPED_TRO_1_SA_X,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_TRO,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_AQA,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SPEED_BOOSTER_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_3,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_PUMP_CONTROL_UNIT,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_WATER_LEVEL_LOWERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_AQA,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_PYR,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SECURITY_LEVEL_2_UNLOCKED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_4,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_SUPER_MISSILE_DATA_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_TRIGGERED_BOX_RUMBLE,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_BOX_DEFEATED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_PYR,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_LEFT_NAVIGATION_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SECRET_CONVERSATION,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SECRET_CONVERSATION_OVER,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_USING_NOC_NAVIGATION_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_NOC_NAVIGATION_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_NOC,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NOC_SA_X_ENCOUNTER,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ESCAPED_NOC_SA_X,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NOC_DATA_ROOM_DESTROYED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_VARIA_SUIT_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_REACHED_TOP_OF_ROOM_AFTER_VARIA,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_NOC,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_ARC,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SECURITY_LEVEL_3_UNLOCKED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_5,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_ICE_MISSILE_DATA_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ICE_MISSILE_DATA_DOWNLOADED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_ARC,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_COOLING_UNIT_OPERATIONAL,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ANIMALS_RELEASED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_ANIMALS,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_ARC_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_POWER_BOMB_DATA_DOWNLOADED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ARC_SA_X_ENCOUNTER,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ESCAPED_ARC_SA_X,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_ARC_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_POWER_OUTAGE,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_SHIP,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_YAKUZA_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_SPACE_JUMP_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_AUXILARY_POWER_ENGAGED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_YAKUZA,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ENGAGED_TRO_2_SA_X,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_ESCAPED_TRO_2_SA_X,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_PLASMA_BEAM_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_TRO_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_ARC_3,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_GRAVITY_SUIT_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_LEVEL_4_SECURITY_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SECURITY_LEVEL_4_UNLOCKED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SECRET_MESSAGE_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ENTERED_DIFFUSION_MISSILE_DATA_ROOM,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_DIFFUSION_MISSILE_DATA_DOWNLOADED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_AQA_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_NOC_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT)
+        )
+    },
+    {
+        .event = EVENT_RESTRICTED_LABORATORY_EXPLOSION,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_60_SECONDS_TO_DETACHMENT,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ESCAPED_RESTRICTED_LABORATORY,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SCREW_ATTACK_ABILITY_RECOVERED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_SRX_2,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_END_OF_FIRST_CONVERSATION,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_16, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_32, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_1_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_5_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_2_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_4_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_3_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_SECTOR_6_ROOM_2, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_56, HATCH_RIGHT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_LEFT) |
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_66, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT)
+        )
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        NAV_HATCHES(
+            NAV_HATCH(NAV_ROOM_MAIN_DECK_ROOM_9, HATCH_RIGHT)
+        )
+    }
+};
+
+#undef NAV_HATCHES
+#undef NAV_HATCH
+#undef HATCH_LEFT
+#undef HATCH_RIGHT
+
+
+const struct HatchLockEvent sHatchLockEvents[75] = {
+    {
+        .event = EVENT_NAVIGATION_ROOM_BEFORE_QUARANTINE_BAY,
+        .area = AREA_MAIN_DECK,
+        .room = 71 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_MISSILES,
+        .area = AREA_MAIN_DECK,
+        .room = 38 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_SRX,
+        .area = AREA_SECTOR_1,
+        .room = 40 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_LEFT_SA_X_QUAKE_ROOM,
+        .area = AREA_SECTOR_2,
+        .room = 18 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_AQA,
+        .area = AREA_SECTOR_4,
+        .room = 42 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_TRIGGERED_BOX_RUMBLE,
+        .area = AREA_SECTOR_3,
+        .room = 23 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ESCAPED_NOC_SA_X,
+        .area = AREA_SECTOR_6,
+        .room = 25 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NOC_DATA_ROOM_DESTROYED,
+        .area = AREA_SECTOR_6,
+        .room = 13 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ENTERED_ICE_MISSILE_DATA_ROOM,
+        .area = AREA_SECTOR_5,
+        .room = 5 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ICE_MISSILE_DATA_DOWNLOADED,
+        .area = AREA_SECTOR_5,
+        .room = 0 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_ARC,
+        .area = AREA_MAIN_DECK,
+        .room = 29 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_LEAVING_ARC,
+        .area = AREA_SECTOR_3,
+        .room = 25 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_WIDE_BEAM_ABILITY_RECOVERED,
+        .area = AREA_SECTOR_3,
+        .room = 25 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_ARC_2,
+        .area = AREA_SECTOR_5,
+        .room = 5 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ENTERED_YAKUZA_ROOM,
+        .area = AREA_MAIN_DECK,
+        .room = 86 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ESCAPED_TRO_2_SA_X,
+        .area = AREA_SECTOR_2,
+        .room = 22 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_ARC_3,
+        .area = AREA_SECTOR_5,
+        .room = 20 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_ENTERING_ARC_3,
+        .area = AREA_SECTOR_5,
+        .room = 34 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_TRIGGERED_BOX_2_RUMBLE,
+        .area = AREA_SECTOR_6,
+        .room = 16 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_RESTRICTED_LABORATORY_EXPLOSION,
+        .area = AREA_MAIN_DECK,
+        .room = 79 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_RESTRICTED_LABORATORY_EXPLOSION,
+        .area = AREA_MAIN_DECK,
+        .room = 80 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_RESTRICTED_LABORATORY_EXPLOSION,
+        .area = AREA_MAIN_DECK,
+        .room = 77 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_RESTRICTED_LABORATORY,
+        .area = AREA_SECTOR_1,
+        .room = 27 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_NAVIGATION_ROOM_AFTER_RESTRICTED_LABORATORY,
+        .area = AREA_SECTOR_1,
+        .room = 53 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SCREW_ATTACK_ABILITY_RECOVERED,
+        .area = AREA_MAIN_DECK,
+        .room = 6 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_MAIN_DECK,
+        .room = 6 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_MAIN_DECK,
+        .room = 18 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = TRUE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_MAIN_DECK,
+        .room = 38 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_1,
+        .room = 11 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_2,
+        .room = 37 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_3,
+        .room = 23 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_3,
+        .room = 26 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_4,
+        .room = 29 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_5,
+        .room = 32 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SECOND_CONVERSATION,
+        .area = AREA_SECTOR_6,
+        .room = 29 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_MAIN_DECK,
+        .room = 6 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_MAIN_DECK,
+        .room = 18 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = TRUE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_MAIN_DECK,
+        .room = 38 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_1,
+        .room = 11 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_2,
+        .room = 37 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_3,
+        .room = 23 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_3,
+        .room = 26 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_4,
+        .room = 29 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_5,
+        .room = 32 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_6,
+        .area = AREA_SECTOR_6,
+        .room = 29 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ENTERED_OPERATION_DECK,
+        .area = AREA_MAIN_DECK,
+        .room = 85 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SA_X_DEFEATED,
+        .area = AREA_MAIN_DECK,
+        .room = 61 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SA_X_DEFEATED,
+        .area = AREA_MAIN_DECK,
+        .room = 81 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 4 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 6 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = TRUE,
+        .hatch5 = FALSE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 7 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 12 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 18 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = FALSE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 23 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 21 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = FALSE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 33 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 38 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 60 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 63 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 70 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ORBIT_CHANGE_IMPLEMENTED,
+        .area = AREA_MAIN_DECK,
+        .room = 85 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 4 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 6 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = TRUE,
+        .hatch5 = FALSE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 7 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = FALSE,
+        .hatch2 = FALSE,
+        .hatch3 = FALSE,
+        .hatch4 = FALSE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 12 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 18 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = FALSE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 21 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = FALSE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 23 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 33 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 38 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 60 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 63 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 70 + 1,
+        .hatch0 = FALSE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_SKIPPED_BY_NOT_TALKING_TO_COMPUTER_7,
+        .area = AREA_MAIN_DECK,
+        .room = 70 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = FALSE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    },
+    {
+        .event = EVENT_ENTERED_SHIP_ROOM,
+        .area = AREA_MAIN_DECK,
+        .room = 63 + 1,
+        .hatch0 = TRUE,
+        .hatch1 = TRUE,
+        .hatch2 = TRUE,
+        .hatch3 = TRUE,
+        .hatch4 = TRUE,
+        .hatch5 = TRUE,
+    }
+};
+
+static const u8 sUnk_3c8b88[2] = {0xF0, 0xF0};
+
+const struct EscapeDigits sEscapeDigits_9Minutes = {
+    .hundredths = 0,
+    .tenths = 0,
+    .secondsOnes = 0,
+    .secondsTens = 0,
+    .minutesOnes = 9,
+    .minutesTens = 0
+};
+
 const u8 sAreaConnections[36][AREA_CONNECTION_FIELD_COUNT] = {
     {
         [AREA_CONNECTION_FIELD_SOURCE_AREA] = AREA_MAIN_DECK,
@@ -682,5 +2237,3 @@ const u8 sEventBasedConnections[60][EVENT_BASED_CONNECTION_FIELD_COUNT] = {
         [EVENT_BASED_CONNECTION_FIELD_DESTINATION_DOOR] = 0x09
     },
 };
-
-static const u8 sBlob_3c8d58_3e392c[] = INCBIN_U8("data/Blob_3c8d58_3e392c.bin");

@@ -78,10 +78,23 @@ typedef s32 bools32;
 #define DELTA_TIME 1
 // Converts a floating point value of seconds to an amount of frames (CONVERT_SECONDS(1.f) == FRAMES_PER_SECOND)
 #define CONVERT_SECONDS(s) ((s32)((s) * FRAMES_PER_SECOND))
-// Applies the delta time to a value via decrementation
-#define APPLY_DELTA_TIME_DEC(v) ((v) -= DELTA_TIME)
+
 // Applies the delta time to a value via incrementation
 #define APPLY_DELTA_TIME_INC(v) ((v) += DELTA_TIME)
+// Applies the delta time to a value via decrementation
+#define APPLY_DELTA_TIME_DEC(v) ((v) -= DELTA_TIME)
+// Applies the delta time to a value via post-increment if possible
+#if (DELTA_TIME == 1)
+#define APPLY_DELTA_TIME_INC_POST(v) ((v)++)
+#else
+#define APPLY_DELTA_TIME_INC_POST(v) APPLY_DELTA_TIME_INC(v)
+#endif
+// Applies the delta time to a value via post-decrement if possible
+#if (DELTA_TIME == 1)
+#define APPLY_DELTA_TIME_DEC_POST(v) ((v)--)
+#else
+#define APPLY_DELTA_TIME_DEC_POST(v) APPLY_DELTA_TIME_DEC(v)
+#endif
 
 // Shorthand for one third of a second
 #define ONE_THIRD_SECOND (CONVERT_SECONDS(1.f / 3.f))

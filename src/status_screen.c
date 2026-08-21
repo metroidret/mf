@@ -10,10 +10,10 @@
 #include "structs/samus.h"
 
 /**
- * @brief 7e678 | 34 | Subroutine for the status screen
+ * @brief 7e678 | 34 | Handler for the status screen
  * 
  */
-void StatusScreenSubroutine(void)
+void StatusScreenHandler(void)
 {
     if ((gChangedInput & (KEY_B | KEY_L | KEY_R)) && !gNonGameplayRam.pauseScreen.pauseDebugEditingValue) 
     {

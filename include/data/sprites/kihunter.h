@@ -32,9 +32,9 @@ extern const struct FrameData sKihunterFlyingOam_TurningAround1[3];
 extern const struct FrameData sKihunterFlyingOam_TurningAround2[3];
 extern const struct FrameData sKihunterHiveOam[2];
 extern const struct FrameData sKihunterBugOam[4];
-extern const struct FrameData sKihunterBarfOam_Moving[3];
-extern const struct FrameData sKihunterBarfOam_Exploding[4];
-extern const struct FrameData sKihunterGroundOam_Barfing[15];
+extern const struct FrameData sKihunterSpitOam_Moving[3];
+extern const struct FrameData sKihunterSpitOam_Exploding[4];
+extern const struct FrameData sKihunterGroundOam_Spitting[15];
 extern const struct FrameData sKihunterGroundOam_JumpingLow[2];
 extern const struct FrameData sKihunterGroundOam_JumpingHighOrFalling[3];
 

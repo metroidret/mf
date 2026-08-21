@@ -104,6 +104,7 @@ struct FrameData {
     .timer = 0\
 }
 
+#define FRAME_DATA_FRAME_COUNT(oam) (ARRAY_SIZE((oam)) - 1)
 #define FRAME_DATA_LAST_ANIM_FRAME(oam) (ARRAY_SIZE((oam)) - 2)
 
 union OamData {

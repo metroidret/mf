@@ -2,7 +2,7 @@
 #include "globals.h"
 #include "gba.h"
 
-#include "data/escape_data.h"
+#include "data/hud_data.h"
 
 #include "constants/event.h"
 
@@ -189,8 +189,8 @@ void EscapeCheckReloadGraphics(void)
 {
     if (EventCheckOn_Escape() != ESCAPE_NONE)
     {
-        DMA_SET(3, sEscapeDigitsGfx, VRAM_OBJ + 0x7800, C_32_2_16(DMA_ENABLE, sizeof(sEscapeDigitsGfx) / sizeof(u16)));
-        DMA_SET(3, sEscapeDigitsPal, PALRAM_OBJ + 0x1E0, C_32_2_16(DMA_ENABLE, 16));
+        DMA3_COPY_16(sEscapeDigitsGfx, VRAM_OBJ + 0x7800, sizeof(sEscapeDigitsGfx) / sizeof(u16));
+        DMA3_COPY_16(sEscapeDigitsPal, PALRAM_OBJ + 0x1E0, 16);
     }
 }
 
@@ -201,11 +201,11 @@ void EscapeCheckReloadGraphics(void)
 void EscapeStart(void)
 {
     // FIXME Load graphics
-    DMA_SET(3, sEscapeDigitsGfx, VRAM_OBJ + 0x7800, C_32_2_16(DMA_ENABLE, sizeof(sEscapeDigitsGfx) / sizeof(u16)));
-    DMA_SET(3, sEscapeDigitsPal, PALRAM_OBJ + 0x1E0, C_32_2_16(DMA_ENABLE, 16));
+    DMA3_COPY_16(sEscapeDigitsGfx, VRAM_OBJ + 0x7800, sizeof(sEscapeDigitsGfx) / sizeof(u16));
+    DMA3_COPY_16(sEscapeDigitsPal, PALRAM_OBJ + 0x1E0, 16);
 
     // Load oam
-    DMA_SET(3, sEscapeDigitsOam, gEscapeDigitsOam, C_32_2_16(DMA_ENABLE, ARRAY_SIZE(gEscapeDigitsOam)));
+    DMA3_COPY_16(sEscapeDigitsOam, gEscapeDigitsOam, ARRAY_SIZE(gEscapeDigitsOam));
 
     // Escape timer uses absolute position, which isn't converted to pixel coordinates when drawing,
     // hence pixel coordinates are used when creating it

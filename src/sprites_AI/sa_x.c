@@ -18,7 +18,7 @@
 #include "structs/power_bomb.h"
 
 #ifdef BUGFIX
-#include "data/samus_data.h"
+#include "data/samus/samus_animation_pointers.h"
 #else // !BUGFIX
 // Incorrectly declared here to produce matching code in SaXSeeAndLocateSamus
 extern const u8 sSamusCollisionData[SPOSE_END][6];
@@ -790,9 +790,9 @@ void SaXInit(void)
     gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
     
     gCurrentSprite.drawOrder = 4;
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -(BLOCK_SIZE * 2 - PIXEL_SIZE * 2);
     gCurrentSprite.hitboxBottom = 0;
@@ -1900,9 +1900,9 @@ void SaXBeamInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_SA_X_ICE_BEAM;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -(QUARTER_BLOCK_SIZE - PIXEL_SIZE);
     gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE - PIXEL_SIZE;
@@ -2068,9 +2068,9 @@ void SaXMissileInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_SA_X_SUPER_MISSILE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -(QUARTER_BLOCK_SIZE - PIXEL_SIZE);
     gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE - PIXEL_SIZE;
@@ -2179,9 +2179,9 @@ void SaXPowerBombInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -2264,9 +2264,9 @@ void LabExplosionInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 3 + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 1 + HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;

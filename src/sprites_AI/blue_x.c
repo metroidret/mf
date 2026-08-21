@@ -130,9 +130,9 @@ void BlueXInit(void)
         gCurrentSprite.drawOrder = 4;
     }
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -(QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
     gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE;
@@ -545,9 +545,9 @@ void BlueXAbsorbtionInit(void)
     gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
     gCurrentSprite.drawOrder = 3;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
 
     gCurrentSprite.pOam = sBlueXAbsorbtionOam_Absorbing;
 

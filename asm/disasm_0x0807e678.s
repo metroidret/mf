@@ -2,8 +2,8 @@
 
     .syntax unified
 
-	thumb_func_start StatusScreenSubroutine
-StatusScreenSubroutine: @ 0x0807E678
+	thumb_func_start StatusScreenHandler
+StatusScreenHandler: @ 0x0807E678
 	push {lr}
 	ldr r0, _0807E6A0 @ =gChangedInput
 	ldrh r1, [r0]
@@ -874,8 +874,8 @@ _0807ED0A:
 _0807ED18: .4byte 0x0600C800
 _0807ED1C: .4byte 0x085821D6
 
-	thumb_func_start EasySleepMenuSubroutine
-EasySleepMenuSubroutine: @ 0x0807ED20
+	thumb_func_start EasySleepMenuHandler
+EasySleepMenuHandler: @ 0x0807ED20
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -1144,7 +1144,7 @@ Sram_ReadHeader: @ 0x0807EF28
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _0807EF42
-	bl unk_da8
+	bl ReadSramHeaderToEwram
 _0807EF42:
 	movs r0, #0
 	bl Sram_VerifyHeader
@@ -1474,7 +1474,7 @@ _0807F1E4:
 	bl Sram_WriteHeaderAndGameInfo
 	b _0807F222
 _0807F1EA:
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	b _0807F222
 _0807F1F0:
 	ldr r0, _0807F210 @ =0x0858225C
@@ -1592,7 +1592,7 @@ _0807F2CA:
 	beq _0807F310
 	b _0807F330
 _0807F2D4:
-	bl ReadMostRecentFileFromGamePak
+	bl ReadMostRecentFileToEwram
 	b _0807F330
 _0807F2DA:
 	ldr r0, _0807F2E4 @ =0x03000014
@@ -1602,7 +1602,7 @@ _0807F2DA:
 	.align 2, 0
 _0807F2E4: .4byte 0x03000014
 _0807F2E8:
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	ldr r2, _0807F304 @ =0x03000B94
 	ldr r0, _0807F308 @ =0x03000B8D
 	ldrb r1, [r0]
@@ -1722,7 +1722,7 @@ _0807F3CE:
 	strb r1, [r0]
 	ldr r0, _0807F3E4 @ =0x03000B90
 	strb r1, [r0]
-	bl unk_d34
+	bl WriteMostRecentFileBackupToSram
 	b _0807F43A
 	.align 2, 0
 _0807F3E0: .4byte gDisableSoftReset
@@ -1732,7 +1732,7 @@ _0807F3E8:
 	bl SramWrite_ToEwram
 	b _0807F43A
 _0807F3F2:
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	ldr r2, _0807F40C @ =0x03000B94
 	ldr r0, _0807F410 @ =0x03000B8D
 	ldrb r1, [r0]
@@ -2611,7 +2611,7 @@ Sram_BackupCurrentFile_Unused: @ 0x0807FB48
 	str r0, [sp]
 	movs r0, #3
 	bl DmaTransfer
-	bl unk_d34
+	bl WriteMostRecentFileBackupToSram
 	add sp, #4
 	pop {r0}
 	bx r0
@@ -2654,7 +2654,7 @@ _0807FB9E:
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _0807FBC8
-	bl ReadAllGamePakSRAM
+	bl ReadAllFilesToEwram
 _0807FBC8:
 	movs r5, #0
 	adds r7, r4, #0
@@ -2691,7 +2691,7 @@ _0807FBE0:
 	movs r3, #0x90
 	lsls r3, r3, #5
 	bl DmaTransfer
-	bl unk_d34
+	bl WriteMostRecentFileBackupToSram
 	movs r0, #1
 	ldr r1, [sp, #0x18]
 	strb r0, [r1]
@@ -2758,7 +2758,7 @@ _0807FC94:
 	mov r1, sb
 	mov r3, r8
 	bl BitFill
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	ldrb r0, [r7]
 	lsls r0, r0, #2
 	ldr r1, _0807FCDC @ =0x08582268
@@ -2769,7 +2769,7 @@ _0807FC94:
 	mov r1, sb
 	mov r3, r8
 	bl BitFill
-	bl unk_d34
+	bl WriteMostRecentFileBackupToSram
 	ldrb r1, [r7]
 	lsls r0, r1, #2
 	adds r0, r0, r1
@@ -3904,7 +3904,7 @@ _08080584:
 	strb r1, [r0]
 	ldr r0, _08080634 @ =gIsLoadingFile
 	strb r1, [r0]
-	ldr r0, _08080638 @ =gUnk_03000be3
+	ldr r0, _08080638 @ =gUnk_3000be3
 	strb r1, [r0]
 	ldr r0, _0808063C @ =0x03000018
 	strb r1, [r0]
@@ -3951,7 +3951,7 @@ _08080628: .4byte gPreviousSoundEvent
 _0808062C: .4byte 0x0300004C
 _08080630: .4byte 0x0300004D
 _08080634: .4byte gIsLoadingFile
-_08080638: .4byte gUnk_03000be3
+_08080638: .4byte gUnk_3000be3
 _0808063C: .4byte 0x03000018
 _08080640: .4byte gDisableSoftReset
 _08080644: .4byte gMaxInGameTimeFlag
@@ -4020,7 +4020,7 @@ _080806D8: .4byte 0x03000014
 _080806DC:
 	bl SramLoad_CurrentSave
 _080806E0:
-	ldr r0, _08080718 @ =gUnk_03000be3
+	ldr r0, _08080718 @ =gUnk_3000be3
 	movs r1, #0
 	strb r1, [r0]
 	ldr r0, _0808071C @ =0x03000018
@@ -4048,7 +4048,7 @@ _080806E0:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08080718: .4byte gUnk_03000be3
+_08080718: .4byte gUnk_3000be3
 _0808071C: .4byte 0x03000018
 _08080720: .4byte gDisableSoftReset
 _08080724: .4byte gMaxInGameTimeFlag
@@ -4101,7 +4101,7 @@ _08080794: .4byte 0x0858225C
 _08080798:
 	cmp r4, #1
 	bne _080807A2
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	b _080807DE
 _080807A2:
 	cmp r4, #2
@@ -4128,7 +4128,7 @@ _080807CC: .4byte 0x03000B8D
 _080807D0:
 	cmp r5, #3
 	bne _080807D8
-	bl unk_d34
+	bl WriteMostRecentFileBackupToSram
 _080807D8:
 	ldr r1, _080807E8 @ =gDisableSoftReset
 	movs r0, #0
@@ -4190,7 +4190,7 @@ _08080844:
 	ldr r4, _08080858 @ =0x03000B8D
 	ldrb r5, [r4]
 	strb r6, [r4]
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	strb r5, [r4]
 	b _080808A2
 	.align 2, 0
@@ -4224,7 +4224,7 @@ _0808088C:
 	ldr r4, _080808AC @ =0x03000B8D
 	ldrb r5, [r4]
 	strb r2, [r4]
-	bl unk_d34
+	bl WriteMostRecentFileBackupToSram
 	strb r5, [r4]
 _0808089C:
 	ldr r1, _080808B0 @ =gDisableSoftReset
@@ -4383,11 +4383,11 @@ Sram_SetCurrentFile: @ 0x08080994
 _080809B8: .4byte 0x03000B8D
 _080809BC: .4byte 0x03000B94
 _080809C0:
-	bl WriteMostRecentFileToGamePak
+	bl WriteMostRecentFileToSram
 	b _080809CE
 _080809C6:
-	bl WriteMostRecentFileToGamePak
-	bl unk_d34
+	bl WriteMostRecentFileToSram
+	bl WriteMostRecentFileBackupToSram
 _080809CE:
 	ldr r3, _080809E8 @ =0x03000B94
 	ldr r2, _080809EC @ =0x03000B8D
@@ -4406,8 +4406,8 @@ _080809CE:
 _080809E8: .4byte 0x03000B94
 _080809EC: .4byte 0x03000B8D
 
-	thumb_func_start EraseSramMenuSubroutine
-EraseSramMenuSubroutine: @ 0x080809F0
+	thumb_func_start EraseSramMenuHandler
+EraseSramMenuHandler: @ 0x080809F0
 	push {r4, r5, r6, lr}
 	movs r6, #0
 	ldr r0, _08080A18 @ =gNonGameplayRam
@@ -4951,11 +4951,11 @@ _08080D86:
 	ldr r3, _08080ED4 @ =0x00001E03
 	adds r0, r3, #0
 	strh r0, [r2]
-	ldr r0, _08080ED8 @ =gWrittenToBldalpha_L
+	ldr r0, _08080ED8 @ =gWrittenToBldalpha_Evb
 	strh r1, [r0]
 	ldr r0, _08080EDC @ =0x04000052
 	strh r1, [r0]
-	ldr r0, _08080EE0 @ =gUnk_03000be3
+	ldr r0, _08080EE0 @ =gUnk_3000be3
 	strb r1, [r0]
 	ldr r0, _08080EE4 @ =gBg1XPosition
 	strh r1, [r0]
@@ -5015,9 +5015,9 @@ _08080EC8: .4byte 0x04000008
 _08080ECC: .4byte 0x0400000A
 _08080ED0: .4byte 0x00001A01
 _08080ED4: .4byte 0x00001E03
-_08080ED8: .4byte gWrittenToBldalpha_L
+_08080ED8: .4byte gWrittenToBldalpha_Evb
 _08080EDC: .4byte 0x04000052
-_08080EE0: .4byte gUnk_03000be3
+_08080EE0: .4byte gUnk_3000be3
 _08080EE4: .4byte gBg1XPosition
 _08080EE8: .4byte gBg1YPosition
 _08080EEC: .4byte 0x03001230

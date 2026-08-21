@@ -59,9 +59,4 @@ extern const struct FrameData sTitleScreenOam_5976c0[3];
 extern const struct FrameData sTitleScreenOam_5976d8[3];
 extern const struct FrameData sTitleScreenOam_5976f0[3];
 
-
-extern const u32 sTitleScreenSpaceBackgroundGfx[3270];
-extern const u16 sTitleScreenSpaceBackgroundPal[16 * 8];
-extern const u32 sTitleScreenSpaceBackgroundTileTable[418];
-
 #endif /* TITLE_SCREEN_DATA_H */

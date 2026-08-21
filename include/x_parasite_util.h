@@ -16,7 +16,7 @@ enum XParasiteFlyingStage {
 };
 
 u32 CheckSpritesThatCantAbsorbX(void);
-u8 CountPrimarySpritesThatCantAbsorbX(void);
+s32 CountPrimarySpritesThatCantAbsorbX(void);
 void XParasiteMove(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor);
 void XParasiteMoveWithSound(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor, u16 sound);
 void SamusAbsorbX(void);

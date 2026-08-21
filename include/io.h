@@ -3,12 +3,12 @@
 
 #include "types.h"
 
-#define write32(addr, val) (*(vu32 *)(addr)) = (val)
-#define write16(addr, val) (*(vu16 *)(addr)) = (val)
-#define write8(addr, val) (*(vu8 *)(addr)) = (val)
+#define WRITE_32(addr, val) (*(vu32 *)(addr)) = (val)
+#define WRITE_16(addr, val) (*(vu16 *)(addr)) = (val)
+#define WRITE_8(addr, val) (*(vu8 *)(addr)) = (val)
 
-#define read32(addr) (*(vu32 *)(addr))
-#define read16(addr) (*(vu16 *)(addr))
-#define read8(addr) (*(vu8 *)(addr))
+#define READ_32(addr) (*(vu32 *)(addr))
+#define READ_16(addr) (*(vu16 *)(addr))
+#define READ_8(addr) (*(vu8 *)(addr))
 
 #endif /* IO_H */

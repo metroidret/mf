@@ -20,9 +20,9 @@ void DataPadInit(void)
 {
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 40;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -4;
     gCurrentSprite.hitboxBottom = 4;
     gCurrentSprite.hitboxLeft = -4;
@@ -143,9 +143,9 @@ void DataPadCenterInit(void)
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.drawDistanceTop = 48;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 40;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
     gCurrentSprite.hitboxTop = -4;
     gCurrentSprite.hitboxBottom = 4;
     gCurrentSprite.hitboxLeft = -4;
@@ -205,9 +205,9 @@ void DataPadSidesInit(void)
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.drawDistanceTop = 48;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 40;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
     gCurrentSprite.hitboxTop = -4;
     gCurrentSprite.hitboxBottom = 4;
     gCurrentSprite.hitboxLeft = -4;
@@ -250,7 +250,7 @@ void DataPadSidesDownloadingData(void)
         gCurrentSprite.pose = 0x1c;
         SAMUS_SET_POSE(SPOSE_FACING_FOREGROUND);
         gSamusData.lastWallTouchedMidAir = 10;
-        gPreventMovementTimer = 1000;
+        gPreventMovementTimer = SAMUS_ITEM_PMT;
     }
 }
 

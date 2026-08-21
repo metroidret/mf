@@ -58,9 +58,9 @@ void MissileHatchInit(void)
 
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
     gCurrentSprite.hitboxTop = -(BLOCK_SIZE + HALF_BLOCK_SIZE);
     gCurrentSprite.hitboxBottom = BLOCK_SIZE + HALF_BLOCK_SIZE;
@@ -202,9 +202,9 @@ void MissileHatchDebrisInit(void)
 
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
     gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
     gCurrentSprite.hitboxBottom = 0;

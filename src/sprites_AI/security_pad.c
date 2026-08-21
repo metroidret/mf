@@ -79,7 +79,7 @@ void SecurityPadUpdatePalette(void)
 
     if (update)
     {
-        DMA_SET(3, pal, PALRAM_OBJ + 0x110 + gCurrentSprite.spritesetGfxSlot * 16 * sizeof(u16), C_32_2_16(DMA_ENABLE, 16 / 2));
+        DMA3_COPY_16(pal, PALRAM_OBJ + 0x110 + gCurrentSprite.spritesetGfxSlot * PAL_ROW_SIZE, PAL_ROW / 2);
     }
 }
 
@@ -94,9 +94,9 @@ void SecurityPadInit(void)
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -364,9 +364,9 @@ void SecurityPadMonitorInit(void)
 
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 3);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -469,9 +469,9 @@ void SecurityPadScreenInit(void)
 
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 3);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;

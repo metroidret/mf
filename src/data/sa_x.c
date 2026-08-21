@@ -5522,7 +5522,7 @@ const struct FrameData* const sSaXElevatorSpritesOamPointers[10] = {
 
 const SaXElevatorFunc_T sSaXElevatorFunctionPointers[1] = { unk_d694 };
 
-const SaXElevatorFunc_T sSaXElevatorSubroutinesPointers[6] = {
+const SaXElevatorFunc_T sSaXElevatorHandlerPointers[6] = {
     SaXElevatorBeforeBlowingUpWall,
     SaXElevatorBlowingUpWall,
     SaXElevatorWalkingBeforeTurningToCamera,
@@ -5776,5 +5776,3 @@ const struct SaXElevatorSprite sSaXElevatorSpritesShootingDoor[7] = {
         .pOamFrame = NULL
     }
 };
-
-static const u8 sBlob_2b5058_2e4904[] = INCBIN_U8("data/Blob_2b5058_2e4904.bin");

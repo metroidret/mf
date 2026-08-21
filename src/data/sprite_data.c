@@ -220,7 +220,7 @@ const u32 sSpritesGraphicsLength[PSPRITE_END - 0x10] = {
     [PSPRITE_BOX - 0x10] = SPRITE_GFX_SIZE(8),
     [PSPRITE_BLUE_ZORO - 0x10] = SPRITE_GFX_SIZE(1),
 
-    [PSPRITE_GERUDA - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_GERUTA - 0x10] = SPRITE_GFX_SIZE(1),
     [PSPRITE_PUMP_CONTROL_PAD - 0x10] = SPRITE_GFX_SIZE(2),
     [PSPRITE_BOILER_CONTROL_PAD - 0x10] = SPRITE_GFX_SIZE(2),
     [PSPRITE_AUXILARY_POWER_PAD - 0x10] = SPRITE_GFX_SIZE(2),
@@ -311,8 +311,8 @@ const u32 sSpritesGraphicsLength[PSPRITE_END - 0x10] = {
     [PSPRITE_BUBBLES_2 - 0x10] = SPRITE_GFX_SIZE(1),
 
     [PSPRITE_WATER_DROP - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_FAKE_ENERGY_TANK - 0x10] = SPRITE_GFX_SIZE(1),
-    [PSPRITE_FAKE_MISSILE_TANK - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_MIMIC_ENERGY_TANK - 0x10] = SPRITE_GFX_SIZE(1),
+    [PSPRITE_MIMIC_MISSILE_TANK - 0x10] = SPRITE_GFX_SIZE(1),
     [PSPRITE_CORE_X_ABILITY_BEFORE_VARIA_CORE - 0x10] = SPRITE_GFX_SIZE(4),
 
     [PSPRITE_BIG_FLASHING_NUMBER - 0x10] = SPRITE_GFX_SIZE(1),
@@ -1266,7 +1266,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         124,
         800
     },
-    [PSPRITE_GERUDA] = {
+    [PSPRITE_GERUTA] = {
         12,
         28,
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,
@@ -1923,7 +1923,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         0,
         0
     },
-    [PSPRITE_FAKE_ENERGY_TANK] = {
+    [PSPRITE_MIMIC_ENERGY_TANK] = {
         1,
         7,
         SDRT_30_10,
@@ -1932,7 +1932,7 @@ const u16 sPrimarySpriteStats[PSPRITE_END][7] = {
         0,
         24
     },
-    [PSPRITE_FAKE_MISSILE_TANK] = {
+    [PSPRITE_MIMIC_MISSILE_TANK] = {
         1,
         7,
         SDRT_30_10,

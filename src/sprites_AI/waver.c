@@ -74,9 +74,9 @@ void WaverInit(void)
             gCurrentSprite.status |= SPRITE_STATUS_FACING_DOWN;
     }
 
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -PIXEL_TO_SUB_PIXEL(8);
     gCurrentSprite.hitboxBottom = PIXEL_TO_SUB_PIXEL(8);
@@ -342,9 +342,9 @@ void WaverDebrisInit(void)
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
 
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -PIXEL_TO_SUB_PIXEL(8);
     gCurrentSprite.hitboxBottom = PIXEL_TO_SUB_PIXEL(1);

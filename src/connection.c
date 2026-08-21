@@ -8,6 +8,7 @@
 
 #include "structs/bg_clip.h"
 #include "structs/block.h"
+#include "structs/color_effects.h"
 #include "structs/connection.h"
 #include "structs/event.h"
 #include "structs/samus.h"
@@ -86,10 +87,10 @@ u32 ConnectionCheckEnterDoor(u16 yPosition, u16 xPosition)
             {
                 gHatchData[i].unk_1_3 = 0;
 
-                if (!gHatchData[i].unk_0_0)
+                if (!gHatchData[i].exists)
                     continue;
 
-                if (gHatchData[i].unk_0_4)
+                if (gHatchData[i].facingRight)
                     found = -1;
                 else
                     found = 1;
@@ -98,7 +99,7 @@ u32 ConnectionCheckEnterDoor(u16 yPosition, u16 xPosition)
 
                 if (found == pDoor->xStart && pDoor->yStart >= gHatchData[i].yPosition && pDoor->yStart <= gHatchData[i].yPosition + 3)
                 {
-                    gHatchData[i].unk_0_1 = 7;
+                    gHatchData[i].currentAnimation = 7;
                 }
             }
 
@@ -111,7 +112,7 @@ u32 ConnectionCheckEnterDoor(u16 yPosition, u16 xPosition)
 
             if (i != 0x0)
             {
-                gColorFading = 0x2;
+                gColorFading.type = 0x2;
 
                 if (i == 0x2)
                 {
@@ -120,11 +121,11 @@ u32 ConnectionCheckEnterDoor(u16 yPosition, u16 xPosition)
                 }
                 else if (i == 0x3)
                 {
-                    gColorFading = 0xA;
+                    gColorFading.type = 0xA;
                 }
             }
 
-            SetCurrentNavigationRoom(pDoor->srcRoom);
+            RoomEffectSetCurrentNavigationRoom(pDoor->srcRoom);
             PlayRoomMusicTrack(gCurrentArea, pDoor->srcRoom);
             break;
         }
@@ -202,9 +203,9 @@ u32 ConnectionCheckAreaConnection(u16 yPosition, u16 xPosition)
     pDoor = &pDoor[gLastDoorUsed];
 
     if (EventCheckPlayCutsceneDuringTransition(pDoor->srcRoom))
-        gColorFading = 0x2;
+        gColorFading.type = 0x2;
 
-    SetCurrentNavigationRoom(pDoor->srcRoom);
+    RoomEffectSetCurrentNavigationRoom(pDoor->srcRoom);
     PlayRoomMusicTrack(gCurrentArea, pDoor->srcRoom);
     return TRUE;
 }

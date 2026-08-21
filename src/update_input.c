@@ -9,7 +9,7 @@ void UpdateInput(void)
 {
     u16 keys;
 
-    keys = KEY_MASK & ~read16(REG_KEY_INPUT);
+    keys = KEY_MASK & ~READ_16(REG_KEY_INPUT);
     gChangedInput = keys & ~gButtonInputCopy;
     gButtonInput = keys;
     gButtonInputCopy = keys;

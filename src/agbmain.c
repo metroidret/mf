@@ -41,7 +41,7 @@ void AgbMain(void)
                 }
                 else if (gSubGameMode2 == 1)
                 {
-                    if (IntroSubroutine())
+                    if (IntroHandler())
                     {
                         gSubGameMode1 = 0;
                         gSubGameMode2 = 4;
@@ -82,7 +82,7 @@ void AgbMain(void)
                 }
                 else if (gSubGameMode2 == 4)
                 {
-                    gPauseScreenFlag = TitleScreenSubroutine();
+                    gPauseScreenFlag = TitleScreenHandler();
 
                     if (gPauseScreenFlag == 1)
                     {
@@ -110,7 +110,7 @@ void AgbMain(void)
             case GAME_MODE_FILE_SELECT_OR_INTRO:
                 if (gSubGameMode2 == 0)
                 {
-                    gPauseScreenFlag = FileSelectSubroutine();
+                    gPauseScreenFlag = FileSelectHandler();
 
                     if (gPauseScreenFlag == 1)
                     {
@@ -135,7 +135,7 @@ void AgbMain(void)
                 }
                 else if (gSubGameMode2 == 1)
                 {
-                    if (NewFileIntroSubroutine())
+                    if (NewFileIntroHandler())
                     {
                         gMainGameMode = GAME_MODE_MAP_SCREEN;
                         gPauseScreenFlag = 1;
@@ -146,7 +146,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_IN_GAME:
-                if (InGameSubroutine())
+                if (InGameHandler())
                 {
                     if (gPauseScreenFlag != 0)
                     {
@@ -181,7 +181,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_MAP_SCREEN:
-                if (PauseScreenSubroutine())
+                if (PauseScreenHandler())
                 {
                     switch (gPauseScreenFlag)
                     {
@@ -197,7 +197,7 @@ void AgbMain(void)
                         case 1:
                             gMainGameMode = GAME_MODE_IN_GAME;
                             gPauseScreenFlag = 0;
-                            gUnk_03000be3 = 0;
+                            gUnk_3000be3 = 0;
                             break;
 
                         case 2:
@@ -216,7 +216,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_CUTSCENE:
-                if (CutsceneSubroutine())
+                if (CutsceneHandler())
                 {
                     if (gSubGameMode2 != 0)
                     {
@@ -247,7 +247,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_SA_X_CLOSE_UP:
-                if (SaXCloseUpSubroutine())
+                if (SaXCloseUpHandler())
                 {
                     gMainGameMode = GAME_MODE_IN_GAME;
                     gSubGameMode1 = 0;
@@ -255,7 +255,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_ERASE_SRAM_MENU:
-                if (EraseSramMenuSubroutine())
+                if (EraseSramMenuHandler())
                 {
                     if (gSubGameMode2 == 1)
                         gRebootGame = 2;
@@ -268,7 +268,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_GAME_OVER:
-                gSubGameMode2 = GameOverSubroutine();
+                gSubGameMode2 = GameOverHandler();
                 if (gSubGameMode2 == 1)
                 {
                     if (Sram_ChecLoadSaveFileWithBlank())
@@ -282,7 +282,7 @@ void AgbMain(void)
                         gPauseScreenFlag = 1;
                     }
 
-                    gUnk_03000be3 = 0;
+                    gUnk_3000be3 = 0;
                     gCurrentCutscene = 0;
                     gSubGameMode1 = 0;
                 }
@@ -294,7 +294,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_ENDING:
-                if (EndingSubroutine())
+                if (EndingHandler())
                 {
                     gMainGameMode = GAME_MODE_CREDITS;
                     gSubGameMode1 = 0;
@@ -302,7 +302,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_DIED_FROM_SR388_COLLISION:
-                if (DiedFromSr388CollisionSubroutine())
+                if (DiedFromSr388CollisionHandler())
                 {
                     gMainGameMode = GAME_MODE_GAME_OVER;
                     gSubGameMode1 = 0;
@@ -310,15 +310,15 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_CREDITS:
-                if (CreditsSubroutine())
+                if (CreditsHandler())
                     gMainGameMode = GAME_MODE_SOFT_RESET;
                 break;
 
             case GAME_MODE_DEMO:
-                if (InGameSubroutine())
+                if (InGameHandler())
                 {
                     gPauseScreenFlag = 0;
-                    gUnk_03000be3 = 0;
+                    gUnk_3000be3 = 0;
                     gSubGameMode1 = 0;
 
                     if (gDemoState == DEMO_STATE_NONE)

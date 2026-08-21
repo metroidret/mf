@@ -2,7 +2,7 @@
 #include "globals.h"
 #include "gba.h"
 
-#include "data/engine_pointers.h"
+#include "data/sprite_pointers.h"
 
 #include "constants/connection.h"
 #include "constants/sprite.h"
@@ -373,8 +373,8 @@ u8 LocationTextLoadGfx(void)
 
     if (gfxSlot > 7)
     {
-        DMA_SET(3, sSpritesGraphicsPointers[PSPRITE_AREA_BANNER - 0x10], VRAM_OBJ + 0x7800, C_32_2_16(DMA_ENABLE, 0x800 / 2));
-        DMA_SET(3, sSpritesPalettePointers[PSPRITE_AREA_BANNER - 0x10], PALRAM_OBJ + 0x1E0, C_32_2_16(DMA_ENABLE, 16));
+        DMA3_COPY_16(sSpritesGraphicsPointers[PSPRITE_AREA_BANNER - 0x10], VRAM_OBJ + 0x7800, 0x800 / 2);
+        DMA3_COPY_16(sSpritesPalettePointers[PSPRITE_AREA_BANNER - 0x10], PALRAM_OBJ + 0x1E0, 16);
 
         gfxSlot = 7;
     }
@@ -468,7 +468,7 @@ u8 LocationTextCheckLoad(void)
             
             if (locationText < LT_NAVIGATION_ROOM)
             {
-                DMA_SET(3, 0x82f82ec, PALRAM_OBJ + 0x100 + gfxSlot * 16 * sizeof(u16), C_32_2_16(DMA_ENABLE, 16));
+                DMA3_COPY_16(0x82f82ec, PALRAM_OBJ + 0x100 + gfxSlot * 16 * sizeof(u16), 16);
             }
         }
     }

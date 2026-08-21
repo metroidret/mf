@@ -87,9 +87,9 @@ void ZebesianWallInit(void)
     SpriteUtilTrySetAbsorbXFlag();
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
-    gCurrentSprite.drawDistanceTop = 40;
-    gCurrentSprite.drawDistanceBottom = 40;
-    gCurrentSprite.drawDistanceHorizontal = 32;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
     gCurrentSprite.pOam = sZebesianWallOam_Crawling;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
@@ -328,9 +328,9 @@ void ZebesianBeamInit(void)
 {
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 0x30;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(3);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.pOam = sZebesianWallBeamOam_Spawning;

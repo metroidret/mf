@@ -44,9 +44,9 @@ void Bubbles1(void)
             gCurrentSprite.yPosition -= HALF_BLOCK_SIZE;
             gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
             gCurrentSprite.currentAnimationFrame = 0;
 
@@ -96,9 +96,9 @@ void Bubbles2(void)
 
             gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.currentAnimationFrame = gSpriteRandomNumber / 2;
             // gCurrentSprite.pOam = sBubbles2Oam_Idle;
@@ -155,9 +155,9 @@ void WaterDrop(void)
 
             gCurrentSprite.yPosition -= BLOCK_SIZE;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
             gCurrentSprite.currentAnimationFrame = 0;
             // gCurrentSprite.pOam = sWaterDropOam_Spawning;

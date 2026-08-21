@@ -16,6 +16,11 @@
 #include "structs/demo.h"
 #include "structs/room.h"
 
+enum SoundEventUpdateType {
+    SEVENT_UPDATE_LEAVING_ROOM = 1,
+    SEVENT_UPDATE_ENTERING_ROOM
+};
+
 static u16 sSoundEventNavConversations[22][2] = {
     {
         NAV_CONVO_UNLOCKED_LEVEL_0_HATCHES,
@@ -266,10 +271,8 @@ static u8 sSoundEventTriggerTypes[SOUND_EVENT_END] = {
     [SOUND_EVENT_ENTERED_OMEGA_METROID_ROOM] = SEVENT_TTYPE_32,
 };
 
-static u8 sBlob_79bcc0_79c27c[] = INCBIN_U8("data/Blob_79bcc0_79c27c.bin");
-
 /**
- * @brief 700bc | 38 | Updates the sub event counter for an SA-X encounter
+ * @brief 700bc | 38 | Updates the sound event counter for an SA-X encounter
  * 
  */
 void SoundEventUpdateForSaXEncounter(void)
@@ -293,7 +296,7 @@ void SoundEventUpdateForSaXEncounter(void)
 }
 
 /**
- * @brief 700f4 | 2c | Updates the sub event for an ability
+ * @brief 700f4 | 2c | Updates the sound event for an ability
  * 
  */
 void SoundEventUpdateForAbility(void)
@@ -306,7 +309,7 @@ void SoundEventUpdateForAbility(void)
 }
 
 /**
- * @brief 70120 | 44 | Updates the sub event for a navigation conversation
+ * @brief 70120 | 44 | Updates the sound event for a navigation conversation
  * 
  */
 void SoundEventUpdateForNavConversation(void)
@@ -317,7 +320,7 @@ void SoundEventUpdateForNavConversation(void)
     {
         if (gPreviousNavigationConversation == sSoundEventNavConversations[i][0])
         {
-            // Found nav conversation, set sub event and update music
+            // Found nav conversation, set sound event and update music
             gSoundEventCounter = sSoundEventNavConversations[i][1];
             SoundEventUpdateMusic(SEVENT_TTYPE_ENDING_NAVIGATION_CONVERSATION);
             break;
@@ -329,22 +332,21 @@ void SoundEventUpdateForNavConversation(void)
 }
 
 /**
- * @brief 70164 | 1c | Sets the current sub event
+ * @brief 70164 | 1c | Sets the current sound event
  * 
- * @param soundEvent Sub event
- * @param triggerType Sub event trigger type
+ * @param soundEvent Sound event
+ * @param triggerType Sound event trigger type
  */
 void SoundEventUpdate(u8 soundEvent, u8 triggerType)
 {
-    // Set sub event and update music
     gSoundEventCounter = soundEvent;
     SoundEventUpdateMusic(triggerType);
 }
 
 /**
- * @brief 70180 | 142c | Updates the music for the current sub event
+ * @brief 70180 | 142c | Updates the music for the current sound event
  * 
- * @param triggerType Sub event trigger type
+ * @param triggerType Sound event trigger type
  */
 void SoundEventUpdateMusic(u8 triggerType)
 {
@@ -362,9 +364,9 @@ void SoundEventUpdateMusic(u8 triggerType)
                 return;
 
             if (triggerType == SEVENT_TTYPE_LEAVING_ROOM)
-                type = 0x1;
+                type = SEVENT_UPDATE_LEAVING_ROOM;
             else if (triggerType == SEVENT_TTYPE_ENTERING_ROOM)
-                type = 0x2;
+                type = SEVENT_UPDATE_ENTERING_ROOM;
             else
                 return;
         }
@@ -379,7 +381,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_FIRST_CONVERSATION_LEAVING_SHIP_STARTED:
-            PlayMusic(0x1E, 2);
+            PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 2);
             updateSoundEvent = TRUE;
             break;
 
@@ -387,13 +389,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 20)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 20)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 20)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 20)
             {
-                PlayMusic(0x2B, 2);
+                PlayMusic(MUSIC_TENSION, 2);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -403,16 +405,16 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_LEFT_NAV_ROOM_AFTER_QUARANTINE_BAY:
-            if (gCurrentNavigationRoom != NAV_ROOM_MAIN_DECK_ROOM_0)
+            if (gCurrentNavigationRoom != NAV_ROOM_NONE)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0x2C, 2);
+                PlayMusic(MUSIC_MAIN_DECK_LIVELY, 2);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -422,7 +424,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_OPERATIONS_DECK_ELEVATOR_MONOLOGUE_ENDED:
-            FadeMusic(60 * 3);
+            FadeMusic(CONVERT_SECONDS(3));
             updateSoundEvent = TRUE;
             break;
 
@@ -430,7 +432,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gLastElevatorUsed != ELEVATOR_MAIN_DECK_TO_OPERATIONS_DECK)
                 break;
 
-            PlayMusic(0x3, 2);
+            PlayMusic(MUSIC_AFTER_EVENT, 2);
             updateSoundEvent = TRUE;
             break;
 
@@ -438,13 +440,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 13)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 13)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 13)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 13)
             {
-                PlayMusic(0x2E, 2);
+                PlayMusic(MUSIC_OPERATIONS_DECK, 2);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -453,13 +455,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 60)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 60)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 60)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 60)
             {
-                PlayMusic(0x1E, 2);
+                PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 2);
                 updateSoundEvent = TRUE;
             }
 
@@ -478,8 +480,8 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_MAIN_DECK_ROOM_32)
                 break;
 
-            PlayMusic(0x34, 2);
-            unk_38a8(0x33, 0);
+            PlayMusic(MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_AMBIENCE, 2);
+            unk_38a8(MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND, 0);
             updateSoundEvent = TRUE;
             break;
 
@@ -489,7 +491,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 35)
             {
-                unk_372c(0x1E, 0x2C, 0x2);
+                unk_372c(0x1E, MUSIC_MAIN_DECK_LIVELY, 0x2);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -498,13 +500,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 38)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 38)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 38)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 38)
             {
-                PlayMusic(0x18, 2);
+                PlayMusic(MUSIC_BOSS_TENSION, 2);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -519,7 +521,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 14)
             {
-                unk_372c(0x1E, 0x2C, 0x2);
+                unk_372c(0x1E, MUSIC_MAIN_DECK_LIVELY, 0x2);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -535,22 +537,22 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_SA_X_ELEVATOR_CUTSCENE_EXPLOSION:
-            PlayMusic(0x31, 2);
+            PlayMusic(MUSIC_SA_X_ELEVATOR, 2);
             updateSoundEvent = TRUE;
             break;
 
         case SOUND_EVENT_SA_X_ELEVATOR_CUTSCENE_DOOR_SHOT:
-            FadeMusic(60 * 5);
+            FadeMusic(CONVERT_SECONDS(5));
             updateSoundEvent = TRUE;
             break;
 
         case SOUND_EVENT_SA_X_ELEVATOR_CUTSCENE_RUMBLE_1:
-            SoundPlay_3b1c(0x229);
+            SoundPlay_3b1c(SOUND_229);
             updateSoundEvent = TRUE;
             break;
 
         case SOUND_EVENT_SA_X_ELEVATOR_CUTSCENE_RUMBLE_2:
-            PlayMusic(0x1E, 2);
+            PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 2);
             updateSoundEvent = TRUE;
             break;
 
@@ -558,13 +560,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_1_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 3);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 3);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -577,13 +579,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_1)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 40)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 40)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 40)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 40)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -596,13 +598,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_1)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 40)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 40)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom != 40)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 40)
             {
-                PlayMusic(0x4, 3);
+                PlayMusic(MUSIC_SECTOR_1, 3);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -611,13 +613,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_1_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 3);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 3);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -626,9 +628,9 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_1)
                 break;
 
-            if (triggerType == SEVENT_TTYPE_LEAVING_ROOM && gDestinationDoor == 1)
+            if (triggerType == SEVENT_TTYPE_LEAVING_ROOM && gDestinationRoom == 1)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
                 updateSoundEvent = TRUE;
                 break;
             }
@@ -646,7 +648,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 1)
             {
-                PlayMusic(0x4, 0);
+                PlayMusic(MUSIC_SECTOR_1, 0);
                 gSoundEventCounter = SOUND_EVENT_STARTED_ELEVATOR_TO_TRO1;
                 updateSoundEvent = TRUE + 1;
             }
@@ -656,7 +658,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gLastElevatorUsed != ELEVATOR_MAIN_DECK_TO_SECTOR_2)
                 break;
 
-            FadeMusic(60 * 5);
+            FadeMusic(CONVERT_SECONDS(5));
             updateSoundEvent = TRUE;
             break;
 
@@ -672,16 +674,16 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_ENTERED_TRO1_NAV_ROOM:
-            if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_3_ROOM_2)
+            if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_2_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 4);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 4);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -694,13 +696,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 0)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 0)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 0)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 0)
             {
-                PlayMusic(0x6, 0);
+                PlayMusic(MUSIC_SECTOR_2, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -717,13 +719,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 18)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 18)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 18)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 18)
             {
-                PlayMusic(0x18, 4);
+                PlayMusic(MUSIC_BOSS_TENSION, 4);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -736,19 +738,19 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 18)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 18)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom != 18)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 18)
             {
-                PlayMusic(0x6, 0);
+                PlayMusic(MUSIC_SECTOR_2, 0);
                 updateSoundEvent = TRUE;
             }
             break;
 
         case SOUND_EVENT_ENTERED_SA_X_TRO_1_ROOM:
-            unk_372c(0x1E, 0x15, 0x8);
+            unk_372c(0x1E, MUSIC_SA_X_APPEARANCE, 0x8);
             updateSoundEvent = TRUE;
             break;
 
@@ -756,13 +758,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 45)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 45)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom != 45)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 45)
             {
-                PlayMusic(0x6, 0);
+                PlayMusic(MUSIC_SECTOR_2, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -776,7 +778,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_LEAVING_TRO1_ELEVATOR_MONOLOGUE_ENDED:
-            FadeMusic(200);
+            FadeMusic(CONVERT_SECONDS(3 + 1.f/3));
             updateSoundEvent = TRUE;
             break;
 
@@ -784,7 +786,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gLastElevatorUsed != ELEVATOR_MAIN_DECK_TO_SECTOR_2)
                 break;
 
-            PlayMusic(0x1E, 11);
+            PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 11);
             updateSoundEvent = TRUE;
             break;
 
@@ -792,13 +794,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_4_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 11);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 11);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -811,13 +813,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_4)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 0)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 0)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 0)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 0)
             {
-                PlayMusic(0x9, 0);
+                PlayMusic(MUSIC_SECTOR_4, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -826,13 +828,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_4)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 31)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 31)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 31)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 31)
             {
-                PlayMusic(0x5F, 5);
+                PlayMusic(MUSIC_UNEASE, 5);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -841,13 +843,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_4)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 42)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 42)
             {
-                FadeMusic(40);
+                FadeMusic(CONVERT_SECONDS(2.f/3));
             }
-            else if (type == 0x2 && gCurrentRoom == 42)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 42)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -860,13 +862,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_4)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 42)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 42)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom != 42)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 42)
             {
-                PlayMusic(0x9, 0);
+                PlayMusic(MUSIC_SECTOR_4, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -879,13 +881,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_3)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 4)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 4)
             {
-                FadeMusic(30);
+                FadeMusic(CONVERT_SECONDS(.5f));
             }
-            else if (type == 0x2 && gCurrentRoom == 4)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 4)
             {
-                PlayMusic(0xF, 10);
+                PlayMusic(MUSIC_SECURITY_DATA_ROOM, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -898,13 +900,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_3)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 4)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 4)
             {
-                FadeMusic(30);
+                FadeMusic(CONVERT_SECONDS(.5f));
             }
-            else if (type == 0x2 && gCurrentRoom != 4)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 4)
             {
-                PlayMusic(0x7, 10);
+                PlayMusic(MUSIC_SECTOR_3, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -913,13 +915,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_3)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 21)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 21)
             {
-                FadeMusic(30);
+                FadeMusic(CONVERT_SECONDS(.5f));
             }
-            else if (type == 0x2 && gCurrentRoom == 21)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 21)
             {
-                PlayMusic(0xF, 10);
+                PlayMusic(MUSIC_SECURITY_DATA_ROOM, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -932,13 +934,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_3)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 21)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 21)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom != 21)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 21)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -957,7 +959,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom != 23)
             {
-                unk_372c(0x14, 0x7, 0x0);
+                unk_372c(0x14, MUSIC_SECTOR_3, 0x0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -967,13 +969,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_LEAVING_PYR1_FEDERATION_CONVERSATION_STARTED:
-            FadeMusic(30);
+            FadeMusic(CONVERT_SECONDS(.5f));
             updateSoundEvent = TRUE;
             break;
 
         case SOUND_EVENT_LEAVING_PYR1_FEDERATION_CONVERSATION_ENDED:
-            unk_372c(0x78, 0x1E, 0xB);
-            SoundPlay(0xFC);
+            unk_372c(0x78, MUSIC_MAIN_DECK_AMBIENCE, 0xB);
+            SoundPlay(SOUND_FC);
             updateSoundEvent = TRUE;
             break;
 
@@ -981,13 +983,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_6_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 0xB);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 0xB);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -997,7 +999,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_SA_X_NOC_ENTERED_ROOM:
-            unk_372c(0xA, 0x15, 0x8);
+            unk_372c(0xA, MUSIC_SA_X_APPEARANCE, 0x8);
             updateSoundEvent = TRUE;
             break;
 
@@ -1005,13 +1007,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_6)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 0)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 0)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 0)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 0)
             {
-                PlayMusic(0xA, 0);
+                PlayMusic(MUSIC_SECTOR_6, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1020,13 +1022,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_6)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 10)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 10)
             {
-                FadeMusic(70);
+                FadeMusic(CONVERT_SECONDS(1 + 1.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 10)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 10)
             {
-                PlayMusic(0xA, 0);
+                PlayMusic(MUSIC_SECTOR_6, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1035,13 +1037,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_6)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 12)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 12)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 12)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 12)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1054,13 +1056,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_6)
                 break;
 
-            if (type == 0x1 && gDestinationDoor != 13)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom != 13)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom != 13)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom != 13)
             {
-                PlayMusic(0xA, 0);
+                PlayMusic(MUSIC_SECTOR_6, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1073,13 +1075,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 7)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 7)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 7)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 7)
             {
-                PlayMusic(0x8, 0);
+                PlayMusic(MUSIC_SECTOR_5, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1096,13 +1098,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 0)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 0)
             {
-                FadeMusic(70);
+                FadeMusic(CONVERT_SECONDS(1 + 1.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 0)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 0)
             {
-                PlayMusic(0x5A, 11);
+                PlayMusic(MUSIC_MAIN_BOILER_OVERHEATING, 11);
                 updateSoundEvent = TRUE;
             }
 
@@ -1113,7 +1115,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_LEAVING_ARC1_CONVERSATION_STARTED:
-            if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_2_ROOM_2)
+            if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_5_ROOM_2)
                 break;
 
             unk_3cfc();
@@ -1136,13 +1138,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_3)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 29)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 29)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 29)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 29)
             {
-                PlayMusic(0x7, 0);
+                PlayMusic(MUSIC_SECTOR_3, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1155,13 +1157,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 46)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 46)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 46)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 46)
             {
-                PlayMusic(0x5C, 10);
+                PlayMusic(MUSIC_SILENCE_2, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1170,13 +1172,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 20)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 20)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 20)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 20)
             {
-                PlayMusic(0x2C, 10);
+                PlayMusic(MUSIC_MAIN_DECK_LIVELY, 10);
                 updateSoundEvent = TRUE;
             }
 
@@ -1192,7 +1194,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_87:
-            unk_372c(0x1E, 0x1E, 0x0);
+            unk_372c(0x1E, MUSIC_MAIN_DECK_AMBIENCE, 0x0);
             updateSoundEvent = TRUE + 1;
             gSoundEventCounter = SOUND_EVENT_84;
             break;
@@ -1205,13 +1207,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 7)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 7)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 7)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 7)
             {
-                PlayMusic(0x8, 0);
+                PlayMusic(MUSIC_SECTOR_5, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1224,19 +1226,19 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 43)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 43)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 43)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 43)
             {
-                PlayMusic(0x5F, 10);
+                PlayMusic(MUSIC_UNEASE, 10);
                 updateSoundEvent = TRUE;
             }
             break;
 
         case SOUND_EVENT_SA_X_ARC_ENTERED_ROOM:
-            unk_372c(0xA, 0x15, 0x8);
+            unk_372c(0xA, MUSIC_SA_X_APPEARANCE, 0x8);
             updateSoundEvent = TRUE;
             break;
 
@@ -1244,13 +1246,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 22)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 22)
             {
-                FadeMusic(70);
+                FadeMusic(CONVERT_SECONDS(1 + 1.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 22)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 22)
             {
-                PlayMusic(0x8, 0);
+                PlayMusic(MUSIC_SECTOR_5, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1260,7 +1262,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_ELEVATOR_POWER_OUTAGE:
-            unk_372c(0x60, 0x3, 0xB);
+            unk_372c(0x60, MUSIC_AFTER_EVENT, 0xB);
             updateSoundEvent = TRUE;
             break;
 
@@ -1270,7 +1272,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 31)
             {
-                unk_372c(0x1E, 0x5C, 0xB);
+                unk_372c(0x1E, MUSIC_SILENCE_2, 0xB);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1292,7 +1294,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_POWER_OUTAGE_LEAVING_SHIP_ENDED:
-            PlayMusic(0x59, 10);
+            PlayMusic(MUSIC_SILENCE_1, 10);
             updateSoundEvent = TRUE;
             break;
 
@@ -1300,13 +1302,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 49)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 49)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 49)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 49)
             {
-                PlayMusic(0x5F, 10);
+                PlayMusic(MUSIC_UNEASE, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1315,13 +1317,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 86)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 86)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 86)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 86)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1337,17 +1339,17 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (triggerType != SEVENT_TTYPE_LEAVING_ROOM)
                 break;
 
-            if (gDestinationDoor == 51)
+            if (gDestinationRoom == 51)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
                 gSoundEventCounter = SOUND_EVENT_LEFT_YAKUZA_ROOM;
                 updateSoundEvent = TRUE + 1;
                 break;
             }
 
-            if (gDestinationDoor == 54)
+            if (gDestinationRoom == 54)
             {
-                unk_372c(0x1E, 0x3, 0xA);
+                unk_372c(0x1E, MUSIC_AFTER_EVENT, 0xA);
                 gSoundEventCounter = SOUND_EVENT_AUXILIARY_POWER_MESSAGE_STARTED;
                 updateSoundEvent = TRUE + 1;
             }
@@ -1359,7 +1361,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 51)
             {
-                PlayMusic(0x3, 10);
+                PlayMusic(MUSIC_AFTER_EVENT, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1370,7 +1372,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_AUXILIARY_POWER_MESSAGE_ENDED:
-            PlayMusic(0x2E, 10);
+            PlayMusic(MUSIC_OPERATIONS_DECK, 10);
             updateSoundEvent = TRUE;
             break;
 
@@ -1378,13 +1380,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_MAIN_DECK_ROOM_56)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 10);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1397,13 +1399,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 24)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 24)
             {
-                FadeMusic(2);
+                FadeMusic(CONVERT_SECONDS(1.f/30));
             }
-            else if (type == 0x2 && gCurrentRoom == 24)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 24)
             {
-                PlayMusic(0x15, 8);
+                PlayMusic(MUSIC_SA_X_APPEARANCE, 8);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1412,13 +1414,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 55)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 55)
             {
-                FadeMusic(2);
+                FadeMusic(CONVERT_SECONDS(1.f/30));
             }
-            else if (type == 0x2 && gCurrentRoom == 55)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 55)
             {
-                PlayMusic(0x1E, 0);
+                PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1429,7 +1431,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 24)
             {
-                PlayMusic(0x15, 8);
+                PlayMusic(MUSIC_SA_X_APPEARANCE, 8);
                 gSoundEventCounter = SOUND_EVENT_111;
                 updateSoundEvent = TRUE + 1;
             }
@@ -1443,7 +1445,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (gDestinationDoor == 32)
+            if (gDestinationRoom == 32)
             {
                 if (gEventCounter == EVENT_ESCAPED_TRO_2_SA_X)
                 {
@@ -1452,7 +1454,7 @@ void SoundEventUpdateMusic(u8 triggerType)
                     break;
                 }
 
-                FadeMusic(30);
+                FadeMusic(CONVERT_SECONDS(.5f));
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1463,7 +1465,7 @@ void SoundEventUpdateMusic(u8 triggerType)
 
             if (gCurrentRoom == 32)
             {
-                PlayMusic(0x6, 0);
+                PlayMusic(MUSIC_SECTOR_2, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1472,13 +1474,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 22)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 22)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 22)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 22)
             {
-                PlayMusic(0x44, 7);
+                PlayMusic(MUSIC_NETTORI_BATTLE, 7);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1491,13 +1493,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_2)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 12)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 12)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 12)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 12)
             {
-                PlayMusic(0x6, 0);
+                PlayMusic(MUSIC_SECTOR_2, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1510,13 +1512,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 0)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 0)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 0)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 0)
             {
-                PlayMusic(0x32, 10);
+                PlayMusic(MUSIC_HEADING_TO_NIGHTMARE_RIDLEY, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1525,13 +1527,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 20)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 20)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 20)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 20)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1544,13 +1546,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_5)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 27)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 27)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 27)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 27)
             {
-                PlayMusic(0x2C, 10);
+                PlayMusic(MUSIC_MAIN_DECK_LIVELY, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1559,13 +1561,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_4)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 14)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 14)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 14)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 14)
             {
-                PlayMusic(0x3C, 0);
+                PlayMusic(MUSIC_SECTOR_4_UNDERWATER, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1586,9 +1588,9 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (gDestinationDoor == 26)
+            if (gDestinationRoom == 26)
             {
-                FadeMusic(200);
+                FadeMusic(CONVERT_SECONDS(3 + 1.f/3));
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1597,7 +1599,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gLastElevatorUsed != ELEVATOR_MAIN_DECK_TO_SECTOR_4)
                 break;
 
-            PlayMusic(0x1E, 11);
+            PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 11);
             updateSoundEvent = TRUE;
             break;
 
@@ -1605,13 +1607,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_6_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 11);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 11);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1624,13 +1626,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_6)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 0)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 0)
             {
-                FadeMusic(50);
+                FadeMusic(CONVERT_SECONDS(5.f/6));
             }
-            else if (type == 0x2 && gCurrentRoom == 0)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 0)
             {
-                PlayMusic(0xA, 0);
+                PlayMusic(MUSIC_SECTOR_6, 0);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1648,13 +1650,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_6)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 16)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 16)
             {
-                FadeMusic(20);
+                FadeMusic(CONVERT_SECONDS(1.f/3));
             }
-            else if (type == 0x2 && gCurrentRoom == 16)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 16)
             {
-                PlayMusic(0x1B, 7);
+                PlayMusic(MUSIC_BOX_BATTLE, 7);
                 updateSoundEvent = TRUE;
             }
 
@@ -1681,21 +1683,21 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 78)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 78)
             {
-                FadeMusic(40);
+                FadeMusic(CONVERT_SECONDS(2.f/3));
                 unk_3cfc();
                 break;
             }
-            else if (type == 0x2 && gCurrentRoom == 78)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 78)
             {
-                PlayMusic(0x5F, 10);
+                PlayMusic(MUSIC_UNEASE, 10);
                 updateSoundEvent = TRUE;
             }
             break;
 
         case SOUND_EVENT_SA_X_LAB_RUMBLE:
-            FadeMusic(20);
+            FadeMusic(CONVERT_SECONDS(1.f/3));
             updateSoundEvent = TRUE;
             break;
 
@@ -1703,13 +1705,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 79)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 79)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 79)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 79)
             {
-                PlayMusic(0x17, 10);
+                PlayMusic(MUSIC_SA_X_CHASE, 10);
                 updateSoundEvent = TRUE;
             }
 
@@ -1718,13 +1720,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_ESCAPED_RESTRICTED_LAB:
-            FadeMusic(60 * 10);
+            FadeMusic(CONVERT_SECONDS(10));
             unk_3cfc();
             updateSoundEvent = TRUE;
             break;
 
         case SOUND_EVENT_RESTRICTED_LAB_CUTSCENE_ENDED:
-            PlayMusic(0x3, 10);
+            PlayMusic(MUSIC_AFTER_EVENT, 10);
             updateSoundEvent = TRUE;
             break;
 
@@ -1737,7 +1739,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             break;
 
         case SOUND_EVENT_RESTRICTED_LAB_ELEVATOR_MONOLOGUE_ENDED:
-            FadeMusic(60 * 5);
+            FadeMusic(CONVERT_SECONDS(5));
             updateSoundEvent = TRUE;
             break;
 
@@ -1745,7 +1747,7 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gLastElevatorUsed != ELEVATOR_RESTRICTED_ZONE_TO_SECTOR_1)
                 break;
 
-            PlayMusic(0x1E, 10);
+            PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 10);
             updateSoundEvent = TRUE;
             break;
 
@@ -1753,13 +1755,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_1)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 30)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 30)
             {
-                FadeMusic(40);
+                FadeMusic(CONVERT_SECONDS(2.f/3));
             }
-            else if (type == 0x2 && gCurrentRoom == 30)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 30)
             {
-                PlayMusic(0x32, 10);
+                PlayMusic(MUSIC_HEADING_TO_NIGHTMARE_RIDLEY, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1768,13 +1770,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_1)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 27)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 27)
             {
-                FadeMusic(40);
+                FadeMusic(CONVERT_SECONDS(2.f/3));
             }
-            else if (type == 0x2 && gCurrentRoom == 27)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 27)
             {
-                PlayMusic(0x18, 6);
+                PlayMusic(MUSIC_BOSS_TENSION, 6);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1787,13 +1789,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_SECTOR_1)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 26)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 26)
             {
-                FadeMusic(40);
+                FadeMusic(CONVERT_SECONDS(2.f/3));
             }
-            else if (type == 0x2 && gCurrentRoom == 26)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 26)
             {
-                PlayMusic(0x32, 10);
+                PlayMusic(MUSIC_HEADING_TO_NIGHTMARE_RIDLEY, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1802,13 +1804,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentNavigationRoom != NAV_ROOM_SECTOR_1_ROOM_2)
                 break;
 
-            if (type == 0x1)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM)
             {
-                PlayMusic(0xB, 10);
+                PlayMusic(MUSIC_NAVIGATION_ROOM, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1821,13 +1823,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 85)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 85)
             {
-                FadeMusic(60);
+                FadeMusic(CONVERT_SECONDS(1));
             }
-            else if (type == 0x2 && gCurrentRoom == 85)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 85)
             {
-                PlayMusic(0x2E, 10);
+                PlayMusic(MUSIC_OPERATIONS_DECK, 10);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1840,13 +1842,13 @@ void SoundEventUpdateMusic(u8 triggerType)
             if (gCurrentArea != AREA_MAIN_DECK)
                 break;
 
-            if (type == 0x1 && gDestinationDoor == 63)
+            if (type == SEVENT_UPDATE_LEAVING_ROOM && gDestinationRoom == 63)
             {
                 FadeMusic(0);
             }
-            else if (type == 0x2 && gCurrentRoom == 63)
+            else if (type == SEVENT_UPDATE_ENTERING_ROOM && gCurrentRoom == 63)
             {
-                PlayMusic(0x58, 7);
+                PlayMusic(MUSIC_SHOCK, 7);
                 updateSoundEvent = TRUE;
             }
             break;
@@ -1867,7 +1869,7 @@ void PlayRoomMusicTrack(u8 area, u8 room)
 {
     gCurrentMusicTrack.number = sAreaRoomEntryPointers[area][room].musicTrack;
     CheckSetNewMusicTrack(gCurrentMusicTrack.number);
-    gDestinationDoor = room;
+    gDestinationRoom = room;
     SoundEventUpdateMusic(SEVENT_TTYPE_LEAVING_ROOM);
 }
 
@@ -1879,9 +1881,9 @@ void CheckUpdateMusicDuringRoomLoad(void)
 {
     if (gDisableMusicFlag)
     {
-        SoundPlay(0);
+        SoundPlay(MUSIC_NONE);
     }
-    else if (!gUnk_03000be3)
+    else if (!gUnk_3000be3)
     {
         if (gDemoState)
             return;
@@ -1908,7 +1910,7 @@ void CheckUpdateMusicDuringRoomLoad(void)
             SoundEventUpdateMusic(SEVENT_TTYPE_LEAVING_SHIP);
 
             if (gEventCounter == EVENT_ENTERED_SHIP && gSoundEventCounter == SOUND_EVENT_POWER_OUTAGE_LEAVING_SHIP_ENDED)
-                SetCurrentEventBasedEffect(12);
+                RoomEffectSetCurrentEventBased(EVENT_EFFECT_12);
         }
     }
     else

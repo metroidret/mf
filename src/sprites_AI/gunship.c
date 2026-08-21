@@ -65,9 +65,9 @@ void GunshipInit(void)
     gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 6 + HALF_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(6.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -81,7 +81,7 @@ void GunshipInit(void)
     gCurrentSprite.work1 = 0;
     gCurrentSprite.work2 = 0;
 
-    if (!gIsLoadingFile && !gUnk_03000be3 && !gDebugFlag)
+    if (!gIsLoadingFile && !gUnk_3000be3 && !gDebugFlag)
     {
         gCurrentSprite.pose = 0x18;
         
@@ -359,9 +359,9 @@ void GunshipBeamInit(void)
 
     gCurrentSprite.samusCollision = SSC_NONE;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(QUARTER_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(QUARTER_BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.25f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.25f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -469,7 +469,7 @@ void GunshipUpdatePalette(void)
     offset = gCurrentSprite.work1 * 16;
     pal = &sGunshipFlashingPal[offset + 11];
 
-    DMA_SET(3, pal, PALRAM_OBJ + 0x136, C_32_2_16(DMA_ENABLE, 5));
+    DMA3_COPY_16(pal, PALRAM_OBJ + 0x136, 5);
 
     if (gCurrentSprite.work2 != 0)
     {
@@ -615,9 +615,9 @@ void GunshipPart(void)
             gCurrentSprite.drawOrder = 12;
             gCurrentSprite.samusCollision = SSC_NONE;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 6 + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 6);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(6.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(6);
 
             gCurrentSprite.hitboxTop = -PIXEL_SIZE;
             gCurrentSprite.hitboxBottom = PIXEL_SIZE;

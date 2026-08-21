@@ -144,9 +144,9 @@ void KihunterGroundInit(void)
     }
 
     gCurrentSprite.work2 = 0;
-    gCurrentSprite.drawDistanceTop = 32;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.5f);
     gCurrentSprite.hitboxBottom = 0;
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.625f);
@@ -191,7 +191,7 @@ void KihunterGroundJumpWarningInit(void)
     }
 }
 
-void KihhunterGroundJumpInit(void)
+void KihunterGroundJumpInit(void)
 {
     gCurrentSprite.pose = 0x18;
     gCurrentSprite.animationDurationCounter = 0;
@@ -249,7 +249,7 @@ void KihunterGroundTurningAroundInit(void)
 void KihunterGroundSpittingInit(void)
 {
     gCurrentSprite.pose = 0x2a;
-    gCurrentSprite.pOam = sKihunterGroundOam_Barfing;
+    gCurrentSprite.pOam = sKihunterGroundOam_Spitting;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
@@ -274,7 +274,7 @@ void KihunterGroundJumpWarning(void)
     }
 
     if (SpriteUtilHasCurrentAnimationEnded())
-        KihhunterGroundJumpInit();
+        KihunterGroundJumpInit();
 }
 
 void KihunterGroundJumping(void)
@@ -405,7 +405,7 @@ void KihunterGroundLanding(void)
             result = KihunterGroundDetectSamus();
             if (result == KIHUNTER_GROUND_SAMUS_IN_FRONT)
             {
-                KihhunterGroundJumpInit();
+                KihunterGroundJumpInit();
             }
             else if (result == KIHUNTER_GROUND_SAMUS_BEHIND)
             {
@@ -608,9 +608,9 @@ void KihunterFlyingInit(void)
         return;
     }
 
-    gCurrentSprite.drawDistanceTop = 32;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.5f);
     gCurrentSprite.hitboxBottom = 0;
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.625f);
@@ -1035,9 +1035,9 @@ void KihunterWingsInit(void)
         gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.drawDistanceTop = 40;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxTop = -4;
     gCurrentSprite.hitboxBottom = 4;
     gCurrentSprite.hitboxLeft = -4;
@@ -1119,14 +1119,14 @@ void KihunterSpitInit(void)
 {
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 8;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.125f);
     gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(0.125f);
-    gCurrentSprite.pOam = sKihunterBarfOam_Moving;
+    gCurrentSprite.pOam = sKihunterSpitOam_Moving;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.work4 = 0;
@@ -1173,7 +1173,7 @@ void KihunterSpitExplodingInit(void)
 {
     gCurrentSprite.pose = 0x38;
     gCurrentSprite.samusCollision = SSC_NONE;
-    gCurrentSprite.pOam = sKihunterBarfOam_Exploding;
+    gCurrentSprite.pOam = sKihunterSpitOam_Exploding;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 }
@@ -1194,9 +1194,9 @@ void KihunterHiveInit(void)
         return;
     }
 
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.0f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.75f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.75f);
@@ -1217,7 +1217,7 @@ void KihunterHiveInit(void)
         gCurrentSprite.primarySpriteRamSlot, gCurrentSprite.yPosition + BLOCK_TO_SUB_PIXEL(1.5f),
         gCurrentSprite.xPosition + BLOCK_TO_SUB_PIXEL(0.5f), 0);
 
-    SoundPlay_2894(SOUND_KIHUNTER_HIVE_BUZZING);
+    unk_2894(SOUND_KIHUNTER_HIVE_BUZZING);
 }
 
 void KihunterHiveSpawnKihunter(void)
@@ -1239,9 +1239,9 @@ void KihunterHiveSpawnKihunter(void)
     ramSlot = SpriteSpawnPrimary(PSPRITE_KIHUNTER_FLYING, 0, gCurrentSprite.spritesetGfxSlot, SSP_X_ABSORBABLE_BY_SAMUS,
         gCurrentSprite.yPosition + BLOCK_TO_SUB_PIXEL(2.0f), gCurrentSprite.xPosition, flip);
     // BUG: Doesn't check if spawning failed, so ramSlot can go out of bounds
-    #ifdef BUGFIX
+#ifdef BUGFIX
     if (ramSlot != UCHAR_MAX)
-    #endif // BUGFIX
+#endif // BUGFIX
     {
         gSpriteData[ramSlot].pose = SPRITE_POSE_SPAWNING_FROM_X_INIT;
         gSpriteData[ramSlot].status |= SPRITE_STATUS_MOSAIC | SPRITE_STATUS_IGNORE_PROJECTILES;
@@ -1262,9 +1262,9 @@ void KihunterHiveSpawnCooldown(void)
 void KihunterBugInit(void)
 {
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 8;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
     gCurrentSprite.hitboxLeft = -PIXEL_SIZE;
@@ -1272,9 +1272,9 @@ void KihunterBugInit(void)
     gCurrentSprite.pOam = sKihunterBugOam;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    #ifndef BUGFIX
+#ifndef BUGFIX
     gCurrentSprite.work4 = 0; // Unnecessary assignment
-    #endif // !BUGFIX
+#endif // !BUGFIX
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.drawOrder = 12;

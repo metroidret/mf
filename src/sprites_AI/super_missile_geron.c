@@ -32,11 +32,11 @@ void SuperMissileGeronInit(void)
     }
     else
     {
-        // All geron sprite ids are next to each other numerically, so doing spriteId - firstGeronId offsets the id to start at 0
+        // All super missile geron sprite IDs are next to each other numerically, so
+        // subtracting by the first super missile geron ID offsets the ID to start at 0
         spriteId = gCurrentSprite.spriteId;
         spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
 
-        // Get bit affected by the current geron
         geronBit = gSuperMissileGeronsDestroyed >> spriteId;
 
         if (geronBit & 1)
@@ -48,9 +48,9 @@ void SuperMissileGeronInit(void)
         gCurrentSprite.pose = SPRITE_POSE_IDLE;
     }
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
 
@@ -124,7 +124,8 @@ void SuperMissileGeronDying(void)
     u8 spriteId;
     u16 geronBit;
 
-    // All geron sprite ids are next to each other numerically, so doing spriteId - firstGeronId offsets the id to start at 0
+    // All super missile geron sprite IDs are next to each other numerically, so
+    // subtracting by the first super missile geron ID offsets the ID to start at 0
     spriteId = gCurrentSprite.spriteId;
     spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
 
@@ -210,9 +211,9 @@ void SuperMissileGeronStem(void)
 
             gCurrentSprite.pose = SPRITE_POSE_IDLE;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
             gCurrentSprite.hitboxTop = -(BLOCK_SIZE * 2);
             gCurrentSprite.hitboxBottom = BLOCK_SIZE * 2;

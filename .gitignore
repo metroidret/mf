@@ -1,5 +1,6 @@
 /src/**/*.s
 /data/*
+/sound/direct_sound_samples/*
 
 *.gba
 *.elf
@@ -17,8 +18,7 @@
 linker.ld.pp
 include/**/*.s
 tools/*.txt
+tools/agbcc
 .vscode
 
 err.log
-
-!/sound/direct_sound_samples/*.bin

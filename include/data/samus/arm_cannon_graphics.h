@@ -1,0 +1,121 @@
+#include "types.h"
+
+extern const u8 sArmCannonGfx_Elevator_Top[6 * 32];
+extern const u8 sArmCannonGfx_Elevator_Bottom[6 * 32];
+
+extern const u8 sArmCannonGfx_Dying_Top_0[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Top_1[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Top_2[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Top_3[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Top_4[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Top_5[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Bottom_0[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Bottom_1[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Bottom_2[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Bottom_3[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Bottom_4[8 * 32];
+extern const u8 sArmCannonGfx_Dying_Bottom_5[8 * 32];
+
+extern const u8 sArmCannonGfx_Dying_HairTop0[3 * 32];
+extern const u8 sArmCannonGfx_Dying_HairTop1[2 * 32];
+
+extern const u8 sArmCannonGfx_ScrewAttacking_Top_0[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Top_1[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Top_2[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Top_3[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Bottom_0[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Bottom_1[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Bottom_2[8 * 32];
+extern const u8 sArmCannonGfx_ScrewAttacking_Bottom_3[8 * 32];
+
+extern const u8 sArmCannonGfx_Default_Right_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Top_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Top_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Bottom_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Bottom_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Right_Bottom_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Top_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Top_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Bottom_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Bottom_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Left_Bottom_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Top_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Top_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Bottom_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Bottom_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Right_Bottom_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Top_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Top_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Bottom_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Bottom_Up[6 * 32];
+extern const u8 sArmCannonGfx_Default_Armed_Left_Bottom_Down[6 * 32];
+
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Right_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Right_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Right_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Right_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Right_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Right_Bottom_Down[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Left_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Left_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Left_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Left_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Left_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnHorizontalLadder_Left_Bottom_Down[6 * 32];
+
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Top_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Top_Up[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Bottom_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Bottom_Up[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Right_Bottom_Down[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Top_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Top_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Top_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Top_Up[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Top_Down[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Bottom_DiagonalDown[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Bottom_Forward[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Bottom_DiagonalUp[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Bottom_Up[6 * 32];
+extern const u8 sArmCannonGfx_OnVerticalLadder_Left_Bottom_Down[6 * 32];
+
+extern const u8 sArmCannonGfx_LoadingSave_Top_0[12 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Bottom_0[8 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Top_10[12 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Bottom_10[8 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Top_12[12 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Bottom_12[8 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Top_14[12 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Bottom_14[8 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Top_1[12 * 32];
+extern const u8 sArmCannonGfx_LoadingSave_Bottom_1[8 * 32];
+
+extern const u8 sArmCannonGfx_UnlockingSecurity_Top[16 * 32];
+extern const u8 sArmCannonGfx_UnlockingSecurity_Bottom[16 * 32];
+
+extern const struct FrameData sArmCannonOam_UnlockingSecurity_Left[25];
+extern const struct FrameData sArmCannonOam_UnlockingSecurity_Right[25];

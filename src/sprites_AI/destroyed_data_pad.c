@@ -34,9 +34,9 @@ void DestroyedDataPad(void)
             gCurrentSprite.samusCollision = SSC_NONE;
             gCurrentSprite.drawOrder = 12;
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 3);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(0);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
 
             gCurrentSprite.hitboxTop = -PIXEL_SIZE;
             gCurrentSprite.hitboxBottom = PIXEL_SIZE;

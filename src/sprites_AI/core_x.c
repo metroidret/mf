@@ -162,9 +162,9 @@ void CoreXAbilityInit(void)
     gCurrentSprite.drawOrder = 6;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
     gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
     gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE;
     gCurrentSprite.hitboxLeft = -HALF_BLOCK_SIZE;
@@ -562,7 +562,7 @@ void CoreXAbilityWaitingAtTarget(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_SAMUS_COLLIDING)
     {
-        gPreventMovementTimer = 1000;
+        gPreventMovementTimer = SAMUS_ITEM_PMT;
 
         gCurrentSprite.properties |= SP_ALWAYS_ACTIVE;
         gCurrentSprite.pose = 0x5f;
@@ -740,9 +740,9 @@ void CoreXShell(void)
             gCurrentSprite.drawOrder = 5;
             gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
             gCurrentSprite.health = maxHealth;
-            gCurrentSprite.drawDistanceTop = 24;
-            gCurrentSprite.drawDistanceBottom = 24;
-            gCurrentSprite.drawDistanceHorizontal = 24;
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
             gCurrentSprite.hitboxTop = -PIXEL_TO_SUB_PIXEL(0x14);
             gCurrentSprite.hitboxBottom = PIXEL_TO_SUB_PIXEL(0x14);
             gCurrentSprite.hitboxLeft = -PIXEL_TO_SUB_PIXEL(0x14);
@@ -881,9 +881,9 @@ void AbilityAura(void)
         gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
         gCurrentSprite.drawOrder = 4;
         gCurrentSprite.bgPriority = gIoRegisters.bg1Cnt & 3;
-        gCurrentSprite.drawDistanceTop = 16;
-        gCurrentSprite.drawDistanceBottom = 16;
-        gCurrentSprite.drawDistanceHorizontal = 16;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
         gCurrentSprite.hitboxTop = -PIXEL_SIZE;
         gCurrentSprite.hitboxBottom = PIXEL_SIZE;
         gCurrentSprite.hitboxLeft = -PIXEL_SIZE;

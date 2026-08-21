@@ -207,7 +207,7 @@ void HudDrawEnergy(void)
         gEnergyDigits.tens = digit;
         needUpdate++;
 
-        DMA_SET(3, &sEnergyDigitsGfx[digit * 32], VRAM_OBJ + 0xE20, C_32_2_16(DMA_ENABLE, 32 / sizeof(u16)));
+        DMA3_COPY_16(&sEnergyDigitsGfx[digit * 32], VRAM_OBJ + 0xE20, 32 / sizeof(u16));
     }
 
     digit = energy / 1 % 10;
@@ -216,7 +216,7 @@ void HudDrawEnergy(void)
         gEnergyDigits.ones = digit;
         needUpdate++;
 
-        DMA_SET(3, &sEnergyDigitsGfx[digit * 32], VRAM_OBJ + 0xE40, C_32_2_16(DMA_ENABLE, 32 / sizeof(u16)));
+        DMA3_COPY_16(&sEnergyDigitsGfx[digit * 32], VRAM_OBJ + 0xE40, 32 / sizeof(u16));
     }
 
     if (!needUpdate)
@@ -229,170 +229,170 @@ void HudDrawEnergy(void)
 
     if (maxHundreds > 9)
     {
-        DMA_SET(3, &sEnergyTanksGfx_Empty[10 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 160 / sizeof(u16)));
+        DMA3_COPY_16(&sEnergyTanksGfx_Empty[10 * 256], VRAM_OBJ + 0xE60, 160 / sizeof(u16));
 
         if (maxHundreds > 10)
         {
-            DMA_SET(3, &sEnergyTanksGfx_Empty[(maxHundreds - 10) * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 160 / sizeof(u16)));
+            DMA3_COPY_16(&sEnergyTanksGfx_Empty[(maxHundreds - 10) * 256], VRAM_OBJ + 0xA60, 160 / sizeof(u16));
         }
         else
         {
-            DMA_SET(3, &sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 160 / sizeof(u16)));
+            DMA3_COPY_16(&sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xA60, 160 / sizeof(u16));
         }
     }
     else if (maxHundreds != 0)
     {
-        DMA_SET(3, &sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 160 / sizeof(u16)));
-        DMA_SET(3, &sEnergyTanksGfx_Empty[maxHundreds * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 160 / sizeof(u16)));
+        DMA3_COPY_16(&sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xA60, 160 / sizeof(u16));
+        DMA3_COPY_16(&sEnergyTanksGfx_Empty[maxHundreds * 256], VRAM_OBJ + 0xE60, 160 / sizeof(u16));
     }
     else
     {
-        DMA_SET(3, &sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 16 * 5));
-        DMA_SET(3, &sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 16 * 5));
+        DMA3_COPY_16(&sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xA60, 16 * 5);
+        DMA3_COPY_16(&sEnergyTanksGfx_Empty[0 * 256], VRAM_OBJ + 0xE60, 16 * 5);
     }
 
     if (currentHundreds > 9)
     {
-        DMA_SET(3, &sEnergyTanksGfx_Full[4 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 16 * 5));
+        DMA3_COPY_16(&sEnergyTanksGfx_Full[4 * 256], VRAM_OBJ + 0xE60, 16 * 5);
     }
     switch (currentHundreds)
     {
         case 1:
             if (maxHundreds >= 2)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xE60, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xE60, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             break;
 
         case 3:
             if (maxHundreds >= 4)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xE80, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xE80, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xE80, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xE80, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 2:
-            DMA_SET(3, &sEnergyTanksGfx_Full[0 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 16 * 1));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[0 * 256], VRAM_OBJ + 0xE60, 16 * 1);
             break;
 
         case 5:
             if (maxHundreds >= 6)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xEA0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xEA0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xEA0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xEA0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 4:
-            DMA_SET(3, &sEnergyTanksGfx_Full[1 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 16 * 2));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[1 * 256], VRAM_OBJ + 0xE60, 16 * 2);
             break;
 
         case 7:
             if (maxHundreds >= 8)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xEC0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xEC0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xEC0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xEC0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 6:
-            DMA_SET(3, &sEnergyTanksGfx_Full[2 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 16 * 3));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[2 * 256], VRAM_OBJ + 0xE60, 16 * 3);
             break;
 
         case 9:
             if (maxHundreds >= 10)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xEE0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xEE0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xEE0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xEE0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 8:
-            DMA_SET(3, &sEnergyTanksGfx_Full[3 * 256], VRAM_OBJ + 0xE60, C_32_2_16(DMA_ENABLE, 16 * 4));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[3 * 256], VRAM_OBJ + 0xE60, 16 * 4);
             break;
 
         case 11:
             if (maxHundreds >= 12)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xA60, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xA60, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             break;
 
         case 13:
             if (maxHundreds >= 14)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xA80, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xA80, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xA80, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xA80, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 12:
-            DMA_SET(3, &sEnergyTanksGfx_Full[0 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 16 * 1));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[0 * 256], VRAM_OBJ + 0xA60, 16 * 1);
             break;
 
         case 15:
             if (maxHundreds >= 16)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xAA0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xAA0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xAA0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xAA0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 14:
-            DMA_SET(3, &sEnergyTanksGfx_Full[1 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 16 * 2));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[1 * 256], VRAM_OBJ + 0xA60, 16 * 2);
             break;
 
         case 17:
             if (maxHundreds >= 18)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xAC0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xAC0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xAC0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xAC0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 16:
-            DMA_SET(3, &sEnergyTanksGfx_Full[2 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 16 * 3));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[2 * 256], VRAM_OBJ + 0xA60, 16 * 3);
             break;
 
         case 19:
             if (maxHundreds >= 20)
             {
-                DMA_SET(3, sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xAE0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFullOneEmpty, VRAM_OBJ + 0xAE0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
             else
             {
-                DMA_SET(3, sEnergyTankGfx_OneFull, VRAM_OBJ + 0xAE0, C_32_2_16(DMA_ENABLE, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16)));
+                DMA3_COPY_16(sEnergyTankGfx_OneFull, VRAM_OBJ + 0xAE0, sizeof(sEnergyTankGfx_OneFullOneEmpty) / sizeof(u16));
             }
 
         case 18:
-            DMA_SET(3, &sEnergyTanksGfx_Full[3 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 16 * 4));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[3 * 256], VRAM_OBJ + 0xA60, 16 * 4);
             break;
 
         case 20:
-            DMA_SET(3, &sEnergyTanksGfx_Full[4 * 256], VRAM_OBJ + 0xA60, C_32_2_16(DMA_ENABLE, 16 * 5));
+            DMA3_COPY_16(&sEnergyTanksGfx_Full[4 * 256], VRAM_OBJ + 0xA60, 16 * 5);
             break;
     }
 }
@@ -519,7 +519,7 @@ void HudDrawMissiles(u8 skipUpdatingNumber)
     }
 
     // Transfer graphics
-    DMA_SET(3, gAmmoDigitsGfx, VRAM_OBJ + 0xF00, C_32_2_16(DMA_ENABLE, sizeof(gAmmoDigitsGfx) / sizeof(u16)));
+    DMA3_COPY_16(gAmmoDigitsGfx, VRAM_OBJ + 0xF00, sizeof(gAmmoDigitsGfx) / sizeof(u16));
 }
 
 /**
@@ -644,7 +644,7 @@ void HudDrawPowerBombs(u8 skipUpdatingNumber)
     }
 
     // Transfer graphics
-    DMA_SET(3, gAmmoDigitsGfx, VRAM_OBJ + 0xF40, C_32_2_16(DMA_ENABLE, sizeof(gAmmoDigitsGfx) / sizeof(u16)));
+    DMA3_COPY_16(gAmmoDigitsGfx, VRAM_OBJ + 0xF40, sizeof(gAmmoDigitsGfx) / sizeof(u16));
 }
 
 /**
@@ -657,7 +657,7 @@ void HudUpdateGfx(void)
     {
         if (!(gSamusData.weaponHighlighted & 0x1))
         {
-            DMA_SET(3, 0x83e799c, VRAM_OBJ + 0xB00, C_32_2_16(DMA_ENABLE, 0x20));
+            DMA3_COPY_16(0x83e799c, VRAM_OBJ + 0xB00, 0x20);
 
             gMissileHighlightStatus = FALSE;
             HudDrawMissiles(TRUE);
@@ -667,7 +667,7 @@ void HudUpdateGfx(void)
     {
         if (gSamusData.weaponHighlighted & 0x1)
         {
-            DMA_SET(3, 0x83e79dc, VRAM_OBJ + 0xB00, C_32_2_16(DMA_ENABLE, 0x20));
+            DMA3_COPY_16(0x83e79dc, VRAM_OBJ + 0xB00, 0x20);
 
             gMissileHighlightStatus = TRUE;
             HudDrawMissiles(TRUE);
@@ -678,7 +678,7 @@ void HudUpdateGfx(void)
     {
         if (!(gSamusData.weaponHighlighted & 0x10))
         {
-            DMA_SET(3, 0x83e7a1c, VRAM_OBJ + 0xB40, C_32_2_16(DMA_ENABLE, 0x20));
+            DMA3_COPY_16(0x83e7a1c, VRAM_OBJ + 0xB40, 0x20);
 
             gPowerBombHighlightStatus = FALSE;
             HudDrawPowerBombs(TRUE);
@@ -688,7 +688,7 @@ void HudUpdateGfx(void)
     {
         if (gSamusData.weaponHighlighted & 0x10)
         {
-            DMA_SET(3, 0x83e7a5c, VRAM_OBJ + 0xB40, C_32_2_16(DMA_ENABLE, 0x20));
+            DMA3_COPY_16(0x83e7a5c, VRAM_OBJ + 0xB40, 0x20);
 
             gPowerBombHighlightStatus = TRUE;
             HudDrawPowerBombs(TRUE);
@@ -699,7 +699,7 @@ void HudUpdateGfx(void)
     {
         gMinimapUpdateFlag--;
 
-        DMA_SET(3, EWRAM_BASE + 0x35C00 + gMinimapUpdateFlag * 48 * sizeof(u16), VRAM_OBJ + 0x1F80 + gMinimapUpdateFlag * 0x400, C_32_2_16(DMA_ENABLE, 48))
+        DMA3_COPY_16(EWRAM_BASE + 0x35C00 + gMinimapUpdateFlag * 48 * sizeof(u16), VRAM_OBJ + 0x1F80 + gMinimapUpdateFlag * 0x400, 48)
     }
 }
 

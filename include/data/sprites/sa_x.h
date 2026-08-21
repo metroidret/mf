@@ -139,7 +139,7 @@ extern const u16 sSaXElevatorRocksAndCloudPal[1 * 16];
 extern const struct FrameData* const sSaXElevatorSpritesOamPointers[10];
 
 extern const SaXElevatorFunc_T sSaXElevatorFunctionPointers[1];
-extern const SaXElevatorFunc_T sSaXElevatorSubroutinesPointers[6];
+extern const SaXElevatorFunc_T sSaXElevatorHandlerPointers[6];
 
 extern const struct SaXElevatorSprite sSaXElevatorSpritesBlowingUpWall[MAX_AMOUNT_OF_SA_X_ELEVATOR_SPRITES + 2];
 extern const struct SaXElevatorSprite sSaXElevatorSpritesShootingDoor[7];

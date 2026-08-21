@@ -79,20 +79,20 @@ void SidehopperInit(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_Y_FLIP)
     {
-        gCurrentSprite.drawDistanceTop = 24;
-        gCurrentSprite.drawDistanceBottom = 40;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2.5f);
         gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(1.375f);
         gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
     }
     else
     {
-        gCurrentSprite.drawDistanceTop = 40;
-        gCurrentSprite.drawDistanceBottom = 24;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2.5f);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
         gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.375f);
         gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE;
     }
 
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxLeft = -BLOCK_SIZE;
     gCurrentSprite.hitboxRight = BLOCK_SIZE;
 

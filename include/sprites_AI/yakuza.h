@@ -1,0 +1,70 @@
+#ifndef YAKUZA_AI_H
+#define YAKUZA_AI_H
+
+#include "types.h"
+
+void YakuzaSyncSubSprites(void);
+void YakuzaUpdatePalette(void);
+boolu8 YakuzaUpdateGrabbedSamus(void);
+boolu8 YakuzaCheckCollidingWithRightWall(void);
+boolu8 YakuzaCheckCollidingWithLeftWall(void);
+boolu8 YakuzaCheckCollidingWithFloor(void);
+boolu8 YakuzaCheckCollidingWithCeiling(void);
+boolu8 YakuzaXMovement(u16 movement);
+boolu8 YakuzaYMovement(u16 movement);
+void YakuzaGrabbedSamusInit(void);
+void YakuzaGrabbedSamus(void);
+void YakuzaPullingSamus(void);
+void YakuzaHoldingSamusHigh(void);
+void YakuzaSlammingSamus(void);
+void YakuzaReleasingSamusInit(void);
+void YakuzaReleasingSamus(void);
+void YakuzaAfterReleasingSamusInit(void);
+void YakuzaAfterReleasingSamus(void);
+void YakuzaInit(void);
+void YakuzaWaitingToAppear(void);
+void YakuzaAboutToAppear(void);
+void YakuzaIdleBeforeNewRoundInit(void);
+void YakuzaIdleBeforeNewRound(void);
+void YakuzaBeginSweepInit(void);
+void YakuzaBeginSweep(void);
+void YakuzaSweeping(void);
+void YakuzaSweepingEnd(void);
+void YakuzaOpeningMouthInit(void);
+void YakuzaOpeningMouth(void);
+void YakuzaMouthOpenedInit(void);
+void YakuzaMouthOpened(void);
+void YakuzaClosingMouthInit(void);
+void YakuzaClosingMouth(void);
+void YakuzaPhase1DyingInit(void);
+void YakuzaPhase1Dying(void);
+void YakuzaUpdateHitboxAndImmunity(void);
+void YakuzaLosingLegsInit(void);
+void YakuzaLosingLegs(void);
+void YakuzaPhase2Init(void);
+void YakuzaPhase2(void);
+void YakuzaPhase2DyingInit(void);
+void YakuzaPhase2Dying(void);
+void YakuzaTurningIntoCoreXInit(void);
+void YakuzaTurningIntoCoreX(void);
+void YakuzaPartInit(void);
+void YakuzaPartLegsIdle(void);
+void YakuzaPartLegsDead(void);
+void YakuzaPartEyeIdle(void);
+void YakuzaPartEyePhase2(void);
+void YakuzaProjectileInit(void);
+void YakuzaProjectileExploding(void);
+void YakuzaProjectileSpitFalling(void);
+void YakuzaProjectileFireFalling(void);
+void YakuzaProjectileFireBurning1(void);
+void YakuzaProjectileFireBurning2(void);
+void YakuzaProjectileFireBurning3(void);
+void YakuzaProjectileFireBurning4(void);
+void YakuzaFallingLegInit(void);
+void YakuzaFallingLegMoving(void);
+void Yakuza(void);
+void YakuzaPart(void);
+void YakuzaProjectile(void);
+void YakuzaFallingLeg(void);
+
+#endif /* YAKUZA_AI_H */

@@ -1,11 +1,49 @@
 #ifndef AUDIO_CONSTANTS_H
 #define AUDIO_CONSTANTS_H
 
+// Soundtrack
+// 04 - セクター1（SRX）SR388再現エリア - Sector 1 (SRX) SR388 Reproduction Area
+// 06 - セクター2（TRO）熱帯エリア - Sector 2 (TRO) Tropical Area
+// 07 - セクター3（PYR）高温地帯エリア - Sector 3 (PYR) High Temperature Zone Area
+// 08 - セクター5（ARC）低温地帯エリア - Sector 5 (ARC) Low Temperature Zone Area
+// 09 - セクター4（AQA）水位制御エリア - Sector 4 (AQA) Water Level Control Area
+// 10 - セクター6（NOC）暗闇エリア - Sector 6 (NOC) Darkness Area
+// 11 - ナビゲーションルーム - Navigation Room
+// 16 - アイテム取得ジングル - Item Obtainment Jingle
+// 17 - 登場ジングル - Appearance Jingle
+// 21 - SA-X出現 - SA-X Appearance
+// 24 - 対決前緊張 - Tension Before a Confrontation
+// 25 - VS.マルカラ - VS. Marukara
+// 26, 64 - VS.ザザビー、バリアコアX - VS. Zazabi, Varia Core-X
+// 27 - VS.ボクス - VS. BOX
+// 43 - 環境音（緊張） - Environment Sound (Tension)
+// 44 - 巨大生反応へ向かえ - Head to the Huge Bio-Reactions
+// 48 - X侵入発覚 - X Invasion Detection
+// 50, 53 - セクター3冷却装置回復タイマーミッション - Sector 3 Cooling Device Restoration Timer Mission
+// 56 - ステーション脱出タイマーミッション - Station Escape Timer Mission
+// 60 - セクター4（AQA）水中エリア - Sector 4 (AQA) Underwater Area
+// 63 - VS.イシュタル、ゲドゥ - VS. Ishtar, Gedu
+// 65 - VS.ナイトメア - VS. Nightmare
+// 66 - VS.ネオリドリー - VS. Neo-Ridley
+// 67 - VS.コアX、鳥人像第二形態 - VS. Core-X, Chozo Statue Second Form
+// 68 - VS.鳥人像第一形態 - VS. Chozo Statue First Form
+// 73, 74 - タイトル - Title
+// 81 - VS.SA-X - VS. SA-X
+// 85 - エンディング - Ending
+// 86 - エピローグ - Epilogue
+// 87 - 環境音（不穏） - Environment Sound (Disquieting)
+// 88 - 環境音（静寂） - Environment Sound (Shock)
+// 89 - 環境音（静寂1） - Environment Sound (Silence 1)
+// 90 - セクター3緊急事態発生 - Sector 3 Emergency Occurrence
+// 91 - 最終指令 - Final Order
+// 92 - 環境音（静寂2） - Environment Sound (Silence 2)
+// 93 - 環境音（陰謀） - Environment Sound (Intrigue)
+
 enum Sound {
     MUSIC_NONE, // 0x0 0
-    MUSIC_1, // 0x1 1
+    MUSIC_UNUSED_1, // 0x1 1 (Short track with mainly percussion)
     MUSIC_2, // 0x2 2
-    MUSIC_3, // 0x3 3
+    MUSIC_AFTER_EVENT, // 0x3 3
     MUSIC_SECTOR_1, // 0x4 4
     MUSIC_5, // 0x5 5
     MUSIC_SECTOR_2, // 0x6 6
@@ -17,13 +55,13 @@ enum Sound {
     MUSIC_C, // 0xc 12
     MUSIC_D, // 0xd 13
     MUSIC_E, // 0xe 14
-    MUSIC_F, // 0xf 15
-    MUSIC_ITEM_FANFARE, // 0x10 16
-    MUSIC_11, // 0x11 17
+    MUSIC_SECURITY_DATA_ROOM, // 0xf 15
+    MUSIC_ITEM_JINGLE, // 0x10 16
+    MUSIC_LOADING_SAVE, // 0x11 17
     MUSIC_12, // 0x12 18
     MUSIC_13, // 0x13 19
-    SOUND_MESSAGE_POPUP, // 0x14 20
-    MUSIC_15, // 0x15 21
+    MUSIC_MESSAGE_POPUP, // 0x14 20
+    MUSIC_SA_X_APPEARANCE, // 0x15 21
     MUSIC_16, // 0x16 22
     MUSIC_SA_X_CHASE, // 0x17 23
     MUSIC_BOSS_TENSION, // 0x18 24
@@ -32,9 +70,9 @@ enum Sound {
     MUSIC_BOX_BATTLE, // 0x1b 27
     MUSIC_1C, // 0x1c 28
     MUSIC_1D, // 0x1d 29
-    MUSIC_1E, // 0x1e 30
-    MUSIC_1F, // 0x1f 31
-    MUSIC_20, // 0x20 32
+    MUSIC_MAIN_DECK_AMBIENCE, // 0x1e 30
+    MUSIC_UNUSED_1F, // 0x1f 31 (Combination of MUSIC_MAIN_DECK_AMBIENCE and MUSIC_TENSION)
+    MUSIC_UNUSED_20, // 0x20 32 (Dramatic track combined with MUSIC_MAIN_DECK_AMBIENCE)
     MUSIC_21, // 0x21 33
     MUSIC_22, // 0x22 34
     MUSIC_23, // 0x23 35
@@ -44,27 +82,27 @@ enum Sound {
     MUSIC_27, // 0x27 39
     MUSIC_28, // 0x28 40
     MUSIC_29, // 0x29 41
-    MUSIC_2A, // 0x2a 42
-    MUSIC_2B, // 0x2b 43
-    MUSIC_2C, // 0x2c 44
-    MUSIC_2D, // 0x2d 45
-    MUSIC_2E, // 0x2e 46
-    MUSIC_2F, // 0x2f 47
-    MUSIC_30, // 0x30 48
-    MUSIC_31, // 0x31 49
-    MUSIC_32, // 0x32 50
-    MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE, // 0x33 51
+    MUSIC_SILENCE_1_SHIP, // 0x2a 42
+    MUSIC_TENSION, // 0x2b 43
+    MUSIC_MAIN_DECK_LIVELY, // 0x2c 44
+    MUSIC_OMEGA_METROID_DEFEATED, // 0x2d 45
+    MUSIC_OPERATIONS_DECK, // 0x2e 46
+    MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND_AND_AMBIENCE, // 0x2f 47
+    MUSIC_X_INVASION_DETECTION, // 0x30 48
+    MUSIC_SA_X_ELEVATOR, // 0x31 49
+    MUSIC_HEADING_TO_NIGHTMARE_RIDLEY, // 0x32 50
+    MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND, // 0x33 51
     MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_AMBIENCE, // 0x34 52
     MUSIC_MAIN_BOILER_COOLDOWN_MISSION, // 0x35 53
     MUSIC_36, // 0x36 54
     MUSIC_37, // 0x37 55
-    MUSIC_ORBIT_CHANGE, // 0x38 56
+    MUSIC_STATION_ESCAPE, // 0x38 56
     MUSIC_39, // 0x39 57
     MUSIC_3A, // 0x3a 58
     MUSIC_OBJECTIVE_COMPLETE, // 0x3b 59
-    MUSIC_3C, // 0x3c 60
+    MUSIC_SECTOR_4_UNDERWATER, // 0x3c 60
     MUSIC_3D, // 0x3d 61
-    MUSIC_3E, // 0x3e 62
+    MUSIC_SECTOR_4_UNDERWATER_UNUSED, // 0x3e 62
     MUSIC_SERRIS_YAKUZA_BATTLE, // 0x3f 63
     MUSIC_VARIA_CORE_X_BATTLE, // 0x40 64
     MUSIC_NIGHTMARE_BATTLE, // 0x41 65
@@ -75,7 +113,7 @@ enum Sound {
     MUSIC_46, // 0x46 70
     MUSIC_47, // 0x47 71
     MUSIC_48, // 0x48 72
-    MUSIC_49, // 0x49 73
+    MUSIC_PRE_TITLE_END, // 0x49 73
     MUSIC_TITLE, // 0x4a 74
     MUSIC_4B, // 0x4b 75
     MUSIC_4C, // 0x4c 76
@@ -85,25 +123,27 @@ enum Sound {
     MUSIC_50, // 0x50 80
     MUSIC_SA_X_BATTLE, // 0x51 81
     MUSIC_52, // 0x52 82
-    MUSIC_53, // 0x53 83
+    MUSIC_EPILOGUE_END, // 0x53 83
     MUSIC_54, // 0x54 84
-    MUSIC_55, // 0x55 85
-    MUSIC_56, // 0x56 86
-    MUSIC_57, // 0x57 87
-    MUSIC_58, // 0x58 88
-    MUSIC_59, // 0x59 89
-    MUSIC_5A, // 0x5a 90
-    MUSIC_5B, // 0x5b 91
-    MUSIC_5C, // 0x5c 92
-    MUSIC_5D, // 0x5d 93
-    MUSIC_5E, // 0x5e 94
-    MUSIC_5F, // 0x5f 95
+    MUSIC_ENDING, // 0x55 85
+    MUSIC_EPILOGUE, // 0x56 86
+    MUSIC_DISQUIETING, // 0x57 87
+    MUSIC_SHOCK, // 0x58 88
+    MUSIC_SILENCE_1, // 0x59 89
+    MUSIC_MAIN_BOILER_OVERHEATING, // 0x5a 90
+    MUSIC_FINAL_ORDER, // 0x5b 91
+    MUSIC_SILENCE_2, // 0x5c 92
+    MUSIC_INTRIGUE, // 0x5d 93
+    MUSIC_UNUSED_5E, // 0x5e 94 (Suspenseful track)
+    MUSIC_UNEASE, // 0x5f 95
     MUSIC_60, // 0x60 96
     MUSIC_61, // 0x61 97
     MUSIC_62, // 0x62 98
     MUSIC_63, // 0x63 99
 
-    SOUND_64, // 0x64 100
+    MUSIC_COUNT, // 0x64 100
+
+    SOUND_64 = MUSIC_COUNT, // 0x64 100
     SOUND_65, // 0x65 101
     SOUND_66, // 0x66 102
     SOUND_67, // 0x67 103
@@ -144,7 +184,7 @@ enum Sound {
     SOUND_SAMUS_ELECTRIC_WATER_DAMAGE, // 0x8a 138
     SOUND_8B, // 0x8b 139
     SOUND_8C, // 0x8c 140
-    SOUND_8D, // 0x8d 141
+    SOUND_LOW_HEALTH, // 0x8d 141
     SOUND_8E, // 0x8e 142
     SOUND_8F, // 0x8f 143
     SOUND_90, // 0x90 144
@@ -399,8 +439,8 @@ enum Sound {
     SOUND_NAMIHE_SPIT, // 0x189 393
     SOUND_NAMIHE_LUNGING, // 0x18a 394
     SOUND_NAMIHE_HURT, // 0x18b 395
-    SOUND_GERUDA_SWIPING, // 0x18c 396
-    SOUND_GERUDA_HURT, // 0x18d 397
+    SOUND_GERUTA_SWIPING, // 0x18c 396
+    SOUND_GERUTA_HURT, // 0x18d 397
     SOUND_SOVA_DROPPING_FLAME, // 0x18e 398
     SOUND_SOVA_FALLING_FLAME_EXPLODING, // 0x18f 399
     SOUND_SOVA_HURT, // 0x190 400
@@ -468,7 +508,7 @@ enum Sound {
     SOUND_1CE, // 0x1ce 462
     SOUND_1CF, // 0x1cf 463
     SOUND_1D0, // 0x1d0 464
-    SOUND_1D1, // 0x1d1 465
+    SOUND_ZOZORO_HURT, // 0x1d1 465
     SOUND_ZORO_COCOON_TRANSFORMED_IDLE, // 0x1d2 466
     SOUND_RIPPER_HURT, // 0x1d3 467
     SOUND_OWTCH_HURT, // 0x1d4 468
@@ -504,9 +544,9 @@ enum Sound {
     SOUND_1F2, // 0x1f2 498
     SOUND_1F3, // 0x1f3 499
     SOUND_1F4, // 0x1f4 500
-    SOUND_1F5, // 0x1f5 501
-    SOUND_1F6, // 0x1f6 502
-    SOUND_1F7, // 0x1f7 503
+    SOUND_CHARACTER_APPEARING_ADAM, // 0x1f5 501
+    SOUND_CHARACTER_APPEARING_SAMUS, // 0x1f6 502
+    SOUND_CHARACTER_APPEARING_FEDERATION, // 0x1f7 503
     SOUND_1F8, // 0x1f8 504
     SOUND_1F9, // 0x1f9 505
     SOUND_1FA, // 0x1fa 506
@@ -752,5 +792,45 @@ enum Sound {
 
     SOUND_COUNT
 };
+
+enum SoundModeFrequency {
+    SOUND_MODE_FREQ_NONE,
+    SOUND_MODE_FREQ_05734,
+    SOUND_MODE_FREQ_07884,
+    SOUND_MODE_FREQ_10512,
+    SOUND_MODE_FREQ_13379,
+    SOUND_MODE_FREQ_15768,
+    SOUND_MODE_FREQ_18157,
+    SOUND_MODE_FREQ_21024,
+    SOUND_MODE_FREQ_26758,
+    SOUND_MODE_FREQ_31536,
+    SOUND_MODE_FREQ_36314,
+    SOUND_MODE_FREQ_40137,
+    SOUND_MODE_FREQ_42048,
+
+    SOUND_MODE_FREQ_END
+};
+
+#define SOUND_ACTION_MAX_CHANNELS_SHIFT (8)
+#define SOUND_ACTION_VOLUME_SHIFT       (12)
+#define SOUND_ACTION_FREQ_INDEX_SHIFT   (16)
+#define SOUND_ACTION_PWM_SHIFT          (20)
+#define SOUND_ACTION_STEREO_SHIFT       (24)
+
+#define SOUND_ACTION_ENABLE_REVERB     (1 << 7)
+#define SOUND_ACTION_MAX_CHANNELS(c)   ((c) << SOUND_ACTION_MAX_CHANNELS_SHIFT)
+#define SOUND_ACTION_VOLUME(v)         ((v) << SOUND_ACTION_VOLUME_SHIFT)
+#define SOUND_ACTION_FREQ_INDEX(i)     ((i) << SOUND_ACTION_FREQ_INDEX_SHIFT)
+#define SOUND_ACTION_PWM(a)            ((a) << SOUND_ACTION_PWM_SHIFT)
+#define SOUND_ACTION_DISABLE_STEREO    (1 << SOUND_ACTION_STEREO_SHIFT)
+#define SOUND_ACTION_ENABLE_STEREO     (2 << SOUND_ACTION_STEREO_SHIFT)
+
+#define SOUND_ACTION_MAX_CHANNELS_FLAG (0xF << SOUND_ACTION_MAX_CHANNELS_SHIFT)
+#define SOUND_ACTION_VOLUME_FLAG       (0xF << SOUND_ACTION_VOLUME_SHIFT)
+#define SOUND_ACTION_FREQ_INDEX_FLAG   (0xF << SOUND_ACTION_FREQ_INDEX_SHIFT)
+#define SOUND_ACTION_PWM_FLAG          (0xF << SOUND_ACTION_PWM_SHIFT)
+#define SOUND_ACTION_STEREO_FLAG       (0xF << SOUND_ACTION_STEREO_SHIFT)
+
+#define PCM_DMA_BUF_SIZE 1536
 
 #endif /* AUDIO_CONSTANTS_H */

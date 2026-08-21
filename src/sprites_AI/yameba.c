@@ -91,9 +91,9 @@ void YamebaInit(void)
 
             gCurrentSprite.scaling = Q_8_8(.625f);
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
             gCurrentSprite.hitboxTop = -(QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
             gCurrentSprite.hitboxBottom = (QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
@@ -107,9 +107,9 @@ void YamebaInit(void)
 
             gCurrentSprite.scaling = Q_8_8(.5f);
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
             gCurrentSprite.hitboxTop = -(QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
             gCurrentSprite.hitboxBottom = (QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
@@ -123,9 +123,9 @@ void YamebaInit(void)
 
             gCurrentSprite.scaling = Q_8_8(1.f);
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
             gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE;
@@ -141,9 +141,9 @@ void YamebaInit(void)
 
             gCurrentSprite.scaling = Q_8_8(1.999f);
 
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
 
             gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
             gCurrentSprite.hitboxBottom = BLOCK_SIZE * 2 + EIGHTH_BLOCK_SIZE;

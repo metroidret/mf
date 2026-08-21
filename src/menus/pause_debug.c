@@ -21,10 +21,10 @@
 void Sram_QuickSave(u8);
 
 /**
- * @brief 7d34c | 70 | Pause debug subroutine
+ * @brief 7d34c | 70 | Pause debug handler
  * 
  */
-void PauseDebugSubroutine(void)
+void PauseDebugHandler(void)
 {
     if (gChangedInput & (KEY_B | KEY_L | KEY_R) && !PAUSE_SCREEN_DATA.pauseDebugEditingValue)
     {
@@ -61,7 +61,7 @@ u32 PauseDebugModifyValues(void)
     s32 editflag;
     u8 eventBackup;
     u8 ebeBackup;
-    u8 ebeCopyBackup;
+    u8 ebeQueuedBackup;
 
     // Get cursor tile position
     cursorY = PAUSE_SCREEN_DATA.oam[0].yPosition / PAUSE_DEBUG_TILE_SIZE;
@@ -256,8 +256,8 @@ u32 PauseDebugModifyValues(void)
                     updateFlag = PAUSE_DEBUG_EDIT_REDRAW_SECTION;
 
                     // Slightly crop debug menu window at the bottom to allow for the event text to be visible
-                    write16(REG_WIN0V, C_16_2_8(0, SCREEN_SIZE_Y - SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE)));
-                    write8(REG_WINOUT, WIN0_BG2);
+                    WRITE_16(REG_WIN0V, C_16_2_8(0, SCREEN_SIZE_Y - SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE)));
+                    WRITE_8(REG_WINOUT, WIN0_BG2);
     
                     // Enable text background
                     PAUSE_SCREEN_DATA.dispcnt |= DCNT_BG0;
@@ -277,8 +277,8 @@ u32 PauseDebugModifyValues(void)
                     updateFlag = PAUSE_DEBUG_EDIT_REDRAW_SECTION;
 
                     // Set the debug menu window to take the entire screen again
-                    write16(REG_WIN0V, C_16_2_8(0, SCREEN_SIZE_Y));
-                    write8(REG_WINOUT, WIN0_BG0 | WIN0_BG2 | WIN0_OBJ | WIN0_COLOR_EFFECT);
+                    WRITE_16(REG_WIN0V, C_16_2_8(0, SCREEN_SIZE_Y));
+                    WRITE_8(REG_WINOUT, WIN0_BG0 | WIN0_BG2 | WIN0_OBJ | WIN0_COLOR_EFFECT);
                 }
             }
 
@@ -333,18 +333,29 @@ u32 PauseDebugModifyValues(void)
             gEquipment.weaponsStatus = 0;
             gEquipment.suitMiscStatus = 0;
 
-            // Backup event based effect and current event
+            // Backup event based effect
             ebeBackup = gCurrentEventBasedEffect;
-            ebeCopyBackup = gCurrentEventBasedEffectCopy;
+            ebeQueuedBackup = gQueuedEventBasedEffect;
             editflag = gEventCounter;
 
-            // Set every event starting from the begginning up to the current event, keeps the event sequence intact
+            // Set every event starting from the beginning up to the current event, keeps the event sequence intact
             for (updateFlag = EVENT_NONE; updateFlag <= editflag; updateFlag++)
                 EventSet(updateFlag);
+            
+#ifdef BUGFIX
+            // Suits aren't equipped in EventSet, so equip them here
+            if (gAbilityCount >= ABILITY_COUNT_VARIA_SUIT)
+            {
+                gEquipment.suitMiscStatus |= SMF_VARIA_SUIT;
+
+                if (gAbilityCount >= ABILITY_COUNT_GRAVITY_SUIT)
+                    gEquipment.suitMiscStatus |= SMF_GRAVITY_SUIT;
+            }
+#endif // BUGFIX
 
             // Restore event based effect
             gCurrentEventBasedEffect = ebeBackup;
-            gCurrentEventBasedEffectCopy = ebeCopyBackup;
+            gQueuedEventBasedEffect = ebeQueuedBackup;
 
             // Redraw everything
             PauseDebugDrawSection(PAUSE_DEBUG_SECTION_ALL);
@@ -436,7 +447,7 @@ u32 PauseDebugModifyValues(void)
 
             if (editflag)
             {
-                // Request a redraw of the sub event section
+                // Request a redraw of the sound event section
                 updateFlag = PAUSE_DEBUG_EDIT_REDRAW_NUMBERED_SECTION;
             }
             break;
@@ -1181,7 +1192,7 @@ void PauseDebugDrawHealthAmmoAndEvent(u8 section)
     if (section == PAUSE_DEBUG_SECTION_EVENT || drawAll)
         PauseDebugDrawNumber(gEventCounter, PAUSE_DEBUG_SECTION_EVENT);
 
-    // Sub event
+    // Sound event
     if (section == PAUSE_DEBUG_SECTION_SOUND_EVENT || drawAll)
         PauseDebugDrawNumber(gSoundEventCounter, PAUSE_DEBUG_SECTION_SOUND_EVENT);
 }

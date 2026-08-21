@@ -2,8 +2,12 @@
 #define GLOBALS_H
 
 #include "types.h"
+#include "gba.h"
 #include "structs/menus/pause_screen.h"
 #include "structs/menus/title_screen.h"
+#include "structs/sa_x_close_up.h"
+#include "structs/ending.h"
+#include "structs/intro.h"
 
 struct InGameData {
     u8 clipdataCode[640];
@@ -13,6 +17,9 @@ union NonGameplayRam {
     struct PauseScreenData pauseScreen;
     struct InGameData inGame;
     struct TitleScreenData titleScreen;
+    struct SaXCloseUpData saXCloseUp;
+    struct IntroData intro;
+    struct EndingData ending;
     u8 size[1344];
 };
 
@@ -21,6 +28,12 @@ extern union NonGameplayRam gNonGameplayRam;
 #define PAUSE_SCREEN_DATA gNonGameplayRam.pauseScreen
 #define IN_GAME_DATA gNonGameplayRam.inGame
 #define TITLE_SCREEN_DATA gNonGameplayRam.titleScreen
+#define SA_X_CLOSE_UP_DATA gNonGameplayRam.saXCloseUp
+#define ENDING_DATA gNonGameplayRam.ending
+
+extern u8 gCommonSpriteGfxBackup[0x4000];
+extern u8 gRoomSpriteGfxBackup[0x4000];
+extern u16 gBackgroundPalette[COLORS_IN_PAL];
 
 extern u8 gRebootGame;
 extern u8 gClearedEveryFrame;
@@ -34,12 +47,12 @@ extern u16 gFrameCounter16Bit;
 extern s8 gPauseScreenFlag;
 extern u8 gCurrentCutscene;
 extern s8 gIsLoadingFile;
-extern s8 gUnk_03000be3;
-extern u8 gUnk_03000B8F;
-extern u8 gUnk_03000064;
+extern bools8 gUnk_3000be3;
+extern u8 gUnk_3000b8f;
+extern u8 gUnk_3000064;
 
 extern u8 gCurrentEventBasedEffect;
-extern u8 gCurrentEventBasedEffectCopy;
+extern u8 gQueuedEventBasedEffect;
 
 extern u8 gDebugFlag;
 extern u16 gButtonInput;
@@ -47,9 +60,16 @@ extern u8 gNotPressingUp;
 extern u16 gButtonInputCopy;
 extern u16 gChangedInput;
 extern u8 gDisableSoftReset;
+extern boolu8 gCollectingTankFlag;
 
+extern u16 gBg0XPosition;
+extern u16 gBg0YPosition;
 extern u16 gBg1XPosition;
 extern u16 gBg1YPosition;
+extern u16 gBg2XPosition;
+extern u16 gBg2YPosition;
+extern u16 gBg3XPosition;
+extern u16 gBg3YPosition;
 
 extern u8 gSpritesetNumber;
 
@@ -58,25 +78,31 @@ extern u8 gDisplayLocationName;
 extern u8 gSamusOnTopOfBackgrounds;
 
 extern u16 gWrittenToBldcnt;
-extern u16 gWrittenToDispcnt;
-extern u8 gWrittenToWinin_L;
-extern u8 gWrittenToWinout_R;
-extern u16 gWrittenToBldalpha;
-extern u16 gWrittenToBldalpha_R;
-extern u16 gWrittenToBldalpha_L;
-extern u16 gWrittenToBldalpha;
+extern u16 gWrittenToBldalpha_Eva;
+extern u16 gWrittenToBldalpha_Evb;
 extern u16 gWrittenToBldy;
-extern u16 gWrittenToWin1H;
-extern u16 gWrittenToWin1V;
-extern u16 gWrittenToBldcnt_Special;
 extern u8 gDisableScrolling;
 extern u8 gDisableMusicFlag;
+extern s8 gDisablePauseFlag;
+
+extern u16 gBg3CntDuringDoorTransition;
+extern u16 gBg1CntDuringDoorTransition;
+
+extern s8 gLanguage;
+
+struct GameCompletion {
+    s8 completedGame;
+    s8 introPlayed;
+};
+
+extern struct GameCompletion gGameCompletion;
 
 struct WindowBorder {
     u8 left;
     u8 right;
     u8 top;
     u8 bottom;
+    u8 timer;
 };
 
 extern struct WindowBorder gWindow1Border;
@@ -102,7 +128,6 @@ struct Haze {
 extern struct Haze gHazeInfo;
 
 extern u16 gBackdropColor;
-extern u8 gMaxInGameTimeFlag;
 
 struct InGameTime {
     u8 hours;
@@ -112,6 +137,7 @@ struct InGameTime {
 };
 
 extern struct InGameTime gInGameTimer;
+extern u8 gMaxInGameTimeFlag;
 
 enum Cutscene {
     CUTSCENE_NONE,
@@ -136,15 +162,25 @@ struct IoRegisters {
     u16 bldcnt;
     u8 bldalpha_eva;
     u8 bldalpha_evb;
-    u8 winin_L;
-    u8 winin_R;
+    u8 winin_H;
+    u8 winout_L;
     u16 bg0Cnt;
     u16 bg1Cnt;
     u16 bg2Cnt;
     u16 bg3Cnt;
+    u16 unk_10;
 };
 
 extern struct IoRegisters gIoRegisters;
+
+struct DefaultTransparency {
+    u8 unk_0;
+    u8 evbCoef;
+    u8 evaCoef;
+    u16 bldcnt;
+};
+
+extern struct DefaultTransparency gDefaultTransparency;
 
 extern u16 gEffectYPosition;
 
@@ -157,6 +193,7 @@ struct ButtonAssignments {
 
 extern struct ButtonAssignments gButtonAssignments;
 
+extern u8 gMonochromeFading;
 extern u8 gWhichBgPositionIsWrittenToBg3Ofs;
 extern u8 gSkipDoorTransition;
 
@@ -164,31 +201,61 @@ extern u16 gWrittenToMosaic_H;
 extern u16 gWrittenToMosaic_L;
 
 extern u8 gDisableDoorsAndTanks;
-extern u8 gColorFading;
 
-#define GAME_MODE_TITLE 0
-#define GAME_MODE_IN_GAME 1
-#define GAME_MODE_SOFT_RESET 2
-#define GAME_MODE_MAP_SCREEN 3
-#define GAME_MODE_CUTSCENE 4
-#define GAME_MODE_SA_X_CLOSE_UP 5
-#define GAME_MODE_ERASE_SRAM_MENU 6
-#define GAME_MODE_FILE_SELECT_OR_INTRO 7
-#define GAME_MODE_GAME_OVER 8
-#define GAME_MODE_ENDING 9
-#define GAME_MODE_DIED_FROM_SR388_COLLISION 10
-#define GAME_MODE_CREDITS 11
-#define GAME_MODE_DEMO 12
-#define GAME_MODE_UNKNOWN 13
-#define GAME_MODE_DEBUG 14
+enum GameMode {
+    GAME_MODE_TITLE,
+    GAME_MODE_IN_GAME,
+    GAME_MODE_SOFT_RESET,
+    GAME_MODE_MAP_SCREEN,
+    GAME_MODE_CUTSCENE,
+    GAME_MODE_SA_X_CLOSE_UP,
+    GAME_MODE_ERASE_SRAM_MENU,
+    GAME_MODE_FILE_SELECT_OR_INTRO,
+    GAME_MODE_GAME_OVER,
+    GAME_MODE_ENDING,
+    GAME_MODE_DIED_FROM_SR388_COLLISION,
+    GAME_MODE_CREDITS,
+    GAME_MODE_DEMO,
+    GAME_MODE_UNKNOWN,
+    GAME_MODE_DEBUG,
+
+    GAME_MODE_COUNT
+};
+
+enum PauseScreenFlag {
+    PAUSE_SCREEN_NONE,
+};
 
 // For in game
+enum SubGameMode {
+    SUB_GAME_MODE_DOOR_TRANSITION = 1,
+    SUB_GAME_MODE_PLAYING,
+    SUB_GAME_MODE_LOADING_ROOM,
+    SUB_GAME_MODE_SA_X_ELEVATOR,
+    SUB_GAME_MODE_DYING,
+    SUB_GAME_MODE_NO_CLIP,
 
-#define SUB_GAME_MODE_DOOR_TRANSITION 1
-#define SUB_GAME_MODE_PLAYING 2
-#define SUB_GAME_MODE_LOADING_ROOM 3
-#define SUB_GAME_MODE_SA_X_ELEVATOR 4
-#define SUB_GAME_MODE_DYING 5
-#define SUB_GAME_MODE_FREE_MOVEMENT 6
+    SUB_GAME_MODE_COUNT
+};
+
+
+extern u16 gUnk_3000050;
+extern s8 gUnk_3004e3a;
+extern u8 gUnk_3004e42;
+
+struct Unk_3004e44 {
+    u8 unk_0_L:4;
+    u8 unk_0_H:4;
+    u8 unk_1;
+};
+
+extern struct Unk_3004e44 gUnk_3004e44;
+
+struct EventBasedEffectInfo {
+    u16 stage;
+    u16 timer;
+};
+
+extern struct EventBasedEffectInfo gEventBasedEffectInfo;
 
 #endif /* GLOBALS_H */

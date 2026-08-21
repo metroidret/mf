@@ -1211,7 +1211,7 @@ _08069EFC:
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _08069F94
-	ldr r0, _08069F30 @ =gUnk_03000064
+	ldr r0, _08069F30 @ =gUnk_3000064
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08069F38
@@ -1228,7 +1228,7 @@ _08069F20: .4byte gColorFading
 _08069F24: .4byte gSamusData
 _08069F28: .4byte 0x0000FFFF
 _08069F2C: .4byte gDisableScrolling
-_08069F30: .4byte gUnk_03000064
+_08069F30: .4byte gUnk_3000064
 _08069F34: .4byte gSubGameMode1
 _08069F38:
 	ldr r0, _08069F48 @ =gCurrentRoomEntry
@@ -6656,7 +6656,7 @@ _0806C8CE:
 	ands r0, r2
 	strb r0, [r4, #1]
 	adds r0, r6, #0
-	bl UpdateHatchAnimaton
+	bl UpdateHatchAnimation
 	ldrb r1, [r4]
 	lsls r0, r1, #0x1c
 	lsrs r0, r0, #0x1d
@@ -6705,8 +6705,8 @@ _0806C922:
 	pop {r0}
 	bx r0
 
-	thumb_func_start UpdateHatchAnimaton
-UpdateHatchAnimaton: @ 0x0806C930
+	thumb_func_start UpdateHatchAnimation
+UpdateHatchAnimation: @ 0x0806C930
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -9901,7 +9901,7 @@ _0806E164:
 	asrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0806E180
-	bl CheckLockHatchesWithTimer
+	bl RoomEffectCheckLockHatchesWithTimer
 _0806E180:
 	add sp, #4
 	pop {r0}
@@ -9973,11 +9973,11 @@ unk_6e1ac: @ 0x0806E1AC
 	ldr r0, _0806E258 @ =gColorFading
 	strb r1, [r0]
 _0806E218:
-	ldr r1, _0806E25C @ =gWrittenToBldalpha_R
+	ldr r1, _0806E25C @ =gWrittenToBldalpha_Eva
 	ldr r2, _0806E234 @ =gIoRegisters
 	ldrb r0, [r2, #4]
 	strh r0, [r1]
-	ldr r1, _0806E260 @ =gWrittenToBldalpha_L
+	ldr r1, _0806E260 @ =gWrittenToBldalpha_Evb
 	ldrb r0, [r2, #5]
 	strh r0, [r1]
 	pop {r0}
@@ -9995,8 +9995,8 @@ _0806E24C: .4byte 0x04000049
 _0806E250: .4byte 0x04000050
 _0806E254: .4byte gEventCounter
 _0806E258: .4byte gColorFading
-_0806E25C: .4byte gWrittenToBldalpha_R
-_0806E260: .4byte gWrittenToBldalpha_L
+_0806E25C: .4byte gWrittenToBldalpha_Eva
+_0806E260: .4byte gWrittenToBldalpha_Evb
 
 	thumb_func_start unk_6e264
 unk_6e264: @ 0x0806E264
@@ -10015,11 +10015,11 @@ unk_6e264: @ 0x0806E264
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bhi _0806E2BC
-	ldr r1, _0806E29C @ =gWrittenToBldalpha_L
+	ldr r1, _0806E29C @ =gWrittenToBldalpha_Evb
 	ldrh r0, [r1]
 	cmp r0, #0
 	bne _0806E2A4
-	ldr r0, _0806E2A0 @ =gWrittenToBldalpha_R
+	ldr r0, _0806E2A0 @ =gWrittenToBldalpha_Eva
 	ldrh r0, [r0]
 	cmp r0, #0
 	beq _0806E2F6
@@ -10027,13 +10027,13 @@ unk_6e264: @ 0x0806E264
 	.align 2, 0
 _0806E294: .4byte gFrameCounter8Bit
 _0806E298: .4byte gCurrentRoomEntry
-_0806E29C: .4byte gWrittenToBldalpha_L
-_0806E2A0: .4byte gWrittenToBldalpha_R
+_0806E29C: .4byte gWrittenToBldalpha_Evb
+_0806E2A0: .4byte gWrittenToBldalpha_Eva
 _0806E2A4:
 	subs r0, #1
 	strh r0, [r1]
 _0806E2A8:
-	ldr r1, _0806E2B8 @ =gWrittenToBldalpha_R
+	ldr r1, _0806E2B8 @ =gWrittenToBldalpha_Eva
 	ldrh r0, [r1]
 	cmp r0, #0
 	beq _0806E2FA
@@ -10041,30 +10041,30 @@ _0806E2A8:
 	strh r0, [r1]
 	b _0806E2FA
 	.align 2, 0
-_0806E2B8: .4byte gWrittenToBldalpha_R
+_0806E2B8: .4byte gWrittenToBldalpha_Eva
 _0806E2BC:
 	subs r0, r1, #1
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #5
 	bhi _0806E2F6
-	ldr r1, _0806E2DC @ =gWrittenToBldalpha_L
+	ldr r1, _0806E2DC @ =gWrittenToBldalpha_Evb
 	ldrh r0, [r1]
 	cmp r0, #0xf
 	bls _0806E2E4
-	ldr r0, _0806E2E0 @ =gWrittenToBldalpha_R
+	ldr r0, _0806E2E0 @ =gWrittenToBldalpha_Eva
 	ldrh r1, [r0]
 	adds r2, r0, #0
 	cmp r1, #0
 	beq _0806E2F6
 	b _0806E2EA
 	.align 2, 0
-_0806E2DC: .4byte gWrittenToBldalpha_L
-_0806E2E0: .4byte gWrittenToBldalpha_R
+_0806E2DC: .4byte gWrittenToBldalpha_Evb
+_0806E2E0: .4byte gWrittenToBldalpha_Eva
 _0806E2E4:
 	adds r0, #1
 	strh r0, [r1]
-	ldr r2, _0806E310 @ =gWrittenToBldalpha_R
+	ldr r2, _0806E310 @ =gWrittenToBldalpha_Eva
 _0806E2EA:
 	ldrh r0, [r2]
 	cmp r0, #0
@@ -10078,10 +10078,10 @@ _0806E2F6:
 	beq _0806E30A
 _0806E2FA:
 	ldr r2, _0806E314 @ =gWrittenToBldalpha
-	ldr r0, _0806E318 @ =gWrittenToBldalpha_L
+	ldr r0, _0806E318 @ =gWrittenToBldalpha_Evb
 	ldrh r0, [r0]
 	lsls r0, r0, #8
-	ldr r1, _0806E310 @ =gWrittenToBldalpha_R
+	ldr r1, _0806E310 @ =gWrittenToBldalpha_Eva
 	ldrh r1, [r1]
 	orrs r0, r1
 	strh r0, [r2]
@@ -10089,9 +10089,9 @@ _0806E30A:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_0806E310: .4byte gWrittenToBldalpha_R
+_0806E310: .4byte gWrittenToBldalpha_Eva
 _0806E314: .4byte gWrittenToBldalpha
-_0806E318: .4byte gWrittenToBldalpha_L
+_0806E318: .4byte gWrittenToBldalpha_Evb
 
 	thumb_func_start unk_6e31c
 unk_6e31c: @ 0x0806E31C
@@ -10112,7 +10112,7 @@ unk_6e31c: @ 0x0806E31C
 	ldr r5, _0806E398 @ =0x02032000
 	movs r0, #0
 	adds r2, r5, #0
-	bl RleDecompress
+	bl RoomRleDecompress
 	ldr r2, _0806E39C @ =0x06003000
 	movs r3, #0x80
 	lsls r3, r3, #5
@@ -10440,11 +10440,11 @@ _0806E60E:
 	cmp r0, #0
 	bne _0806E634
 	ldr r0, _0806E65C @ =0x030054B0
-	bl StopMusic
+	bl StopMusicOrSound
 	ldr r0, _0806E660 @ =0x030055F0
-	bl StopMusic
+	bl StopMusicOrSound
 	ldr r0, _0806E664 @ =0x030054F0
-	bl StopMusic
+	bl StopMusicOrSound
 _0806E634:
 	ldr r1, _0806E668 @ =gNextOamSlot
 	movs r0, #0
@@ -10556,7 +10556,7 @@ _0806E728:
 	ldr r4, _0806E75C @ =0x02032000
 	movs r0, #0
 	adds r2, r4, #0
-	bl RleDecompress
+	bl RoomRleDecompress
 	ldr r2, _0806E760 @ =0x06003000
 	movs r3, #0x80
 	lsls r3, r3, #5
@@ -10612,8 +10612,8 @@ _0806E772:
 	subs r0, #0x43
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	ldr r5, _0806E820 @ =gWrittenToBldalpha_L
-	ldr r6, _0806E824 @ =gWrittenToBldalpha_R
+	ldr r5, _0806E820 @ =gWrittenToBldalpha_Evb
+	ldr r6, _0806E824 @ =gWrittenToBldalpha_Eva
 	cmp r0, #2
 	bls _0806E7BA
 	movs r0, #0x10
@@ -10664,8 +10664,8 @@ _0806E810: .4byte 0x0400001E
 _0806E814: .4byte gWrittenToBldcnt_Special
 _0806E818: .4byte 0x00003F48
 _0806E81C: .4byte gCurrentRoomEntry
-_0806E820: .4byte gWrittenToBldalpha_L
-_0806E824: .4byte gWrittenToBldalpha_R
+_0806E820: .4byte gWrittenToBldalpha_Evb
+_0806E824: .4byte gWrittenToBldalpha_Eva
 _0806E828: .4byte gWrittenToBldalpha
 _0806E82C: .4byte 0x03004E3E
 _0806E830: .4byte 0x00004604
@@ -10675,13 +10675,13 @@ _0806E83C: .4byte gWrittenToDispcnt
 _0806E840: .4byte 0x0000FEFF
 _0806E844: .4byte gColorFading
 _0806E848:
-	ldr r0, _0806E864 @ =gWrittenToBldalpha_L
+	ldr r0, _0806E864 @ =gWrittenToBldalpha_Evb
 	ldrh r2, [r0]
 	adds r3, r2, #0
 	adds r5, r0, #0
 	cmp r3, #0
 	bne _0806E86C
-	ldr r0, _0806E868 @ =gWrittenToBldalpha_R
+	ldr r0, _0806E868 @ =gWrittenToBldalpha_Eva
 	ldrh r1, [r0]
 	adds r6, r0, #0
 	cmp r1, #0xf
@@ -10689,12 +10689,12 @@ _0806E848:
 	strh r3, [r5]
 	b _0806E872
 	.align 2, 0
-_0806E864: .4byte gWrittenToBldalpha_L
-_0806E868: .4byte gWrittenToBldalpha_R
+_0806E864: .4byte gWrittenToBldalpha_Evb
+_0806E868: .4byte gWrittenToBldalpha_Eva
 _0806E86C:
 	subs r0, r2, #1
 	strh r0, [r5]
-	ldr r6, _0806E87C @ =gWrittenToBldalpha_R
+	ldr r6, _0806E87C @ =gWrittenToBldalpha_Eva
 _0806E872:
 	ldrh r0, [r6]
 	cmp r0, #0xf
@@ -10702,7 +10702,7 @@ _0806E872:
 	adds r0, #1
 	b _0806E882
 	.align 2, 0
-_0806E87C: .4byte gWrittenToBldalpha_R
+_0806E87C: .4byte gWrittenToBldalpha_Eva
 _0806E880:
 	movs r0, #0x10
 _0806E882:
@@ -10921,7 +10921,7 @@ _0806EA0C:
 	bl unk_6dacc
 	cmp r0, #0
 	beq _0806EA34
-	bl StopAllMusicsAndSounds
+	bl StopAllMusicAndSounds
 	ldrb r0, [r4, #1]
 	adds r0, #1
 	strb r0, [r4, #1]
@@ -11116,7 +11116,7 @@ _0806EB6E:
 	beq _0806EB92
 	b _0806EC8C
 _0806EB92:
-	bl CheckLockHatchesWithTimer
+	bl RoomEffectCheckLockHatchesWithTimer
 	b _0806EC8C
 	.align 2, 0
 _0806EB98: .4byte gDoorPositionStart
@@ -11770,10 +11770,10 @@ _0806F0DC: .4byte 0x030053FC
 _0806F0E0: .4byte gHazeInfo
 _0806F0E4: .4byte 0x04000014
 _0806F0E8:
-	ldr r1, _0806F17C @ =gWrittenToWinin_L
+	ldr r1, _0806F17C @ =gWrittenToWinin_H
 	movs r0, #0x1f
 	strb r0, [r1]
-	ldr r1, _0806F180 @ =gWrittenToWinout_R
+	ldr r1, _0806F180 @ =gWrittenToWinout_L
 	movs r0, #0x37
 	strb r0, [r1]
 	ldr r1, _0806F184 @ =gWrittenToBldcnt_Special
@@ -11843,8 +11843,8 @@ _0806F138:
 	str r0, [r2]
 	b _0806F1E6
 	.align 2, 0
-_0806F17C: .4byte gWrittenToWinin_L
-_0806F180: .4byte gWrittenToWinout_R
+_0806F17C: .4byte gWrittenToWinin_H
+_0806F180: .4byte gWrittenToWinout_L
 _0806F184: .4byte gWrittenToBldcnt_Special
 _0806F188: .4byte 0x04000054
 _0806F18C: .4byte gWrittenToWin1V
@@ -12233,10 +12233,10 @@ _0806F4D0:
 	movs r3, #0
 	orrs r0, r1
 	strb r0, [r2, #4]
-	ldr r1, _0806F508 @ =gWrittenToWinin_L
+	ldr r1, _0806F508 @ =gWrittenToWinin_H
 	movs r0, #0x37
 	strb r0, [r1]
-	ldr r1, _0806F50C @ =gWrittenToWinout_R
+	ldr r1, _0806F50C @ =gWrittenToWinout_L
 	movs r0, #0x1f
 	strb r0, [r1]
 	ldr r0, _0806F510 @ =gBackdropColor
@@ -12248,8 +12248,8 @@ _0806F4F8: .4byte 0x02035400
 _0806F4FC: .4byte 0x02035000
 _0806F500: .4byte 0x800000F0
 _0806F504: .4byte gColorFading
-_0806F508: .4byte gWrittenToWinin_L
-_0806F50C: .4byte gWrittenToWinout_R
+_0806F508: .4byte gWrittenToWinin_H
+_0806F50C: .4byte gWrittenToWinout_L
 _0806F510: .4byte gBackdropColor
 _0806F514:
 	ldr r0, _0806F54C @ =0x030053FC

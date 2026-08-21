@@ -90,6 +90,22 @@
 #define C_16_2_8(high, low) ((high) << 8 | (low))
 
 /**
+ * @brief Creates a signed 8-bit value from an @c s16
+ * 
+ * @param value Value
+ * @return Result
+ */
+#define C_S8_2_S16(value) ((value) & 0x80 ? 0x100 + (value) : (value))
+
+/**
+ * @brief Creates a signed 9-bit value from an @c s16
+ * 
+ * @param value Value
+ * @return Result
+ */
+#define C_S9_2_S16(value) ((value) & 0x100 ? 0x200 + (value) : (value))
+
+/**
  * @brief Constructs a byte from 8 bits
  * 
  */
@@ -138,13 +154,14 @@
 #define COLOR_WHITE COLOR(COLOR_MASK, COLOR_MASK, COLOR_MASK)
 #define COLOR_BLACK COLOR(0, 0, 0)
 
-#define SET_BACKDROP_COLOR(color) (write16(PALRAM_BASE, (color)))
+#define SET_BACKDROP_COLOR(color) (WRITE_16(PALRAM_BASE, (color)))
 
 #define SUB_PIXEL_TO_PIXEL(pixel) ((pixel) / SUB_PIXEL_RATIO)
 #define SUB_PIXEL_TO_PIXEL_(pixel) (DIV_SHIFT(pixel, SUB_PIXEL_RATIO))
 #define PIXEL_TO_SUB_PIXEL(pixel) ((s32)((pixel) * SUB_PIXEL_RATIO))
 #define SUB_PIXEL_TO_BLOCK(pixel) ((pixel) / BLOCK_SIZE)
 #define BLOCK_TO_SUB_PIXEL(block) ((s32)((block) * BLOCK_SIZE))
+#define BLOCK_TO_PIXEL(block) ((s32)((block) * PIXEL_PER_BLOCK))
 #define VELOCITY_TO_SUB_PIXEL(velocity) (DIV_SHIFT((velocity), 8))
 #define SUB_PIXEL_TO_VELOCITY(velocity) ((s32)((velocity) * 8))
 #define PIXEL_TO_VELOCITY(velocity) ((s32)((velocity) * SUB_PIXEL_RATIO * 8))
@@ -174,6 +191,38 @@
 
 #define FORCE_RODATA __attribute__((section(".rodata")))
 #define NAKED_FUNCTION __attribute__((naked))
+#define PACKED __attribute__((packed))
 
 #define ALIGN_2() asm(".align 2, 0")
 #define ALIGN_4() asm(".align 4, 0")
+
+/**
+ * @brief Creates an enum and its underlying type
+ * 
+ * The underlying type will have the enum name, and the provided type.
+ * 
+ * The enum will have the name provided followed by an underscore (_).
+ * 
+ * e.g. Using the macro like this :
+ * 
+ * `MAKE_ENUM(u8, Event)`
+ * 
+ * will create this :
+ * 
+ * `typedef u8 Event;`
+ * 
+ * `enum Event_`
+ * 
+ * @param type Underlying enum type
+ * @param name Enum name
+ * 
+ */
+#define MAKE_ENUM(type, name)   \
+typedef type name;              \
+enum name ##_
+
+/**
+ * @brief Indicates that an enum is a list of flags.
+ * 
+ */
+#define ENUM_FLAG

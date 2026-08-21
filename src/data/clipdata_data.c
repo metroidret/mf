@@ -470,7 +470,7 @@ const u16 sClipdataTilemapBehaviorTypes[CLIPDATA_TILEMAP_COUNT] = {
     [CLIPDATA_TILEMAP_463] = CLIP_BEHAVIOR_NONE,
 };
 
-static const u8 sBlob_3be740_3bf5c0[] = INCBIN_U8("data/Blob_3be740_3bf5c0.bin");
+const u16 sCommonTilemap[1856] = INCBIN_U16("data/common/common_tilemap.tt");
 
 const u8 sClipdataTilemapCollisionTypes[CLIPDATA_TILEMAP_COUNT] = {
     [CLIPDATA_TILEMAP_0] = CLIPDATA_TYPE_AIR,
@@ -938,5 +938,3 @@ const u8 sClipdataTilemapCollisionTypes[CLIPDATA_TILEMAP_COUNT] = {
     [CLIPDATA_TILEMAP_462] = CLIPDATA_TYPE_AIR,
     [CLIPDATA_TILEMAP_463] = CLIPDATA_TYPE_AIR,
 };
-
-static const u8 sBlob_3bf790_3c8b90[] = INCBIN_U8("data/Blob_3bf790_3c8b90.bin");

@@ -77,20 +77,20 @@ void DessgeegaInit(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_Y_FLIP)
     {
-        gCurrentSprite.drawDistanceTop = 32;
-        gCurrentSprite.drawDistanceBottom = 48;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(3);
         gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.5f);
         gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(1.3125f);
     }
     else
     {
-        gCurrentSprite.drawDistanceTop = 48;
-        gCurrentSprite.drawDistanceBottom = 32;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
         gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(1.3125f);
         gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(0.5f);
     }
 
-    gCurrentSprite.drawDistanceHorizontal = 24;
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
     gCurrentSprite.hitboxLeft = -BLOCK_SIZE;
     gCurrentSprite.hitboxRight = BLOCK_SIZE;
 
@@ -689,9 +689,9 @@ void DessgeegaSpikeInit(void)
 {
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
     gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
-    gCurrentSprite.drawDistanceTop = 8;
-    gCurrentSprite.drawDistanceBottom = 8;
-    gCurrentSprite.drawDistanceHorizontal = 8;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
     gCurrentSprite.hitboxTop = -PIXEL_SIZE;
     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
     gCurrentSprite.hitboxLeft = -PIXEL_SIZE;

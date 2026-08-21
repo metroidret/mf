@@ -1,0 +1,40 @@
+#include "data/rooms/sector_6_rooms_data.h"
+#include "macros.h"
+
+const u8 sSector6_13_Scrolls[SCROLL_DATA_SIZE(1)] = {
+	13, // Room
+	1, // Number of scrolls
+	
+	// Scroll 0
+	2, 31, // X bounds
+	2, 25, // Y bounds
+	UCHAR_MAX, UCHAR_MAX, // Breakable block position
+	UCHAR_MAX, // Breakable block direction
+	UCHAR_MAX, // Breakable block Y bound extension
+};
+
+const u8 sSector6_13_Clipdata[140] = {
+    34, // Room width
+    34, // Room height
+    _INCBIN_U8("data/rooms/sector_6/sector_6_13_clipdata.rle")
+};
+
+const u8 sSector6_13_Bg2[14] = {
+    34, // Room width
+    34, // Room height
+    _INCBIN_U8("data/rooms/sector_6/sector_6_13_bg2.rle")
+};
+
+const u8 sSector6_13_Bg1[497] = {
+    34, // Room width
+    34, // Room height
+    _INCBIN_U8("data/rooms/sector_6/sector_6_13_bg1.rle")
+};
+
+const u8 sSector6_13_Spriteset0[ENEMY_ROOM_DATA_ARRAY_SIZE(4)] = {
+	15, 17, SPRITESET_IDX(14),
+	16, 17, SPRITESET_IDX(0),
+	19, 24, SSP_X_ABSORBABLE_BY_SAMUS | SPRITESET_IDX(0),
+	ROOM_SPRITE_DATA_TERMINATOR
+};
+

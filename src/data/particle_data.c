@@ -8183,5 +8183,3 @@ const struct FrameData sParticleOam_ChargingMissileCharged[4] = {
     },
     [3] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_3eed78_575a60[] = INCBIN_U8("data/Blob_3eed78_575a60.bin");

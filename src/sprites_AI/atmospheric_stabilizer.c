@@ -69,9 +69,9 @@ void AtmosphericStabilizerInit(void)
     gCurrentSprite.drawOrder = 12;
     gCurrentSprite.yPosition -= BLOCK_TO_SUB_PIXEL(0.5f);
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
-    gCurrentSprite.drawDistanceTop = 32;
-    gCurrentSprite.drawDistanceBottom = 32;
-    gCurrentSprite.drawDistanceHorizontal = 32;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.work1 = 32;
@@ -262,7 +262,7 @@ void AtmosphericStabilizerBackOnline(void)
         else
             gCurrentSprite.pOam = sAtmosphericStabilizerFanOam_OnlineVertical;
 
-        StartStopEventBasedEffect(1); // FIXME enum
+        RoomEffectStartStopEventBased(EVENT_EFFECT_ATMOSPHERIC_STABILIZER);
     }
 }
 
@@ -271,9 +271,9 @@ void AtmosphericStabilizerCoverInit(void)
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
     gCurrentSprite.drawOrder = 4;
     gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
-    gCurrentSprite.drawDistanceTop = 32;
-    gCurrentSprite.drawDistanceBottom = 32;
-    gCurrentSprite.drawDistanceHorizontal = 32;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(2);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
@@ -708,7 +708,7 @@ void AtmosphericStabilizerCoverExploding(void)
         if (count > 0)
         {
             TrySpawnMessageBanner(messageType);
-            gPreventMovementTimer = 1000;
+            gPreventMovementTimer = SAMUS_ITEM_PMT;
         }
     }
 }
@@ -720,9 +720,9 @@ void AtmosphericStabilizerParasiteInit(void)
     gCurrentSprite.drawOrder = 5;
     gCurrentSprite.frozenPaletteRowOffset = 1;
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     switch (gCurrentSprite.roomSlot)
     {

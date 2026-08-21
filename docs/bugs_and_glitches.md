@@ -7,9 +7,18 @@ These are known bugs and glitches in the game: code that clearly does not work a
 - [Bugs](#bugs)
   - [Y-flipped Zoro uses the wrong size for top hitbox](#y-flipped-zoro-uses-the-wrong-size-for-top-hitbox)
   - [Y-flipped Sciser uses the wrong size for top hitbox](#y-flipped-sciser-uses-the-wrong-size-for-top-hitbox)
+  - [Gerutas don't update their hitbox after turning around](#gerutas-dont-update-their-hitbox-after-turning-around)
+  - [Rolling Yards use wrong Y value for left wall collision check](#rolling-yards-use-wrong-y-value-for-left-wall-collision-check)
+  - [Choot spit explosion uses wrong X value for collision check](#choot-spit-explosion-uses-wrong-x-value-for-collision-check)
+  - [Power bomb gerons use the wrong sprite ID to calculate their destroyed bit position](#power-bomb-gerons-use-the-wrong-sprite-id-to-calculate-their-destroyed-bit-position)
   - [Kihunter hives don't check if spawning a Kihunter failed](#kihunter-hives-dont-check-if-spawning-a-kihunter-failed)
   - [SA-X sprite AI has wrong declaration for `sSamusCollisionData`](#sa-x-sprite-ai-has-wrong-declaration-for-ssamuscollisiondata)
   - [Sprites that rotate toward a target will never target directly up](#sprites-that-rotate-toward-a-target-will-never-target-directly-up)
+  - [Samus OAM for wall jumping left is missing a part](#samus-oam-for-wall-jumping-left-is-missing-a-part)
+  - [Samus's arm doesn't recoil when shooting diagonally up right](#samuss-arm-doesnt-recoil-when-standing-and-shooting-diagonally-up-right)
+  - [Arm cannon OAM data for shooting and crouching while facing right is malformed](#arm-cannon-oam-data-for-shooting-and-crouching-while-facing-right-is-malformed)
+  - [Arm cannon animation for running left is missing an arm cannon offset](#arm-cannon-animation-for-running-left-is-missing-an-arm-cannon-offset)
+  - [Changing the event in the debug menu doesn't equip suits](#changing-the-event-in-the-debug-menu-doesnt-equip-suits)
 - [Oversights and Design Flaws](#oversights-and-design-flaws)
   - [`ClipdataConvertToCollision` is copied to RAM but still runs in ROM](#clipdataconverttocollision-is-copied-to-ram-but-still-runs-in-rom)
   - [`ClipdataCheckElevatorDisabled` checks every elevator when only one needs to be checked](#clipdatacheckelevatordisabled-checks-every-elevator-when-only-one-needs-to-be-checked)
@@ -51,6 +60,91 @@ These are known bugs and glitches in the game: code that clearly does not work a
       gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.75f);
       gCurrentSprite.hitboxRight = BLOCK_TO_SUB_PIXEL(0.75f); 
   }
+```
+
+### Gerutas don't update their hitbox after turning around
+
+Gerutas update their hitbox when returning to idle after attacking, but not after turning around. The difference is minor though, with the hitbox only being offset by a quarter of a block (4 pixels).
+
+**Fix:** Edit `GerutaTurningAround` in [geruta.c](../src/sprites_AI/geruta.c) to call `GerutaSetIdleHitboxes`
+
+```diff
+  if (SpriteUtilHasCurrentAnimationNearlyEnded())
+  {
+-     // BUG: Hitbox isn't updated after turning around
+      gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
+      gCurrentSprite.status ^= SPRITE_STATUS_X_FLIP;
++     GerutaSetIdleHitboxes();
+  }
+```
+
+### Rolling Yards use wrong Y value for left wall collision check
+
+**Note:** Yards that can roll don't appear in the final game, so this code was likely unfinished/untested.
+
+**Fix:** Edit `YardRolling` in [yard.c](../src/sprites_AI/yard.c) to subtract one pixel from the Y position instead of a quarter block.
+
+```diff
+  // Still on ground or slope, check block above bottom-left
+- // BUG: Y position should be subtracted by one pixel
+- SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition - BLOCK_TO_SUB_PIXEL(0.25f),
+-     gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(0.5f));
++ SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition - BLOCK_TO_SUB_PIXEL(0.0625f),
++     gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(0.5f));
+  if (gPreviousCollisionCheck == COLLISION_SOLID)
+  {
+      // Hit a wall
+      gCurrentSprite.status |= SPRITE_STATUS_FACING_RIGHT;
+      return;
+  }
+```
+
+### Choot spit explosion uses wrong X value for collision check
+
+Choot spit checks collision when exploding to determine which animation to use (on ground vs mid-air). However, it checks one block to the right when it should just check at the spit's X position. Note that there are no setups in the original game where this bug can occur.
+
+**Fix:** Edit `ChootSpitExplodingInit` in [choot.c](../src/sprites_AI/choot.c) to not subtract one block from the X position.
+
+```diff
+- // BUG: Center of spit should be checked for collision, not one block to the right
+- SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(1.0f));
++ SpriteUtilCheckCollisionAtPosition(gCurrentSprite.yPosition, gCurrentSprite.xPosition);
+  if (gPreviousCollisionCheck & COLLISION_FLAGS_UNKNOWN_F0)
+      gCurrentSprite.pOam = sChootSpitOam_ExplodingOnGround;
+  else
+      gCurrentSprite.pOam = sChootSpitOam_ExplodingMidair;
+```
+### Power bomb gerons use the wrong sprite ID to calculate their destroyed bit position
+
+Each geron type uses a variable to track which ones have been destroyed. Since the variables are 16-bit, up to 16 of each type can be tracked. The sprite IDs for each type appear sequentially, so subtracting the first geron's ID from the current geron's ID will get its bit position. However, power bomb gerons subtract the first *super missile* geron ID instead of the first *power bomb* geron ID. This ends up not causing any problems, because power bomb geron IDs are immediately after super missile geron IDs, and there are only 8 of each, so power bomb gerons end up using the top 8 bits of their destroyed variable.
+
+**Fix:** Edit `PowerBombGeronInit` and `PowerBombGeronDying` in [power_bomb_geron.c](../src/sprites_AI/power_bomb_geron.c) to subtract the first power bomb geron sprite ID.
+
+```diff
+  spriteId = gCurrentSprite.spriteId;
+- // BUG: The first super missile geron is used insead of the first power bomb geron
+- spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
++ spriteId -= PSPRITE_GERON_POWER_BOMB_1;
+
+  geronBit = gPowerBombGeronsDestroyed >> spriteId;
+
+  if (geronBit & 1)
+  {
+      gCurrentSprite.status = 0;
+      return;
+  }
+
+...
+
+  spriteId = gCurrentSprite.spriteId;
+- // BUG: The first super missile geron is used insead of the first power bomb geron
+- spriteId -= PSPRITE_GERON_SUPER_MISSILE_1;
++ spriteId -= PSPRITE_GERON_POWER_BOMB_1;
+
+  geronBit = 1 << spriteId;
+  gPowerBombGeronsDestroyed |= geronBit;
+
+  GeronSetCollision(CAA_REMOVE_SOLID);
 ```
 
 ### Kihunter hives don't check if spawning a Kihunter failed
@@ -114,6 +208,106 @@ Beam Core-X eyes and BOX's missiles rotate in order to target Samus. The conditi
           targetRotation = Q_8_8(7.f / 8);
       }
   }
+```
+
+### Samus OAM for wall jumping left is missing a part
+
+When Samus starts a wall jump facing left, the top right part is missing, due to the X coordinate being incorrect (the value is written as if it were 8 bits, but OAM X coordinates are 9 bits).
+
+**Fix:** Edit `sSamusOam_StartingWallJump_Left_Frame0` in [samus_graphics.c](../src/data/samus/samus_graphics.c) to use the correct X coordinate.
+
+```diff
+  static const u16 sSamusOam_StartingWallJump_Left_Frame0[OAM_DATA_SIZE(3)] = {
+      3,
+      OAM_ENTRY(-22, -33, OAM_DIMS_16x16, OAM_NO_FLIP, 0x4, 0, 0),
+-     OAM_ENTRY(250, -33, OAM_DIMS_8x16, OAM_NO_FLIP, 0x6, 0, 0),
++     OAM_ENTRY(-6, -33, OAM_DIMS_8x16, OAM_NO_FLIP, 0x6, 0, 0),
+      OAM_ENTRY(-24, -17, OAM_DIMS_32x16, OAM_NO_FLIP, 0x0, 0, 0),
+  };
+```
+
+### Samus's arm doesn't recoil when standing and shooting diagonally up right
+
+Whenever Samus shoots while not moving, her arm cannon recoils a bit. This happens for every shooting pose and arm direction except for standing while aiming diagonally up right.
+
+**Fix:** Edit `sArmCannonOam_Shooting_DiagonalUp_Right_Frame0` in [arm_cannon_data.c](../src/data/samus/arm_cannon_data.c) to move each arm cannon part left by 1 pixel.
+
+```diff
+  static const u16 sArmCannonOam_Shooting_DiagonalUp_Right_Frame0[OAM_DATA_SIZE(3)] = {
+      3 | ARM_CANNON_OAM_ORDER_BEHIND,
+-     OAM_ENTRY(3, -47, OAM_DIMS_16x16, OAM_NO_FLIP, 0x40, 1, 0),
+-     OAM_ENTRY(19, -39, OAM_DIMS_16x16, OAM_NO_FLIP, 0x42, 1, 0),
+-     OAM_ENTRY(3, -31, OAM_DIMS_16x16, OAM_NO_FLIP, 0x44, 1, 0),
++     OAM_ENTRY(2, -47, OAM_DIMS_16x16, OAM_NO_FLIP, 0x40, 1, 0),
++     OAM_ENTRY(18, -39, OAM_DIMS_16x16, OAM_NO_FLIP, 0x42, 1, 0),
++     OAM_ENTRY(2, -31, OAM_DIMS_16x16, OAM_NO_FLIP, 0x44, 1, 0),
+  };
+```
+
+### Arm cannon OAM data for shooting and crouching while facing right is malformed
+
+When shooting and crouching while facing right, the arm cannon disappears. This is because the OAM data seems to be shifted by 2 bytes somehow, with the part count missing, and an extra 0 at the end. This can also happen when forced into crouching by jumping on an enemy close to a ceiling, since it uses the same OAM.
+
+**Fix:** Edit `sArmCannonOam_ShootingAndCrouching_None_Right_Frame0` in [arm_cannon_data.c](../src/data/samus/arm_cannon_data.c) to add the part count and remove the trailing 0.
+
+```diff
+  static const u16 sArmCannonOam_ShootingAndCrouching_None_Right_Frame0[OAM_DATA_SIZE(3)] = {
++     3 | ARM_CANNON_OAM_ORDER_BEHIND,
+      OAM_ENTRY(1, -28, OAM_DIMS_16x16, OAM_NO_FLIP, 0x42, 1, 0),
+      OAM_ENTRY(1, -12, OAM_DIMS_16x16, OAM_NO_FLIP, 0x44, 1, 0),
+      OAM_ENTRY(11, -16, OAM_DIMS_8x8, OAM_NO_FLIP, 0x5f, 1, 0),
+-     0
+  };
+```
+
+### Arm cannon animation for running left is missing an arm cannon offset
+
+One of the arm cannon offsets for running left is missing, and the animation points to `sArmCannonOffset_Empty` instead. This bug can only be observed if you start charging your beam while running through a door transition.
+
+**Fix:** Add `sArmCannonOffset_Running_None_Left_Frame5` in [arm_cannon_data.c](../src/data/samus/arm_cannon_data.c), and update the offset pointer in `sArmCannonAnim_Running_None_Left`.
+
+```diff
++ static const s16 sArmCannonOffset_Running_None_Left_Frame5[ACO_COUNT] = {
++     [ACO_Y] = C_S8_2_S16(-22),
++     [ACO_X] = C_S9_2_S16(-3)
++ };
+
+...
+
+  {
+      .pOffset = sArmCannonOffset_Running_None_Left_Frame4,
+      .pOam = sSamusOam_Empty
+  },
+  {
+-     .pOffset = sArmCannonOffset_Empty,
++     .pOffset = sArmCannonOffset_Running_None_Left_Frame5,
+      .pOam = sSamusOam_Empty
+  },
+  {
+      .pOffset = sArmCannonOffset_Running_None_Left_Frame6,
+      .pOam = sSamusOam_Empty
+  },
+```
+
+### Changing the event in the debug menu doesn't equip suits
+
+When changing the event in the pause debug menu, `EventSet` is called for every event up to the value set. This will update the security hatch level and equipped abilities. However, suits are not equipped, because a short animation plays before they're equipped.
+
+**Fix:** Edit `PauseDebugModifyValues` in [pause_debug.c](../src/menus/pause_debug.c) to equip the suits based on the ability count.
+
+```diff
+  // Set every event starting from the beginning up to the current event, keeps the event sequence intact
+  for (updateFlag = EVENT_NONE; updateFlag <= editflag; updateFlag++)
+      EventSet(updateFlag);
+  
++ // Suits aren't equipped in EventSet, so equip them here
++ if (gAbilityCount >= ABILITY_COUNT_VARIA_SUIT)
++ {
++     gEquipment.suitMiscStatus |= SMF_VARIA_SUIT;
++
++     if (gAbilityCount >= ABILITY_COUNT_GRAVITY_SUIT)
++         gEquipment.suitMiscStatus |= SMF_GRAVITY_SUIT;
++ }
 ```
 
 
@@ -240,7 +434,6 @@ To trigger the first BOX fight, the game calls `EventCheckRoomEventTrigger` to c
 - PowerBombExplosion doesn't check if out of bounds, which can lead to memory corruption
   - Fix: don't check collision with any blocks outside of the room
 - Clipping into slopes ([video](https://www.youtube.com/watch?v=OGtZYyUtl8s))
-- Landing on an enemy close to the ceiling doesn't draw the arm cannon when facing right
 - Frozen enemies
   - Double hitting a frozen enemy with ice missiles doesn't kill it
   - Killing, re-freezing, and running off of an enemy on the same frame lets Samus run in air ([video](https://www.youtube.com/watch?v=mjApFImfno0))
@@ -274,7 +467,6 @@ To trigger the first BOX fight, the game calls `EventCheckRoomEventTrigger` to c
 
 - Floating point math is used when fixed point could have been used
 - Bomb's hitbox isn't centered
-- Power bomb gerons use the wrong sprite ID to calculate the destroyed bit position
 - Geemers hide when any button is pressed
 - Pseudo-screw collision with Nettori spores is inconsistent
 - The Metroids in the Restricted Lab check Samus's Y position to set their X position
@@ -290,5 +482,4 @@ To trigger the first BOX fight, the game calls `EventCheckRoomEventTrigger` to c
   - Sector 5, Room 12: misplaced BG1 block
 
 ### Graphical Issues
-- The OAM for starting a wall jump while facing left is missing a part
 - Arming missiles with Varia or Gravity suit uses Fusion suit colors for Samus's arm

@@ -562,9 +562,9 @@ void ArachnusInit(void)
     gCurrentSprite.status |= SPRITE_STATUS_X_FLIP;
     gCurrentSprite.health = GET_PSPRITE_HEALTH(gCurrentSprite.spriteId);
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
-    gCurrentSprite.drawDistanceTop = 64;
-    gCurrentSprite.drawDistanceBottom = 0;
-    gCurrentSprite.drawDistanceHorizontal = 64;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(4);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(4);
     ARACHNUS_ATTACK_TIMER = 100;
 
     if (gCurrentSprite.pose == SPRITE_POSE_SPAWNING_FROM_X_INIT)
@@ -929,9 +929,9 @@ void ArachnusShell(void)
         gCurrentSprite.status = gCurrentSprite.status & ~SPRITE_STATUS_NOT_DRAWN;
         gCurrentSprite.drawOrder = 5;
         gCurrentSprite.health = GET_SSPRITE_HEALTH(gCurrentSprite.spriteId);
-        gCurrentSprite.drawDistanceTop = 48;
-        gCurrentSprite.drawDistanceBottom = 0;
-        gCurrentSprite.drawDistanceHorizontal = 24;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
         gCurrentSprite.hitboxTop = PIXEL_TO_SUB_PIXEL(-40);
         gCurrentSprite.hitboxBottom = 0;
         gCurrentSprite.pOam = sArachnusShellOam_Idle;
@@ -1024,9 +1024,9 @@ void ArachnusHead(void)
     {
         gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
         gCurrentSprite.drawOrder = 3;
-        gCurrentSprite.drawDistanceTop = 48;
-        gCurrentSprite.drawDistanceBottom = 0;
-        gCurrentSprite.drawDistanceHorizontal = 32;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
         gCurrentSprite.hitboxTop = -PIXEL_SIZE;
         gCurrentSprite.hitboxBottom = PIXEL_SIZE;
         gCurrentSprite.hitboxLeft = -PIXEL_SIZE;
@@ -1047,9 +1047,9 @@ void ArachnusArm1(void)
     {
         gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
         gCurrentSprite.drawOrder = 4;
-        gCurrentSprite.drawDistanceTop = 32;
-        gCurrentSprite.drawDistanceBottom = 0;
-        gCurrentSprite.drawDistanceHorizontal = 40;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
         gCurrentSprite.hitboxTop = -PIXEL_SIZE;
         gCurrentSprite.hitboxBottom = PIXEL_SIZE;
         gCurrentSprite.hitboxLeft = -PIXEL_SIZE;
@@ -1070,9 +1070,9 @@ void ArachnusArm2(void)
     {
         gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
         gCurrentSprite.drawOrder = 2;
-        gCurrentSprite.drawDistanceTop = 32;
-        gCurrentSprite.drawDistanceBottom = 0;
-        gCurrentSprite.drawDistanceHorizontal = 40;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
         gCurrentSprite.hitboxTop = -PIXEL_SIZE;
         gCurrentSprite.hitboxBottom = PIXEL_SIZE;
         gCurrentSprite.hitboxLeft = -PIXEL_SIZE;
@@ -1106,9 +1106,9 @@ void ArachnusFire(void)
             gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
             gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
             gCurrentSprite.drawOrder = 2;
-            gCurrentSprite.drawDistanceTop = 40;
-            gCurrentSprite.drawDistanceBottom = 0;
-            gCurrentSprite.drawDistanceHorizontal = 8;
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
             gCurrentSprite.hitboxBottom = 0;
             gCurrentSprite.hitboxLeft = PIXEL_TO_SUB_PIXEL(-6);
             gCurrentSprite.hitboxRight = PIXEL_TO_SUB_PIXEL(6);
@@ -1263,9 +1263,9 @@ void ArachnusSlash(void)
             gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
             gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
             gCurrentSprite.drawOrder = 3;
-            gCurrentSprite.drawDistanceTop = 48;
-            gCurrentSprite.drawDistanceBottom = 0;
-            gCurrentSprite.drawDistanceHorizontal = 56;
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(3);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(3.5f);
             gCurrentSprite.hitboxTop = PIXEL_TO_SUB_PIXEL(-48);
             gCurrentSprite.hitboxBottom = 0;
             gCurrentSprite.hitboxLeft = PIXEL_TO_SUB_PIXEL(-8);
@@ -1350,9 +1350,9 @@ void ArachnusSlashTrail(void)
             gCurrentSprite.properties |= SP_KILL_OFF_SCREEN;
             gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
             gCurrentSprite.drawOrder = 2;
-            gCurrentSprite.drawDistanceTop = 32;
-            gCurrentSprite.drawDistanceBottom = 0;
-            gCurrentSprite.drawDistanceHorizontal = 64;
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(0);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(4);
             gCurrentSprite.hitboxTop = -PIXEL_SIZE;
             gCurrentSprite.hitboxBottom = PIXEL_SIZE;
             gCurrentSprite.hitboxLeft = -PIXEL_SIZE;

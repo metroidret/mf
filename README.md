@@ -2,11 +2,11 @@
 
 This is a work in progress decompilation of Metroid Fusion.
 
-1524/3607 functions decompiled (42.25%, 2083 left)
+2732/3607 functions decompiled (75.74%, 875 left)
 
-0xafcba/0x6f9d24 bytes of data not in blobs (9.84%, 0x64a06a left)
+0x4e57c4/0x6f9d24 bytes of data not in blobs (70.19%, 0x214560 left)
 
-Progress can be seen here: https://docs.google.com/spreadsheets/d/19pUPm1dp-7IY9iCeJJA412dwgD2f1M6A1QafzlRV8ic/edit#gid=0
+Progress can be seen here: https://docs.google.com/spreadsheets/d/1HvJ-jynb-4P9tfEBVJmkQFpIg6mJRDRUBvDIBiLxQIo/
 
 **This decomp is not shiftable, don't use it as a base to work on anything**
 
@@ -25,7 +25,7 @@ Debug simply indicates whether the ROM contains the debug features, it is option
 
 The default built ROM is mf_us.gba
 
-**Discords**: 
+**Discords**:
 - https://discord.gg/2MGB9Xbr9y Metroidret
 - https://discord.gg/WtekHKb MAGConst
 
@@ -48,7 +48,9 @@ The default built ROM is mf_us.gba
 - Clone [agbcc](https://github.com/pret/agbcc) by running this command: `git clone https://github.com/pret/agbcc`
 - Enter the agbcc folder (run `cd agbcc`) and build it (run `./build.sh`)
 - Add agbcc to your path (`export PATH="<agbcc_path>:$PATH"`, where `<agbcc_path>` is the full path to the agbcc directory)
-- Locate yourself in the decompilation root, and then build preproc (run `cd tools/preproc && make`)
+- Either:
+  - Install agbcc into this project (by using its `./install.sh <path>` script, where `<path>` is the path to the root of this repository), or
+  - Add agbcc to your path (`export PATH="<agbcc_path>:$PATH"`, where `<agbcc_path>` is the full path to the agbcc directory)
 
 ## Build
 

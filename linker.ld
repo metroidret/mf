@@ -4,9 +4,21 @@ MEMORY {
     rom : ORIGIN = 0x08000000 LENGTH = 32M
 }
 
+gNumMusicPlayers = 8;
+gUnk_Audio0x64 = 0x64;
+gUnk_Audio0x193F600 = 0x193F600;
+gUnk_Audio0x50 = 0x50;
 
 SECTIONS {
     ewram (NOLOAD) : ALIGN(4) {
+        . = 0x0001c000; gCommonSpriteGfxBackup = .;
+        . = 0x00020000; gRoomSpriteGfxBackup = .;
+        . = 0x00026000; gDecompClipdataMap = .;
+        . = 0x00029000; gDecompBg0Map = .;
+        . = 0x0002c000; gDecompBg1Map = .;
+        . = 0x0002f000; gDecompBg2Map = .;
+        . = 0x00032000; gDecompBg3Map = .;
+        . = 0x00035400; gBackgroundPalette = .;
         . = 0x00035d20; gMakeSolidBlocks = .;
     } >ewram
 
@@ -16,9 +28,12 @@ SECTIONS {
         . = 0x00000004; gWrittenToBldalpha = .;
         . = 0x00000006; gWrittenToBldcnt = .;
         . = 0x00000008; gWrittenToDispcnt = .;
-        . = 0x0000000c; gWrittenToWinin_L = .;
-        . = 0x0000000d; gWrittenToWinout_R = .;
+        . = 0x0000000c; gWrittenToWinin_H = .;
+        . = 0x0000000d; gWrittenToWinout_L = .;
         . = 0x0000000e; gBackdropColor = .;
+        . = 0x00000011; gLanguage = .;
+        . = 0x00000014; gGameCompletion = .;
+        . = 0x00000018; gMonochromeFading = .;
         . = 0x00000019; gWhichBgPositionIsWrittenToBg3Ofs = .;
         . = 0x0000001a; gSamusOnTopOfBackgrounds = .;
         . = 0x0000001b; gAbilityCount = .;
@@ -31,24 +46,32 @@ SECTIONS {
         . = 0x00000022; gDisableMusicFlag = .;
         . = 0x00000024; gSkipDoorTransition = .;
         . = 0x00000025; gDisableSoftReset = .;
+        . = 0x00000026; gCollectingTankFlag = .;
+        . = 0x00000027; gDisableAnimatedGraphicsTimer = .;
         . = 0x0000002a; gDisableDoorsAndTanks = .;
+        . = 0x0000002b; gDisablePauseFlag = .;
         . = 0x0000002c; gCurrentArea = .;
         . = 0x0000002d; gCurrentRoom = .;
         . = 0x0000002e; gLastDoorUsed = .;
+        . = 0x0000002f; gLastDoorProperties = .;
         . = 0x00000030; gDisplayLocationName = .;
         . = 0x00000044; gEffectYPosition = .;
         . = 0x00000046; gDoorUnlockTimer = .;
+        . = 0x00000047; gUnk_3000047 = .;
         . = 0x00000048; gCurrentNavigationRoom = .;
         . = 0x00000049; gLastElevatorUsed = .;
         . = 0x0000004a; gCurrentEventBasedEffect = .;
-        . = 0x0000004b; gCurrentEventBasedEffectCopy = .;
+        . = 0x0000004b; gQueuedEventBasedEffect = .;
         . = 0x0000004e; gScreenShakeXOffset = .;
         . = 0x0000004f; gScreenShakeYOffset = .;
+        . = 0x00000050; gUnk_3000050 = .;
         . = 0x00000052; gSpritesetNumber = .;
         . = 0x00000053; gCurrentClipdataAffectingAction = .;
+        . = 0x00000054; gSpritesetEntryUsed = .;
+        . = 0x00000058; gUseAlternateAnimatedTilesetFlags = .;
         . = 0x00000060; gSoundEventCounter = .;
         . = 0x00000062; gPreviousSoundEvent = .;
-        . = 0x00000064; gUnk_03000064 = .;
+        . = 0x00000064; gUnk_3000064 = .;
         . = 0x00000068; gHazeInfo = .;
         . = 0x00000070; gIoRegisters = .;
         . = 0x00000084; gBackgroundsData = .;
@@ -60,6 +83,7 @@ SECTIONS {
         . = 0x000000f0; gScreenShakeY = .;
         . = 0x000000f4; gScreenShakeX = .;
         . = 0x00000110; gCurrentPowerBomb = .;
+        . = 0x00000124; gCamera = .;
         . = 0x00000138; gInGameTimer = .;
         . = 0x0000013c; gMaxInGameTimeFlag = .;
         . = 0x00000140; gSpriteData = .;
@@ -90,7 +114,7 @@ SECTIONS {
         . = 0x000007a6; gIgnoreSamusAndSpriteCollision = .;
         . = 0x000007a7; gSpriteDrawOrder = .;
         . = 0x000007a7; gSaXVision = .;
-        . = 0x000007c0; gUnk_030007c0 = .;
+        . = 0x000007c0; gUnk_30007c0 = .;
         . = 0x000007f0; gSpriteRandomNumber = .;
         . = 0x000007f1; gBossWork0 = .;
         . = 0x000007f2; gBossWork1 = .;
@@ -118,20 +142,21 @@ SECTIONS {
         . = 0x00000b80; gArmCannonY = .;
         . = 0x00000b82; gArmCannonX = .;
         . = 0x00000b84; gPauseScreenFlag = .;
-        . = 0x00000b85; gUnk_03000B85 = .;
+        . = 0x00000b85; gUnk_3000b85 = .;
         . = 0x00000b86; gPreviousArea = .;
         . = 0x00000b87; gEventCounter = .;
         . = 0x00000b88; gPreviousNavigationConversation = .;
         . = 0x00000b89; gPreviousCutscene = .;
         . = 0x00000b8a; gRoomEventTrigger = .;
         . = 0x00000b8b; gIsLoadingFile = .;
-        . = 0x00000b8f; gUnk_03000B8F = .;
+        . = 0x00000b8d; gMostRecentSaveFile = .;
+        . = 0x00000b8f; gUnk_3000b8f = .;
         . = 0x00000bd0; gPauseDebugOptions = .;
         . = 0x00000bdc; gCurrentCutscene = .;
         . = 0x00000bde; gMainGameMode = .;
         . = 0x00000be0; gSubGameMode1 = .;
         . = 0x00000be2; gSubGameMode2 = .;
-        . = 0x00000be3; gUnk_03000be3 = .;
+        . = 0x00000be3; gUnk_3000be3 = .;
         . = 0x00000be4; gClearedEveryFrame = .;
         . = 0x00000be5; gFrameCounter8Bit = .;
         . = 0x00000be6; gVBlankRequestFlag = .;
@@ -145,24 +170,37 @@ SECTIONS {
         . = 0x0000120c; gWrittenToMosaic_H = .;
         . = 0x0000120e; gWrittenToMosaic_L = .;
         . = 0x0000121e; gWrittenToBldy = .;
-        . = 0x00001220; gWrittenToBldalpha_R = .;
-        . = 0x00001222; gWrittenToBldalpha_L = .;
+        . = 0x00001220; gWrittenToBldalpha_Eva = .;
+        . = 0x00001222; gWrittenToBldalpha_Evb = .;
+        . = 0x00001224; gBg0XPosition = .;
+        . = 0x00001226; gBg0YPosition = .;
         . = 0x00001228; gBg1XPosition = .;
         . = 0x0000122A; gBg1YPosition = .;
+        . = 0x0000122C; gBg2XPosition = .;
+        . = 0x0000122E; gBg2YPosition = .;
+        . = 0x00001230; gBg3XPosition = .;
+        . = 0x00001232; gBg3YPosition = .;
         . = 0x00001242; gDemoState = .;
         . = 0x00001243; gPoseLock = .;
         . = 0x00001244; gSamusData = .;
         . = 0x00001270; gSamusDataCopy = .;
         . = 0x0000129c; gSamusGraphicsInfo = .;
         . = 0x000012d8; gSamusAnimationInfo = .;
+        . = 0x000012e4; gSamusEcho = .;
         . = 0x000012f0; gSamusEnvironmentalEffects = .;
         . = 0x00001310; gEquipment = .;
+        . = 0x00001320; gSamusCollisionData = .;
         . = 0x00001330; gSamusPhysics = .;
+        . = 0x00001340; gPreviousSamusField0 = .;
         . = 0x00001342; gPreviousXPosition = .;
         . = 0x00001344; gPreviousYPosition = .;
         . = 0x00001346; gSamusUnderwaterFlag = .;
         . = 0x00001348; gPreventMovementTimer = .;
         . = 0x0000134a; gDisableDrawingSamusAndScrollingFlag = .;
+        . = 0x0000134c; gPrevious64Positions = .;
+        . = 0x0000144c; gPreviousPositionCounter = .;
+        . = 0x0000144e; gUnk_300144e = .;
+        . = 0x0000144f; gUnk_300144f = .;
         . = 0x00001450; gButtonAssignments = .;
         . = 0x00001458; gSaXData = .;
         . = 0x0000147c; gSaXElevatorData = .;
@@ -171,6 +209,26 @@ SECTIONS {
         . = 0x000019c8; gHBlankCallback = .;
         . = 0x000019cc; gVCountCallback = .;
         . = 0x000019d0; gMusicInfo = .;
+
+        . = 0x0000343c; gUnk_300343c = .;
+        . = 0x00003464; gPsgSounds = .;
+        . = 0x00003504; gSoundChannelBackup = .;
+        . = 0x00003654; gSoundCodeAPointer = .;
+        . = 0x00003658; gSoundCodeA = .;
+        . = 0x00003cb0; gSoundCodeBPointer = .;
+        . = 0x00003cb4; gSoundCodeB = .;
+        . = 0x00003d58; gSoundCodeCPointer = .;
+        . = 0x00003d5c; gSoundCodeC = .;
+        . = 0x00003e10; gTrack0Variables = .;
+        . = 0x00004130; gTrack1Variables = .;
+        . = 0x00004450; gTrack2Variables = .;
+        . = 0x000044f0; gTrack3Variables = .;
+        . = 0x00004590; gTrack4Variables = .;
+        . = 0x00004630; gTrack5Variables = .;
+        . = 0x000046d0; gTrack6Variables = .;
+        . = 0x000047c0; gTrack7Variables = .;
+
+        . = 0x00004810; gSamusUseYVelocityForX = .;
         . = 0x00004812; gDemoInputs = .;
         . = 0x00004a12; gDemoInputDurations = .;
         . = 0x00004c12; gDemoInputCounter = .;
@@ -180,6 +238,7 @@ SECTIONS {
         . = 0x00004d1c; gNotPressingUp = .;
         . = 0x00004d28; gSamusPalette = .;
         . = 0x00004d88; gSamusPaletteLength = .;
+        . = 0x00004d8c; gUnk_3004d8c = .;
         . = 0x00004d90; gSaXPalette = .;
         . = 0x00004dd4; gWrittenToWin1H = .;
         . = 0x00004dd6; gWrittenToWin1V = .;
@@ -188,18 +247,52 @@ SECTIONS {
         . = 0x00004ddc; gTilemapAndClipPointers = .;
         . = 0x00004de8; gCurrentMusicTrack = .;
         . = 0x00004dec; gHatchData = .;
+        . = 0x00004e04; gHatchDoorIds = .;
         . = 0x00004e0c; gDoorPositionStart = .;
+        . = 0x00004e10; gUnk_3004e10 = .;
+        . = 0x00004e18; gBg3Movement = .;
+        . = 0x00004e20; gUnk_3004e20 = .;
+        . = 0x00004e28; gTilesetTransparentColor = .;
+        . = 0x00004e30; gUnk_3004e30 = .;
         . = 0x00004e38; gSamusDoorPositionOffset = .;
-        . = 0x00004e3c; gDestinationDoor = .;
-        . = 0x00004e48; gUnk_03004e48 = .;
+        . = 0x00004e3a; gUnk_3004e3a = .;
+        . = 0x00004e3b; gLockedHatches = .;
+        . = 0x00004e3c; gDestinationRoom = .;
+        . = 0x00004e3e; gBg3CntDuringDoorTransition = .;
+        . = 0x00004e40; gBg1CntDuringDoorTransition = .;
+        . = 0x00004e42; gUnk_3004e42 = .;
+        . = 0x00004e44; gUnk_3004e44 = .;
+        . = 0x00004e48; gUnk_3004e48 = .;
+        . = 0x00004e4c; gUnk_3004e4c = .;
         . = 0x00004e58; gColorFading = .;
+        . = 0x00004e60; gBrokenBlocks = .;
+        . = 0x00004ee0; gUnk_3004ee0 = .;
+        . = 0x00004fa0; gEventBasedEffectInfo = .;
+        . = 0x00004fa8; gBombChains = .;
+        . = 0x00004fb8; gActiveBombChainTypes = .;
+        . = 0x00004fbc; gDefaultTransparency = .;
+        . = 0x00004fc0; gAnimatedPaletteTiming = .;
+        . = 0x00004fc4; gHatchFlashAnimation = .;
+        . = 0x00004fc8; gAnimatedPaletteAndTileset = .;
+        . = 0x00004fcc; gScrollCounter = .;
+        . = 0x00004fd0; gHorizontalTilemap = .;
+        . = 0x00005138; gVerticalTilemap = .;
         . = 0x00005318; gClipdataCodePointer = .;
 
         . = 0x00005408; *libgcc.a:dp-bit.o(.bss);
         . = 0x00005420; *libgcc.a:fp-bit.o(.bss);
 
+        . = 0x00005430; gTrackData3 = .;
+        . = 0x00005470; gTrackData1 = .;
+        . = 0x000054b0; gTrackData6 = .;
+        . = 0x000054f0; gTrackData4 = .;
+        . = 0x00005530; gTrackData0 = .;
+        . = 0x00005570; gTrackData7 = .;
+        . = 0x000055b0; gTrackData2 = .;
+        . = 0x000055f0; gTrackData5 = .;
+
         . = 0x00007ffc; gInterruptCodePointer = .;
-        
+
     } >iwram
 
     rom : ALIGN(2) {
@@ -214,12 +307,18 @@ SECTIONS {
         src/init_helpers.o(.text);
         src/fixed_point.o(.text);
         src/callbacks.o(.text);
+        src/sram_misc.o(.text);
+        src/audio.o(.text);
+        src/audio_wrappers.o(.text);
+        src/dma.o(.text);
+        src/music_wrappers.o(.text);
 
-        asm/disasm_0x08000c28.o(.text);
+        asm/sound_code.o(.text);
+        asm/audio_internal.o(.text);
         asm/syscalls.o(.text);
-        src/sram/sram.o(.text);
-        asm/samus.o(.text);
 
+        src/sram/sram.o(.text);
+        src/samus.o(.text);
         src/demo_input.o(.text);
         src/sa_x.o(.text);
         src/in_game.o(.text);
@@ -274,9 +373,24 @@ SECTIONS {
         src/sprites_AI/electric_water.o(.text);
         src/sprites_AI/zoro.o(.text);
         src/sprites_AI/kihunter.o(.text);
-
-        asm/disasm_0x08026C7C.o(.text);
-
+        src/sprites_AI/reo.o(.text);
+        src/sprites_AI/lava_plume.o(.text);
+        src/sprites_AI/fune_namihe.o(.text);
+        src/sprites_AI/box.o(.text);
+        src/sprites_AI/geruta.o(.text);
+        src/sprites_AI/misc_pad.o(.text);
+        src/sprites_AI/operations_room_pad.o(.text);
+        src/sprites_AI/scientist.o(.text);
+        src/sprites_AI/skultera.o(.text);
+        src/sprites_AI/zeela.o(.text);
+        src/sprites_AI/sova.o(.text);
+        src/sprites_AI/yard.o(.text);
+        src/sprites_AI/evir.o(.text);
+        src/sprites_AI/bull.o(.text);
+        src/sprites_AI/memu.o(.text);
+        src/sprites_AI/geruboss.o(.text);
+        src/sprites_AI/choot.o(.text);
+        src/sprites_AI/zebesian_ground.o(.text);
         src/sprites_AI/blue_x.o(.text);
         src/sprites_AI/missile_hatch.o(.text);
         src/sprites_AI/super_missile_geron.o(.text);
@@ -289,18 +403,50 @@ SECTIONS {
         src/sprites_AI/zazabi.o(.text);
         src/sprites_AI/elevator_pad.o(.text);
         src/sprites_AI/serris.o(.text);
+        src/sprites_AI/owtch.o(.text);
+        src/sprites_AI/geega.o(.text);
+        src/sprites_AI/pillar.o(.text);
+        src/sprites_AI/genesis.o(.text);
+        src/sprites_AI/puyo.o(.text);
+        src/sprites_AI/mimic.o(.text);
+        src/sprites_AI/flashing_number.o(.text);
+        src/sprites_AI/zebesian_aqua.o(.text);
 
-        asm/disasm_0x08049888.o(.text);
+        asm/disasm_0x0804d038.o(.text);
 
+        src/sprites_AI/metroid.o(.text);
+        src/sprites_AI/lab_debris.o(.text);
+        src/sprites_AI/powamp.o(.text);
+        src/sprites_AI/zozoro.o(.text);
+
+        asm/disasm_0x080507F4.o(.text);
+
+        src/sprites_AI/continual_x_spawner.o(.text);
+
+        asm/disasm_0x080519AC.o(.text);
+
+        src/sprites_AI/electric_water_damage_box2.o(.text);
+        src/sprites_AI/frozen_ridley.o(.text);
+        src/sprites_AI/gold_enemy_door_lock.o(.text);
+        src/sprites_AI/mega_x.o(.text);
+        src/sprites_AI/omega_metroid_husk.o(.text);
+        src/sprites_AI/ice_beam_ability.o(.text);
+        src/sprites_AI/metroid_husk.o(.text);
+        src/sprites_AI/ridley.o(.text);
+        src/sprites_AI/ridley_pre_spawn.o(.text);
+        src/sprites_AI/yakuza.o(.text);
+        src/sprites_AI/nightmare.o(.text);
         src/event_checks.o(.text);
         src/x_parasite_util.o(.text);
         src/screen_shake.o(.text);
-
-        asm/disasm_0x080626F4.o(.text);
-
+        src/room_effect.o(.text);
+        src/room.o(.text);
         src/power_bomb_explosion.o(.text);
 
-        asm/disasm_0x080685b4.o(.text);
+        src/gadora_hatch.o(.text);
+        src/in_game_timer.o(.text);
+        src/display.o(.text);
+        src/process_pause_press.o(.text);
 
         src/clipdata.o(.text);
         src/connection.o(.text);
@@ -312,12 +458,16 @@ SECTIONS {
         src/demo.o(.text);
         src/hud.o(.text);
         src/escape.o(.text);
-
-        asm/disasm_0x08072d50.o(.text);
-
+        src/hud_generic.o(.text);
+        src/particle.o(.text);
+        src/oam_id.o(.text);
         src/event.o(.text);
 
         asm/disasm_0x08074ffc.o(.text);
+
+        src/text.o(.text);
+
+        asm/disasm_0x08079afc.o(.text);
 
         src/menus/pause_debug.o(.text);
 
@@ -325,8 +475,15 @@ SECTIONS {
 
         src/projectile.o(.text);
         src/menus/title_screen.o(.text);
+        src/new_file_intro.o(.text);
 
-        asm/disasm_0x08087610.o(.text);
+        asm/disasm_0x08088240.o(.text);
+
+        src/sa_x_close_up.o(.text);
+
+        asm/disasm_0x0809deb4.o(.text);
+
+        src/ending.o(.text);
 
         *libgcc.a:_call_via_rX.o(.text);
         *libgcc.a:_divsi3.o(.text);
@@ -347,11 +504,26 @@ SECTIONS {
 
     .rodata : ALIGN(2) {
         src/data/generic_data.o(.rodata);
+        src/data/audio.o(.rodata);
+
+        src/data/music_track_data.o(.rodata);
+        sound/sound_entries.o(.rodata);
+        sound/tracks/null_track.o(.rodata);
+        sound/direct_sound_data.o(.rodata);
+        sound/track_data.o(.rodata);
 
         src/sram/sram.o(.rodata);
 
+        src/data/samus/samus_empty_data.o(.rodata);
+        src/data/samus/arm_cannon_data.o(.rodata);
+        src/data/samus/samus_animation_pointers.o(.rodata);
+        src/data/samus/samus_palette_data.o(.rodata);
+        src/data/samus/arm_cannon_graphics_pointers.o(.rodata);
         src/data/samus_data.o(.rodata);
         src/data/sa_x.o(.rodata);
+        src/data/samus/samus_graphics.o(.rodata);
+        src/data/samus/arm_cannon_graphics.o(.rodata);
+
         src/data/sprite_data.o(.rodata);
         src/data/sprite_debris_data.o(.rodata);
         src/data/sprites/target.o(.rodata);
@@ -391,7 +563,24 @@ SECTIONS {
         src/data/sprites/electric_water.o(.rodata);
         src/data/sprites/zoro.o(.rodata);
         src/data/sprites/kihunter.o(.rodata);
-
+        src/data/sprites/reo.o(.rodata);
+        src/data/sprites/lava_plume.o(.rodata);
+        src/data/sprites/fune_namihe.o(.rodata);
+        src/data/sprites/box.o(.rodata);
+        src/data/sprites/geruta.o(.rodata);
+        src/data/sprites/misc_pad.o(.rodata);
+        src/data/sprites/operations_room_pad.o(.rodata);
+        src/data/sprites/scientist.o(.rodata);
+        src/data/sprites/skultera.o(.rodata);
+        src/data/sprites/zeela.o(.rodata);
+        src/data/sprites/sova.o(.rodata);
+        src/data/sprites/yard.o(.rodata);
+        src/data/sprites/evir.o(.rodata);
+        src/data/sprites/bull.o(.rodata);
+        src/data/sprites/memu.o(.rodata);
+        src/data/sprites/geruboss.o(.rodata);
+        src/data/sprites/choot.o(.rodata);
+        src/data/sprites/zebesian_ground.o(.rodata);
         src/data/sprites/blue_x.o(.rodata);
         src/data/sprites/missile_hatch.o(.rodata);
         src/data/sprites/super_missile_geron.o(.rodata);
@@ -404,23 +593,475 @@ SECTIONS {
         src/data/sprites/zazabi.o(.rodata);
         src/data/sprites/elevator_pad.o(.rodata);
         src/data/sprites/serris.o(.rodata);
+        src/data/sprites/owtch.o(.rodata);
+        src/data/sprites/geega.o(.rodata);
+        src/data/sprites/pillar.o(.rodata);
+        src/data/sprites/genesis.o(.rodata);
+        src/data/sprites/puyo.o(.rodata);
+        src/data/sprites/mimic.o(.rodata);
+        src/data/sprites/flashing_number.o(.rodata);
+        src/data/sprites/zebesian_aqua.o(.rodata);
+
+        src/data/sprites/metroid.o(.rodata);
+        src/data/sprites/lab_debris.o(.rodata);
+        src/data/sprites/powamp.o(.rodata);
+        src/data/sprites/zozoro.o(.rodata);
+        src/data/sprites/electric_water_damage_box2.o(.rodata);
+
+        src/data/sprites/frozen_ridley.o(.rodata);
+        src/data/sprites/mega_x.o(.rodata);
+        src/data/sprites/omega_metroid_husk.o(.rodata);
+        src/data/sprites/ice_beam_ability.o(.rodata);
+        src/data/sprites/metroid_husk.o(.rodata);
+        src/data/sprites/ridley.o(.rodata);
+        src/data/sprites/ridley_pre_spawn.o(.rodata);
+        src/data/sprites/yakuza.o(.rodata);
+        src/data/sprites/nightmare.o(.rodata);
         src/data/sprites/x_parasite.o(.rodata);
         src/data/clipdata_data.o(.rodata);
+        src/data/rooms_data.o(.rodata);
+        src/data/empty_data.o(.rodata);
         src/data/connection_data.o(.rodata);
+        src/data/animated_graphics_data.o(.rodata);
         src/data/demo_data.o(.rodata);
         src/data/hud_data.o(.rodata);
-        src/data/escape_data.o(.rodata);
         src/data/particle_data.o(.rodata);
+        src/data/default_background_graphics.o(.rodata);
+        src/data/clipdata_types_tilemap.o(.rodata);
+        src/data/rooms/test_rooms_data.o(.rodata);
+
+        src/data/tilesets/tilesets_set0.o(.rodata);
+        src/data/common_pals.o(.rodata);
+        src/data/common_bgs.o(.rodata);
+        src/data/tilesets/tilesets_set1.o(.rodata);
+
+        src/data/rooms/main_deck/main_deck_0.o(.rodata);
+        src/data/rooms/main_deck/main_deck_1.o(.rodata);
+        src/data/rooms/main_deck/main_deck_2.o(.rodata);
+        src/data/rooms/main_deck/main_deck_3.o(.rodata);
+        src/data/rooms/main_deck/main_deck_4.o(.rodata);
+        src/data/rooms/main_deck/main_deck_5.o(.rodata);
+        src/data/rooms/main_deck/main_deck_6.o(.rodata);
+        src/data/rooms/main_deck/main_deck_7.o(.rodata);
+        src/data/rooms/main_deck/main_deck_8.o(.rodata);
+        src/data/rooms/main_deck/main_deck_9.o(.rodata);
+        src/data/rooms/main_deck/main_deck_10.o(.rodata);
+        src/data/rooms/main_deck/main_deck_11.o(.rodata);
+        src/data/rooms/main_deck/main_deck_12.o(.rodata);
+        src/data/rooms/main_deck/main_deck_13.o(.rodata);
+        src/data/rooms/main_deck/main_deck_14.o(.rodata);
+        src/data/rooms/main_deck/main_deck_15.o(.rodata);
+        src/data/rooms/main_deck/main_deck_16.o(.rodata);
+        src/data/rooms/main_deck/main_deck_17.o(.rodata);
+        src/data/rooms/main_deck/main_deck_18.o(.rodata);
+        src/data/rooms/main_deck/main_deck_19.o(.rodata);
+        src/data/rooms/main_deck/main_deck_20.o(.rodata);
+        src/data/rooms/main_deck/main_deck_21.o(.rodata);
+        src/data/rooms/main_deck/main_deck_22.o(.rodata);
+        src/data/rooms/main_deck/main_deck_23.o(.rodata);
+        src/data/rooms/main_deck/main_deck_24.o(.rodata);
+        src/data/rooms/main_deck/main_deck_25.o(.rodata);
+        src/data/rooms/main_deck/main_deck_26.o(.rodata);
+        src/data/rooms/main_deck/main_deck_27.o(.rodata);
+        src/data/rooms/main_deck/main_deck_28.o(.rodata);
+        src/data/rooms/main_deck/main_deck_29.o(.rodata);
+        src/data/rooms/main_deck/main_deck_30.o(.rodata);
+        src/data/rooms/main_deck/main_deck_31.o(.rodata);
+        src/data/rooms/main_deck/main_deck_32.o(.rodata);
+        src/data/rooms/main_deck/main_deck_33.o(.rodata);
+        src/data/rooms/main_deck/main_deck_34.o(.rodata);
+        src/data/rooms/main_deck/main_deck_35.o(.rodata);
+        src/data/rooms/main_deck/main_deck_36.o(.rodata);
+        src/data/rooms/main_deck/main_deck_37.o(.rodata);
+        src/data/rooms/main_deck/main_deck_38.o(.rodata);
+        src/data/rooms/main_deck/main_deck_39.o(.rodata);
+        src/data/rooms/main_deck/main_deck_40.o(.rodata);
+        src/data/rooms/main_deck/main_deck_41.o(.rodata);
+        src/data/rooms/main_deck/main_deck_42.o(.rodata);
+        src/data/rooms/main_deck/main_deck_43.o(.rodata);
+        src/data/rooms/main_deck/main_deck_44.o(.rodata);
+        src/data/rooms/main_deck/main_deck_45.o(.rodata);
+        src/data/rooms/main_deck/main_deck_46.o(.rodata);
+        src/data/rooms/main_deck/main_deck_47.o(.rodata);
+        src/data/rooms/main_deck/main_deck_48.o(.rodata);
+        src/data/rooms/main_deck/main_deck_49.o(.rodata);
+        src/data/rooms/main_deck/main_deck_50.o(.rodata);
+        src/data/rooms/main_deck/main_deck_51.o(.rodata);
+        src/data/rooms/main_deck/main_deck_52.o(.rodata);
+        src/data/rooms/main_deck/main_deck_53.o(.rodata);
+        src/data/rooms/main_deck/main_deck_54.o(.rodata);
+        src/data/rooms/main_deck/main_deck_55.o(.rodata);
+        src/data/rooms/main_deck/main_deck_56.o(.rodata);
+        src/data/rooms/main_deck/main_deck_57.o(.rodata);
+        src/data/rooms/main_deck/main_deck_58.o(.rodata);
+        src/data/rooms/main_deck/main_deck_59.o(.rodata);
+        src/data/rooms/main_deck/main_deck_60.o(.rodata);
+        src/data/rooms/main_deck/main_deck_61.o(.rodata);
+        src/data/rooms/main_deck/main_deck_62.o(.rodata);
+        src/data/rooms/main_deck/main_deck_63.o(.rodata);
+        src/data/rooms/main_deck/main_deck_64.o(.rodata);
+        src/data/rooms/main_deck/main_deck_65.o(.rodata);
+        src/data/rooms/main_deck/main_deck_66.o(.rodata);
+        src/data/rooms/main_deck/main_deck_67.o(.rodata);
+        src/data/rooms/main_deck/main_deck_68.o(.rodata);
+        src/data/rooms/main_deck/main_deck_69.o(.rodata);
+        src/data/rooms/main_deck/main_deck_70.o(.rodata);
+        src/data/rooms/main_deck/main_deck_71.o(.rodata);
+        src/data/rooms/main_deck/main_deck_72.o(.rodata);
+        src/data/rooms/main_deck/main_deck_73.o(.rodata);
+        src/data/rooms/main_deck/main_deck_74.o(.rodata);
+        src/data/rooms/main_deck/main_deck_75.o(.rodata);
+        src/data/rooms/main_deck/main_deck_76.o(.rodata);
+        src/data/rooms/main_deck/main_deck_77.o(.rodata);
+        src/data/rooms/main_deck/main_deck_78.o(.rodata);
+        src/data/rooms/main_deck/main_deck_79.o(.rodata);
+        src/data/rooms/main_deck/main_deck_80.o(.rodata);
+        src/data/rooms/main_deck/main_deck_81.o(.rodata);
+        src/data/rooms/main_deck/main_deck_82.o(.rodata);
+        src/data/rooms/main_deck/main_deck_83.o(.rodata);
+        src/data/rooms/main_deck/main_deck_84.o(.rodata);
+        src/data/rooms/main_deck/main_deck_85.o(.rodata);
+        src/data/rooms/main_deck/main_deck_86.o(.rodata);
+        src/data/rooms/main_deck/bg3.o(.rodata);
+
+        src/data/tilesets/tilesets_set2.o(.rodata);
+
+        src/data/rooms/sector_1/sector_1_0.o(.rodata);
+        src/data/rooms/sector_1/sector_1_1.o(.rodata);
+        src/data/rooms/sector_1/sector_1_2.o(.rodata);
+        src/data/rooms/sector_1/sector_1_3.o(.rodata);
+        src/data/rooms/sector_1/sector_1_4.o(.rodata);
+        src/data/rooms/sector_1/sector_1_5.o(.rodata);
+        src/data/rooms/sector_1/sector_1_6.o(.rodata);
+        src/data/rooms/sector_1/sector_1_7.o(.rodata);
+        src/data/rooms/sector_1/sector_1_8.o(.rodata);
+        src/data/rooms/sector_1/sector_1_9.o(.rodata);
+        src/data/rooms/sector_1/sector_1_10.o(.rodata);
+        src/data/rooms/sector_1/sector_1_11.o(.rodata);
+        src/data/rooms/sector_1/sector_1_12.o(.rodata);
+        src/data/rooms/sector_1/sector_1_13.o(.rodata);
+        src/data/rooms/sector_1/sector_1_14.o(.rodata);
+        src/data/rooms/sector_1/sector_1_15.o(.rodata);
+        src/data/rooms/sector_1/sector_1_16.o(.rodata);
+        src/data/rooms/sector_1/sector_1_17.o(.rodata);
+        src/data/rooms/sector_1/sector_1_18.o(.rodata);
+        src/data/rooms/sector_1/sector_1_19.o(.rodata);
+        src/data/rooms/sector_1/sector_1_20.o(.rodata);
+        src/data/rooms/sector_1/sector_1_21.o(.rodata);
+        src/data/rooms/sector_1/sector_1_22.o(.rodata);
+        src/data/rooms/sector_1/sector_1_23.o(.rodata);
+        src/data/rooms/sector_1/sector_1_24.o(.rodata);
+        src/data/rooms/sector_1/sector_1_25.o(.rodata);
+        src/data/rooms/sector_1/sector_1_26.o(.rodata);
+        src/data/rooms/sector_1/sector_1_27.o(.rodata);
+        src/data/rooms/sector_1/sector_1_28.o(.rodata);
+        src/data/rooms/sector_1/sector_1_29.o(.rodata);
+        src/data/rooms/sector_1/sector_1_30.o(.rodata);
+        src/data/rooms/sector_1/sector_1_31.o(.rodata);
+        src/data/rooms/sector_1/sector_1_32.o(.rodata);
+        src/data/rooms/sector_1/sector_1_33.o(.rodata);
+        src/data/rooms/sector_1/sector_1_34.o(.rodata);
+        src/data/rooms/sector_1/sector_1_35.o(.rodata);
+        src/data/rooms/sector_1/sector_1_36.o(.rodata);
+        src/data/rooms/sector_1/sector_1_37.o(.rodata);
+        src/data/rooms/sector_1/sector_1_38.o(.rodata);
+        src/data/rooms/sector_1/sector_1_39.o(.rodata);
+        src/data/rooms/sector_1/sector_1_40.o(.rodata);
+        src/data/rooms/sector_1/sector_1_41.o(.rodata);
+        src/data/rooms/sector_1/sector_1_42.o(.rodata);
+        src/data/rooms/sector_1/sector_1_43.o(.rodata);
+        src/data/rooms/sector_1/sector_1_44.o(.rodata);
+        src/data/rooms/sector_1/sector_1_45.o(.rodata);
+        src/data/rooms/sector_1/sector_1_46.o(.rodata);
+        src/data/rooms/sector_1/sector_1_47.o(.rodata);
+        src/data/rooms/sector_1/sector_1_48.o(.rodata);
+        src/data/rooms/sector_1/sector_1_49.o(.rodata);
+        src/data/rooms/sector_1/sector_1_50.o(.rodata);
+        src/data/rooms/sector_1/sector_1_51.o(.rodata);
+        src/data/rooms/sector_1/sector_1_52.o(.rodata);
+        src/data/rooms/sector_1/sector_1_53.o(.rodata);
+        src/data/rooms/sector_1/bg3.o(.rodata);
+
+        src/data/tilesets/tilesets_set3.o(.rodata);
+
+        src/data/rooms/sector_2/sector_2_0.o(.rodata);
+        src/data/rooms/sector_2/sector_2_1.o(.rodata);
+        src/data/rooms/sector_2/sector_2_2.o(.rodata);
+        src/data/rooms/sector_2/sector_2_3.o(.rodata);
+        src/data/rooms/sector_2/sector_2_4.o(.rodata);
+        src/data/rooms/sector_2/sector_2_5.o(.rodata);
+        src/data/rooms/sector_2/sector_2_6.o(.rodata);
+        src/data/rooms/sector_2/sector_2_7.o(.rodata);
+        src/data/rooms/sector_2/sector_2_8.o(.rodata);
+        src/data/rooms/sector_2/sector_2_9.o(.rodata);
+        src/data/rooms/sector_2/sector_2_10.o(.rodata);
+        src/data/rooms/sector_2/sector_2_11.o(.rodata);
+        src/data/rooms/sector_2/sector_2_12.o(.rodata);
+        src/data/rooms/sector_2/sector_2_13.o(.rodata);
+        src/data/rooms/sector_2/sector_2_14.o(.rodata);
+        src/data/rooms/sector_2/sector_2_15.o(.rodata);
+        src/data/rooms/sector_2/sector_2_16.o(.rodata);
+        src/data/rooms/sector_2/sector_2_17.o(.rodata);
+        src/data/rooms/sector_2/sector_2_18.o(.rodata);
+        src/data/rooms/sector_2/sector_2_19.o(.rodata);
+        src/data/rooms/sector_2/sector_2_20.o(.rodata);
+        src/data/rooms/sector_2/sector_2_21.o(.rodata);
+        src/data/rooms/sector_2/sector_2_22.o(.rodata);
+        src/data/rooms/sector_2/sector_2_23.o(.rodata);
+        src/data/rooms/sector_2/sector_2_24.o(.rodata);
+        src/data/rooms/sector_2/sector_2_25.o(.rodata);
+        src/data/rooms/sector_2/sector_2_26.o(.rodata);
+        src/data/rooms/sector_2/sector_2_27.o(.rodata);
+        src/data/rooms/sector_2/sector_2_28.o(.rodata);
+        src/data/rooms/sector_2/sector_2_29.o(.rodata);
+        src/data/rooms/sector_2/sector_2_30.o(.rodata);
+        src/data/rooms/sector_2/sector_2_31.o(.rodata);
+        src/data/rooms/sector_2/sector_2_32.o(.rodata);
+        src/data/rooms/sector_2/sector_2_33.o(.rodata);
+        src/data/rooms/sector_2/sector_2_34.o(.rodata);
+        src/data/rooms/sector_2/sector_2_35.o(.rodata);
+        src/data/rooms/sector_2/sector_2_36.o(.rodata);
+        src/data/rooms/sector_2/sector_2_37.o(.rodata);
+        src/data/rooms/sector_2/sector_2_38.o(.rodata);
+        src/data/rooms/sector_2/sector_2_39.o(.rodata);
+        src/data/rooms/sector_2/sector_2_40.o(.rodata);
+        src/data/rooms/sector_2/sector_2_41.o(.rodata);
+        src/data/rooms/sector_2/sector_2_42.o(.rodata);
+        src/data/rooms/sector_2/sector_2_43.o(.rodata);
+        src/data/rooms/sector_2/sector_2_44.o(.rodata);
+        src/data/rooms/sector_2/sector_2_45.o(.rodata);
+        src/data/rooms/sector_2/sector_2_46.o(.rodata);
+        src/data/rooms/sector_2/sector_2_47.o(.rodata);
+        src/data/rooms/sector_2/sector_2_48.o(.rodata);
+        src/data/rooms/sector_2/sector_2_49.o(.rodata);
+        src/data/rooms/sector_2/sector_2_50.o(.rodata);
+        src/data/rooms/sector_2/sector_2_51.o(.rodata);
+        src/data/rooms/sector_2/sector_2_52.o(.rodata);
+        src/data/rooms/sector_2/sector_2_53.o(.rodata);
+        src/data/rooms/sector_2/sector_2_54.o(.rodata);
+        src/data/rooms/sector_2/sector_2_55.o(.rodata);
+        src/data/rooms/sector_2/sector_2_56.o(.rodata);
+        src/data/rooms/sector_2/sector_2_57.o(.rodata);
+        src/data/rooms/sector_2/sector_2_58.o(.rodata);
+        src/data/rooms/sector_2/sector_2_59.o(.rodata);
+        src/data/rooms/sector_2/sector_2_60.o(.rodata);
+        src/data/rooms/sector_2/bg3.o(.rodata);
+
+        src/data/tilesets/tilesets_set4.o(.rodata);
+
+        src/data/rooms/sector_3/sector_3_0.o(.rodata);
+        src/data/rooms/sector_3/sector_3_1.o(.rodata);
+        src/data/rooms/sector_3/sector_3_2.o(.rodata);
+        src/data/rooms/sector_3/sector_3_3.o(.rodata);
+        src/data/rooms/sector_3/sector_3_4.o(.rodata);
+        src/data/rooms/sector_3/sector_3_5.o(.rodata);
+        src/data/rooms/sector_3/sector_3_6.o(.rodata);
+        src/data/rooms/sector_3/sector_3_7.o(.rodata);
+        src/data/rooms/sector_3/sector_3_8.o(.rodata);
+        src/data/rooms/sector_3/sector_3_9.o(.rodata);
+        src/data/rooms/sector_3/sector_3_10.o(.rodata);
+        src/data/rooms/sector_3/sector_3_11.o(.rodata);
+        src/data/rooms/sector_3/sector_3_12.o(.rodata);
+        src/data/rooms/sector_3/sector_3_13.o(.rodata);
+        src/data/rooms/sector_3/sector_3_14.o(.rodata);
+        src/data/rooms/sector_3/sector_3_15.o(.rodata);
+        src/data/rooms/sector_3/sector_3_16.o(.rodata);
+        src/data/rooms/sector_3/sector_3_17.o(.rodata);
+        src/data/rooms/sector_3/sector_3_18.o(.rodata);
+        src/data/rooms/sector_3/sector_3_19.o(.rodata);
+        src/data/rooms/sector_3/sector_3_20.o(.rodata);
+        src/data/rooms/sector_3/sector_3_21.o(.rodata);
+        src/data/rooms/sector_3/sector_3_22.o(.rodata);
+        src/data/rooms/sector_3/sector_3_23.o(.rodata);
+        src/data/rooms/sector_3/sector_3_24.o(.rodata);
+        src/data/rooms/sector_3/sector_3_25.o(.rodata);
+        src/data/rooms/sector_3/sector_3_26.o(.rodata);
+        src/data/rooms/sector_3/sector_3_27.o(.rodata);
+        src/data/rooms/sector_3/sector_3_28.o(.rodata);
+        src/data/rooms/sector_3/sector_3_29.o(.rodata);
+        src/data/rooms/sector_3/sector_3_30.o(.rodata);
+        src/data/rooms/sector_3/sector_3_31.o(.rodata);
+        src/data/rooms/sector_3/sector_3_32.o(.rodata);
+        src/data/rooms/sector_3/sector_3_33.o(.rodata);
+        src/data/rooms/sector_3/sector_3_34.o(.rodata);
+        src/data/rooms/sector_3/sector_3_35.o(.rodata);
+        src/data/rooms/sector_3/sector_3_36.o(.rodata);
+        src/data/rooms/sector_3/sector_3_37.o(.rodata);
+        src/data/rooms/sector_3/sector_3_38.o(.rodata);
+        src/data/rooms/sector_3/bg3.o(.rodata);
+
+        src/data/tilesets/tilesets_set5.o(.rodata);
+
+        src/data/rooms/sector_5/sector_5_0.o(.rodata);
+        src/data/rooms/sector_5/sector_5_1.o(.rodata);
+        src/data/rooms/sector_5/sector_5_2.o(.rodata);
+        src/data/rooms/sector_5/sector_5_3.o(.rodata);
+        src/data/rooms/sector_5/sector_5_4.o(.rodata);
+        src/data/rooms/sector_5/sector_5_5.o(.rodata);
+        src/data/rooms/sector_5/sector_5_6.o(.rodata);
+        src/data/rooms/sector_5/sector_5_7.o(.rodata);
+        src/data/rooms/sector_5/sector_5_8.o(.rodata);
+        src/data/rooms/sector_5/sector_5_9.o(.rodata);
+        src/data/rooms/sector_5/sector_5_10.o(.rodata);
+        src/data/rooms/sector_5/sector_5_11.o(.rodata);
+        src/data/rooms/sector_5/sector_5_12.o(.rodata);
+        src/data/rooms/sector_5/sector_5_13.o(.rodata);
+        src/data/rooms/sector_5/sector_5_14.o(.rodata);
+        src/data/rooms/sector_5/sector_5_15.o(.rodata);
+        src/data/rooms/sector_5/sector_5_16.o(.rodata);
+        src/data/rooms/sector_5/sector_5_17.o(.rodata);
+        src/data/rooms/sector_5/sector_5_18.o(.rodata);
+        src/data/rooms/sector_5/sector_5_19.o(.rodata);
+        src/data/rooms/sector_5/sector_5_20.o(.rodata);
+        src/data/rooms/sector_5/sector_5_21.o(.rodata);
+        src/data/rooms/sector_5/sector_5_22.o(.rodata);
+        src/data/rooms/sector_5/sector_5_23.o(.rodata);
+        src/data/rooms/sector_5/sector_5_24.o(.rodata);
+        src/data/rooms/sector_5/sector_5_25.o(.rodata);
+        src/data/rooms/sector_5/sector_5_26.o(.rodata);
+        src/data/rooms/sector_5/sector_5_27.o(.rodata);
+        src/data/rooms/sector_5/sector_5_28.o(.rodata);
+        src/data/rooms/sector_5/sector_5_29.o(.rodata);
+        src/data/rooms/sector_5/sector_5_30.o(.rodata);
+        src/data/rooms/sector_5/sector_5_31.o(.rodata);
+        src/data/rooms/sector_5/sector_5_32.o(.rodata);
+        src/data/rooms/sector_5/sector_5_33.o(.rodata);
+        src/data/rooms/sector_5/sector_5_34.o(.rodata);
+        src/data/rooms/sector_5/sector_5_35.o(.rodata);
+        src/data/rooms/sector_5/sector_5_36.o(.rodata);
+        src/data/rooms/sector_5/sector_5_37.o(.rodata);
+        src/data/rooms/sector_5/sector_5_38.o(.rodata);
+        src/data/rooms/sector_5/sector_5_39.o(.rodata);
+        src/data/rooms/sector_5/sector_5_40.o(.rodata);
+        src/data/rooms/sector_5/sector_5_41.o(.rodata);
+        src/data/rooms/sector_5/sector_5_42.o(.rodata);
+        src/data/rooms/sector_5/sector_5_43.o(.rodata);
+        src/data/rooms/sector_5/sector_5_44.o(.rodata);
+        src/data/rooms/sector_5/sector_5_45.o(.rodata);
+        src/data/rooms/sector_5/sector_5_46.o(.rodata);
+        src/data/rooms/sector_5/sector_5_47.o(.rodata);
+        src/data/rooms/sector_5/sector_5_48.o(.rodata);
+        src/data/rooms/sector_5/sector_5_49.o(.rodata);
+        src/data/rooms/sector_5/sector_5_50.o(.rodata);
+        src/data/rooms/sector_5/sector_5_51.o(.rodata);
+        src/data/rooms/sector_5/bg3.o(.rodata);
+
+        src/data/tilesets/tilesets_set6.o(.rodata);
+
+        src/data/rooms/sector_4/sector_4_0.o(.rodata);
+        src/data/rooms/sector_4/sector_4_1.o(.rodata);
+        src/data/rooms/sector_4/sector_4_2.o(.rodata);
+        src/data/rooms/sector_4/sector_4_3.o(.rodata);
+        src/data/rooms/sector_4/sector_4_4.o(.rodata);
+        src/data/rooms/sector_4/sector_4_5.o(.rodata);
+        src/data/rooms/sector_4/sector_4_6.o(.rodata);
+        src/data/rooms/sector_4/sector_4_7.o(.rodata);
+        src/data/rooms/sector_4/sector_4_8.o(.rodata);
+        src/data/rooms/sector_4/sector_4_9.o(.rodata);
+        src/data/rooms/sector_4/sector_4_10.o(.rodata);
+        src/data/rooms/sector_4/sector_4_11.o(.rodata);
+        src/data/rooms/sector_4/sector_4_12.o(.rodata);
+        src/data/rooms/sector_4/sector_4_13.o(.rodata);
+        src/data/rooms/sector_4/sector_4_14.o(.rodata);
+        src/data/rooms/sector_4/sector_4_15.o(.rodata);
+        src/data/rooms/sector_4/sector_4_16.o(.rodata);
+        src/data/rooms/sector_4/sector_4_17.o(.rodata);
+        src/data/rooms/sector_4/sector_4_18.o(.rodata);
+        src/data/rooms/sector_4/sector_4_19.o(.rodata);
+        src/data/rooms/sector_4/sector_4_20.o(.rodata);
+        src/data/rooms/sector_4/sector_4_21.o(.rodata);
+        src/data/rooms/sector_4/sector_4_22.o(.rodata);
+        src/data/rooms/sector_4/sector_4_23.o(.rodata);
+        src/data/rooms/sector_4/sector_4_24.o(.rodata);
+        src/data/rooms/sector_4/sector_4_25.o(.rodata);
+        src/data/rooms/sector_4/sector_4_26.o(.rodata);
+        src/data/rooms/sector_4/sector_4_27.o(.rodata);
+        src/data/rooms/sector_4/sector_4_28.o(.rodata);
+        src/data/rooms/sector_4/sector_4_29.o(.rodata);
+        src/data/rooms/sector_4/sector_4_30.o(.rodata);
+        src/data/rooms/sector_4/sector_4_31.o(.rodata);
+        src/data/rooms/sector_4/sector_4_32.o(.rodata);
+        src/data/rooms/sector_4/sector_4_33.o(.rodata);
+        src/data/rooms/sector_4/sector_4_34.o(.rodata);
+        src/data/rooms/sector_4/sector_4_35.o(.rodata);
+        src/data/rooms/sector_4/sector_4_36.o(.rodata);
+        src/data/rooms/sector_4/sector_4_37.o(.rodata);
+        src/data/rooms/sector_4/sector_4_38.o(.rodata);
+        src/data/rooms/sector_4/sector_4_39.o(.rodata);
+        src/data/rooms/sector_4/sector_4_40.o(.rodata);
+        src/data/rooms/sector_4/sector_4_41.o(.rodata);
+        src/data/rooms/sector_4/sector_4_42.o(.rodata);
+        src/data/rooms/sector_4/sector_4_43.o(.rodata);
+        src/data/rooms/sector_4/sector_4_44.o(.rodata);
+        src/data/rooms/sector_4/sector_4_45.o(.rodata);
+        src/data/rooms/sector_4/sector_4_46.o(.rodata);
+        src/data/rooms/sector_4/sector_4_47.o(.rodata);
+        src/data/rooms/sector_4/bg3.o(.rodata);
+
+        src/data/tilesets/tilesets_set7.o(.rodata);
+
+        src/data/rooms/sector_6/sector_6_0.o(.rodata);
+        src/data/rooms/sector_6/sector_6_1.o(.rodata);
+        src/data/rooms/sector_6/sector_6_2.o(.rodata);
+        src/data/rooms/sector_6/sector_6_3.o(.rodata);
+        src/data/rooms/sector_6/sector_6_4.o(.rodata);
+        src/data/rooms/sector_6/sector_6_5.o(.rodata);
+        src/data/rooms/sector_6/sector_6_6.o(.rodata);
+        src/data/rooms/sector_6/sector_6_7.o(.rodata);
+        src/data/rooms/sector_6/sector_6_8.o(.rodata);
+        src/data/rooms/sector_6/sector_6_9.o(.rodata);
+        src/data/rooms/sector_6/sector_6_10.o(.rodata);
+        src/data/rooms/sector_6/sector_6_11.o(.rodata);
+        src/data/rooms/sector_6/sector_6_12.o(.rodata);
+        src/data/rooms/sector_6/sector_6_13.o(.rodata);
+        src/data/rooms/sector_6/sector_6_14.o(.rodata);
+        src/data/rooms/sector_6/sector_6_15.o(.rodata);
+        src/data/rooms/sector_6/sector_6_16.o(.rodata);
+        src/data/rooms/sector_6/sector_6_17.o(.rodata);
+        src/data/rooms/sector_6/sector_6_18.o(.rodata);
+        src/data/rooms/sector_6/sector_6_19.o(.rodata);
+        src/data/rooms/sector_6/sector_6_20.o(.rodata);
+        src/data/rooms/sector_6/sector_6_21.o(.rodata);
+        src/data/rooms/sector_6/sector_6_22.o(.rodata);
+        src/data/rooms/sector_6/sector_6_23.o(.rodata);
+        src/data/rooms/sector_6/sector_6_24.o(.rodata);
+        src/data/rooms/sector_6/sector_6_25.o(.rodata);
+        src/data/rooms/sector_6/sector_6_26.o(.rodata);
+        src/data/rooms/sector_6/sector_6_27.o(.rodata);
+        src/data/rooms/sector_6/sector_6_28.o(.rodata);
+        src/data/rooms/sector_6/sector_6_29.o(.rodata);
+        src/data/rooms/sector_6/sector_6_30.o(.rodata);
+        src/data/rooms/sector_6/sector_6_31.o(.rodata);
+        src/data/rooms/sector_6/sector_6_32.o(.rodata);
+        src/data/rooms/sector_6/sector_6_33.o(.rodata);
+        src/data/rooms/sector_6/sector_6_34.o(.rodata);
+        src/data/rooms/sector_6/sector_6_35.o(.rodata);
+        src/data/rooms/sector_6/sector_6_36.o(.rodata);
+        src/data/rooms/sector_6/sector_6_37.o(.rodata);
+        src/data/rooms/sector_6/sector_6_38.o(.rodata);
+        src/data/rooms/sector_6/sector_6_39.o(.rodata);
+        src/data/rooms/sector_6/sector_6_40.o(.rodata);
+        src/data/rooms/sector_6/bg3.o(.rodata);
+
         src/data/event_data.o(.rodata);
         src/data/menus/pause_debug.o(.rodata);
+        src/data/sram_pointers.o(.rodata);
         src/data/projectile_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
-        src/data/engine_pointers.o(.rodata);
+        src/data/new_file_intro_data.o(.rodata);
+        src/data/sa_x_close_up.o(.rodata);
+        src/data/ending_data.o(.rodata);
+        src/data/sprite_pointers.o(.rodata);
+        src/data/frame_data_pointers.o(.rodata);
     } >rom
 
     .data : ALIGN(2) {
         src/room.o(.data);
+        src/scroll.o(.data);
         src/sound_event.o(.data);
+        src/particle.o(.data);
         src/projectile.o(.data);
+        src/new_file_intro.o(.data);
+        src/ending.o(.data);
     } >rom
 }

@@ -88,6 +88,7 @@ struct SamusAnimationInfo {
     u8 currentPaletteRow;
     u8 spaceJumpSpinCounter;
     u8 shinesparkTimer;
+    u8 unk_6[7];
 };
 
 struct SamusPhysics {
@@ -114,22 +115,67 @@ struct SamusEnvironmentalEffect {
     const u16* pOamFrame;
 };
 
+struct SamusCollisionData {
+    u16 horizontalMovingDirection;
+    u16 verticalMovingDirection;
+    u8 unk_4;
+    u8 unk_5;
+    s16 unk_6;
+    u8 standingStatus;
+    u8 collisionType;
+    u8 unk_A;
+    u8 unk_B;
+    u8 touchingSideBlock;
+    u8 touchingTopBlock;
+    u8 unk_E;
+};
+
+struct SamusEcho {
+    u8 active;
+    u8 timer;
+    u8 position;
+    u8 unk_4[9];
+};
+
+struct SamusAnimData {
+    const u8* pTopGfx;
+    const u8* pBottomGfx;
+    const u16* pOam;
+    u8 timer;
+};
+
+struct ArmCannonAnimData {
+    const s16* pOffset;
+    const u16* pOam;
+};
+
 extern struct SamusData gSamusData;
 extern struct SamusData gSamusDataCopy;
-extern struct SamusEnvironmentalEffect gSamusEnvironmentalEffects[2];
-extern struct Equipment gEquipment;
 extern struct SamusGraphicsInfo gSamusGraphicsInfo;
 extern struct SamusAnimationInfo gSamusAnimationInfo;
+extern struct SamusEnvironmentalEffect gSamusEnvironmentalEffects[2];
+extern struct Equipment gEquipment;
+extern struct SamusCollisionData gSamusCollisionData;
 extern struct SamusPhysics gSamusPhysics;
+extern struct SamusEcho gSamusEcho;
 
 extern u16 gSamusPalette[3 * 16];
 extern u16 gSamusPaletteLength;
 
+extern u8 gPreviousSamusField0;
 extern u16 gPreviousXPosition;
 extern u16 gPreviousYPosition;
 extern u8 gPoseLock;
 extern u8 gSamusUnderwaterFlag;
 extern u16 gPreventMovementTimer;
 extern u8 gDisableDrawingSamusAndScrollingFlag;
+extern s16 gPreviousPositionCounter;
+
+extern u8 gSamusUseYVelocityForX;
+extern s8 gUnk_3004d8c;
+extern s8 gUnk_300144e;
+extern u8 gUnk_300144f;
+
+extern u16 gPrevious64Positions[2][64];
 
 #endif /* SAMUS_STRUCTS_H */

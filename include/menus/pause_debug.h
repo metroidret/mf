@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-void PauseDebugSubroutine(void);
+void PauseDebugHandler(void);
 u32 PauseDebugModifyValues(void);
 void PauseDebugDrawEventText(u8 event);
 void PauseDebugDrawSection(u8 section);

@@ -6,8 +6,9 @@
 
 #include "data/sprites/sa_x.h"
 #include "data/sprite_data.h"
-#include "data/engine_pointers.h"
+#include "data/sprite_pointers.h"
 
+#include "constants/audio.h"
 #include "constants/clipdata.h"
 #include "constants/sprite.h"
 #include "constants/samus.h"
@@ -757,7 +758,7 @@ void SaXBossWaitingToAppear(void)
             gCurrentSprite.pose = 0x45;
             gCurrentSprite.work3 = 8;
             gCurrentSprite.status &= ~SPRITE_STATUS_HIDDEN;
-            PlayMusic(0x51, 7);
+            PlayMusic(MUSIC_SA_X_BATTLE, 7);
         }
     }
 }
@@ -1343,8 +1344,7 @@ void SaXBossTransformingIntoMonster(void)
     if (gCurrentSprite.work1 < 28)
     {
         offset = gCurrentSprite.work1;
-        DMA_SET(3, &sSpritesGraphicsPointers[PSPRITE_SA_X_MONSTER - 0x10][0x200 + offset * 0x80],
-            VRAM_OBJ + 0x4800 + offset * 0x200, C_32_2_16(DMA_ENABLE, 0x200 / 2));
+        DMA3_COPY_16(&sSpritesGraphicsPointers[PSPRITE_SA_X_MONSTER - 0x10][0x200 + offset * 0x80], VRAM_OBJ + 0x4800 + offset * 0x200, 0x200 / 2);
 
         if (gCurrentSprite.work1 == 0)
         {
@@ -1359,7 +1359,7 @@ void SaXBossTransformingIntoMonster(void)
 
     if (gCurrentSprite.work1 == 28)
     {
-        DMA_SET(3, sSpritesPalettePointers[PSPRITE_SA_X_MONSTER - 0x10] + 16 * 2, PALRAM_OBJ + 0x120, C_32_2_16(DMA_ENABLE, 0x70));
+        DMA3_COPY_16(sSpritesPalettePointers[PSPRITE_SA_X_MONSTER - 0x10] + 16 * 2, PALRAM_OBJ + 0x120, 0x70);
     }
 }
 

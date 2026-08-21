@@ -19,9 +19,9 @@ void UnusedSprites(void)
     {
         gCurrentSprite.pose++;
 
-        gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-        gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-        gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
         gCurrentSprite.hitboxTop = -QUARTER_BLOCK_SIZE;
         gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE;

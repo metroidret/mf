@@ -2,10 +2,13 @@
 #include "macros.h"
 #include "globals.h"
 
+#include "data/frame_data_pointers.h"
 #include "data/sprite_data.h"
+#include "data/sprites/core_x.h"
 #include "data/sprites/x_parasite.h"
 #include "data/sprites/zazabi.h"
 
+#include "constants/audio.h"
 #include "constants/clipdata.h"
 #include "constants/samus.h"
 #include "constants/sprite.h"
@@ -21,97 +24,94 @@
 #define ZAZABI_HEIGHT (BLOCK_SIZE * 4 + HALF_BLOCK_SIZE)
 #define ZAZABI_WIDTH (BLOCK_SIZE + HALF_BLOCK_SIZE + PIXEL_SIZE)
 
-#ifdef NON_MATCHING
-void ZazabiSyncSubSprites(void)
-{
+#define ZAZABI_EYE_DRAW_ORDER 12
+#define ZAZABI_DRAW_ORDER_EATING_SAMUS 4
 
-}
-#else
-NAKED_FUNCTION
+enum ZazabiPose {
+    ZAZABI_POSE_CRAWLING_INIT = 0x1,
+    ZAZABI_POSE_CRAWLING = 0x2,
+    ZAZABI_POSE_IDLE_INIT = 0x7,
+    ZAZABI_POSE_IDLE = 0x8,
+    ZAZABI_POSE_JUMP_WARNING_INIT = 0x17,
+    ZAZABI_POSE_JUMP_WARNING = 0x18,
+    ZAZABI_POSE_JUMPING_INIT = 0x19,
+    ZAZABI_POSE_JUMPING = 0x1A,
+    ZAZABI_POSE_FALLING_INIT = 0x1B,
+    ZAZABI_POSE_FALLING = 0x1C,
+    ZAZABI_POSE_LANDING_MOUTH_OPEN_INIT = 0x1D,
+    ZAZABI_POSE_LANDING_MOUTH_OPEN = 0x1E,
+    ZAZABI_POSE_LANDING_INIT = 0x1F,
+    ZAZABI_POSE_LANDING = 0x20,
+    ZAZABI_POSE_EATING_SAMUS_1_INIT = 0x37,
+    ZAZABI_POSE_EATING_SAMUS_1 = 0x38,
+    ZAZABI_POSE_EATING_SAMUS_2_INIT = 0x39,
+    ZAZABI_POSE_EATING_SAMUS_2 = 0x3A,
+    ZAZABI_POSE_EATING_SAMUS_3_INIT = 0x3B,
+    ZAZABI_POSE_EATING_SAMUS_3 = 0x3C,
+    ZAZABI_POSE_EATING_SAMUS_4_INIT = 0x3D,
+    ZAZABI_POSE_EATING_SAMUS_4 = 0x3E,
+    ZAZABI_POSE_EATING_SAMUS_5_INIT = 0x3F,
+    ZAZABI_POSE_EATING_SAMUS_5 = 0x40,
+    ZAZABI_POSE_SPITTING_SAMUS_INIT = 0x41,
+    ZAZABI_POSE_SPITTING_SAMUS = 0x42,
+    ZAZABI_POSE_LANDING_AFTER_SPITTING_INIT = 0x43,
+    ZAZABI_POSE_LANDING_AFTER_SPITTING = 0x44,
+    ZAZABI_POSE_DYING_INIT = 0x45,
+    ZAZABI_POSE_DYING = 0x46,
+};
+
+/**
+ * @brief 45330 | 9c | Synchronize the sub sprites of Zazabi
+ * 
+ */
 void ZazabiSyncSubSprites(void)
 {
-    asm(" \n\
-    push {r4, r5, lr} \n\
-	ldr r2, _0804535C @ =gSubSpriteData1 \n\
-	ldrh r0, [r2, #4] \n\
-	ldr r1, [r2] \n\
-	lsl r0, r0, #3 \n\
-	add r0, r0, r1 \n\
-	ldr r5, [r0] \n\
-	ldr r3, _08045360 @ =gCurrentSprite \n\
-	ldrb r1, [r3, #0x1e] \n\
-	lsl r0, r1, #1 \n\
-	add r0, r0, r1 \n\
-	lsl r0, r0, #1 \n\
-	add r0, r0, r5 \n\
-	ldrh r1, [r0] \n\
-	add r4, r1, #0 \n\
-	ldrh r0, [r2, #0xc] \n\
-	cmp r0, #0x28 \n\
-	bne _08045368 \n\
-	ldr r0, _08045364 @ =0x0879B374 \n\
-	lsl r1, r1, #2 \n\
-	b _0804538C \n\
-	.align 2, 0 \n\
-_0804535C: .4byte gSubSpriteData1 \n\
-_08045360: .4byte gCurrentSprite \n\
-_08045364: .4byte 0x0879B374 \n\
-_08045368: \n\
-	cmp r0, #0x3c \n\
-	bne _08045378 \n\
-	ldr r0, _08045374 @ =0x0879B290 \n\
-	lsl r1, r1, #2 \n\
-	b _0804538C \n\
-	.align 2, 0 \n\
-_08045374: .4byte 0x0879B290 \n\
-_08045378: \n\
-	cmp r0, #0x50 \n\
-	bne _08045388 \n\
-	ldr r0, _08045384 @ =0x0879B1AC \n\
-	lsl r1, r1, #2 \n\
-	b _0804538C \n\
-	.align 2, 0 \n\
-_08045384: .4byte 0x0879B1AC \n\
-_08045388: \n\
-	ldr r0, _080453C8 @ =0x0879B0C8 \n\
-	lsl r1, r4, #2 \n\
-_0804538C: \n\
-	add r1, r1, r0 \n\
-	ldr r0, [r3, #0x18] \n\
-	ldr r1, [r1] \n\
-	cmp r0, r1 \n\
-	beq _0804539E \n\
-	str r1, [r3, #0x18] \n\
-	movs r0, #0 \n\
-	strb r0, [r3, #0x1c] \n\
-	strh r0, [r3, #0x16] \n\
-_0804539E: \n\
-	ldrb r1, [r3, #0x1e] \n\
-	lsl r0, r1, #1 \n\
-	add r0, r0, r1 \n\
-	lsl r0, r0, #1 \n\
-	add r0, r0, r5 \n\
-	ldrh r0, [r0, #2] \n\
-	ldrh r1, [r2, #8] \n\
-	add r0, r0, r1 \n\
-	strh r0, [r3, #2] \n\
-	ldrb r1, [r3, #0x1e] \n\
-	lsl r0, r1, #1 \n\
-	add r0, r0, r1 \n\
-	lsl r0, r0, #1 \n\
-	add r0, r0, r5 \n\
-	ldrh r0, [r0, #4] \n\
-	ldrh r2, [r2, #0xa] \n\
-	add r0, r0, r2 \n\
-	strh r0, [r3, #4] \n\
-	pop {r4, r5} \n\
-	pop {r0} \n\
-	bx r0 \n\
-	.align 2, 0 \n\
-_080453C8: .4byte 0x0879B0C8 \n\
-    ");
+    MultiSpriteDataInfo_T pData;
+    u16 oamIdx;
+
+    pData = gSubSpriteData1.pMultiOam[gSubSpriteData1.currentAnimationFrame].pData;
+    oamIdx = pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_OAM_INDEX];
+    
+    if (gSubSpriteData1.health == 40)
+    {
+        if (gCurrentSprite.pOam != sZazabiFrameDataPointers1[oamIdx])
+        {
+            gCurrentSprite.pOam = sZazabiFrameDataPointers1[oamIdx];
+            gCurrentSprite.animationDurationCounter = 0;
+            gCurrentSprite.currentAnimationFrame = 0;
+        }
+    }
+    else if (gSubSpriteData1.health == 60)
+    {
+        if (gCurrentSprite.pOam != sZazabiFrameDataPointers2[oamIdx])
+        {
+            gCurrentSprite.pOam = sZazabiFrameDataPointers2[oamIdx];
+            gCurrentSprite.animationDurationCounter = 0;
+            gCurrentSprite.currentAnimationFrame = 0;
+        }
+    }
+    else if (gSubSpriteData1.health == 80)
+    {
+        if (gCurrentSprite.pOam != sZazabiFrameDataPointers3[oamIdx])
+        {
+            gCurrentSprite.pOam = sZazabiFrameDataPointers3[oamIdx];
+            gCurrentSprite.animationDurationCounter = 0;
+            gCurrentSprite.currentAnimationFrame = 0;
+        }
+    }
+    else
+    {
+        if (gCurrentSprite.pOam != sZazabiFrameDataPointers4[oamIdx])
+        {
+            gCurrentSprite.pOam = sZazabiFrameDataPointers4[oamIdx];
+            gCurrentSprite.animationDurationCounter = 0;
+            gCurrentSprite.currentAnimationFrame = 0;
+        }
+    }
+
+    gCurrentSprite.yPosition = gSubSpriteData1.yPosition + pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_Y_OFFSET];
+    gCurrentSprite.xPosition = gSubSpriteData1.xPosition + pData[gCurrentSprite.roomSlot][MULTI_SPRITE_DATA_ELEMENT_X_OFFSET];
 }
-#endif
 
 /**
  * @brief 453cc | 154 | Handles the collision between projectiles and zazabi
@@ -133,7 +133,7 @@ void ZazabiProjectilesCollision(void)
         if ((gCurrentSprite.invincibilityStunFlashTimer % 4) == 0)
         {
             if (gCurrentSprite.invincibilityStunFlashTimer & 4)
-                gCurrentSprite.paletteRow = 13 - (gCurrentSprite.spritesetGfxSlot + gCurrentSprite.frozenPaletteRowOffset);
+                SPRITE_SET_ABSOLUTE_PALETTE_ROW(gCurrentSprite, SPRITE_FLASHING_PALETTE_ROW);
             else
                 gCurrentSprite.paletteRow = 0;
         }
@@ -149,7 +149,7 @@ void ZazabiProjectilesCollision(void)
         if (gProjectileData[i].status & PROJ_STATUS_CAN_AFFECT_ENVIRONMENT)
             continue;
 
-        if (gProjectileData[i].movementStage <= 1)
+        if (gProjectileData[i].movementStage <= PROJECTILE_STAGE_SPAWNING)
             continue;
 
         if (gProjectileData[i].xPosition <= gCurrentSprite.xPosition - hitboxX)
@@ -168,13 +168,13 @@ void ZazabiProjectilesCollision(void)
         projX = gProjectileData[i].xPosition;
         if (gProjectileData[i].type == PROJ_TYPE_NORMAL_MISSILE)
         {
-            if (gProjectileData[i].movementStage != 0x7)
+            if (gProjectileData[i].movementStage != PROJECTILE_STAGE_TUMBLING)
             {
                 ProjectileDealDamageToZazabi(ZAZABI_DAMAGE_RECEIVED);
 
                 ParticleSet(projY, projX, PE_MISSILE_EXPLOSION);
                 SPRITE_CLEAR_AND_SET_ISFT(gCurrentSprite, 41);
-                SoundPlayNotAlreadyPlaying(0x285);
+                SoundPlayNotAlreadyPlaying(SOUND_ZAZABI_HURT);
 
                 gProjectileData[i].status = 0;
                 continue;
@@ -190,7 +190,7 @@ void ZazabiProjectilesCollision(void)
 
                     ParticleSet(projY, projX, PE_CHARGE_BEAM_HIT);
                     SPRITE_CLEAR_AND_SET_ISFT(gCurrentSprite, 41);
-                    SoundPlayNotAlreadyPlaying(0x285);
+                    SoundPlayNotAlreadyPlaying(SOUND_ZAZABI_HURT);
 
                     gProjectileData[i].status = 0;
                     continue;
@@ -325,16 +325,16 @@ void ZazabiInit(void)
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
 
-    gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-    gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
     gCurrentSprite.hitboxTop = -(HALF_BLOCK_SIZE + QUARTER_BLOCK_SIZE);
     gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE + QUARTER_BLOCK_SIZE;
     gCurrentSprite.hitboxLeft = -HALF_BLOCK_SIZE;
     gCurrentSprite.hitboxRight = HALF_BLOCK_SIZE;
 
-    gCurrentSprite.drawOrder = 12;
+    gCurrentSprite.drawOrder = ZAZABI_EYE_DRAW_ORDER;
     gCurrentSprite.work3 = 0;
     gCurrentSprite.roomSlot = ZAZABI_PART_EYE;
 
@@ -358,7 +358,7 @@ void ZazabiInit(void)
         gCurrentSprite.pose = ZAZABI_POSE_IDLE_INIT;
     }
 
-    ramSlot = SpriteSpawnSecondary(SSPRITE_ZAZABI_PART, ZAZABI_PART_0, gCurrentSprite.spritesetGfxSlot,
+    ramSlot = SpriteSpawnSecondary(SSPRITE_ZAZABI_PART, ZAZABI_PART_MOUTH_FRONT, gCurrentSprite.spritesetGfxSlot,
         gCurrentSprite.primarySpriteRamSlot, gSubSpriteData1.yPosition, gSubSpriteData1.xPosition, 0);
 
     if (ramSlot == UCHAR_MAX)
@@ -367,7 +367,7 @@ void ZazabiInit(void)
         return;
     }
 
-    ramSlot = SpriteSpawnSecondary(SSPRITE_ZAZABI_PART, ZAZABI_PART_MOUTH, gCurrentSprite.spritesetGfxSlot,
+    ramSlot = SpriteSpawnSecondary(SSPRITE_ZAZABI_PART, ZAZABI_PART_MOUTH_BACK, gCurrentSprite.spritesetGfxSlot,
         gCurrentSprite.primarySpriteRamSlot, gSubSpriteData1.yPosition, gSubSpriteData1.xPosition, 0);
 
     if (ramSlot == UCHAR_MAX)
@@ -558,7 +558,7 @@ void ZazabiCrawling(void)
     {
         case 1:
             if (gSubSpriteData1.animationDurationCounter == 1)
-                SoundPlay(0x27B);
+                SoundPlay(SOUND_ZAZABI_CRAWL);
 
             movement = 2;
             break;
@@ -654,7 +654,7 @@ void ZazabiJumpWarning(void)
  */
 void ZazabiJumpingInit(void)
 {
-    SoundPlay(0x27c);
+    SoundPlay(SOUND_ZAZABI_JUMP);
 
     gSubSpriteData1.animationDurationCounter = 0;
     gSubSpriteData1.currentAnimationFrame = 0;
@@ -776,7 +776,7 @@ void ZazabiJumping(void)
 void ZazabiFallingInit(void)
 {
     if (gCurrentSprite.work3 == 0)
-        SoundPlay(0x27e);
+        SoundPlay(SOUND_ZAZABI_OPEN_MOUTH);
 
     gSubSpriteData1.animationDurationCounter = 0;
     gSubSpriteData1.currentAnimationFrame = 0;
@@ -922,7 +922,7 @@ void ZazabiFalling(void)
         {
             if (gSubSpriteData1.currentAnimationFrame < 5)
             {
-                SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition + (BLOCK_SIZE * 5 + HALF_BLOCK_SIZE - ONE_SUB_PIXEL * 2), gSubSpriteData1.xPosition);
+                SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition + (BLOCK_SIZE * 5 + HALF_BLOCK_SIZE - PIXEL_SIZE / 2), gSubSpriteData1.xPosition);
 
                 if (gPreviousCollisionCheck != COLLISION_AIR)
                 {
@@ -939,7 +939,7 @@ void ZazabiFalling(void)
         {
             if (gSubSpriteData1.currentAnimationFrame < 3)
             {
-                SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition + (BLOCK_SIZE * 5 + HALF_BLOCK_SIZE - ONE_SUB_PIXEL * 2), gSubSpriteData1.xPosition);
+                SpriteUtilCheckCollisionAtPosition(gSubSpriteData1.yPosition + (BLOCK_SIZE * 5 + HALF_BLOCK_SIZE - PIXEL_SIZE / 2), gSubSpriteData1.xPosition);
 
                 if (gPreviousCollisionCheck != COLLISION_AIR)
                 {
@@ -965,7 +965,7 @@ void ZazabiFalling(void)
             ParticleSet(gSubSpriteData1.yPosition + BLOCK_SIZE * 5 + QUARTER_BLOCK_SIZE + PIXEL_SIZE,
                 gSubSpriteData1.xPosition + (BLOCK_SIZE + QUARTER_BLOCK_SIZE - PIXEL_SIZE), PE_SMOKE);
 
-            SoundPlay(0x27D);
+            SoundPlay(SOUND_ZAZABI_LAND);
         }
 
         return;
@@ -1029,7 +1029,7 @@ void ZazabiFalling(void)
 
     if (gPreviousVerticalCollisionCheck != COLLISION_AIR)
     {
-        gSubSpriteData1.yPosition = blockTop - BLOCK_SIZE * 5 ;
+        gSubSpriteData1.yPosition = blockTop - BLOCK_SIZE * 5;
         gCurrentSprite.pose = ZAZABI_POSE_LANDING_INIT;
         gCurrentSprite.work3--;
 
@@ -1038,7 +1038,7 @@ void ZazabiFalling(void)
         ParticleSet(gSubSpriteData1.yPosition + BLOCK_SIZE * 5 + QUARTER_BLOCK_SIZE,
             gSubSpriteData1.xPosition + (HALF_BLOCK_SIZE - PIXEL_SIZE), PE_SMOKE);
 
-        SoundPlay(0x27D);
+        SoundPlay(SOUND_ZAZABI_LAND);
     }
 }
 
@@ -1049,7 +1049,7 @@ void ZazabiFalling(void)
 void ZazabiLandingMouthOpenInit(void)
 {
     if (gSamusData.pose == SPOSE_GRABBED_BY_ZAZABI)
-        SoundPlay(0x280);
+        SoundPlay(SOUND_ZAZABI_LAND_EATING_SAMUS);
 
     if (gSubSpriteData1.health == 40)
         gSubSpriteData1.pMultiOam = sZazabiMultiOam_LandingMouthOpen1;
@@ -1073,7 +1073,7 @@ void ZazabiLandingMouthOpenInit(void)
 void ZazabiLandingMouthOpen(void)
 {
     if (gSubSpriteData1.currentAnimationFrame == 1 && gSubSpriteData1.animationDurationCounter == 1 && gSubSpriteData1.health != 40)
-        SoundPlay(0x27F);
+        SoundPlay(SOUND_ZAZABI_LAND_MOUTH_OPEN);
 
     if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
     {
@@ -1159,7 +1159,7 @@ void ZazabiEatingSamus1(void)
         if (gCurrentSprite.work1 == 0)
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_2_INIT;
-            SoundPlay(0x281);
+            SoundPlay(SOUND_ZAZABI_SWALLOW_SAMUS);
         }
     }
 }
@@ -1196,7 +1196,7 @@ void ZazabiEatingSamus2(void)
         if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_3_INIT;
-            SoundPlay(0x281);
+            SoundPlay(SOUND_ZAZABI_SWALLOW_SAMUS);
         }
     }
 }
@@ -1244,7 +1244,7 @@ void ZazabiEatingSamus3(void)
         if (gCurrentSprite.work1 == 0)
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_4_INIT;
-            SoundPlay(0x281);
+            SoundPlay(SOUND_ZAZABI_SWALLOW_SAMUS);
         }
     }
 }
@@ -1285,7 +1285,7 @@ void ZazabiEatingSamus4(void)
         if (SpriteUtilHasSubSprite1AnimationNearlyEnded())
         {
             gCurrentSprite.pose = ZAZABI_POSE_EATING_SAMUS_5_INIT;
-            SoundPlay(0x281);
+            SoundPlay(SOUND_ZAZABI_SWALLOW_SAMUS);
         }
     }
 }
@@ -1336,7 +1336,7 @@ void ZazabiEatingSamus5(void)
  */
 void ZazabiSpittingSamusInit(void)
 {
-    SoundPlayNotAlreadyPlaying(0x283);
+    SoundPlayNotAlreadyPlaying(SOUND_ZAZABI_SPIT_SAMUS);
 
     if (gSubSpriteData1.health == 60)
         gSubSpriteData1.pMultiOam = sZazabiMultiOam_SpittingSamus2;
@@ -1416,7 +1416,7 @@ void ZazabiDyingInit(void)
     gCurrentSprite.workX = 1;
 
     ParticleSet(gCurrentSprite.yPosition, gCurrentSprite.xPosition, PE_0x2F);
-    SoundPlay_3b1c(0x286);
+    SoundPlay_3b1c(SOUND_ZAZABI_DYING);
 }
 
 /**
@@ -1492,13 +1492,13 @@ void ZazabiDying(void)
             break;
     }
 
-    if (gCurrentSprite.workY < 20)
+    if (gCurrentSprite.workY < sizeof(sHiJumpCoreXGfx) / 512)
     {
         SpriteLoadGfx(gCoreXFormationSpriteId, 0, gCurrentSprite.workY);
     }
-    else if (gCurrentSprite.workY == 20)
+    else if (gCurrentSprite.workY == sizeof(sHiJumpCoreXGfx) / 512)
     {
-        SpriteLoadPal(gCoreXFormationSpriteId, 0, 5);
+        SpriteLoadPal(gCoreXFormationSpriteId, 0, ARRAY_SIZE(sHiJumpCoreXPal) / 16);
     }
 }
 
@@ -1513,21 +1513,21 @@ void ZazabiPartInit(void)
     gCurrentSprite.status |= SPRITE_STATUS_IGNORE_PROJECTILES;
     gCurrentSprite.status |= SPRITE_STATUS_MOSAIC;
 
-    gCurrentSprite.pose = 0x2;
+    gCurrentSprite.pose = SPRITE_POSE_IDLE;
     gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
     gCurrentSprite.health = 1;
 
     if (gCurrentSprite.roomSlot < ZAZABI_PART_EYE)
-        gCurrentSprite.drawOrder = 11;
+        gCurrentSprite.drawOrder = ZAZABI_EYE_DRAW_ORDER - 1;
     else
-        gCurrentSprite.drawOrder = 13;
+        gCurrentSprite.drawOrder = ZAZABI_EYE_DRAW_ORDER + 1;
 
     switch (gCurrentSprite.roomSlot)
     {
-        case ZAZABI_PART_0:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
+        case ZAZABI_PART_MOUTH_FRONT:
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2);
 
             gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
             gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE;
@@ -1535,10 +1535,10 @@ void ZazabiPartInit(void)
             gCurrentSprite.hitboxRight = BLOCK_SIZE;
             break;
 
-        case ZAZABI_PART_MOUTH:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
+        case ZAZABI_PART_MOUTH_BACK:
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1.5f);
 
             gCurrentSprite.hitboxTop = -PIXEL_SIZE;
             gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -1550,9 +1550,9 @@ void ZazabiPartInit(void)
             break;
 
         case ZAZABI_PART_HAIR:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 2 + HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(2);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(2.5f);
 
             gCurrentSprite.hitboxTop = -BLOCK_SIZE;
             gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE;
@@ -1561,9 +1561,9 @@ void ZazabiPartInit(void)
             break;
 
         case ZAZABI_PART_EYE_SHELL:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE + HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.hitboxTop = -(BLOCK_SIZE + HALF_BLOCK_SIZE);
             gCurrentSprite.hitboxBottom = BLOCK_SIZE + HALF_BLOCK_SIZE;
@@ -1572,9 +1572,9 @@ void ZazabiPartInit(void)
             break;
 
         case ZAZABI_PART_PUPIL:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(.5f);
 
             gCurrentSprite.hitboxTop = -PIXEL_SIZE;
             gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -1586,9 +1586,9 @@ void ZazabiPartInit(void)
             break;
 
         case ZAZABI_PART_UPPER_SHELL:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.hitboxTop = -HALF_BLOCK_SIZE;
             gCurrentSprite.hitboxBottom = HALF_BLOCK_SIZE;
@@ -1597,9 +1597,9 @@ void ZazabiPartInit(void)
             break;
 
         case ZAZABI_PART_MIDDLE_SHELL:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.hitboxTop = -(HALF_BLOCK_SIZE - PIXEL_SIZE);
             gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE;
@@ -1608,9 +1608,9 @@ void ZazabiPartInit(void)
             break;
 
         case ZAZABI_PART_LOWER_SHELL:
-            gCurrentSprite.drawDistanceTop = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceBottom = SUB_PIXEL_TO_PIXEL(HALF_BLOCK_SIZE);
-            gCurrentSprite.drawDistanceHorizontal = SUB_PIXEL_TO_PIXEL(BLOCK_SIZE);
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(.5f);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
             gCurrentSprite.hitboxTop = -(QUARTER_BLOCK_SIZE + EIGHTH_BLOCK_SIZE);
             gCurrentSprite.hitboxBottom = QUARTER_BLOCK_SIZE + PIXEL_SIZE;
@@ -1666,7 +1666,7 @@ void ZazabiPartDefault(void)
 
         case ZAZABI_POSE_FALLING_INIT:
         case ZAZABI_POSE_FALLING:
-            if (gCurrentSprite.roomSlot != ZAZABI_PART_0)
+            if (gCurrentSprite.roomSlot != ZAZABI_PART_MOUTH_FRONT)
                 break;
 
             if (gSpriteData[ramSlot].work3 != 0)
@@ -1674,7 +1674,7 @@ void ZazabiPartDefault(void)
 
             if (gSubSpriteData1.health == 40)
             {
-                if (gCurrentSprite.pOam == sZazabi_3729f8)
+                if (gCurrentSprite.pOam == sZazabiPartOam_MouthFrontOpening_2)
                 {
                     gCurrentSprite.hitboxTop = -(BLOCK_SIZE - QUARTER_BLOCK_SIZE);
                     gCurrentSprite.hitboxBottom = PIXEL_SIZE;
@@ -1684,7 +1684,7 @@ void ZazabiPartDefault(void)
             }
             else
             {
-                if (gCurrentSprite.pOam == sZazabiPartOam_MouthOpened)
+                if (gCurrentSprite.pOam == sZazabiPartOam_MouthFrontOpened)
                 {
                     gCurrentSprite.samusCollision = SSC_ZAZABI_CAN_GRAB;
 
@@ -1705,7 +1705,7 @@ void ZazabiPartDefault(void)
             break;
 
         case ZAZABI_POSE_LANDING_MOUTH_OPEN_INIT:
-            if (gCurrentSprite.roomSlot == ZAZABI_PART_0)
+            if (gCurrentSprite.roomSlot == ZAZABI_PART_MOUTH_FRONT)
             {
                 gCurrentSprite.samusCollision = SSC_HURTS_SAMUS;
                 
@@ -1724,14 +1724,14 @@ void ZazabiPartDefault(void)
             if (gSamusData.pose == SPOSE_GRABBED_BY_ZAZABI)
             {
                 if (gCurrentSprite.roomSlot < ZAZABI_PART_EYE)
-                    gCurrentSprite.drawOrder = 3;
+                    gCurrentSprite.drawOrder = ZAZABI_DRAW_ORDER_EATING_SAMUS - 1;
                 else
-                    gCurrentSprite.drawOrder = 5;
+                    gCurrentSprite.drawOrder = ZAZABI_DRAW_ORDER_EATING_SAMUS + 1;
             }
             break;
 
         case ZAZABI_POSE_LANDING_MOUTH_OPEN:
-            if (gCurrentSprite.roomSlot == ZAZABI_PART_0)
+            if (gCurrentSprite.roomSlot == ZAZABI_PART_MOUTH_FRONT)
             {
                 if (gSamusData.pose == SPOSE_GRABBED_BY_ZAZABI)
                 {
@@ -1829,9 +1829,9 @@ void ZazabiPartDefault(void)
             }
 
             if (gCurrentSprite.roomSlot < ZAZABI_PART_EYE)
-                gCurrentSprite.drawOrder = 11;
+                gCurrentSprite.drawOrder = ZAZABI_EYE_DRAW_ORDER - 1;
             else
-                gCurrentSprite.drawOrder = 13;
+                gCurrentSprite.drawOrder = ZAZABI_EYE_DRAW_ORDER + 1;
     }
 }
 
@@ -1859,7 +1859,7 @@ void ZazabiPartMouth(void)
     {
         ZazabiSyncSubSprites();
 
-        if (gCurrentSprite.pOam == sZazabi_372c80)
+        if (gCurrentSprite.pOam == sZazabiPartOam_MouthBackHidden)
             gCurrentSprite.status |= SPRITE_STATUS_NOT_DRAWN;
         else
             gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
@@ -1893,7 +1893,7 @@ void ZazabiPartPupil(void)
             {
                 if (SpriteUtilHasCurrentAnimationEnded())
                 {
-                    gCurrentSprite.pOam = sZazabiPartOam_PupilClosed;
+                    gCurrentSprite.pOam = sZazabiPartOam_PupilOpen;
                     gCurrentSprite.animationDurationCounter = 0;
                     gCurrentSprite.currentAnimationFrame = 0;
 
@@ -1907,14 +1907,14 @@ void ZazabiPartPupil(void)
                 gCurrentSprite.currentAnimationFrame = 0;
 
                 gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
-                SoundPlayNotAlreadyPlaying(0x287);
+                SoundPlayNotAlreadyPlaying(SOUND_ZAZABI_BLINK_EYE);
             }
             break;
 
         default:
             if (gCurrentSprite.pOam == sZazabiPartOam_PupilBlinking)
             {
-                gCurrentSprite.pOam = sZazabiPartOam_PupilClosed;
+                gCurrentSprite.pOam = sZazabiPartOam_PupilOpen;
                 gCurrentSprite.animationDurationCounter = 0;
                 gCurrentSprite.currentAnimationFrame = 0;
 
@@ -2076,7 +2076,7 @@ void ZazabiPart(void)
             SpriteUtilSyncCurrentSpritePositionWithSubSprite1Position();
             break;
 
-        case ZAZABI_PART_MOUTH:
+        case ZAZABI_PART_MOUTH_BACK:
             ZazabiPartMouth();
             break;
 
@@ -2085,7 +2085,7 @@ void ZazabiPart(void)
             {
                 ParticleSet(gCurrentSprite.yPosition, gCurrentSprite.xPosition, PE_0x2F);
                 gCurrentSprite.status = 0;
-                SoundPlay_3b1c(0x284);
+                SoundPlay_3b1c(SOUND_ZAZABI_SEGMENT_DESTROYED);
             }
             else
             {
@@ -2099,7 +2099,7 @@ void ZazabiPart(void)
             {
                 ParticleSet(gCurrentSprite.yPosition, gCurrentSprite.xPosition, PE_0x2F);
                 gCurrentSprite.status = 0;
-                SoundPlay_3b1c(0x284);
+                SoundPlay_3b1c(SOUND_ZAZABI_SEGMENT_DESTROYED);
             }
             else
             {
@@ -2113,7 +2113,7 @@ void ZazabiPart(void)
             {
                 ParticleSet(gCurrentSprite.yPosition, gCurrentSprite.xPosition, PE_0x2F);
                 gCurrentSprite.status = 0;
-                SoundPlay_3b1c(0x284);
+                SoundPlay_3b1c(SOUND_ZAZABI_SEGMENT_DESTROYED);
             }
             else
             {

@@ -274,11 +274,11 @@ void SpriteUtilTakeConstantDamageFromYakuza(void)
     {
         // Play hurt sounds
         if (MOD_AND(gEquipment.currentEnergy, 16) == 0)
-            SoundPlay_2894(SOUND_SAMUS_HURT);
+            unk_2894(SOUND_SAMUS_HURT);
         else if (MOD_AND(gEquipment.currentEnergy, 16) == 7)
-            SoundPlay_2894(SOUND_SAMUS_HURT);
+            unk_2894(SOUND_SAMUS_HURT);
 
-        SoundPlay_2894(SOUND_SAMUS_CONSTANT_DAMAGE);
+        unk_2894(SOUND_SAMUS_CONSTANT_DAMAGE);
     }
 }
 
@@ -731,14 +731,14 @@ void SpriteUtilSamusAndSpriteCollision(void)
                             gSamusData.invincibilityTimer = 8;
 
                             if (MOD_AND(gEquipment.currentEnergy, 16) == 0)
-                                SoundPlay_2894(SOUND_SAMUS_HURT);
+                                unk_2894(SOUND_SAMUS_HURT);
                             else if (MOD_AND(gEquipment.currentEnergy, 16) == 7)
-                                SoundPlay_2894(SOUND_SAMUS_HURT);
+                                unk_2894(SOUND_SAMUS_HURT);
 
                             if (gSpriteData[i].spriteId == PSPRITE_ELECTRIC_WATER_DAMAGE || gSpriteData[i].spriteId == PSPRITE_ELECTRIC_WATER_DAMAGE_BOX_2)
-                                SoundPlay_2894(SOUND_SAMUS_ELECTRIC_WATER_DAMAGE);
+                                unk_2894(SOUND_SAMUS_ELECTRIC_WATER_DAMAGE);
                             else
-                                SoundPlay_2894(SOUND_SAMUS_CONSTANT_DAMAGE);
+                                unk_2894(SOUND_SAMUS_CONSTANT_DAMAGE);
                         }
                     }
 
@@ -953,11 +953,11 @@ void SpriteUtilSamusAndSpriteCollision(void)
                             gSamusData.invincibilityTimer = 30;
 
                             if (MOD_AND(gEquipment.currentEnergy, 16) == 0)
-                                SoundPlay_2894(SOUND_SAMUS_HURT);
+                                unk_2894(SOUND_SAMUS_HURT);
                             else if (MOD_AND(gEquipment.currentEnergy, 16) == 7)
-                                SoundPlay_2894(SOUND_SAMUS_HURT);
+                                unk_2894(SOUND_SAMUS_HURT);
 
-                            SoundPlay_2894(SOUND_SAMUS_CONSTANT_DAMAGE);
+                            unk_2894(SOUND_SAMUS_CONSTANT_DAMAGE);
                         }
                     }
 
@@ -1500,12 +1500,12 @@ u8 SpriteUtilMakeSpriteRotateTowardsTarget(s16 oamRotation, s16 targetY, s16 tar
             // Target is directly above sprite
             targetRotation = Q_8_8(6.f / 8);
         }
-        #ifdef BUGFIX
+#ifdef BUGFIX
         else if (targetX > spriteX)
-        #else // !BUGFIX
+#else // !BUGFIX
         // BUG: Should be "else if"
         if (targetX > spriteX)
-        #endif // BUGFIX
+#endif // BUGFIX
         {
             // Target is right of sprite
             if (spriteY - targetY < BLOCK_SIZE)
@@ -2808,9 +2808,9 @@ u32 SpriteUtilCheckSamusPassThroughSprite(u8 spriteSlot)
             break;
 
         case SPOSE_HANGING_ON_LEDGE:
-        case SPOSE_PULLING_YOURSELF_UP_FROM_HANGING:
-        case SPOSE_PULLING_YOURSELF_FORWARD_FROM_HANGING:
-        case SPOSE_PULLING_YOURSELF_INTO_MORPH_BALL_TUNNEL:
+        case SPOSE_PULLING_UP_FROM_HANGING:
+        case SPOSE_PULLING_FORWARD_FROM_HANGING:
+        case SPOSE_PULLING_INTO_MORPH_FROM_HANGING:
         case SPOSE_SCREW_ATTACKING:
         case SPOSE_SHINESPARKING:
             passThrough++;
@@ -3002,9 +3002,9 @@ u32 SpriteUtilCheckSamusPullingSelfUp(void)
 {
     switch (gSamusData.pose)
     {
-        case SPOSE_PULLING_YOURSELF_UP_FROM_HANGING:
-        case SPOSE_PULLING_YOURSELF_FORWARD_FROM_HANGING:
-        case SPOSE_PULLING_YOURSELF_INTO_MORPH_BALL_TUNNEL:
+        case SPOSE_PULLING_UP_FROM_HANGING:
+        case SPOSE_PULLING_FORWARD_FROM_HANGING:
+        case SPOSE_PULLING_INTO_MORPH_FROM_HANGING:
             return TRUE;
     }
 
@@ -3234,7 +3234,7 @@ void SpriteUtilMoveEyeCoreXBeamPart(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (gCurrentSprite.roomSlot == 1)
@@ -3263,7 +3263,7 @@ void SpriteUtilMoveEyeCoreXBeamPart(void)
             }
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (gCurrentSprite.roomSlot == 1)
@@ -3338,7 +3338,7 @@ void SpriteUtilMoveEyeCoreXWaveBeamPart(void)
 
     switch (gCurrentSprite.work0)
     {
-        case ACD_DIAGONALLY_DOWN:
+        case ACD_DIAGONAL_DOWN:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (roomSlot == 1)
@@ -3367,7 +3367,7 @@ void SpriteUtilMoveEyeCoreXWaveBeamPart(void)
             }
             break;
 
-        case ACD_DIAGONALLY_UP:
+        case ACD_DIAGONAL_UP:
             if (gCurrentSprite.status & SPRITE_STATUS_X_FLIP)
             {
                 if (roomSlot == 1)
@@ -3615,7 +3615,9 @@ void SpriteUtilMoveBeamCoreX(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 
             }
         }
         else
+        {
             turning = TRUE;
+        }
     }
 
     if (turning)
@@ -3689,7 +3691,9 @@ void SpriteUtilMoveBeamCoreX(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 
             }
         }
         else
+        {
             turning = TRUE;
+        }
     }
 
     if (turning)
@@ -3763,7 +3767,9 @@ void SpriteUtilMoveBeamCoreX_Unused(u16 dstY, u16 dstX, u8 yVelocity, u8 xVeloci
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
         }
         else
@@ -3779,10 +3785,14 @@ void SpriteUtilMoveBeamCoreX_Unused(u16 dstY, u16 dstX, u8 yVelocity, u8 xVeloci
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -3841,7 +3851,9 @@ void SpriteUtilMoveBeamCoreX_Unused(u16 dstY, u16 dstX, u8 yVelocity, u8 xVeloci
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
         }
         else
@@ -3857,10 +3869,14 @@ void SpriteUtilMoveBeamCoreX_Unused(u16 dstY, u16 dstX, u8 yVelocity, u8 xVeloci
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -3932,7 +3948,9 @@ void SpriteUtilMoveTowardsTarget(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap,
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
         }
         else
@@ -3946,10 +3964,14 @@ void SpriteUtilMoveTowardsTarget(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap,
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4005,7 +4027,9 @@ void SpriteUtilMoveTowardsTarget(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap,
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
         }
         else
@@ -4019,10 +4043,14 @@ void SpriteUtilMoveTowardsTarget(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap,
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4096,7 +4124,9 @@ void unk_1343c(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 speedDivisor, 
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
         }
         else
@@ -4112,10 +4142,14 @@ void unk_1343c(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 speedDivisor, 
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4179,7 +4213,9 @@ void unk_1343c(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 speedDivisor, 
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
         }
         else
@@ -4195,10 +4231,14 @@ void unk_1343c(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity, u8 speedDivisor, 
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4270,7 +4310,9 @@ void unk_136ac(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor)
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
         }
         else
@@ -4284,10 +4326,14 @@ void unk_136ac(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor)
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4304,7 +4350,7 @@ void unk_136ac(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor)
 
     turning = FALSE;
 
-    if (gCurrentSprite.status & SPRITE_STATUS_SAMUS_DETECTED)
+    if (gCurrentSprite.status & SPRITE_STATUS_FACING_DOWN)
     {
         if (gCurrentSprite.work1 == 0)
         {
@@ -4348,7 +4394,9 @@ void unk_136ac(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor)
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
         }
         else
@@ -4362,10 +4410,14 @@ void unk_136ac(u16 dstY, u16 dstX, u8 ySpeedCap, u8 xSpeedCap, u8 speedDivisor)
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4414,7 +4466,9 @@ void SpriteUtilMoveRidleyFireball(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity
                 }
             }
             else
+            {
                 updatePos = TRUE;
+            }
 
             if (updatePos)
                 gCurrentSprite.xPosition += gCurrentSprite.work3 >> speedDivisor;
@@ -4448,7 +4502,9 @@ void SpriteUtilMoveRidleyFireball(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity
                 }
             }
             else
+            {
                 updatePos = TRUE;
+            }
 
             if (updatePos)
                 gCurrentSprite.xPosition -= gCurrentSprite.work3 >> speedDivisor;
@@ -4466,10 +4522,14 @@ void SpriteUtilMoveRidleyFireball(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity
                     gCurrentSprite.work2 = 0;
                 }
                 else
+                {
                     gCurrentSprite.xPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 
@@ -4500,7 +4560,9 @@ void SpriteUtilMoveRidleyFireball(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity
                 }
             }
             else
+            {
                 updatePos = TRUE;
+            }
 
             if (updatePos)
                 gCurrentSprite.yPosition += gCurrentSprite.work4 >> speedDivisor;
@@ -4534,7 +4596,9 @@ void SpriteUtilMoveRidleyFireball(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity
                 }
             }
             else
+            {
                 updatePos = TRUE;
+            }
 
             if (updatePos)
                 gCurrentSprite.yPosition -= gCurrentSprite.work4 >> speedDivisor;
@@ -4552,10 +4616,14 @@ void SpriteUtilMoveRidleyFireball(u16 dstY, u16 dstX, u8 yVelocity, u8 xVelocity
                     gCurrentSprite.work1 = 0;
                 }
                 else
+                {
                     gCurrentSprite.yPosition -= velocity;
+                }
             }
             else
+            {
                 turning = TRUE;
+            }
         }
     }
 

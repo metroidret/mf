@@ -19,9 +19,9 @@ void ToxicGasInit(void)
     gCurrentSprite.pOam = sToxicGasOam;
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 48;
-    gCurrentSprite.drawDistanceHorizontal = 48;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(3);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(3);
     gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(0.75f);
     gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(2.75f);
     gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(0.75f);
@@ -89,9 +89,9 @@ void ToxicGasExplosion(void)
         gCurrentSprite.pOam = sToxicGasExplosionOam;
         gCurrentSprite.animationDurationCounter = 0;
         gCurrentSprite.currentAnimationFrame = 0;
-        gCurrentSprite.drawDistanceTop = 64;
-        gCurrentSprite.drawDistanceBottom = 64;
-        gCurrentSprite.drawDistanceHorizontal = 64;
+        gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(4);
+        gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(4);
+        gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(4);
         gCurrentSprite.hitboxTop = -BLOCK_TO_SUB_PIXEL(2.f);
         gCurrentSprite.hitboxBottom = BLOCK_TO_SUB_PIXEL(2.f);
         gCurrentSprite.hitboxLeft = -BLOCK_TO_SUB_PIXEL(2.f);

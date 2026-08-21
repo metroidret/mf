@@ -66,9 +66,9 @@ void MessageBannerInit(void)
     gCurrentSprite.bgPriority = 0;
     gCurrentSprite.samusCollision = SSC_NONE;
     gCurrentSprite.properties |= (SP_ABSOLUTE_POSITION | SP_ALWAYS_ACTIVE);
-    gCurrentSprite.drawDistanceTop = 0x10;
-    gCurrentSprite.drawDistanceBottom = 0x10;
-    gCurrentSprite.drawDistanceHorizontal = 0x80;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(8);
     gCurrentSprite.hitboxTop = -4;
     gCurrentSprite.hitboxBottom = 4;
     gCurrentSprite.hitboxLeft = -4;
@@ -107,7 +107,7 @@ void MessageBannerInit(void)
             gCurrentSprite.pose = 1;
         }
 
-        gPreventMovementTimer = 1000;
+        gPreventMovementTimer = SAMUS_ITEM_PMT;
     }
     else
     {
@@ -146,18 +146,18 @@ void MessageBannerPopUp(void)
             gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
             if (roomSlot == 0)
             {
-                unk_38a8(MUSIC_ITEM_FANFARE, 0);
+                unk_38a8(MUSIC_ITEM_JINGLE, 0);
             }
             else if (roomSlot == 5 || roomSlot == 6 || roomSlot == 7 || roomSlot == 8 || roomSlot == 9)
             {
                 if (roomSlot == 7)
-                    PlayMusic(MUSIC_3, 10);
+                    PlayMusic(MUSIC_AFTER_EVENT, 10);
                 unk_38a8(MUSIC_OBJECTIVE_COMPLETE, 0);
             }
             else if (!(roomSlot == 5 || roomSlot == 6 || roomSlot == 7 || roomSlot == 8
                 || roomSlot == 9 || roomSlot == 10 || roomSlot == 11 || roomSlot == 12))
             {
-                SoundPlay_3b1c(SOUND_MESSAGE_POPUP);
+                SoundPlay_3b1c(MUSIC_MESSAGE_POPUP);
             }
         }
 
@@ -166,7 +166,7 @@ void MessageBannerPopUp(void)
             if (roomSlot != 0)
                 TextDrawMessageBanner(roomSlot, gCurrentSprite.spritesetGfxSlot, gCurrentSprite.work1);
             else
-                DisplayMessage(gCurrentSprite.spritesetGfxSlot, gCurrentSprite.work1);
+                TextDisplayMessage(gCurrentSprite.spritesetGfxSlot, gCurrentSprite.work1);
         }
     }
     else if (SpriteUtilHasCurrentAnimationEnded())
@@ -204,7 +204,7 @@ void MessageBannerStatic(void)
 
     roomSlot = gCurrentSprite.roomSlot;
 
-    gPreventMovementTimer = 1000;
+    gPreventMovementTimer = SAMUS_ITEM_PMT;
 
     if (gCurrentSprite.workY > 0)
     {
@@ -226,7 +226,7 @@ void MessageBannerStatic(void)
             }
             else if (roomSlot == 11)
             {
-                PlayMusic(MUSIC_ORBIT_CHANGE, 10);
+                PlayMusic(MUSIC_STATION_ESCAPE, 10);
             }
         }
         else if (roomSlot == 8 && gSamusData.pose == SPOSE_UNLOCKING_HABITATIONS_DECK)
@@ -320,9 +320,9 @@ void SaveYesNoCursor(void)
             gCurrentSprite.drawOrder = 3;
             gCurrentSprite.samusCollision = SSC_NONE;
             gCurrentSprite.properties |= SP_ABSOLUTE_POSITION | SP_ALWAYS_ACTIVE;
-            gCurrentSprite.drawDistanceTop = 16;
-            gCurrentSprite.drawDistanceBottom = 16;
-            gCurrentSprite.drawDistanceHorizontal = 16;
+            gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+            gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
             gCurrentSprite.hitboxTop = -4;
             gCurrentSprite.hitboxBottom = 4;
             gCurrentSprite.hitboxLeft = -4;

@@ -35,7 +35,7 @@ u32 CheckSpritesThatCantAbsorbX(void)
     return FALSE;
 }
 
-u8 CountPrimarySpritesThatCantAbsorbX(void)
+s32 CountPrimarySpritesThatCantAbsorbX(void)
 {
     u8 count;
     u8 i;
@@ -746,9 +746,9 @@ void XParasiteInit(void)
     gCurrentSprite.animationDurationCounter = 0;
     gCurrentSprite.currentAnimationFrame = 0;
 
-    gCurrentSprite.drawDistanceTop = 16;
-    gCurrentSprite.drawDistanceBottom = 16;
-    gCurrentSprite.drawDistanceHorizontal = 16;
+    gCurrentSprite.drawDistanceTop = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceBottom = BLOCK_TO_PIXEL(1);
+    gCurrentSprite.drawDistanceHorizontal = BLOCK_TO_PIXEL(1);
 
     gCurrentSprite.hitboxTop = -PIXEL_TO_SUB_PIXEL(9);
     gCurrentSprite.hitboxBottom = PIXEL_TO_SUB_PIXEL(9);
@@ -964,7 +964,7 @@ u8 XParasiteFlyingMovement(void)
             // Calculate and store taxicab distance from X parasite to other sprite
             SET_ABS_SUB(distY, y, targetY);
             SET_ABS_SUB(distX, x, targetX);
-            gUnk_030007c0[i] = distY + distX;
+            gUnk_30007c0[i] = distY + distX;
 
             stage = X_PARASITE_FLYING_STAGE_FLYING_TO_SPRITE;
             if (gCurrentSprite.pose == X_PARASITE_POSE_FLYING)
@@ -1008,7 +1008,7 @@ u8 XParasiteFlyingMovement(void)
         else
         {
             // Sprite isn't eligible to absorb/spawn, set dummy value that's greater than any sprite eligible
-            gUnk_030007c0[i] = 0x8000;
+            gUnk_30007c0[i] = 0x8000;
         }
     }
 
@@ -1055,7 +1055,7 @@ u8 XParasiteFlyingMovement(void)
         // Get nearest sprite by taxicab distance
         for (i = 0; i < MAX_AMOUNT_OF_SPRITES; i++)
         {
-            if (gUnk_030007c0[targetRamSlot] > gUnk_030007c0[i])
+            if (gUnk_30007c0[targetRamSlot] > gUnk_30007c0[i])
                 targetRamSlot = i;
         }
 

@@ -20,7 +20,7 @@ struct TitleScreenObject {
     u8 objMode;
     u8 unk_C;
     const struct FrameData* pOam;
-    TitleScreenObjectFunc_T pSubroutine;
+    TitleScreenObjectFunc_T pHandler;
 };
 
 struct TitleScreenData {

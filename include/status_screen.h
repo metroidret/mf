@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-void StatusScreenSubroutine(void);
+void StatusScreenHandler(void);
 void StatusScreenDrawEverything(void);
 void StatusScreenDrawNumber(u8 section, u16 value, u8 palette, boolu8 isMax);
 void StatusScreenDrawBeamOrSuit(u8 section, u8 value);

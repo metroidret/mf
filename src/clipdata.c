@@ -25,26 +25,26 @@
  */
 void unk_68974(void)
 {
-    if (gUnk_03004e48[0] == 0)
+    if (gUnk_3004e48[0] == 0)
         return;
     
-    switch (gUnk_03004e48[0])
+    switch (gUnk_3004e48[0])
     {
         case 1:
             DmaTransfer(3, VRAM_BASE + 0x1000, EWRAM_BASE + 0x20000, 0x1000, 16);
-            gUnk_03004e48[1] = 0;
-            gUnk_03004e48[0]++;
+            gUnk_3004e48[1] = 0;
+            gUnk_3004e48[0]++;
 
         case 2:
             if (unk_689f0())
-                gUnk_03004e48[0]++;
+                gUnk_3004e48[0]++;
 
         default:
-            if (gUnk_03004e48[0] == 0x80)
+            if (gUnk_3004e48[0] == 0x80)
             {
                 DmaTransfer(3, EWRAM_BASE + 0x20000, VRAM_BASE + 0x1000, 0x1000, 16);
-                gUnk_03004e48[0] = 0;
-                gUnk_03004e48[1] = 0;
+                gUnk_3004e48[0] = 0;
+                gUnk_3004e48[1] = 0;
             }
     }
 }
@@ -61,14 +61,14 @@ s32 unk_689f0(void)
     s32 i;
     s32 clipdata;
 
-    if (gUnk_03004e48[1] == 12)
+    if (gUnk_3004e48[1] == 12)
         return TRUE;
 
     yPosition = SUB_PIXEL_TO_BLOCK(gBg1YPosition);
     xPosition = SUB_PIXEL_TO_BLOCK(gBg1XPosition);
 
     yPosition--;
-    yPosition += gUnk_03004e48[1];
+    yPosition += gUnk_3004e48[1];
     xPosition--;
 
     for (i = 0; i <= 16; i++, xPosition++)
@@ -115,7 +115,7 @@ s32 unk_689f0(void)
         BgClipSetBg1BlockTilemapValue(clipdata, yPosition, xPosition);
     }
 
-    gUnk_03004e48[1]++;
+    gUnk_3004e48[1]++;
 
     return FALSE;
 }
@@ -127,7 +127,7 @@ s32 unk_689f0(void)
 void ClipdataSetupCode(void)
 {
     // Copy code to RAM
-    DMA_SET(3, ClipdataConvertToCollision, &IN_GAME_DATA.clipdataCode, C_32_2_16(DMA_ENABLE, sizeof(IN_GAME_DATA.clipdataCode) / sizeof(u16)));
+    DMA3_COPY_16(ClipdataConvertToCollision, &IN_GAME_DATA.clipdataCode, sizeof(IN_GAME_DATA.clipdataCode) / sizeof(u16));
 
     // Set pointer
     gClipdataCodePointer = (CollisionFunc_T)&IN_GAME_DATA.clipdataCode[1];
@@ -279,7 +279,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
 
     result = CLIPDATA_TYPE_AIR;
 
-    #ifdef BUGFIX
+#ifdef BUGFIX
 
     // This function is copied to RAM, presumably for performance reasons, because it is often
     // called many times per frame and code runs faster in RAM. However, the switch statement gets
@@ -467,7 +467,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
         result = pCollision->type;
     }
 
-    #else // BUGFIX
+#else // BUGFIX
 
     switch (pCollision->type)
     {
@@ -624,7 +624,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
                 result = tmp - result * 6;
                 clipdata = FALSE;
 
-                if (gHatchData[result].unk_1_0 == 2)
+                if (gHatchData[result].state == 2)
                     clipdata = TRUE;
             }
             else
@@ -645,7 +645,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
             break;
     }
 
-    #endif // BUGFIX
+#endif // BUGFIX
 
     return result;
 }
@@ -657,7 +657,7 @@ u32 ClipdataConvertToCollision(struct CollisionData* pCollision)
  * @param xPosition X position (in sub-pixels)
  * @return u32 Current affecting
  */
-u32 ClipdataCheckCurrentAffectingAtPosition(u16 yPosition, u16 xPosition)
+s32 ClipdataCheckCurrentAffectingAtPosition(u16 yPosition, u16 xPosition)
 {
     u32 clipdata;
     u32 behavior;
@@ -718,7 +718,7 @@ u32 ClipdataCheckCurrentAffectingAtPosition(u16 yPosition, u16 xPosition)
     if (clipdata == CLIPDATA_MOVEMENT_ELEVATOR_DOWN || clipdata == CLIPDATA_MOVEMENT_ELEVATOR_UP)
     {
         // If not already riding, check if can use the elevator
-        if (gSamusData.pose != SPOSE_USING_AN_ELEVATOR && ClipdataCheckElevatorDisabled(clipdata))
+        if (gSamusData.pose != SPOSE_USING_ELEVATOR && ClipdataCheckElevatorDisabled(clipdata))
         {
             // Can't use the elevator, so void the movement clipdata
             clipdata = CLIPDATA_MOVEMENT_NONE;
@@ -793,9 +793,9 @@ u32 ClipdataCheckElevatorDisabled(u16 movementClip)
 {
     s32 i;
     s32 j;
-    #ifndef BUGFIX
+#ifndef BUGFIX
     u8 disabledElevators[ELEVATOR_END] = {0};
-    #endif // !BUGFIX
+#endif // !BUGFIX
 
     gLastElevatorUsed = UCHAR_MAX;
     j = FALSE;
@@ -833,10 +833,10 @@ u32 ClipdataCheckElevatorDisabled(u16 movementClip)
             // Check in the event range
             if (sElevatorDisabledEvents[j].eventStart <= gEventCounter && gEventCounter < sElevatorDisabledEvents[j].eventEnd)
             {
-                #ifdef BUGFIX
+#ifdef BUGFIX
                 if (sElevatorDisabledEvents[j].disabledElevators[gLastElevatorUsed])
                     return TRUE;
-                #else // !BUGFIX
+#else // !BUGFIX
                 // Apply flags
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_OPERATIONS_DECK]    |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_OPERATIONS_DECK];
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY]              |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY];
@@ -849,16 +849,16 @@ u32 ClipdataCheckElevatorDisabled(u16 movementClip)
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY_POWER_OUTAGE] |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_LOBBY_POWER_OUTAGE];
                 disabledElevators[ELEVATOR_MAIN_DECK_TO_HABITATIONS_DECK]   |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_MAIN_DECK_TO_HABITATIONS_DECK];
                 disabledElevators[ELEVATOR_RESTRICTED_ZONE_TO_SECTOR_1]     |= sElevatorDisabledEvents[j].disabledElevators[ELEVATOR_RESTRICTED_ZONE_TO_SECTOR_1];
-                #endif // BUGFIX
+#endif // BUGFIX
             }
         }
 
-        #ifndef BUGFIX
+#ifndef BUGFIX
         j = disabledElevators[gLastElevatorUsed];
 
         if (j)
             return j;
-        #endif // !BUGFIX
+#endif // !BUGFIX
     }
 
     // Get trigger type and set elevator direction
