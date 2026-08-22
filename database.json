@@ -12561,12 +12561,20 @@
     "size": 2
   },
   {
-    "path": "Blob_38188c_38475c.bin",
-    "count": "0x2ED0",
+    "path": "sprites/animals.gfx",
+    "count": "0x800",
     "addr": {
-      "us": "0x38188C"
+      "us": "0x3818A8"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "sprites/animals.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x3838A8"
+    },
+    "size": 2
   },
   {
     "path": "sprites/metroid.gfx",

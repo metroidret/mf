@@ -2857,13 +2857,13 @@ const u16 sSecondarySpriteStats[SSPRITE_END][4] = {
         SDRT_90_80 | SDRT_CAN_CREATE_DEBRIS,
         WEAKNESS_NONE
     },
-    [SSPRITE_67] = {
+    [SSPRITE_HABITATION_GATE] = {
         0,
         0,
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,
         WEAKNESS_NONE
     },
-    [SSPRITE_68] = {
+    [SSPRITE_HABITATION_GATE_LIGHT] = {
         0,
         0,
         SDRT_30_10 | SDRT_CAN_CREATE_DEBRIS,
