@@ -75,9 +75,9 @@ void MiscPadInit(void)
 
     if (gCurrentSprite.spriteId == PSPRITE_HABITAION_PAD)
     {
-        SpriteSpawnSecondary(SSPRITE_68, 0, 4, gCurrentSprite.primarySpriteRamSlot, gCurrentSprite.yPosition,
+        SpriteSpawnSecondary(SSPRITE_HABITATION_GATE_LIGHT, 0, 4, gCurrentSprite.primarySpriteRamSlot, gCurrentSprite.yPosition,
             gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(4.0f), 0);
-        ramSlot = SpriteSpawnSecondary(SSPRITE_67, 0, 4, gCurrentSprite.primarySpriteRamSlot, gCurrentSprite.yPosition,
+        ramSlot = SpriteSpawnSecondary(SSPRITE_HABITATION_GATE, 0, 4, gCurrentSprite.primarySpriteRamSlot, gCurrentSprite.yPosition,
             gCurrentSprite.xPosition - BLOCK_TO_SUB_PIXEL(4.0f), 0);
         gBossWork2 = ramSlot;
     }

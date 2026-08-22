@@ -411,9 +411,7 @@ SECTIONS {
         src/sprites_AI/mimic.o(.text);
         src/sprites_AI/flashing_number.o(.text);
         src/sprites_AI/zebesian_aqua.o(.text);
-
-        asm/disasm_0x0804d038.o(.text);
-
+        src/sprites_AI/animals.o(.text);
         src/sprites_AI/metroid.o(.text);
         src/sprites_AI/lab_debris.o(.text);
         src/sprites_AI/powamp.o(.text);
@@ -601,7 +599,7 @@ SECTIONS {
         src/data/sprites/mimic.o(.rodata);
         src/data/sprites/flashing_number.o(.rodata);
         src/data/sprites/zebesian_aqua.o(.rodata);
-
+        src/data/sprites/animals.o(.rodata);
         src/data/sprites/metroid.o(.rodata);
         src/data/sprites/lab_debris.o(.rodata);
         src/data/sprites/powamp.o(.rodata);

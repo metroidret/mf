@@ -2,9 +2,9 @@
 
 This is a work in progress decompilation of Metroid Fusion.
 
-2732/3607 functions decompiled (75.74%, 875 left)
+2795/3607 functions decompiled (77.49%, 812 left)
 
-0x4e57c4/0x6f9d24 bytes of data not in blobs (70.19%, 0x214560 left)
+0x4e8694/0x6f9d24 bytes of data not in blobs (70.35%, 0x211690 left)
 
 Progress can be seen here: https://docs.google.com/spreadsheets/d/1HvJ-jynb-4P9tfEBVJmkQFpIg6mJRDRUBvDIBiLxQIo/
 
