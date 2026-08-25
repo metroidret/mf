@@ -6,6 +6,9 @@
 
 #include "constants/sprite.h"
 
+#define GET_SPRITE_GRAPHICS(id) sSpritesGraphicsPointers[(id) - 0x10]
+#define GET_SPRITE_PALETTE(id) sSpritesPalettePointers[(id) - 0x10]
+
 extern const Func_T sPrimarySpritesAiPointers[PSPRITE_END];
 
 extern const u32* const sSpritesGraphicsPointers[PSPRITE_END - 0x10];

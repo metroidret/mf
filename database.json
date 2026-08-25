@@ -12641,10 +12641,26 @@
     "size": 2
   },
   {
-    "path": "Blob_388224_39f4b0.bin",
-    "count": "0x1728C",
+    "path": "sprites/sa_x_monster.gfx",
+    "count": "0x1000",
     "addr": {
-      "us": "0x388224"
+      "us": "0x388FB4"
+    },
+    "size": 4
+  },
+  {
+    "path": "sprites/sa_x_monster.pal",
+    "count": "0x80",
+    "addr": {
+      "us": "0x38CFB4"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_390518_39f4b0.bin",
+    "count": "0xEF98",
+    "addr": {
+      "us": "0x390518"
     },
     "size": 1
   },
@@ -27153,10 +27169,10 @@
     "size": 1
   },
   {
-    "path": "Blob_79b458_79b708.bin",
-    "count": "0x2B0",
+    "path": "Blob_79b560_79b708.bin",
+    "count": "0x1A8",
     "addr": {
-      "us": "0x79B458"
+      "us": "0x79B560"
     },
     "size": 1
   },

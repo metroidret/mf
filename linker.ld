@@ -416,9 +416,7 @@ SECTIONS {
         src/sprites_AI/lab_debris.o(.text);
         src/sprites_AI/powamp.o(.text);
         src/sprites_AI/zozoro.o(.text);
-
-        asm/disasm_0x080507F4.o(.text);
-
+        src/sprites_AI/sa_x_monster.o(.text);
         src/sprites_AI/continual_x_spawner.o(.text);
 
         asm/disasm_0x080519AC.o(.text);
@@ -604,6 +602,7 @@ SECTIONS {
         src/data/sprites/lab_debris.o(.rodata);
         src/data/sprites/powamp.o(.rodata);
         src/data/sprites/zozoro.o(.rodata);
+        src/data/sprites/sa_x_monster.o(.rodata);
         src/data/sprites/electric_water_damage_box2.o(.rodata);
 
         src/data/sprites/frozen_ridley.o(.rodata);
