@@ -119,6 +119,11 @@ enum HabitationGatePose {
 #define HABITATION_GATE_SLOT gBossWork2
 
 
+/**
+ * @brief 4d038 | c0 | Checks if dachora should do a head movement
+ *
+ * @return u8 bool, dachora started a head movement
+ */
 boolu8 DachoraCheckDoHeadMovement(void)
 {
     boolu8 doMovement;
@@ -164,6 +169,10 @@ boolu8 DachoraCheckDoHeadMovement(void)
     return doMovement;
 }
 
+/**
+ * @brief 4d0f8 | 98 | Initializes dachora
+ *
+ */
 void DachoraInit(void)
 {
     if (EventCheckAfter_AnimalsReleased())
@@ -200,6 +209,10 @@ void DachoraInit(void)
     }
 }
 
+/**
+ * @brief 4d190 | 38 | Initializes dachora to be idle
+ *
+ */
 void DachoraIdleInit(void)
 {
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
@@ -210,6 +223,10 @@ void DachoraIdleInit(void)
     gCurrentSprite.DACHORA_TIMER = CONVERT_SECONDS(1) + gSpriteRandomNumber * 4;
 }
 
+/**
+ * @brief 4d1c8 | 114 | Handles dachora being idle
+ *
+ */
 void DachoraIdle(void)
 {
     u16 targetX;
@@ -258,6 +275,10 @@ void DachoraIdle(void)
     }
 }
 
+/**
+ * @brief 4d2dc | 24 | Initializes dachora to stand
+ *
+ */
 void DachoraStandingInit(void)
 {
     gCurrentSprite.pose = DACHORA_POSE_STANDING;
@@ -267,6 +288,10 @@ void DachoraStandingInit(void)
     gCurrentSprite.DACHORA_TIMER = CONVERT_SECONDS(11/60.f);
 }
 
+/**
+ * @brief 4d300 | 24 | Handles dachora standing
+ *
+ */
 void DachoraStanding(void)
 {
     gCurrentSprite.DACHORA_TIMER--;
@@ -274,6 +299,10 @@ void DachoraStanding(void)
         gCurrentSprite.pose = DACHORA_POSE_HEAD_MOVEMENT_INIT;
 }
 
+/**
+ * @brief 4d324 | 50 | Initializes dachora to do a head movement
+ *
+ */
 void DachoraHeadMovementInit(void)
 {
     gCurrentSprite.pose = DACHORA_POSE_HEAD_MOVEMENT;
@@ -291,6 +320,10 @@ void DachoraHeadMovementInit(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
+/**
+ * @brief 4d374 | 40 | Handles dachora doing a head movement
+ *
+ */
 void DachoraHeadMovement(void)
 {
     if (!SpriteUtilHasCurrentAnimationEnded())
@@ -308,6 +341,10 @@ void DachoraHeadMovement(void)
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
+/**
+ * @brief 4d3b4 | 20 | Initializes dachora to turn around
+ *
+ */
 void DachoraTurningAroundInit(void)
 {
     gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND;
@@ -316,6 +353,10 @@ void DachoraTurningAroundInit(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
+/**
+ * @brief 4d3d4 | 44 | Handles dachora turning around
+ *
+ */
 void DachoraTurningAround(void)
 {
     if (!SpriteUtilHasCurrentAnimationEnded())
@@ -333,12 +374,20 @@ void DachoraTurningAround(void)
         gCurrentSprite.drawOrder = 14;
 }
 
+/**
+ * @brief 4d418 | 1c | Handles dachora turning around (2nd part)
+ *
+ */
 void DachoraTurningAroundSecondPart(void)
 {
     if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
+/**
+ * @brief 4d434 | 20 | Initializes dachora to turn around while leaving
+ *
+ */
 void DachoraTurningAroundWhileLeavingInit(void)
 {
     gCurrentSprite.pose = DACHORA_POSE_TURNING_AROUND_WHILE_LEAVING;
@@ -347,6 +396,10 @@ void DachoraTurningAroundWhileLeavingInit(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
+/**
+ * @brief 4d454 | 34 | Handles dachora turning around while leaving
+ *
+ */
 void DachoraTurningAroundWhileLeaving(void)
 {
     if (SpriteUtilHasCurrentAnimationEnded())
@@ -359,12 +412,20 @@ void DachoraTurningAroundWhileLeaving(void)
     }
 }
 
+/**
+ * @brief 4d488 | 1c | Handles dachora turning around while leaving (2nd part)
+ *
+ */
 void DachoraTurningAroundWhileLeavingSecondPart(void)
 {
     if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = DACHORA_POSE_WALKING_TO_WAITING_SPOT_INIT;
 }
 
+/**
+ * @brief 4d4a4 | 24 | Initializes dachora to leave the enclosure
+ *
+ */
 void DachoraLeavingEnclosureInit(void)
 {
     gCurrentSprite.pose = DACHORA_POSE_LEAVING_ENCLOSURE;
@@ -373,6 +434,10 @@ void DachoraLeavingEnclosureInit(void)
     gCurrentSprite.drawOrder = 4;
 }
 
+/**
+ * @brief 4d4c8 | 74 | Handles dachora leaving the enclosure
+ *
+ */
 void DachoraLeavingEnclosure(void)
 {
     u8 index;
@@ -399,6 +464,10 @@ void DachoraLeavingEnclosure(void)
     }
 }
 
+/**
+ * @brief 4d53c | 1c | Initializes dachora to walk to the waiting spot
+ *
+ */
 void DachoraWalkingToWaitingSpotInit(void)
 {
     gCurrentSprite.pOam = sDachoraOam_Running;
@@ -407,6 +476,10 @@ void DachoraWalkingToWaitingSpotInit(void)
     gCurrentSprite.pose = DACHORA_POSE_WALKING_TO_WAITING_SPOT;
 }
 
+/**
+ * @brief 4d558 | 38 | Handles dachora walking to the waiting spot
+ *
+ */
 void DachoraWalkingToWaitingSpot(void)
 {
     if (gCurrentSprite.xPosition < gAbilityRestingXPosition - BLOCK_TO_SUB_PIXEL(3))
@@ -422,6 +495,10 @@ void DachoraWalkingToWaitingSpot(void)
     }
 }
 
+/**
+ * @brief 4d590 | 80 | Handles dachora waiting for the etecoons
+ *
+ */
 void DachoraWaitingForOthers(void)
 {
     u8 count;
@@ -454,6 +531,10 @@ void DachoraWaitingForOthers(void)
     }
 }
 
+/**
+ * @brief 4d610 | 68 | Handles dachora waiting to spawn baby dachora
+ *
+ */
 void DachoraWaitingToSpawnBaby(void)
 {
     if (gCurrentSprite.currentAnimationFrame == 0 && gCurrentSprite.animationDurationCounter == 1)
@@ -469,6 +550,10 @@ void DachoraWaitingToSpawnBaby(void)
     }
 }
 
+/**
+ * @brief 4d678 | 6c | Handles dachora waiting for baby dachora
+ *
+ */
 void DachoraWaitingForBaby(void)
 {
     if (gCurrentSprite.currentAnimationFrame == 0 && gCurrentSprite.animationDurationCounter == 1)
@@ -485,6 +570,10 @@ void DachoraWaitingForBaby(void)
     }
 }
 
+/**
+ * @brief 4d6e4 | 84 | Handles dachora bowing
+ *
+ */
 void DachoraBowing(void)
 {
     if (gCurrentSprite.DACHORA_TIMER > 0)
@@ -516,6 +605,10 @@ void DachoraBowing(void)
     }
 }
 
+/**
+ * @brief 4d768 | 38 | Handles dachora waiting to run away
+ *
+ */
 void DachoraWaitingToRunAway(void)
 {
     gCurrentSprite.DACHORA_TIMER--;
@@ -530,6 +623,10 @@ void DachoraWaitingToRunAway(void)
     }
 }
 
+/**
+ * @brief 4d7a0 | 28 | Handles dachora running away
+ *
+ */
 void DachoraRunningAway(void)
 {
     gCurrentSprite.xPosition += BLOCK_TO_SUB_PIXEL(7/32.f);
@@ -539,6 +636,10 @@ void DachoraRunningAway(void)
         gCurrentSprite.status = 0;
 }
 
+/**
+ * @brief 4d7c8 | 80 | Initializes baby dachora
+ *
+ */
 void BabyDachoraInit(void)
 {
     gCurrentSprite.status &= ~SPRITE_STATUS_NOT_DRAWN;
@@ -564,6 +665,10 @@ void BabyDachoraInit(void)
     gCurrentSprite.BABY_DACHORA_TIMER = CONVERT_SECONDS(8/15.f);
 }
 
+/**
+ * @brief 4d848 | 34 | Handles baby dachora walking to the gate
+ *
+ */
 void BabyDachoraWalkingToGate(void)
 {
     gCurrentSprite.BABY_DACHORA_TIMER--;
@@ -578,6 +683,10 @@ void BabyDachoraWalkingToGate(void)
     }
 }
 
+/**
+ * @brief 4d87c | 58 | Handles baby dachora leaving the enclosure
+ *
+ */
 void BabyDachoraLeavingEnclosure(void)
 {
     u8 index;
@@ -599,6 +708,10 @@ void BabyDachoraLeavingEnclosure(void)
     }
 }
 
+/**
+ * @brief 4d8d4 | 44 | Handles baby dachora walking to the waiting spot
+ *
+ */
 void BabyDachoraWalkingToWaitingSpot(void)
 {
     gCurrentSprite.BABY_DACHORA_TIMER--;
@@ -616,6 +729,10 @@ void BabyDachoraWalkingToWaitingSpot(void)
     }
 }
 
+/**
+ * @brief 4d918 | 64 | Handles baby dachora waiting to run away
+ *
+ */
 void BabyDachoraWaitingToRunAway(void)
 {
     u8 i;
@@ -639,6 +756,10 @@ void BabyDachoraWaitingToRunAway(void)
     }
 }
 
+/**
+ * @brief 4d97c | 5c | Handles baby dachora running away
+ *
+ */
 void BabyDachoraRunningAway(void)
 {
     if (gCurrentSprite.BABY_DACHORA_TIMER > 0)
@@ -665,6 +786,11 @@ void BabyDachoraRunningAway(void)
     }
 }
 
+/**
+ * @brief 4d9d8 | e4 | Checks if an etecoon should grab a tire swing
+ *
+ * @return u8 bool, should grab a tire swing
+ */
 boolu8 EtecoonCheckGrabTireSwing(void)
 {
     u16 thisY;
@@ -722,6 +848,11 @@ boolu8 EtecoonCheckGrabTireSwing(void)
     return FALSE;
 }
 
+/**
+ * @brief 4dabc | a8 | Checks if an etecoon should face the foreground
+ *
+ * @return u8 bool, should face the foreground
+ */
 boolu8 EtecoonCheckFaceForeground(void)
 {
     boolu8 faceForeground = TRUE;
@@ -760,6 +891,10 @@ boolu8 EtecoonCheckFaceForeground(void)
     return faceForeground;
 }
 
+/**
+ * @brief 4db64 | dc | Initializes an etecoon
+ *
+ */
 void EtecoonInit(void)
 {
     if (EventCheckAfter_AnimalsReleased())
@@ -802,6 +937,10 @@ void EtecoonInit(void)
     }
 }
 
+/**
+ * @brief 4dc40 | 60 | Initializes an etecoon to be idle
+ *
+ */
 void EtecoonIdleInit(void)
 {
     gCurrentSprite.pose = SPRITE_POSE_IDLE;
@@ -819,6 +958,10 @@ void EtecoonIdleInit(void)
         gCurrentSprite.ETECOON_DOUBLE_SPEED = TRUE;
 }
 
+/**
+ * @brief 4dca0 | 15c | Handles an etecoon being idle
+ *
+ */
 void EtecoonIdle(void)
 {
     u16 targetX;
@@ -891,6 +1034,10 @@ void EtecoonIdle(void)
     }
 }
 
+/**
+ * @brief 4ddfc | 24 | Initializes an etecoon to stand
+ *
+ */
 void EtecoonStandingInit(void)
 {
     gCurrentSprite.pose = ETECOON_POSE_STANDING;
@@ -900,6 +1047,10 @@ void EtecoonStandingInit(void)
     gCurrentSprite.ETECOON_TIMER = CONVERT_SECONDS(11/60.f);
 }
 
+/**
+ * @brief 4de20 | 48 | Handles an etecoon standing
+ *
+ */
 void EtecoonStanding(void)
 {
     if (gCurrentSprite.pOam == sEtecoonOam_Standing)
@@ -919,6 +1070,10 @@ void EtecoonStanding(void)
     }
 }
 
+/**
+ * @brief 4de68 | 5c | Initializes an etecoon to face the foreground
+ *
+ */
 void EtecoonFacingForegroundInit(void)
 {
     gCurrentSprite.pose = ETECOON_POSE_FACING_FOREGROUND;
@@ -937,6 +1092,10 @@ void EtecoonFacingForegroundInit(void)
     gCurrentSprite.ETECOON_TIMER = gSpriteRandomNumber / 4;
 }
 
+/**
+ * @brief 4dec4 | cc | Handles an etecoon facing the foreground
+ *
+ */
 void EtecoonFacingForeground(void)
 {
     u8 tireSlot;
@@ -976,6 +1135,10 @@ void EtecoonFacingForeground(void)
     }
 }
 
+/**
+ * @brief 4df90 | 20 | Initializes an etecoon to turn around
+ *
+ */
 void EtecoonTurningAroundInit(void)
 {
     gCurrentSprite.pose = ETECOON_POSE_TURNING_AROUND;
@@ -984,6 +1147,10 @@ void EtecoonTurningAroundInit(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
+/**
+ * @brief 4dfb0 | 44 | Handles an etecoon turning around
+ *
+ */
 void EtecoonTurningAround(void)
 {
     if (SpriteUtilHasCurrentAnimationEnded())
@@ -1001,12 +1168,20 @@ void EtecoonTurningAround(void)
     }
 }
 
+/**
+ * @brief 4dff4 | 1c | Handles an etecoon turning around (2nd part)
+ *
+ */
 void EtecoonTurningAroundSecondPart(void)
 {
     if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = SPRITE_POSE_IDLE_INIT;
 }
 
+/**
+ * @brief 4e010 | 60 | Handles an etecoon jumping to a tire
+ *
+ */
 void EtecoonJumpingToTire(void)
 {
     u8 tireSlot;
@@ -1027,6 +1202,10 @@ void EtecoonJumpingToTire(void)
     }
 }
 
+/**
+ * @brief 4e070 | 94 | Handles an etecoon swinging from a tire
+ *
+ */
 void EtecoonSwingingFromTire(void)
 {
     u8 tireSlot;
@@ -1060,6 +1239,10 @@ void EtecoonSwingingFromTire(void)
     }
 }
 
+/**
+ * @brief 4e104 | 40 | Handles an etecoon falling from a tire
+ *
+ */
 void EtecoonFallingFromTire(void)
 {
     if (SpriteUtilHasCurrentAnimationEnded())
@@ -1074,6 +1257,10 @@ void EtecoonFallingFromTire(void)
     }
 }
 
+/**
+ * @brief 4e144 | 20 | Initializes an etecoon to turn around while leaving
+ *
+ */
 void EtecoonTurningAroundWhileLeavingInit(void)
 {
     gCurrentSprite.pose = ETECOON_POSE_TURNING_AROUND_WHILE_LEAVING;
@@ -1082,6 +1269,10 @@ void EtecoonTurningAroundWhileLeavingInit(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
+/**
+ * @brief 4e164 | 34 | Handles an etecoon turning around while leaving
+ *
+ */
 void EtecoonTurningAroundWhileLeaving(void)
 {
     if (SpriteUtilHasCurrentAnimationEnded())
@@ -1094,12 +1285,20 @@ void EtecoonTurningAroundWhileLeaving(void)
     }
 }
 
+/**
+ * @brief 4e198 | 1c | Handles an etecoon turning around while leaving (2nd part)
+ *
+ */
 void EtecoonTurningAroundWhileLeavingSecondPart(void)
 {
     if (SpriteUtilHasCurrentAnimationNearlyEnded())
         gCurrentSprite.pose = ETECOON_POSE_WALKING_TO_WAITING_SPOT_INIT;
 }
 
+/**
+ * @brief 4e1b4 | 24 | Initializes an etecoon to leave the enclosure
+ *
+ */
 void EtecoonLeavingEnclosureInit(void)
 {
     gCurrentSprite.pose = ETECOON_POSE_LEAVING_ENCLOSURE;
@@ -1110,6 +1309,10 @@ void EtecoonLeavingEnclosureInit(void)
 
 #define TWO_PIXEL_MASK (~PIXEL_TO_SUB_PIXEL(2) + ONE_SUB_PIXEL)
 
+/**
+ * @brief 4e1d8 | e8 | Handles an etecoon leaving the enclosure
+ *
+ */
 void EtecoonLeavingEnclosure(void)
 {
     u8 index;
@@ -1166,6 +1369,10 @@ void EtecoonLeavingEnclosure(void)
     }
 }
 
+/**
+ * @brief 4e2c0 | 1c | Initializes an etecoon to walk to the waiting spot
+ *
+ */
 void EtecoonWalkingToWaitingSpotInit(void)
 {
     gCurrentSprite.pOam = sEtecoonOam_Running;
@@ -1174,6 +1381,10 @@ void EtecoonWalkingToWaitingSpotInit(void)
     gCurrentSprite.pose = ETECOON_POSE_WALKING_TO_WAITING_SPOT;
 }
 
+/**
+ * @brief 4e2dc | a8 | Handles an etecoon walking to the waiting spot
+ *
+ */
 void EtecoonWalkingToWaitingSpot(void)
 {
     u16 spriteRoundedX;
@@ -1212,6 +1423,10 @@ void EtecoonWalkingToWaitingSpot(void)
     }
 }
 
+/**
+ * @brief 4e384 | 1c | Initializes an etecoon to wait for dachora
+ *
+ */
 void EtecoonWaitingForOthersInit(void)
 {
     gCurrentSprite.pOam = sEtecoonOam_Waiting;
@@ -1220,6 +1435,10 @@ void EtecoonWaitingForOthersInit(void)
     gCurrentSprite.pose = ETECOON_POSE_WAITING_FOR_OTHERS;
 }
 
+/**
+ * @brief 4e3a0 | 80 | Handles an etecoon waiting for dachora
+ *
+ */
 void EtecoonWaitingForOthers(void)
 {
     u8 i;
@@ -1246,6 +1465,10 @@ void EtecoonWaitingForOthers(void)
     }
 }
 
+/**
+ * @brief 4e420 | 4c | Handles an etecoon running away
+ *
+ */
 void EtecoonRunningAway(void)
 {
     if (gCurrentSprite.ETECOON_TIMER > 0)
@@ -1268,6 +1491,10 @@ void EtecoonRunningAway(void)
     }
 }
 
+/**
+ * @brief 4e46c | 6c | Initializes a tire swing
+ *
+ */
 void TireSwingInit(void)
 {
     gCurrentSprite.drawOrder = 13;
@@ -1290,6 +1517,10 @@ void TireSwingInit(void)
     gCurrentSprite.currentAnimationFrame = 0;
 }
 
+/**
+ * @brief 4e4d8 | 48 | Handles a tire swing being idle
+ *
+ */
 void TireSwingIdle(void)
 {
     if ((gCurrentSprite.status & SPRITE_STATUS_FACING_DOWN) &&
@@ -1302,6 +1533,10 @@ void TireSwingIdle(void)
     }
 }
 
+/**
+ * @brief 4e520 | 194 | Dachora AI
+ *
+ */
 void Dachora(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
@@ -1395,6 +1630,10 @@ void Dachora(void)
     }
 }
 
+/**
+ * @brief 4e6b4 | b8 | Baby dachora AI
+ *
+ */
 void BabyDachora(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
@@ -1427,6 +1666,10 @@ void BabyDachora(void)
     }
 }
 
+/**
+ * @brief 4e76c | 1a8 | Etecoon AI
+ *
+ */
 void Etecoon(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
@@ -1519,6 +1762,10 @@ void Etecoon(void)
     }
 }
 
+/**
+ * @brief 4e914 | 30 | Tire swing AI
+ *
+ */
 void TireSwing(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
@@ -1535,6 +1782,10 @@ void TireSwing(void)
     }
 }
 
+/**
+ * @brief 4e944 | d0 | Habitation gate light AI
+ *
+ */
 void HabitationGateLight(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
@@ -1585,6 +1836,10 @@ void HabitationGateLight(void)
     }
 }
 
+/**
+ * @brief 4ea14 | d8 | Habitation gate AI
+ *
+ */
 void HabitationGate(void)
 {
     gCurrentSprite.ignoreSamusCollisionTimer = 1;
