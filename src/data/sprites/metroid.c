@@ -58,99 +58,99 @@ const s16 sMetroidSwayingXSpeeds[80] = {
 const u32 sMetroidGfx[512 * 1] = INCBIN_U32("data/sprites/metroid.gfx");
 const u16 sMetroidPal[PAL_ROW * 1] = INCBIN_U16("data/sprites/metroid.pal");
 
-const u16 sMetroidOam_Unused_385294_Frame0[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_385294_Frame0[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -5, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x20c, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_385294_Frame1[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_385294_Frame1[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -6, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x20e, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_385294_Frame2[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_385294_Frame2[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -7, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x210, 8, 0),
 };
 
-const u16 sMetroidOam_Idle_Frame0[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Idle_Frame0[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-6, -6, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x206, 8, 0),
 };
 
-const u16 sMetroidOam_Idle_Frame3[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Idle_Frame3[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -6, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x208, 8, 0),
 };
 
-const u16 sMetroidOam_Idle_Frame1[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Idle_Frame1[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-6, -7, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x20a, 8, 0),
 };
 
-const u16 sMetroidOam_Background_Frame0[OAM_DATA_SIZE(1)] = {
+static const u16 sMetroidOam_Background_Frame0[OAM_DATA_SIZE(1)] = {
     1,
     OAM_ENTRY(-8, -7, OAM_DIMS_16x16, OAM_NO_FLIP, 0x214, 8, 0),
 };
 
-const u16 sMetroidOam_Background_Frame1[OAM_DATA_SIZE(1)] = {
+static const u16 sMetroidOam_Background_Frame1[OAM_DATA_SIZE(1)] = {
     1,
     OAM_ENTRY(-8, -7, OAM_DIMS_16x16, OAM_NO_FLIP, 0x218, 8, 0),
 };
 
-const u16 sMetroidOam_Background_Frame3[OAM_DATA_SIZE(1)] = {
+static const u16 sMetroidOam_Background_Frame3[OAM_DATA_SIZE(1)] = {
     1,
     OAM_ENTRY(-8, -7, OAM_DIMS_16x16, OAM_NO_FLIP, 0x216, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_38530c_Frame0[OAM_DATA_SIZE(1)] = {
+static const u16 sMetroidOam_Unused_38530c_Frame0[OAM_DATA_SIZE(1)] = {
     1,
     OAM_ENTRY(-8, -7, OAM_DIMS_16x16, OAM_NO_FLIP, 0x212, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_38531c_Frame0[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_38531c_Frame0[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-5, -6, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x200, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_38531c_Frame1[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_38531c_Frame1[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-6, -5, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x202, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_38531c_Frame3[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_38531c_Frame3[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-5, -6, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 0x204, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_385344_Frame0[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_385344_Frame0[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -5, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_X_FLIP, 0x200, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_385344_Frame3[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_385344_Frame3[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_X_FLIP, 0x202, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_385344_Frame1[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_385344_Frame1[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-7, -5, OAM_DIMS_8x8, OAM_NO_FLIP, 0x21a, 8, 0),
     OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_X_FLIP, 0x204, 8, 0),
 };
 
-const u16 sMetroidOam_Unused_38536c_Frame0[OAM_DATA_SIZE(2)] = {
+static const u16 sMetroidOam_Unused_38536c_Frame0[OAM_DATA_SIZE(2)] = {
     2,
     OAM_ENTRY(-8, -32, OAM_DIMS_16x16, OAM_NO_FLIP, 0x21b, 8, 0),
     OAM_ENTRY(-8, -16, OAM_DIMS_16x16, OAM_NO_FLIP, 0x21d, 8, 0),

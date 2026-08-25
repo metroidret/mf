@@ -37,7 +37,9 @@ extern const struct FrameData sDachoraOam_Blinking[4];
 extern const struct FrameData sDachoraOam_TiltingHead[3];
 extern const struct FrameData sDachoraOam_TurningHead[4];
 
+extern const struct FrameData sBabyDachoraOam_Standing[2];
 extern const struct FrameData sBabyDachoraOam_Walking[5];
+extern const struct FrameData sBabyDachoraOam_Blinking[4];
 
 extern const struct FrameData sHabitationGateLightOam_Idle[2];
 
