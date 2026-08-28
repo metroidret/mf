@@ -77,6 +77,11 @@ struct SpriteData {
     u8 numberOfXToForm;
 };
 
+#define SPRITE_X_SPEED_DEC work2
+#define SPRITE_X_SPEED_INC work3
+#define SPRITE_Y_SPEED_DEC work1
+#define SPRITE_Y_SPEED_INC work4
+
 struct SubSpriteData {
     const struct MultiSpriteData* pMultiOam;
     u16 currentAnimationFrame;

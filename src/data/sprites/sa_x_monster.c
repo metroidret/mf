@@ -4736,5 +4736,3 @@ const struct FrameData sSaXMonsterPartOam_Body_Still_Right[2] = {
     },
     [1] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_390518_39f4b0[] = INCBIN_U8("data/Blob_390518_39f4b0.bin");

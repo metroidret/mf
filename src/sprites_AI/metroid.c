@@ -26,13 +26,8 @@ enum MetroidSaX {
 };
 
 #define METROID_SA_X work0
-#define METROID_X_VEL_IDX work3
-#define METROID_Y_VEL_IDX work4
-
-#define METROID_Y_VEL_DEC work1
-#define METROID_X_VEL_DEC work2 
-#define METROID_X_VEL_INC work3
-#define METROID_Y_VEL_INC work4
+#define METROID_X_SPEED_IDX work3
+#define METROID_Y_SPEED_IDX work4
 
 /**
  * @brief 4eaec | 228 | Initializes a metroid
@@ -80,28 +75,28 @@ void MetroidInit(void)
         if (samusY - BLOCK_TO_SUB_PIXEL(5) < spriteY)
         {
             gCurrentSprite.METROID_SA_X = METROID_SA_X_BOTTOM;
-            gCurrentSprite.METROID_Y_VEL_IDX = ARRAY_SIZE(sMetroidSwayingYSpeeds) / 2;
-            gCurrentSprite.METROID_X_VEL_IDX = 0;
+            gCurrentSprite.METROID_Y_SPEED_IDX = ARRAY_SIZE(sMetroidSwayingYSpeeds) / 2;
+            gCurrentSprite.METROID_X_SPEED_IDX = 0;
             gCurrentSprite.xPosition -= BLOCK_TO_SUB_PIXEL(3);
         }
         else if (samusY - BLOCK_TO_SUB_PIXEL(6) < spriteY)
         {
             gCurrentSprite.METROID_SA_X = METROID_SA_X_MIDDLE;
-            gCurrentSprite.METROID_Y_VEL_IDX = 0;
-            gCurrentSprite.METROID_X_VEL_IDX = ARRAY_SIZE(sMetroidSwayingXSpeeds) * 3 / 4;
+            gCurrentSprite.METROID_Y_SPEED_IDX = 0;
+            gCurrentSprite.METROID_X_SPEED_IDX = ARRAY_SIZE(sMetroidSwayingXSpeeds) * 3 / 4;
             gCurrentSprite.xPosition += BLOCK_TO_SUB_PIXEL(3);
         }
         else if (samusY - BLOCK_TO_SUB_PIXEL(7) < spriteY)
         {
             gCurrentSprite.METROID_SA_X = METROID_SA_X_TOP;
-            gCurrentSprite.METROID_Y_VEL_IDX = ARRAY_SIZE(sMetroidSwayingYSpeeds) * 3 / 4;
-            gCurrentSprite.METROID_X_VEL_IDX = ARRAY_SIZE(sMetroidSwayingXSpeeds) / 2;
+            gCurrentSprite.METROID_Y_SPEED_IDX = ARRAY_SIZE(sMetroidSwayingYSpeeds) * 3 / 4;
+            gCurrentSprite.METROID_X_SPEED_IDX = ARRAY_SIZE(sMetroidSwayingXSpeeds) / 2;
         }
         else
         {
             randNum = gSpriteRandomNumber * 4;
-            gCurrentSprite.METROID_X_VEL_IDX = randNum;
-            gCurrentSprite.METROID_Y_VEL_IDX = randNum;
+            gCurrentSprite.METROID_X_SPEED_IDX = randNum;
+            gCurrentSprite.METROID_Y_SPEED_IDX = randNum;
             gCurrentSprite.METROID_SA_X = METROID_SA_X_NONE;
             gCurrentSprite.pose = METROID_POSE_SWAYING;
         }
@@ -114,8 +109,8 @@ void MetroidInit(void)
         gCurrentSprite.pose = SPRITE_POSE_IDLE;
         
         randNum = gSpriteRandomNumber * 2;
-        gCurrentSprite.METROID_X_VEL_IDX = randNum;
-        gCurrentSprite.METROID_Y_VEL_IDX = randNum;
+        gCurrentSprite.METROID_X_SPEED_IDX = randNum;
+        gCurrentSprite.METROID_Y_SPEED_IDX = randNum;
 
         SpriteUtilChooseRandomXDirection();
 
@@ -157,24 +152,24 @@ void MetroidSwaying(void)
     s16 yDistance;
     s16 xDistance;
 
-    index = gCurrentSprite.METROID_Y_VEL_IDX;
+    index = gCurrentSprite.METROID_Y_SPEED_IDX;
     yDistance = sMetroidSwayingYSpeeds[index];
     if (yDistance == SHORT_MAX)
     {
         yDistance = sMetroidSwayingYSpeeds[0];
         index = 0;
     }
-    gCurrentSprite.METROID_Y_VEL_IDX = index + 1;
+    gCurrentSprite.METROID_Y_SPEED_IDX = index + 1;
     gCurrentSprite.yPosition += yDistance;
 
-    index = gCurrentSprite.METROID_X_VEL_IDX;
+    index = gCurrentSprite.METROID_X_SPEED_IDX;
     xDistance = sMetroidSwayingXSpeeds[index];
     if (xDistance == SHORT_MAX)
     {
         xDistance = sMetroidSwayingXSpeeds[0];
         index = 0;
     }
-    gCurrentSprite.METROID_X_VEL_IDX = index + 1;
+    gCurrentSprite.METROID_X_SPEED_IDX = index + 1;
     gCurrentSprite.xPosition += xDistance;
 }
 
@@ -201,18 +196,18 @@ void MetroidFloatingInTube(void)
 
     if ((gCurrentSprite.spritesetSlotAndProperties & SSP_PROPERTY_MASK) == SSP_UNINFECTED_OR_BOSS)
     {
-        index = gCurrentSprite.METROID_Y_VEL_IDX;
+        index = gCurrentSprite.METROID_Y_SPEED_IDX;
         yDistance = sMetroidBackgroundFloatingYSpeeds[index];
         if (yDistance == SHORT_MAX)
         {
             if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_DOWN;
     
-            gCurrentSprite.METROID_Y_VEL_IDX = 0;
+            gCurrentSprite.METROID_Y_SPEED_IDX = 0;
         }
         else
         {
-            gCurrentSprite.METROID_Y_VEL_IDX++;
+            gCurrentSprite.METROID_Y_SPEED_IDX++;
 
             screenY = SUB_PIXEL_TO_PIXEL(gCurrentSprite.yPosition) - SUB_PIXEL_TO_PIXEL(gBg1YPosition);
             if (gCurrentSprite.status & SPRITE_STATUS_FACING_DOWN)
@@ -241,18 +236,18 @@ void MetroidFloatingInTube(void)
                 gCurrentSprite.yPosition -= yDistance;
         }
 
-        index = gCurrentSprite.METROID_X_VEL_IDX;
+        index = gCurrentSprite.METROID_X_SPEED_IDX;
         xDistance = sMetroidBackgroundFloatingXSpeeds[index];
         if (xDistance == SHORT_MAX)
         {
             if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
 
-            gCurrentSprite.METROID_X_VEL_IDX = 0;
+            gCurrentSprite.METROID_X_SPEED_IDX = 0;
         }
         else
         {
-            gCurrentSprite.METROID_X_VEL_IDX++;
+            gCurrentSprite.METROID_X_SPEED_IDX++;
     
             screenX = SUB_PIXEL_TO_PIXEL(gCurrentSprite.xPosition) - SUB_PIXEL_TO_PIXEL(gBg1XPosition);
             if (screenX < SCREEN_X_MIDDLE)
@@ -300,18 +295,18 @@ void MetroidFloatingInTube(void)
     }
     else
     {
-        index = gCurrentSprite.METROID_Y_VEL_IDX;
+        index = gCurrentSprite.METROID_Y_SPEED_IDX;
         yDistance = sMetroidFloatingYSpeeds[index];
         if (yDistance == SHORT_MAX)
         {
             if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_DOWN;
 
-            gCurrentSprite.METROID_Y_VEL_IDX = 0;
+            gCurrentSprite.METROID_Y_SPEED_IDX = 0;
         }
         else
         {
-            gCurrentSprite.METROID_Y_VEL_IDX++;
+            gCurrentSprite.METROID_Y_SPEED_IDX++;
 
             screenY = SUB_PIXEL_TO_PIXEL(gCurrentSprite.yPosition) - SUB_PIXEL_TO_PIXEL(gBg1YPosition);
             if (gCurrentSprite.status & SPRITE_STATUS_FACING_DOWN)
@@ -341,18 +336,18 @@ void MetroidFloatingInTube(void)
                 gCurrentSprite.yPosition -= yDistance;
         }
 
-        index = gCurrentSprite.METROID_X_VEL_IDX;
+        index = gCurrentSprite.METROID_X_SPEED_IDX;
         xDistance = sMetroidFloatingXSpeeds[index];
         if (xDistance == SHORT_MAX)
         {
             if (gSpriteRandomNumber < SPRITE_RNG_PROB(.25f))
                 gCurrentSprite.status ^= SPRITE_STATUS_FACING_RIGHT;
 
-            gCurrentSprite.METROID_X_VEL_IDX = 0;
+            gCurrentSprite.METROID_X_SPEED_IDX = 0;
         }
         else
         {
-            gCurrentSprite.METROID_X_VEL_IDX++;
+            gCurrentSprite.METROID_X_SPEED_IDX++;
 
             screenX = SUB_PIXEL_TO_PIXEL(gCurrentSprite.xPosition) - SUB_PIXEL_TO_PIXEL(gBg1XPosition);
             if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
@@ -394,24 +389,24 @@ void MetroidFloatingNearSaX(void)
     s16 yDistance;
     s16 xDistance;
 
-    index = gCurrentSprite.METROID_Y_VEL_IDX;
+    index = gCurrentSprite.METROID_Y_SPEED_IDX;
     yDistance = sMetroidSwayingYSpeeds[index];
     if (yDistance == SHORT_MAX)
     {
         yDistance = sMetroidSwayingYSpeeds[0];
         index = 0;
     }
-    gCurrentSprite.METROID_Y_VEL_IDX = index + 1;
+    gCurrentSprite.METROID_Y_SPEED_IDX = index + 1;
     gCurrentSprite.yPosition += yDistance;
 
-    index = gCurrentSprite.METROID_X_VEL_IDX;
+    index = gCurrentSprite.METROID_X_SPEED_IDX;
     xDistance = sMetroidSwayingXSpeeds[index];
     if (xDistance == SHORT_MAX)
     {
         xDistance = sMetroidSwayingXSpeeds[0];
         index = 0;
     }
-    gCurrentSprite.METROID_X_VEL_IDX = index + 1;
+    gCurrentSprite.METROID_X_SPEED_IDX = index + 1;
     gCurrentSprite.xPosition += xDistance;
 
     gCurrentSprite.workY--;
@@ -419,10 +414,10 @@ void MetroidFloatingNearSaX(void)
     {
         gCurrentSprite.pose = METROID_POSE_FLOATING_TOWARD_SA_X;
 
-        gCurrentSprite.METROID_X_VEL_DEC = 0;
-        gCurrentSprite.METROID_X_VEL_INC = 1;
-        gCurrentSprite.METROID_Y_VEL_DEC = 0;
-        gCurrentSprite.METROID_Y_VEL_INC = 1;
+        gCurrentSprite.SPRITE_X_SPEED_DEC = 0;
+        gCurrentSprite.SPRITE_X_SPEED_INC = 1;
+        gCurrentSprite.SPRITE_Y_SPEED_DEC = 0;
+        gCurrentSprite.SPRITE_Y_SPEED_INC = 1;
 
         gCurrentSprite.status &= ~SPRITE_STATUS_SAMUS_COLLIDING;
 
@@ -467,10 +462,10 @@ void MetroidFloatingTowardSaX(void)
                     spriteX + offset > targetX - BLOCK_TO_SUB_PIXEL(.3125f) && spriteX - offset < targetX + BLOCK_TO_SUB_PIXEL(.3125f))
                 {
                     gCurrentSprite.status |= SPRITE_STATUS_SAMUS_COLLIDING;
-                    gCurrentSprite.METROID_X_VEL_DEC = 0;
-                    gCurrentSprite.METROID_X_VEL_INC = 1;
-                    gCurrentSprite.METROID_Y_VEL_DEC = 0;
-                    gCurrentSprite.METROID_Y_VEL_INC = 1;
+                    gCurrentSprite.SPRITE_X_SPEED_DEC = 0;
+                    gCurrentSprite.SPRITE_X_SPEED_INC = 1;
+                    gCurrentSprite.SPRITE_Y_SPEED_DEC = 0;
+                    gCurrentSprite.SPRITE_Y_SPEED_INC = 1;
 
                     if (gSpriteData[i].pose == SPRITE_POSE_IDLE)
                     {
@@ -529,118 +524,118 @@ void MetroidFloatingTowardSaX(void)
 
     if (gCurrentSprite.status & SPRITE_STATUS_FACING_RIGHT)
     {
-        if (gCurrentSprite.METROID_X_VEL_DEC == 0)
+        if (gCurrentSprite.SPRITE_X_SPEED_DEC == 0)
         {
             if (gCurrentSprite.xPosition <= targetX - 4)
             {
-                if (gCurrentSprite.METROID_X_VEL_INC < xSpeedCap)
-                    gCurrentSprite.METROID_X_VEL_INC++;
+                if (gCurrentSprite.SPRITE_X_SPEED_INC < xSpeedCap)
+                    gCurrentSprite.SPRITE_X_SPEED_INC++;
 
-                gCurrentSprite.xPosition += DIV_SHIFT(gCurrentSprite.METROID_X_VEL_INC, 4);
+                gCurrentSprite.xPosition += DIV_SHIFT(gCurrentSprite.SPRITE_X_SPEED_INC, 4);
             }
             else
             {
-                gCurrentSprite.METROID_X_VEL_DEC = gCurrentSprite.METROID_X_VEL_INC;
+                gCurrentSprite.SPRITE_X_SPEED_DEC = gCurrentSprite.SPRITE_X_SPEED_INC;
             }
         }
         else
         {
-            if (--gCurrentSprite.METROID_X_VEL_DEC > 0)
+            if (--gCurrentSprite.SPRITE_X_SPEED_DEC > 0)
             {
-                gCurrentSprite.xPosition += DIV_SHIFT(gCurrentSprite.METROID_X_VEL_DEC, 4);
+                gCurrentSprite.xPosition += DIV_SHIFT(gCurrentSprite.SPRITE_X_SPEED_DEC, 4);
             }
             else
             {
                 gCurrentSprite.status &= ~SPRITE_STATUS_FACING_RIGHT;
-                gCurrentSprite.METROID_X_VEL_INC = 1;
+                gCurrentSprite.SPRITE_X_SPEED_INC = 1;
             }
         }
     }
     else
     {
-        if (gCurrentSprite.METROID_X_VEL_DEC == 0)
+        if (gCurrentSprite.SPRITE_X_SPEED_DEC == 0)
         {
             if (gCurrentSprite.xPosition < targetX + 4)
             {
-                gCurrentSprite.METROID_X_VEL_DEC = gCurrentSprite.METROID_X_VEL_INC;
+                gCurrentSprite.SPRITE_X_SPEED_DEC = gCurrentSprite.SPRITE_X_SPEED_INC;
             }
             else
             {
-                if (gCurrentSprite.METROID_X_VEL_INC < xSpeedCap)
-                    gCurrentSprite.METROID_X_VEL_INC++;
+                if (gCurrentSprite.SPRITE_X_SPEED_INC < xSpeedCap)
+                    gCurrentSprite.SPRITE_X_SPEED_INC++;
     
-                gCurrentSprite.xPosition -= DIV_SHIFT(gCurrentSprite.METROID_X_VEL_INC, 4);
+                gCurrentSprite.xPosition -= DIV_SHIFT(gCurrentSprite.SPRITE_X_SPEED_INC, 4);
             }
         }
         else
         {
-            if (--gCurrentSprite.METROID_X_VEL_DEC > 0)
+            if (--gCurrentSprite.SPRITE_X_SPEED_DEC > 0)
             {
-                gCurrentSprite.xPosition -= DIV_SHIFT(gCurrentSprite.METROID_X_VEL_DEC, 4);
+                gCurrentSprite.xPosition -= DIV_SHIFT(gCurrentSprite.SPRITE_X_SPEED_DEC, 4);
             }
             else
             {
                 gCurrentSprite.status |= SPRITE_STATUS_FACING_RIGHT;
-                gCurrentSprite.METROID_X_VEL_INC = 1;
+                gCurrentSprite.SPRITE_X_SPEED_INC = 1;
             }
         }
     }
 
     if (gCurrentSprite.status & SPRITE_STATUS_FACING_DOWN)
     {
-        if (gCurrentSprite.METROID_Y_VEL_DEC == 0)
+        if (gCurrentSprite.SPRITE_Y_SPEED_DEC == 0)
         {
             if (gCurrentSprite.yPosition <= targetY - 4)
             {
-                if (gCurrentSprite.METROID_Y_VEL_INC < ySpeedCap)
-                    gCurrentSprite.METROID_Y_VEL_INC++;
+                if (gCurrentSprite.SPRITE_Y_SPEED_INC < ySpeedCap)
+                    gCurrentSprite.SPRITE_Y_SPEED_INC++;
 
-                gCurrentSprite.yPosition += DIV_SHIFT(gCurrentSprite.METROID_Y_VEL_INC, 4);
+                gCurrentSprite.yPosition += DIV_SHIFT(gCurrentSprite.SPRITE_Y_SPEED_INC, 4);
             }
             else
             {
-                gCurrentSprite.METROID_Y_VEL_DEC = gCurrentSprite.METROID_Y_VEL_INC;
+                gCurrentSprite.SPRITE_Y_SPEED_DEC = gCurrentSprite.SPRITE_Y_SPEED_INC;
             }
         }
         else
         {
-            if (--gCurrentSprite.METROID_Y_VEL_DEC > 0)
+            if (--gCurrentSprite.SPRITE_Y_SPEED_DEC > 0)
             {
-                gCurrentSprite.yPosition += DIV_SHIFT(gCurrentSprite.METROID_Y_VEL_DEC, 4);
+                gCurrentSprite.yPosition += DIV_SHIFT(gCurrentSprite.SPRITE_Y_SPEED_DEC, 4);
             }
             else
             {
                 gCurrentSprite.status &= ~SPRITE_STATUS_FACING_DOWN;
-                gCurrentSprite.METROID_Y_VEL_INC = 1;
+                gCurrentSprite.SPRITE_Y_SPEED_INC = 1;
             }
         }
     }
     else
     {
-        if (gCurrentSprite.METROID_Y_VEL_DEC == 0)
+        if (gCurrentSprite.SPRITE_Y_SPEED_DEC == 0)
         {
             if (gCurrentSprite.yPosition < targetY + 4)
             {
-                gCurrentSprite.METROID_Y_VEL_DEC = gCurrentSprite.METROID_Y_VEL_INC;
+                gCurrentSprite.SPRITE_Y_SPEED_DEC = gCurrentSprite.SPRITE_Y_SPEED_INC;
             }
             else
             {
-                if (gCurrentSprite.METROID_Y_VEL_INC < ySpeedCap)
-                    gCurrentSprite.METROID_Y_VEL_INC++;
+                if (gCurrentSprite.SPRITE_Y_SPEED_INC < ySpeedCap)
+                    gCurrentSprite.SPRITE_Y_SPEED_INC++;
     
-                gCurrentSprite.yPosition -= DIV_SHIFT(gCurrentSprite.METROID_Y_VEL_INC, 4);
+                gCurrentSprite.yPosition -= DIV_SHIFT(gCurrentSprite.SPRITE_Y_SPEED_INC, 4);
             }
         }
         else
         {
-            if (--gCurrentSprite.METROID_Y_VEL_DEC > 0)
+            if (--gCurrentSprite.SPRITE_Y_SPEED_DEC > 0)
             {
-                gCurrentSprite.yPosition -= DIV_SHIFT(gCurrentSprite.METROID_Y_VEL_DEC, 4);
+                gCurrentSprite.yPosition -= DIV_SHIFT(gCurrentSprite.SPRITE_Y_SPEED_DEC, 4);
             }
             else
             {
                 gCurrentSprite.status |= SPRITE_STATUS_FACING_DOWN;
-                gCurrentSprite.METROID_Y_VEL_INC = 1;
+                gCurrentSprite.SPRITE_Y_SPEED_INC = 1;
             }
         }
     }
