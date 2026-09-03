@@ -2,6 +2,7 @@
 #include "new_file_intro.h"
 
 #include "constants/game_state.h"
+#include "constants/audio.h"
 
 #include "structs/cutscene.h"
 
@@ -23,6 +24,12 @@ static boolu32 NewFileIntroSamusFaintingProcess(void);
 static boolu32 NewFileIntroSamusFainting(void);
 void NewFileIntroProcessOam_Empty(void);
 void NewFileIntroProcessTextCursor(struct SpecialCutsceneOam* pOam);
+void NewFileIntroSr388PreviewVblank(void);
+u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
+boolu32 NewFileIntroSr388Preview(void);
+void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition, s16 arg3);
+void NewFileIntroInSr388Vblank(void);
+u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -44,7 +51,27 @@ const struct FrameData* sData_79C2CC[6] = {
     sOam_597ed0
 };
 
-static u8 sBlob_79c2e4_79c3fc[] = INCBIN_U8("data/Blob_79c2e4_79c3fc.bin");
+static u8 sBlob_79c2e4_79c3c8[] = INCBIN_U8("data/Blob_79c2e4_79c3c8.bin");
+
+// SR388 surface view gfx
+static const u32* sData_79C3C8[8] = {
+    (u32*)0x0863a1a0,
+    (u32*)0x0863ac58,
+    (u32*)0x0863b854,
+    (u32*)0x0863c594,
+    (u32*)0x0863cf98,
+    (u32*)0x0863d89c,
+    (u32*)0x0863e2d8,
+    (u32*)0x0863eadc
+};
+
+static const u32* sData_79C3E8[5] = {
+    (u32*)0x0863eda0,
+    (u32*)0x0863f8dc,
+    (u32*)0x08640580,
+    (u32*)0x086411e8,
+    (u32*)0x08641e20
+};
 
 static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx0,
@@ -62,7 +89,7 @@ static const u32* sIntroSamusSittingBgGfxPointers[5] = {
     (u32*)0x086465ec,
     (u32*)0x08647534,
     (u32*)0x0864843c,
-    (u32*)0x086492fc,
+    (u32*)0x086492fc
 };
 
 static const u32* sIntroSamusHelmetCloseupBgGfxPointers[6] = {
@@ -71,7 +98,7 @@ static const u32* sIntroSamusHelmetCloseupBgGfxPointers[6] = {
     (u32*)0x0864b614,
     (u32*)0x0864c444,
     (u32*)0x0864d0f4,
-    (u32*)0x0864de24,
+    (u32*)0x0864de24
 };
 
 static u8 sBlob_79c448_79c5a4[] = INCBIN_U8("data/Blob_79c448_79c5a4.bin");
@@ -2140,4 +2167,678 @@ void NewFileIntroProcessOam_Empty(void)
     return;
 }
 
+ /**
+ * @brief 89ab4 | 248 | To document
+ * 
+ */
+void NewFileIntroSr388PreviewInit(void)
+{
+    u16 i;
+    
+    CallbackSetVBlank(unk_99940);
+    
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+    
+    LZ77UncompVram(sIntroSr388SpaceAndSurfaceObjGfx, VRAM_OBJ);
+    
+    DMA3_COPY_32(sIntroSr388SpaceAndSurfaceObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
+    DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / sizeof(u32));
+    
+    CallbackSetVBlank(unk_99940);
+
+    for (i = 0; i < 8; i++)
+        LZ77UncompVram(sData_79C3C8[i], VRAM_BASE + i * 0x1000);
+
+    LZ77UncompVram(sIntroSr388SurfaceTilemap, VRAM_BASE + 0xE800);
+
+    for (i = 0; i < 5; i++)
+        LZ77UncompVram(sData_79C3E8[i], VRAM_BASE + 0x8000 + i * 0x1000);
+    
+    LZ77UncompVram(sIntroSr388SpaceBgTilemap, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSr388PlanetTilemap, VRAM_BASE + 0xF000);
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
+    
+    DMA3_COPY_32(sSr388SpaceAndSurfacePal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG1CNT, CREATE_BGCNT(0, 29, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(2, 30, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(2, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
+    
+    gBg1XPosition = 0;
+    gBg1YPosition = 0;
+    gBg2XPosition = 16;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+    
+    WRITE_16(REG_BG0HOFS, -8);
+    WRITE_16(REG_BG0VOFS, 0);
+    
+    NewFileIntroSr388SetupOam(50, 250, 200);
+    NewFileIntroSr388SetupOam(1, 0, 0);
+    NewFileIntroSr388SetupOam(2, gBg2XPosition, 0);
+    
+    NewFileIntroSetupSr388PreviewAsteroid(3, 250, 100, -12);
+    NewFileIntroSetupSr388PreviewAsteroid(4, 150, 10, -8);
+    NewFileIntroSetupSr388PreviewAsteroid(5, 50, 60, -6);
+    NewFileIntroSetupSr388PreviewAsteroid(6, 190, 130, -20);
+    NewFileIntroSetupSr388PreviewAsteroid(5, 280, 30, -10);
+    
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    
+    PlayMusic(MUSIC_SECTOR_1, 13);
+    
+    WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
+    
+    CallbackSetVBlank(NewFileIntroSr388PreviewVblank);
+}
+
+ /**
+ * @brief 89cfc | 348 | To document
+ * 
+ */
+boolu32 NewFileIntroSr388PreviewProcess(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+    INTRO_DATA.timer++;
+    
+    switch (INTRO_DATA.subStage)
+    {
+        case 0:
+            if (INTRO_DATA.timer == 1)
+            {
+                DMA3_FILL_32(0, VRAM_BASE + 0xD000, 0x1000);
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG0);
+            }
+            else if (INTRO_DATA.timer == 50)
+            {
+                INTRO_DATA.unk_212 = 0;
+                INTRO_DATA.unk_E = 0;
+                INTRO_DATA.unk_C = 0;
+                INTRO_DATA.pText = sMonologueTextPointers[gLanguage][8];
+            }
+            else if (INTRO_DATA.timer == 58)
+            {
+                gWrittenToBldalpha_Eva = 0;
+                gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
+            }
+            else if (INTRO_DATA.timer == 59)
+            {
+                WRITE_16(REG_BLDCNT, BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_SECOND_TARGET_PIXEL | BLDCNT_BG3_SECOND_TARGET_PIXEL);
+            }
+            else if (INTRO_DATA.timer == 60)
+            {
+                INTRO_DATA.timer = 0;
+                NewFileIntroSr388SetupOam(9, gBg2XPosition + 92, 64);
+                INTRO_DATA.subStage = 1;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 1:
+            if (INTRO_DATA.timer == 2)
+            {
+                INTRO_DATA.timer = 0;
+
+                if (gWrittenToBldalpha_Eva < BLDALPHA_MAX_VALUE)
+                    gWrittenToBldalpha_Eva++;
+            }
+
+            if (*INTRO_DATA.pText == 0xFC00 && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
+                INTRO_DATA.unk_218 = 1;
+
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
+            {
+                INTRO_DATA.unk_218 = 0;
+            }
+            else if (INTRO_DATA.unk_218 == 3)
+            {
+                INTRO_DATA.unk_218 = 0;
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 2;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 2:
+            if (INTRO_DATA.timer == 2)
+            {
+                INTRO_DATA.timer = 0;
+
+                if (gWrittenToBldalpha_Eva == 0)
+                {
+                    SpecialCutsceneDestroyOamOfType(9);
+                    INTRO_DATA.subStage = 3;
+                }
+                else
+                {
+                    gWrittenToBldalpha_Eva--;
+                }
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 3:
+            if (INTRO_DATA.timer == 1)
+            {
+                gWrittenToBldalpha_Eva = 0;
+                gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
+            }
+            else if (INTRO_DATA.timer == 2)
+            {
+                WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_SECOND_TARGET_PIXEL 
+                         | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL | BLDCNT_BACKDROP_SECOND_TARGET_PIXEL);
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG1);
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 4;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 4:
+            if (gWrittenToBldalpha_Eva == BLDALPHA_MAX_VALUE)
+            {
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~(DCNT_BG2 | DCNT_BG3));
+                WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.subStage = 5;
+                NewFileIntroSr388SetupOam(10, 128, 210);
+            }
+            else if (gWrittenToBldalpha_Eva == 2)
+            {
+                NewFileIntroSr388SetupOam(7, 0, 0);
+            }
+
+            if (INTRO_DATA.timer == 7)
+            {
+                INTRO_DATA.timer = 0;
+
+                if (gWrittenToBldalpha_Eva < BLDALPHA_MAX_VALUE)
+                {
+                    gWrittenToBldalpha_Eva++;
+                    gWrittenToBldalpha_Evb--;
+                }
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 5:
+            if (INTRO_DATA.timer == 70)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 6;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 6:
+            INTRO_DATA.unk_213++;
+            if (INTRO_DATA.unk_213 == 4)
+            {
+                INTRO_DATA.unk_213 = 0;
+
+                if (gWrittenToBldy < BLDY_MAX_VALUE)
+                {
+                    gWrittenToBldy++;
+                }
+                else
+                {
+                    INTRO_DATA.timer = 0;
+                    INTRO_DATA.subStage = 0;
+                    finished = TRUE;
+                }
+            }
+
+            if (gWrittenToBldy >= BLDY_MAX_VALUE)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 0;
+                finished = TRUE;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+    
+    IntroProcessText();
+    
+    return finished;
+}
+
+ /**
+ * @brief 8A044 | ac | To document
+ * 
+ */
+boolu32 NewFileIntroSr388Preview(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    switch (INTRO_DATA.stage)
+    {
+        case 0:
+            NewFileIntroSr388PreviewInit();
+            INTRO_DATA.stage = 1;
+            break;
+
+        case 1:
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+
+            INTRO_DATA.timer++;
+
+            if (gWrittenToBldy)
+            {
+                if (INTRO_DATA.timer > 1)
+                {
+                    INTRO_DATA.timer = 0;
+                    gWrittenToBldy--;
+                }
+            }
+            else
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.stage = 2;
+            }
+            break;
+
+        case 2:
+            if (NewFileIntroSr388PreviewProcess())
+            {
+                INTRO_DATA.subStage = 0;
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.stage = 3;
+            }
+            break;
+
+        case 3:
+            if (gWrittenToBldy < BLDY_MAX_VALUE)
+            {
+                gWrittenToBldy++;
+            }
+            else
+            {
+                INTRO_DATA.stage = 0;
+                finished = TRUE;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+
+    return finished;
+}
+
+ /**
+ * @brief 8a0f0 | 40 | To document
+ * 
+ */
+void unk_8a0f0(struct SpecialCutsceneOam* pOam)
+{
+    pOam->animationDurationCounter++;
+    if (pOam->animationDurationCounter == 36)
+        pOam->animationDurationCounter = 0;
+
+    gBg3XPosition = pOam->xPosition;
+
+    if (INTRO_DATA.subStage == 5)
+    {
+        gBg3XPosition = 0;
+        pOam->type = 0;
+    }
+}
+
+ /**
+ * @brief 8a130 | 40 | To document
+ * 
+ */
+void unk_8a130(struct SpecialCutsceneOam* pOam)
+{
+    pOam->animationDurationCounter++;
+    if (pOam->animationDurationCounter == 29)
+        pOam->animationDurationCounter = 0;
+
+    gBg2XPosition = pOam->xPosition;
+
+    if (INTRO_DATA.subStage == 5)
+    {
+        gBg2XPosition = 0;
+        pOam->type = 0;
+    }
+}
+
+ /**
+ * @brief 8a170 | 6c | To document
+ * 
+ */
+void NewFileIntroProcessSr388PreviewAsteroid(struct SpecialCutsceneOam *pOam)
+{
+    if (pOam->stage == 0)
+    {
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->unk_A++;
+        pOam->xPosition = ((pOam->unk_8 * pOam->unk_A) >> 6) + pOam->spawnX;
+        
+        if (pOam->xPosition < -40)
+        {
+            pOam->spawnX = 280;
+            pOam->unk_A = 0;
+        }
+    }
+    
+    if (gNonGameplayRam.intro.subStage == 5)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8a1dc | 28 | To document
+ * 
+ */
+void unk_8a1dc(struct SpecialCutsceneOam* pOam)
+{
+    pOam->animationDurationCounter++;
+    if (pOam->animationDurationCounter == 3)
+    {
+        pOam->animationDurationCounter = 0;
+        pOam->unk_4++;
+        gBg1YPosition = pOam->unk_4;
+    }
+}
+
+ /**
+ * @brief 8a204 | 64 | To document
+ * 
+ */
+void unk_8a204(struct SpecialCutsceneOam *pOam)
+{
+    pOam->unk_A++;
+    
+    pOam->timer++;
+    if (pOam->timer == 21)
+        pOam->timer = 0;
+    
+    if (pOam->unk_A == 110)
+        NewFileIntroSr388SetupOam(9, pOam->xPosition + 24, pOam->yPosition);
+    else if (pOam->unk_A > 1000)
+        pOam->unk_A = 1000;
+    
+    if (gNonGameplayRam.intro.subStage == 5)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8a268 | 38 | To document
+ * 
+ */
+void NewFileIntroProcessSunReflection(struct SpecialCutsceneOam* pOam)
+{
+    pOam->timer++;
+    if (pOam->timer == 29)
+        pOam->timer = 0;
+
+    if (INTRO_DATA.subStage == 5)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8a2a0 | 30 | To document
+ * 
+ */
+void NewFileIntroProcessSr388Rocks(struct SpecialCutsceneOam* pOam)
+{
+    pOam->timer++;
+    if (pOam->timer == 1)
+    {
+        pOam->timer = 0;
+        pOam->yPosition--;
+    }
+
+    if (pOam->yPosition <= 160)
+        pOam->pOam = (struct FrameData*)&sOam_59a0f0;
+}
+
+ /**
+ * @brief 8a2d0 | 29c | To document
+ * 
+ */
+u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
+{
+    u8 slot;
+
+    for (slot = 0; slot < 20; slot++)
+    {
+        if (INTRO_DATA.oam[slot].type == 0)
+            break;
+    }
+
+    if (slot > 19)
+        return 20;
+    
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], 36);
+
+    INTRO_DATA.oam[slot].xPosition = xPosition;
+    INTRO_DATA.oam[slot].yPosition = yPosition;
+    INTRO_DATA.oam[slot].type = type;
+    INTRO_DATA.oam[slot].unk_18_0 = 1;
+    
+    if (type == 1)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_8a0f0;
+    }
+    else if (type == 2)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_8a130;
+    }
+    else if (type == 3)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0a0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
+    }
+    else if (type == 4)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0b0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
+    }
+    else if (type == 5)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0c0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
+    }
+    else if (type == 6)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0d0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
+    }
+    else if (type == 7)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_8a1dc;
+    }
+    else if (type == 8)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 3;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a100;
+        INTRO_DATA.oam[slot].pFunction = unk_8a204;
+    }
+    else if (type == 9)
+    {
+        INTRO_DATA.oam[slot].unk_18_3 = 1;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0e0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSunReflection;
+    }
+    else if (type == 10)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 1;
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a168;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388Rocks;
+    }
+    else if (type == 50)
+    {
+        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_613180;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
+    }
+    
+    return slot;
+}
+
+ /**
+ * @brief 8a56c | 38 | To document
+ * 
+ */
+void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition, s16 arg3)
+{
+    u8 slot;
+    
+    slot = NewFileIntroSr388SetupOam(type, xPosition, yPosition);
+    INTRO_DATA.oam[slot].unk_8 = arg3;
+}
+
+ /**
+ * @brief 8a5a4 | 94 | To document
+ * 
+ */
+void NewFileIntroSr388PreviewVblank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, 256);
+
+    WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
+
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+
+    WRITE_16(REG_BG1HOFS, gBg1XPosition);
+    WRITE_16(REG_BG1VOFS, gBg1YPosition);
+    WRITE_16(REG_BG2HOFS, gBg2XPosition);
+    WRITE_16(REG_BG2VOFS, gBg2YPosition);
+    WRITE_16(REG_BG3HOFS, gBg3XPosition);
+    WRITE_16(REG_BG3VOFS, gBg3YPosition);
+}
+
+ /**
+ * @brief 8a638 | 254 | To document
+ * 
+ */
+void NewFileIntroInSr388Init(void)
+{
+    CallbackSetVBlank(unk_99940);
+
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+
+    LZ77UncompVram(sIntroHornoadEncounterObjGfx, VRAM_OBJ);
+
+    DMA3_COPY_32(sIntroHornoadEncounterObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
+    DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / sizeof(u32));
+
+    LZ77UncompVram(sIntroHornoadEncounterBgGfx, VRAM_BASE);
+    LZ77UncompVram(sTilemap_5a86c8, VRAM_BASE + 0xE800);
+    LZ77UncompVram(sTilemap_5a83b8, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
+    LZ77UncompVram(sTilemap_5a9044, VRAM_BASE + 0xC000);
+
+    DMA3_COPY_32(sPal_5a8e44, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+
+    WRITE_16(REG_BG0CNT, 0x1C08);
+    WRITE_16(REG_BG1CNT, 0x5801);
+    WRITE_16(REG_BG2CNT, 0x5D01);
+    WRITE_16(REG_BG3CNT, 0x1F03);
+    
+    gBg2XPosition = 136;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg1XPosition = gBg3XPosition + 392; // Seems redundant but needed for match
+    gBg1YPosition = gBg2YPosition - 96;  // ^Same
+
+    gUnk_3001234 = 560;
+    gUnk_3001236 = -40;
+
+    WRITE_16(REG_BG0HOFS, -8);
+    WRITE_16(REG_BG0VOFS, 0);
+
+    NewFileIntroInSr388SetupOam(50, 250, 200);
+    NewFileIntroInSr388SetupOam(255, 0, 0);
+    NewFileIntroInSr388SetupOam(255, 0, 0);
+    NewFileIntroInSr388SetupOam(1, 234, 200);
+    NewFileIntroInSr388SetupOam(2, 288, 200);
+    NewFileIntroInSr388SetupOam(3, 312, 100);
+    NewFileIntroInSr388SetupOam(11, 0, 0);
+    NewFileIntroInSr388SetupOam(12, 304 - gBg2XPosition, 200);
+
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
+    
+    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    
+    WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
+
+    CallbackSetVBlank(NewFileIntroInSr388Vblank);
+}
+
+
+
+
+
+
+
+
+
+
+ /**
+ * @brief  |  | To document
+ * 
+ */
 

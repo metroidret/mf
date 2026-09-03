@@ -20,6 +20,38 @@ extern const u32 sIntroSamusShipFlyingTextTilemap[125];
 extern const u16 sPal_598a8c[16 * 1];
 extern const u16 sIntroSamusCloseupGrayscalePal[16 * 4];
 
+extern const u16 sSr388SpaceAndSurfacePal[256];
+
+extern const u32 sIntroSr388SurfaceTilemap[551];
+extern const u32 sIntroSr388SpaceBgTilemap[265];
+extern const u32 sIntroSr388PlanetTilemap[199];
+
+extern const struct FrameData sOam_59a0a0[2];
+extern const struct FrameData sOam_59a0b0[2];
+extern const struct FrameData sOam_59a0c0[2];
+extern const struct FrameData sOam_59a0d0[2];
+extern const struct FrameData sOam_59a0e0[2];
+extern const struct FrameData sOam_59a0f0[2];
+extern const struct FrameData sOam_59a100[13];
+extern const struct FrameData sOam_59a168[2];
+extern const struct FrameData sOam_59a178[8];
+extern const struct FrameData sOam_59a1a8[2];
+
+extern const u32 sIntroSr388SpaceAndSurfaceObjGfx[3538];
+
+extern const u16 sIntroSr388SpaceAndSurfaceObjPal[16 * 16];
+
+extern const u32 sIntroHornoadEncounterObjGfx[4252];
+extern const u16 sIntroHornoadEncounterObjPal[16 * 16];
+extern const u32 sIntroHornoadEncounterBgGfx[4027];
+
+extern const u32 sTilemap_5a83b8[196];
+extern const u32 sTilemap_5a86c8[479];
+
+extern const u16 sPal_5a8e44[16 * 16];
+
+extern const u32 sTilemap_5a9044[135];
+
 extern const u32 sIntroSamusSittingGfx[4818];
 extern const u16 sIntroSamusSittingPal[16 * 16];
 extern const u32 sIntroSamusSittingTilemap[171];
@@ -40,6 +72,9 @@ extern const u16 sIntroBslSpaceBgPal[16 * 8];
 extern const u16 sPal_612f48[16 * 16];
 
 extern const u32 sNextPageArrowGfx[8];
+
+extern const struct FrameData sOam_613180[5];
+
 extern const u16 sNextPageArrowPal[16 * 1];
 
 extern const u16 sCutsceneTextNone[2];
