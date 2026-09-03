@@ -79,6 +79,21 @@ extern const u16 sNextPageArrowPal[16 * 1];
 
 extern const u16 sCutsceneTextNone[2];
 
+extern const u32 sIntroSr388SurfaceBgGfx0[686];
+extern const u32 sIntroSr388SurfaceBgGfx1[767];
+extern const u32 sIntroSr388SurfaceBgGfx2[848];
+extern const u32 sIntroSr388SurfaceBgGfx3[641];
+extern const u32 sIntroSr388SurfaceBgGfx4[577];
+extern const u32 sIntroSr388SurfaceBgGfx5[655];
+extern const u32 sIntroSr388SurfaceBgGfx6[513];
+extern const u32 sIntroSr388SurfaceBgGfx7[177];
+
+extern const u32 sIntroSr388PlanetBgGfx0[719];
+extern const u32 sIntroSr388PlanetBgGfx1[809];
+extern const u32 sIntroSr388PlanetBgGfx2[794];
+extern const u32 sIntroSr388PlanetBgGfx3[782];
+extern const u32 sIntroSr388PlanetBgGfx4[772];
+
 extern const u32 sIntroBslObjectGfx0[448];
 extern const u32 sIntroBslObjectGfx1[402];
 extern const u32 sIntroBslObjectGfx2[420];
@@ -87,5 +102,18 @@ extern const u32 sIntroBslObjectGfx4[298];
 extern const u32 sIntroBslObjectGfx5[186];
 extern const u32 sIntroBslObjectGfx6[543];
 extern const u32 sIntroBslObjectGfx7[482];
+
+extern const u32 sIntroSamusSittingBgGfx0[920];
+extern const u32 sIntroSamusSittingBgGfx1[978];
+extern const u32 sIntroSamusSittingBgGfx2[962];
+extern const u32 sIntroSamusSittingBgGfx3[944];
+extern const u32 sIntroSamusSittingBgGfx4[800];
+
+extern const u32 sIntroSamusHelmetCloseupBgGfx0[598];
+extern const u32 sIntroSamusHelmetCloseupBgGfx1[848];
+extern const u32 sIntroSamusHelmetCloseupBgGfx2[908];
+extern const u32 sIntroSamusHelmetCloseupBgGfx3[812];
+extern const u32 sIntroSamusHelmetCloseupBgGfx4[844];
+extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
 
 #endif /* NEW_FILE_INTRO_DATA_H */

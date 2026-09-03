@@ -53,24 +53,23 @@ const struct FrameData* sData_79C2CC[6] = {
 
 static u8 sBlob_79c2e4_79c3c8[] = INCBIN_U8("data/Blob_79c2e4_79c3c8.bin");
 
-// SR388 surface view gfx
-static const u32* sData_79C3C8[8] = {
-    (u32*)0x0863a1a0,
-    (u32*)0x0863ac58,
-    (u32*)0x0863b854,
-    (u32*)0x0863c594,
-    (u32*)0x0863cf98,
-    (u32*)0x0863d89c,
-    (u32*)0x0863e2d8,
-    (u32*)0x0863eadc
+static const u32* sIntroSr388SurfaceBgGfxPointers[8] = {
+    sIntroSr388SurfaceBgGfx0,
+    sIntroSr388SurfaceBgGfx1,
+    sIntroSr388SurfaceBgGfx2,
+    sIntroSr388SurfaceBgGfx3,
+    sIntroSr388SurfaceBgGfx4,
+    sIntroSr388SurfaceBgGfx5,
+    sIntroSr388SurfaceBgGfx6,
+    sIntroSr388SurfaceBgGfx7
 };
 
-static const u32* sData_79C3E8[5] = {
-    (u32*)0x0863eda0,
-    (u32*)0x0863f8dc,
-    (u32*)0x08640580,
-    (u32*)0x086411e8,
-    (u32*)0x08641e20
+static const u32* sIntroSr388PlanetBgGfxPointers[5] = {
+    sIntroSr388PlanetBgGfx0,
+    sIntroSr388PlanetBgGfx1,
+    sIntroSr388PlanetBgGfx2,
+    sIntroSr388PlanetBgGfx3,
+    sIntroSr388PlanetBgGfx4
 };
 
 static const u32* sIntroBslObjectGfxPointers[8] = {
@@ -85,20 +84,20 @@ static const u32* sIntroBslObjectGfxPointers[8] = {
 };
 
 static const u32* sIntroSamusSittingBgGfxPointers[5] = {
-    (u32*)0x0864578c,
-    (u32*)0x086465ec,
-    (u32*)0x08647534,
-    (u32*)0x0864843c,
-    (u32*)0x086492fc
+    sIntroSamusSittingBgGfx0,
+    sIntroSamusSittingBgGfx1,
+    sIntroSamusSittingBgGfx2,
+    sIntroSamusSittingBgGfx3,
+    sIntroSamusSittingBgGfx4
 };
 
 static const u32* sIntroSamusHelmetCloseupBgGfxPointers[6] = {
-    (u32*)0x08649f7c,
-    (u32*)0x0864a8d4,
-    (u32*)0x0864b614,
-    (u32*)0x0864c444,
-    (u32*)0x0864d0f4,
-    (u32*)0x0864de24
+    sIntroSamusHelmetCloseupBgGfx0,
+    sIntroSamusHelmetCloseupBgGfx1,
+    sIntroSamusHelmetCloseupBgGfx2,
+    sIntroSamusHelmetCloseupBgGfx3,
+    sIntroSamusHelmetCloseupBgGfx4,
+    sIntroSamusHelmetCloseupBgGfx5
 };
 
 static u8 sBlob_79c448_79c5a4[] = INCBIN_U8("data/Blob_79c448_79c5a4.bin");
@@ -2187,13 +2186,13 @@ void NewFileIntroSr388PreviewInit(void)
     
     CallbackSetVBlank(unk_99940);
 
-    for (i = 0; i < 8; i++)
-        LZ77UncompVram(sData_79C3C8[i], VRAM_BASE + i * 0x1000);
+    for (i = 0; i < ARRAY_SIZE(sIntroSr388SurfaceBgGfxPointers); i++)
+        LZ77UncompVram(sIntroSr388SurfaceBgGfxPointers[i], VRAM_BASE + i * 0x1000);
 
     LZ77UncompVram(sIntroSr388SurfaceTilemap, VRAM_BASE + 0xE800);
 
-    for (i = 0; i < 5; i++)
-        LZ77UncompVram(sData_79C3E8[i], VRAM_BASE + 0x8000 + i * 0x1000);
+    for (i = 0; i < ARRAY_SIZE(sIntroSr388PlanetBgGfxPointers); i++)
+        LZ77UncompVram(sIntroSr388PlanetBgGfxPointers[i], VRAM_BASE + 0x8000 + i * 0x1000);
     
     LZ77UncompVram(sIntroSr388SpaceBgTilemap, VRAM_BASE + 0xF800);
     LZ77UncompVram(sIntroSr388PlanetTilemap, VRAM_BASE + 0xF000);
@@ -2554,7 +2553,7 @@ void NewFileIntroProcessSr388PreviewAsteroid(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->type = 0;
         pOam->unk_18_0 = 0;
@@ -2593,7 +2592,7 @@ void unk_8a204(struct SpecialCutsceneOam *pOam)
     else if (pOam->unk_A > 1000)
         pOam->unk_A = 1000;
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->type = 0;
         pOam->unk_18_0 = 0;
@@ -2631,7 +2630,7 @@ void NewFileIntroProcessSr388Rocks(struct SpecialCutsceneOam* pOam)
     }
 
     if (pOam->yPosition <= 160)
-        pOam->pOam = (struct FrameData*)&sOam_59a0f0;
+        pOam->pOam = (struct FrameData*)sOam_59a0f0;
 }
 
  /**
@@ -2642,7 +2641,7 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
 {
     u8 slot;
 
-    for (slot = 0; slot < 20; slot++)
+    for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
     {
         if (INTRO_DATA.oam[slot].type == 0)
             break;
@@ -2651,7 +2650,7 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
     if (slot > 19)
         return 20;
     
-    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], 36);
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], sizeof(struct SpecialCutsceneOam));
 
     INTRO_DATA.oam[slot].xPosition = xPosition;
     INTRO_DATA.oam[slot].yPosition = yPosition;
@@ -2743,7 +2742,7 @@ void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition
  */
 void NewFileIntroSr388PreviewVblank(void)
 {
-    DMA3_COPY_32(gOamData, OAM_BASE, 256);
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
 
@@ -2790,10 +2789,10 @@ void NewFileIntroInSr388Init(void)
     WRITE_16(REG_BG3HOFS, 0);
     WRITE_16(REG_BG3VOFS, 0);
 
-    WRITE_16(REG_BG0CNT, 0x1C08);
-    WRITE_16(REG_BG1CNT, 0x5801);
-    WRITE_16(REG_BG2CNT, 0x5D01);
-    WRITE_16(REG_BG3CNT, 0x1F03);
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG1CNT, CREATE_BGCNT(0, 24, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_512x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 29, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_512x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
     
     gBg2XPosition = 136;
     gBg2YPosition = 0;
@@ -2827,18 +2826,4 @@ void NewFileIntroInSr388Init(void)
 
     CallbackSetVBlank(NewFileIntroInSr388Vblank);
 }
-
-
-
-
-
-
-
-
-
-
- /**
- * @brief  |  | To document
- * 
- */
 

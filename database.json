@@ -26609,12 +26609,108 @@
     "size": 1
   },
   {
-    "path": "Blob_63a1a0_642a30.bin",
-    "count": "0x8890",
+    "path": "new_file_intro/sr388_surface_bg_0.gfx.lz",
+    "count": "0x2AE",
     "addr": {
       "us": "0x63A1A0"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_1.gfx.lz",
+    "count": "0x2FF",
+    "addr": {
+      "us": "0x63AC58"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_2.gfx.lz",
+    "count": "0x350",
+    "addr": {
+      "us": "0x63B854"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_3.gfx.lz",
+    "count": "0x281",
+    "addr": {
+      "us": "0x63C594"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_4.gfx.lz",
+    "count": "0x241",
+    "addr": {
+      "us": "0x63CF98"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_5.gfx.lz",
+    "count": "0x28F",
+    "addr": {
+      "us": "0x63D89C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_6.gfx.lz",
+    "count": "0x201",
+    "addr": {
+      "us": "0x63E2D8"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_surface_bg_7.gfx.lz",
+    "count": "0xB1",
+    "addr": {
+      "us": "0x63EADC"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_planet_bg_0.gfx.lz",
+    "count": "0x2CF",
+    "addr": {
+      "us": "0x63EDA0"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_planet_bg_1.gfx.lz",
+    "count": "0x329",
+    "addr": {
+      "us": "0x63F8DC"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_planet_bg_2.gfx.lz",
+    "count": "0x31A",
+    "addr": {
+      "us": "0x640580"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_planet_bg_3.gfx.lz",
+    "count": "0x30E",
+    "addr": {
+      "us": "0x6411E8"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/sr388_planet_bg_4.gfx.lz",
+    "count": "0x304",
+    "addr": {
+      "us": "0x641E20"
+    },
+    "size": 4
   },
   {
     "path": "new_file_intro/bsl_object_0.gfx.lz",
@@ -26681,10 +26777,98 @@
     "size": 4
   },
   {
-    "path": "Blob_64578c_72eee0.bin",
-    "count": "0xE9754",
+    "path": "new_file_intro/samus_sitting_bg_0.gfx.lz",
+    "count": "0x398",
     "addr": {
       "us": "0x64578C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_sitting_bg_1.gfx.lz",
+    "count": "0x3D2",
+    "addr": {
+      "us": "0x6465EC"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_sitting_bg_2.gfx.lz",
+    "count": "0x3C2",
+    "addr": {
+      "us": "0x647534"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_sitting_bg_3.gfx.lz",
+    "count": "0x3B0",
+    "addr": {
+      "us": "0x64843C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_sitting_bg_4.gfx.lz",
+    "count": "0x320",
+    "addr": {
+      "us": "0x6492FC"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_helmet_closeup_bg_0.gfx.lz",
+    "count": "0x256",
+    "addr": {
+      "us": "0x649F7C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_helmet_closeup_bg_1.gfx.lz",
+    "count": "0x350",
+    "addr": {
+      "us": "0x64A8D4"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_helmet_closeup_bg_2.gfx.lz",
+    "count": "0x38C",
+    "addr": {
+      "us": "0x64B614"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_helmet_closeup_bg_3.gfx.lz",
+    "count": "0x32C",
+    "addr": {
+      "us": "0x64C444"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_helmet_closeup_bg_4.gfx.lz",
+    "count": "0x34C",
+    "addr": {
+      "us": "0x64D0F4"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_helmet_closeup_bg_5.gfx.lz",
+    "count": "0x193",
+    "addr": {
+      "us": "0x64DE24"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_64e470_72eee0.bin",
+    "count": "0xE0A70",
+    "addr": {
+      "us": "0x64E470"
     },
     "size": 1
   },
