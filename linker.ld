@@ -419,8 +419,9 @@ SECTIONS {
         src/sprites_AI/sa_x_monster.o(.text);
         src/sprites_AI/continual_x_spawner.o(.text);
         src/sprites_AI/box_2.o(.text);
+        src/sprites_AI/omega_metroid.o(.text);
 
-        asm/disasm_0x08053d38.o(.text);
+        asm/disasm_0x08056140.o(.text);
 
         src/sprites_AI/electric_water_damage_box2.o(.text);
         src/sprites_AI/frozen_ridley.o(.text);
@@ -605,9 +606,9 @@ SECTIONS {
         src/data/sprites/zozoro.o(.rodata);
         src/data/sprites/sa_x_monster.o(.rodata);
         src/data/sprites/box_2.o(.rodata);
+        src/data/sprites/omega_metroid.o(.rodata);
 
         src/data/sprites/electric_water_damage_box2.o(.rodata);
-
         src/data/sprites/frozen_ridley.o(.rodata);
         src/data/sprites/mega_x.o(.rodata);
         src/data/sprites/omega_metroid_husk.o(.rodata);

@@ -1,0 +1,74 @@
+#ifndef OMEGA_METROID_AI_H
+#define OMEGA_METROID_AI_H
+
+#include "types.h"
+
+void OmegaMetroidSyncSubSprites(void);
+void OmegaMetroidPartSetDrawOrder(void);
+void OmegaMetroidPartSetDrawOrder_SaXCutscene(void);
+void OmegaMetroidUpdatePalette(void);
+void OmegaMetroidSaXIceBeamCollision(void);
+void OmegaMetroidUpdateHeartPalette(void);
+void OmegaMetroidUpdateHealthThreshold(void);
+boolu8 OmegaMetroidCheckSamusOnLowHealth(void);
+void OmegaMetroidBodyFlashing_SaXCutscene(void);
+void OmegaMetroidBodyFlashing(void);
+boolu8 OmegaMetroidCheckSamusInFrontRange(void);
+boolu8 OmegaMetroidCheckBehindRightTrigger(void);
+boolu8 OmegaMetroidCheckInFrontOfMiddleTrigger(void);
+boolu8 OmegaMetroidCheckInFrontOfLeftTrigger(void);
+boolu8 OmegaMetroidXMovement(void);
+boolu8 OmegaMetroidBackwardMovement(void);
+boolu8 OmegaMetroidForwardMovement(void);
+boolu8 OmegaMetroidStartWalking(void);
+u8 OmegaMetroidStandingMovement(void);
+void OmegaMetroidInit(void);
+void OmegaMetroidWaitingToAppear(void);
+void OmegaMetroidFirstJump(void);
+void OmegaMetroidLandingFromFirstJump(void);
+void OmegaMetroidLandedAfterFirstJump(void);
+void OmegaMetroidScreamingAfterFirstJump(void);
+void OmegaMetroidFinishedScreamingAfterFirstJump(void);
+void OmegaMetroidJumpWarningInit(void);
+void OmegaMetroidJumpWarning(void);
+void OmegaMetroidJumping(void);
+void OmegaMetroidFalling(void);
+void OmegaMetroidLandingInit(void);
+void OmegaMetroidLanding(void);
+void OmegaMetroidIdleInit(void);
+void OmegaMetroidIdle(void);
+void OmegaMetroidWalkingBeforeSaXInit(void);
+void OmegaMetroidWalkingBeforeSaX(void);
+void OmegaMetroidSlowWalkingInit(void);
+void OmegaMetroidSlowWalking();
+void OmegaMetroidWalkingInit(void);
+void OmegaMetroidWalking();
+void OmegaMetroidSwipingInit(void);
+void OmegaMetroidSwiping(void);
+void OmegaMetroidVerticalJumpInit(void);
+void OmegaMetroidVerticalJump(void);
+void OmegaMetroidSpawnSaX(void);
+void OmegaMetroidWaitingForSaXInit(void);
+void OmegaMetroidWaitingForSaX(void);
+void OmegaMetroidWatchingSaX(void);
+void OmegaMetroidDamagedBySaX(void);
+void OmegaMetroidWalkingBackwardFromSaX(void);
+void OmegaMetroidDamagedBySaX2(void);
+void OmegaMetroidWaitingToSwipeSaX(void);
+void OmegaMetroidSwipingSaX(void);
+void OmegaMetroidKilledSaX(void);
+void OmegaMetroidScreamingAfterIceBeamObtained(void);
+void OmegaMetroidWalkingBackwardInit(void);
+void OmegaMetroidWalkingBackward(void);
+void OmegaMetroidDyingInit(void);
+void OmegaMetroidDying1(void);
+void OmegaMetroidDying2(void);
+void OmegaMetroidDying3(void);
+
+void OmegaMetroidPartInit(void);
+void OmegaMetroidPartIdle(void);
+
+void OmegaMetroid(void);
+void OmegaMetroidPart(void);
+
+#endif /* OMEGA_METROID_AI_H */

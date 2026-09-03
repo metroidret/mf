@@ -301,7 +301,7 @@ void MessageBanner(void)
     }
 
     gCurrentSprite.yPosition = 0x36;
-    gCurrentSprite.xPosition = SCREEN_SIZE_X / 2;
+    gCurrentSprite.xPosition = SCREEN_X_MIDDLE;
 }
 
 void SaveYesNoCursor(void)

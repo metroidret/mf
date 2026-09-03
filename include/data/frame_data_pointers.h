@@ -4,7 +4,7 @@
 #include "data/sprites/zazabi.h"
 #include "data/sprites/sa_x_monster.h"
 #include "data/sprites/box_2.h"
-// #include "data/sprites/omega_metroid.h"
+#include "data/sprites/omega_metroid.h"
 #include "data/sprites/ridley.h"
 #include "data/sprites/yakuza.h"
 #include "data/sprites/nightmare.h"
@@ -20,7 +20,7 @@ extern const struct FrameData* const sSaXMonsterFrameDataPointers[SA_X_MONSTER_O
 
 extern const struct FrameData* const sBox2FrameDataPointers[BOX_2_OAM_COUNT];
 
-// extern const struct FrameData* const sOmegaMetroidFrameDataPointers[OMEGA_METROID_OAM_END];
+extern const struct FrameData* const sOmegaMetroidFrameDataPointers[OMEGA_METROID_OAM_COUNT];
 
 extern const struct FrameData* const sRidleyFrameDataPointers[RIDLEY_OAM_END];
 

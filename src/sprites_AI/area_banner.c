@@ -143,5 +143,5 @@ void AreaBanner(void)
     else
         gCurrentSprite.yPosition = SCREEN_SIZE_Y - EIGHTH_BLOCK_SIZE;
 
-    gCurrentSprite.xPosition = SCREEN_SIZE_X / 2;
+    gCurrentSprite.xPosition = SCREEN_X_MIDDLE;
 }

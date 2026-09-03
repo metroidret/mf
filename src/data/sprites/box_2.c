@@ -2306,5 +2306,3 @@ const struct FrameData sBox2PartOam_BrainBottom[5] = {
     },
     [4] = FRAME_DATA_TERMINATOR
 };
-
-static const u8 sBlob_395900_39f4b0[] = INCBIN_U8("data/Blob_395900_39f4b0.bin");
