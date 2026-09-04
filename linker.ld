@@ -180,6 +180,8 @@ SECTIONS {
         . = 0x0000122E; gBg2YPosition = .;
         . = 0x00001230; gBg3XPosition = .;
         . = 0x00001232; gBg3YPosition = .;
+        . = 0x00001234; gUnk_3001234 = .;
+        . = 0x00001236; gUnk_3001236 = .;
         . = 0x00001242; gDemoState = .;
         . = 0x00001243; gPoseLock = .;
         . = 0x00001244; gSamusData = .;

@@ -71,6 +71,9 @@ extern u16 gBg2YPosition;
 extern u16 gBg3XPosition;
 extern u16 gBg3YPosition;
 
+extern u16 gUnk_3001234;
+extern u16 gUnk_3001236;
+
 extern u8 gSpritesetNumber;
 
 extern u8 gDisplayLocationName;
