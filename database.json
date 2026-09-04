@@ -12873,22 +12873,6 @@
     "size": 1
   },
   {
-    "path": "Blob_3c8d58_3c8f90.bin",
-    "count": "0x238",
-    "addr": {
-      "us": "0x3C8D58"
-    },
-    "size": 1
-  },
-  {
-    "path": "Blob_3c8f90_3c9230.bin",
-    "count": "0x2A0",
-    "addr": {
-      "us": "0x3C8F90"
-    },
-    "size": 1
-  },
-  {
     "path": "Blob_3c923b_3c94d0.bin",
     "count": "0x295",
     "addr": {
@@ -25881,10 +25865,34 @@
     "size": 4
   },
   {
-    "path": "Blob_5594a8_575a60.bin",
-    "count": "0x1C5B8",
+    "path": "animated_tiles/tiles.gfx",
+    "count": "0x7500",
     "addr": {
       "us": "0x5594A8"
+    },
+    "size": 1
+  },
+  {
+    "path": "animated_tiles/tanks.gfx",
+    "count": "0x600",
+    "addr": {
+      "us": "0x5609A8"
+    },
+    "size": 1
+  },
+  {
+    "path": "animated_tiles/liquids.gfx",
+    "count": "0x1000",
+    "addr": {
+      "us": "0x560FA8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_561fa8_575a60.bin",
+    "count": "0x13AB8",
+    "addr": {
+      "us": "0x561FA8"
     },
     "size": 1
   },

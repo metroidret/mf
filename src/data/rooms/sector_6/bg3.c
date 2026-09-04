@@ -26,6 +26,3 @@ const u32 sSector6_Bg0_CavesSpotlight[170] = {
     BGCNT_SIZE_512x256,
     _INCBIN_U32("data/rooms/sector_6/sector_6_caves_spotlight_bg0.tm.lz")
 };
-
-// Animated graphics, etc...
-static const u8 sBlob_5594a8_575a60[] = INCBIN_U8("data/Blob_5594a8_575a60.bin");

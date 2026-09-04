@@ -98,8 +98,8 @@ void RoomLoad(void)
     RoomSetInitialTilemap(1);
     RoomSetInitialTilemap(2);
     unk_6b890();
-    LoadAnimatedGraphics();
-    ResetTankAnimations();
+    AnimatedGraphicsLoad();
+    AnimatedGraphicsResetTanks();
     HazeSetBackgroundEffect();
     HazeProcess();
     MinimapCheckOnTransition();
@@ -1264,8 +1264,8 @@ void RoomUpdateAnimatedGraphicsAndPalette(void)
     {
         if (gDisableAnimatedGraphicsTimer == 0)
         {
-            UpdateAnimatedGraphics();
-            UpdateTankAnimations();
+            AnimatedGraphicsUpdate();
+            AnimatedGraphicsUpdateTanks();
             UpdateAnimatedPalette();
             RoomUpdateHatchFlashingAnimation();
         }

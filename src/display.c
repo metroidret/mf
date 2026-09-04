@@ -49,7 +49,7 @@ void IoWriteRegisters(void)
     }
 
     CheckTransferFadedPalette();
-    TransferAnimatedGraphics();
+    AnimatedGraphicsTransfer();
 }
 
 /**
@@ -109,5 +109,5 @@ void IoWriteRegistersDuringTransition(void)
     }
     
     CheckTransferFadedPalette();
-    TransferAnimatedGraphics();
+    AnimatedGraphicsTransfer();
 }

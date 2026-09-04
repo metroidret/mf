@@ -48,6 +48,7 @@ SECTIONS {
         . = 0x00000025; gDisableSoftReset = .;
         . = 0x00000026; gCollectingTankFlag = .;
         . = 0x00000027; gDisableAnimatedGraphicsTimer = .;
+        . = 0x00000028; gAnimatedGraphicsToUpdate = .;
         . = 0x0000002a; gDisableDoorsAndTanks = .;
         . = 0x0000002b; gDisablePauseFlag = .;
         . = 0x0000002c; gCurrentArea = .;
@@ -278,6 +279,8 @@ SECTIONS {
         . = 0x00004fd0; gHorizontalTilemap = .;
         . = 0x00005138; gVerticalTilemap = .;
         . = 0x00005318; gClipdataCodePointer = .;
+        . = 0x0000531c; gAnimatedGraphicsData = .;
+        . = 0x000053dc; gTankAnimations = .;
 
         . = 0x00005408; *libgcc.a:dp-bit.o(.bss);
         . = 0x00005420; *libgcc.a:fp-bit.o(.bss);
@@ -448,8 +451,9 @@ SECTIONS {
 
         src/clipdata.o(.text);
         src/connection.o(.text);
+        src/animated_graphics.o(.text);
 
-        asm/disasm_0x080695b4.o(.text);
+        asm/disasm_0x08069b04.o(.text);
 
         src/sound_event.o(.text);
 
@@ -1043,6 +1047,8 @@ SECTIONS {
         src/data/rooms/sector_6/sector_6_39.o(.rodata);
         src/data/rooms/sector_6/sector_6_40.o(.rodata);
         src/data/rooms/sector_6/bg3.o(.rodata);
+
+        src/data/animated_tiles_data.o(.rodata);
 
         src/data/event_data.o(.rodata);
         src/data/menus/pause_debug.o(.rodata);
