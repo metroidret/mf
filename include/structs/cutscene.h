@@ -28,7 +28,7 @@ struct SpecialCutsceneOam {
     u8 unk_1A_2 : 2;
     u8 unk_1A_4 : 4;
     u8 unk_1B;
-    struct FrameData* pOam;        // 0x1C
+    const struct FrameData* pOam;  // 0x1C
     void* pFunction;               // 0x20
 };
 

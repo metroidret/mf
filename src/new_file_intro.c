@@ -3,6 +3,7 @@
 
 #include "constants/game_state.h"
 #include "constants/audio.h"
+#include "constants/text.h"
 
 #include "structs/cutscene.h"
 
@@ -586,7 +587,7 @@ static void NewFileIntroSamusShipFlyingInit(void)
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4 );
 
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
 
     CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
@@ -602,7 +603,7 @@ static boolu32 NewFileIntroSamusShipFlyingProcess(void)
 
     result = FALSE;
 
-    if (*INTRO_DATA.pText == 0xfc00 && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
+    if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
         INTRO_DATA.unk_218 = 1;
     
     INTRO_DATA.timer++;
@@ -763,7 +764,7 @@ static void NewFileIntroSamusFaintingInit(void)
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, VRAM_SIZE / 24 );
 
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
 
@@ -784,7 +785,7 @@ static boolu32 NewFileIntroSamusFaintingProcess(void)
 
     finished = FALSE;
     
-    if ((*INTRO_DATA.pText == 0xFC00) && (gChangedInput & KEY_A) && (INTRO_DATA.unk_218 == 0))
+    if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
         INTRO_DATA.unk_218 = 1;
     
     INTRO_DATA.timer += 1;
@@ -795,7 +796,7 @@ static boolu32 NewFileIntroSamusFaintingProcess(void)
             if (INTRO_DATA.timer == 1)
             {
                 WRITE_16(REG_BLDCNT, BLDCNT_OBJ_SECOND_TARGET_PIXEL | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_FIRST_TARGET_PIXEL);
-                NewFileIntroSetupOam(10, (s16)gBg2XPosition, (s16)gBg2YPosition, 1);
+                NewFileIntroSetupOam(10, gBg2XPosition, gBg2YPosition, 1);
             }
             else if (INTRO_DATA.timer == 59)
             {
@@ -952,7 +953,7 @@ void NewFileIntroSamusDriftingInit(void)
     WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
     
     NewFileIntroSetupOam(200, 250, 0, 0);
-    NewFileIntroSetupOam(1, (s16)gBg2XPosition, (s16)gBg2YPosition, 0);
+    NewFileIntroSetupOam(1, gBg2XPosition, gBg2YPosition, 0);
     NewFileIntroSetupOam(20, 160, 90, 0);
     NewFileIntroSetupOam(4, 0, 0, 1);
     
@@ -964,7 +965,7 @@ void NewFileIntroSamusDriftingInit(void)
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
@@ -1055,7 +1056,7 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
@@ -1136,7 +1137,7 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
     
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / 4);
     
@@ -1159,7 +1160,7 @@ boolu32 NewFileIntroSamusDriftingProcess(void)
 
     finished = FALSE;
     
-    if (*INTRO_DATA.pText == 0xFC00 && gChangedInput & KEY_A && !INTRO_DATA.unk_218)
+    if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW && gChangedInput & KEY_A && !INTRO_DATA.unk_218)
         INTRO_DATA.unk_218 = 1;
     
     INTRO_DATA.timer++;
@@ -1547,7 +1548,7 @@ void NewFileIntroProcessHorizontalParticle(struct SpecialCutsceneOam *pOam)
         pOam->unk_8 = rng + 1;
         rng = SpecialCutsceneGetRandomNumber() & 3;
         pOam->unk_4 = rng;
-        pOam->pOam = (struct FrameData*)sData_79C2CC[pOam->unk_4];
+        pOam->pOam = sData_79C2CC[pOam->unk_4];
         pOam->spawnX = pOam->xPosition;
         pOam->stage = 1;
     }
@@ -1566,7 +1567,7 @@ void NewFileIntroProcessHorizontalParticle(struct SpecialCutsceneOam *pOam)
             else
                 pOam->unk_4 = 0;
             
-            pOam->pOam = (struct FrameData*)sData_79C2CC[pOam->unk_4];
+            pOam->pOam = sData_79C2CC[pOam->unk_4];
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
         }
@@ -1720,7 +1721,7 @@ void NewFileIntroProcessSamusDrifting(struct SpecialCutsceneOam* pOam)
  */
 void NewFileIntroProcessSamusDriftingIntoAsteroids(struct SpecialCutsceneOam *pOam)
 {
-    struct FrameData* frame;
+    const struct FrameData* frame;
 
     pOam->unk_A++;
     
@@ -1878,7 +1879,7 @@ void NewFileIntroProcessSamusDriftingIntoAsteroids(struct SpecialCutsceneOam *pO
         pOam->animationDurationCounter = 0;
         pOam->currentAnimationFrame = 0;
         pOam->unk_18_1 = 0;
-        pOam->pOam = (struct FrameData*)0x08598000;
+        pOam->pOam = sOam_598000;
         pOam->stage = 6;
         INTRO_DATA.subStage = 6;
     }
@@ -1986,11 +1987,11 @@ void NewFileIntroProcessDepthParticle(struct SpecialCutsceneOam* pOam)
         if ((s16)pOam->unk_A < 100)
         {
             if ((s16)pOam->unk_A == 25)
-                pOam->pOam = (struct FrameData*)sOam_597ed0;
+                pOam->pOam = sOam_597ed0;
             else if ((s16)pOam->unk_A == 50)
-                pOam->pOam = (struct FrameData*)sOam_597ee0;
+                pOam->pOam = sOam_597ee0;
             else if ((s16)pOam->unk_A == 70)
-                pOam->pOam = (struct FrameData*)sOam_597ef0;
+                pOam->pOam = sOam_597ef0;
 
             divisor = -pOam->unk_4 + 100;
             x = pOam->spawnX / divisor;
@@ -2060,13 +2061,13 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
     else if (type == 2)
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1);
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f50;
+        INTRO_DATA.oam[slot].pOam = sOam_597f50;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessFlyingSamusShip;
     }
     else if (type == 3)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 3;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597ec0;
+        INTRO_DATA.oam[slot].pOam = sOam_597ec0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHorizontalParticle;
     }
     else if (type == 4)
@@ -2083,7 +2084,7 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1);
         INTRO_DATA.oam[slot].unk_18_1 = 3;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f50;
+        INTRO_DATA.oam[slot].pOam = sOam_597f50;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusDrifting;
     }
     else if (type == 30)
@@ -2092,53 +2093,53 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
         INTRO_DATA.oam[slot].spawnY = yPosition;
         INTRO_DATA.oam[slot].scaling = Q_8_8(1);
         INTRO_DATA.oam[slot].unk_18_1 = 1;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f88;
+        INTRO_DATA.oam[slot].pOam = sOam_597f88;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusDriftingIntoAsteroids;
     }
     else if (type == 31)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597f88;
+        INTRO_DATA.oam[slot].pOam = sOam_597f88;
         INTRO_DATA.oam[slot].pFunction = unk_89488;
     }
     else if (type == 32)
     {
         INTRO_DATA.oam[slot].unk_4 = -40;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fe0;
+        INTRO_DATA.oam[slot].pOam = sOam_597fe0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 33)
     {
         INTRO_DATA.oam[slot].unk_4 = -30;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fd0;
+        INTRO_DATA.oam[slot].pOam = sOam_597fd0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 34)
     {
         INTRO_DATA.oam[slot].unk_4 = -20;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fc0;
+        INTRO_DATA.oam[slot].pOam = sOam_597fc0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 35)
     {
         INTRO_DATA.oam[slot].unk_4 = -10;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597fb0;
+        INTRO_DATA.oam[slot].pOam = sOam_597fb0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSidewaysBslShip;
     }
     else if (type == 36)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08597ec0;
+        INTRO_DATA.oam[slot].pOam = sOam_597ec0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessDepthParticle;
     }
     else if (type == 200)
     {
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08613180;
+        INTRO_DATA.oam[slot].pOam = sOam_613180;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
     }
     else if (type == 201)
     {
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)0x08613180;
+        INTRO_DATA.oam[slot].pOam = sOam_613180;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessOam_Empty;
     }
     
@@ -2228,7 +2229,7 @@ void NewFileIntroSr388PreviewInit(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
     
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     
     PlayMusic(MUSIC_SECTOR_1, 13);
     
@@ -2292,7 +2293,7 @@ boolu32 NewFileIntroSr388PreviewProcess(void)
                     gWrittenToBldalpha_Eva++;
             }
 
-            if (*INTRO_DATA.pText == 0xFC00 && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
+            if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
                 INTRO_DATA.unk_218 = 1;
 
             if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
@@ -2630,7 +2631,7 @@ void NewFileIntroProcessSr388Rocks(struct SpecialCutsceneOam* pOam)
     }
 
     if (pOam->yPosition <= 160)
-        pOam->pOam = (struct FrameData*)sOam_59a0f0;
+        pOam->pOam = sOam_59a0f0;
 }
 
  /**
@@ -2670,25 +2671,25 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
     else if (type == 3)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0a0;
+        INTRO_DATA.oam[slot].pOam = sOam_59a0a0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
     }
     else if (type == 4)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0b0;
+        INTRO_DATA.oam[slot].pOam = sOam_59a0b0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
     }
     else if (type == 5)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0c0;
+        INTRO_DATA.oam[slot].pOam = sOam_59a0c0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
     }
     else if (type == 6)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0d0;
+        INTRO_DATA.oam[slot].pOam = sOam_59a0d0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388PreviewAsteroid;
     }
     else if (type == 7)
@@ -2699,25 +2700,25 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
     else if (type == 8)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 3;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a100;
+        INTRO_DATA.oam[slot].pOam = sOam_59a100;
         INTRO_DATA.oam[slot].pFunction = unk_8a204;
     }
     else if (type == 9)
     {
         INTRO_DATA.oam[slot].unk_18_3 = 1;
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a0e0;
+        INTRO_DATA.oam[slot].pOam = sOam_59a0e0;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSunReflection;
     }
     else if (type == 10)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 1;
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_59a168;
+        INTRO_DATA.oam[slot].pOam = sOam_59a168;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSr388Rocks;
     }
     else if (type == 50)
     {
-        INTRO_DATA.oam[slot].pOam = (struct FrameData*)sOam_613180;
+        INTRO_DATA.oam[slot].pOam = sOam_613180;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
     }
     
@@ -2797,8 +2798,8 @@ void NewFileIntroInSr388Init(void)
     gBg2XPosition = 136;
     gBg2YPosition = 0;
     gBg3XPosition = 0;
-    gBg1XPosition = gBg3XPosition + 392; // Seems redundant but needed for match
-    gBg1YPosition = gBg2YPosition - 96;  // ^Same
+    gBg1XPosition = gBg3XPosition + 392;
+    gBg1YPosition = gBg2YPosition - 96;
 
     gUnk_3001234 = 560;
     gUnk_3001236 = -40;
@@ -2820,7 +2821,7 @@ void NewFileIntroInSr388Init(void)
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
     
-    INTRO_DATA.pText = (u16*)sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
     
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
 

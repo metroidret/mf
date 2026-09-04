@@ -7,6 +7,21 @@ extern const struct FrameData sOam_597ec0[2];
 extern const struct FrameData sOam_597ed0[2];
 extern const struct FrameData sOam_597ee0[2];
 extern const struct FrameData sOam_597ef0[2];
+extern const struct FrameData sOam_597f00[2];
+extern const struct FrameData sOam_597f10[2];
+extern const struct FrameData sOam_597f20[2];
+extern const struct FrameData sOam_597f30[2];
+extern const struct FrameData sOam_597f40[2];
+extern const struct FrameData sOam_597f50[7];
+extern const struct FrameData sOam_597f88[5];
+extern const struct FrameData sOam_597fb0[2];
+extern const struct FrameData sOam_597fc0[2];
+extern const struct FrameData sOam_597fd0[2];
+extern const struct FrameData sOam_597fe0[2];
+extern const struct FrameData sOam_597ff0[2];
+extern const struct FrameData sOam_598000[12];
+extern const struct FrameData sOam_598060[5];
+extern const struct FrameData sOam_598088[5];
 
 extern const u16 sIntroSamusShipPal[16 * 5];
 extern const u16 sPal_598150[16 * 2];
@@ -35,10 +50,8 @@ extern const struct FrameData sOam_59a0f0[2];
 extern const struct FrameData sOam_59a100[13];
 extern const struct FrameData sOam_59a168[2];
 extern const struct FrameData sOam_59a178[8];
-extern const struct FrameData sOam_59a1a8[2];
 
 extern const u32 sIntroSr388SpaceAndSurfaceObjGfx[3538];
-
 extern const u16 sIntroSr388SpaceAndSurfaceObjPal[16 * 16];
 
 extern const u32 sIntroHornoadEncounterObjGfx[4252];

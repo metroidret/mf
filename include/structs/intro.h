@@ -8,7 +8,7 @@
 #define INTRO_DATA gNonGameplayRam.intro
 
 struct IntroData {
-    u16* pText;
+    const u16* pText;
     u8 unk_1[4];
     u16 stage;
     u16 unk_A;
