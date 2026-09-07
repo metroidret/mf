@@ -80,13 +80,13 @@ void RoomLoad(void)
     
     if (gPauseScreenFlag == PAUSE_SCREEN_NONE && !gIsLoadingFile)
     {
-        ProcessGeneralScrolling();
+        ScrollProcessGeneral();
         
         gBg1YPosition = gCamera.yPosition;
         gBg1XPosition = gCamera.xPosition;
         
-        unk_6a7b4();
-        ProcessGeneralScrolling();
+        ScrollSetInitialBg3Position();
+        ScrollProcessGeneral();
         
         if (gCurrentRoomEntry.bg0Prop == BG_PROP_SA_X_ROOM)
             gBg0XPosition = BLOCK_TO_SUB_PIXEL(8);
@@ -421,7 +421,7 @@ void RoomReset(void)
     gDoorPositionStart.y = pDoor->yStart;
     
     gSaXSpawnPosition = sRawCoordsX_Empty;
-    gUnk_3004e4c = sUnk_3c88e4;
+    gWaterMovement = sWaterMovement_Empty;
     gUnk_3004e30 = sUnk_3c88dc;
 
     EventCheckRoomHasEventTrigger(gCurrentRoom + 1);
@@ -462,8 +462,8 @@ void RoomReset(void)
     gCamera.yPosition = 0;
     gCamera.xVelocity = 0;
     gCamera.yVelocity = 0;
-    gCamera.unk_8 = 0;
-    gCamera.unk_9 = 0;
+    gCamera.frontWideDirection = FRONT_WIDE_NONE;
+    gCamera.ladderFrontWideDirection = FRONT_WIDE_NONE;
 
     xOffset = pDoor->xStart;
     yOffset = pDoor->yEnd + 1;
@@ -517,22 +517,22 @@ void RoomReset(void)
  */
 void RoomLoadScrollsAndEventBasedEffects(void)
 {
-    LoadScrolls();
+    ScrollLoad();
 
     if (gPauseScreenFlag != PAUSE_SCREEN_NONE)
         return;
 
-    gUnk_3004e10.unk_0 = 0x80;
-    gUnk_3004e10.unk_2 = 0x80;
-    gUnk_3004e10.unk_6 = 0x80;
-    gUnk_3004e10.unk_4 = 0x80;
+    gScreenBlockPadding.right = SCREEN_X_BLOCK_PADDING;
+    gScreenBlockPadding.left = SCREEN_X_BLOCK_PADDING;
+    gScreenBlockPadding.bottom = SCREEN_Y_BLOCK_PADDING;
+    gScreenBlockPadding.top = SCREEN_Y_BLOCK_PADDING;
 
     if (gCurrentArea >= AREA_NORMAL_COUNT)
     {
-        gUnk_3004e10.unk_0 = 0;
-        gUnk_3004e10.unk_2 = 0;
-        gUnk_3004e10.unk_6 = 0x80;
-        gUnk_3004e10.unk_4 = 0x80;
+        gScreenBlockPadding.right = BLOCK_TO_SUB_PIXEL(0);
+        gScreenBlockPadding.left = BLOCK_TO_SUB_PIXEL(0);
+        gScreenBlockPadding.bottom = SCREEN_Y_BLOCK_PADDING;
+        gScreenBlockPadding.top = SCREEN_Y_BLOCK_PADDING;
     }
 
     gBg3Movement = sBg3Movement_Empty;
@@ -549,20 +549,20 @@ void RoomLoadScrollsAndEventBasedEffects(void)
             break;
     }
 
-    gUnk_3004e20 = sUnk_3c88cc;
+    gBg0Movement = sBg0Movement_Empty;
 
     if (gCurrentRoomEntry.bg0Prop == BG_PROP_FOG)
     {
-        gUnk_3004e20.unk_0 = 3;
+        gBg0Movement.type = BG0_MOVEMENT_FOG;
     }
     else
     {
         if (gCurrentRoomEntry.visualEffect == EFFECT_WATER)
-            gUnk_3004e20.unk_0 = 1;
+            gBg0Movement.type = BG0_MOVEMENT_WATER;
         else if (gCurrentRoomEntry.visualEffect == EFFECT_SNOWFLAKES_COLD_KNOCKBACK)
-            gUnk_3004e20.unk_0 = 4;
+            gBg0Movement.type = BG0_MOVEMENT_SNOWFLAKES;
         else if (gCurrentRoomEntry.visualEffect == EFFECT_SNOWFLAKES_COLD)
-            gUnk_3004e20.unk_0 = 4;
+            gBg0Movement.type = BG0_MOVEMENT_SNOWFLAKES;
     }
 
     gQueuedEventBasedEffect = 0;
@@ -1404,13 +1404,13 @@ void RoomUpdateBackgroundPositions(void)
 
     if (gUnk_3000050 & 0x100)
     {
-        gBackgroundPositions.bg[0].x = ((gBg0XPosition / 4) + gUnk_3004e20.unk_4) & 0x1FF;
-        gBackgroundPositions.bg[0].y = ((gBg0YPosition / 4) + gUnk_3004e20.unk_6) & 0x1FF;
+        gBackgroundPositions.bg[0].x = ((gBg0XPosition / 4) + gBg0Movement.xOffset) & 0x1FF;
+        gBackgroundPositions.bg[0].y = ((gBg0YPosition / 4) + gBg0Movement.yOffset) & 0x1FF;
     }
     else
     {
-        gBackgroundPositions.bg[0].x = (((gBg0XPosition / 4) + gUnk_3004e20.unk_4) & 0x1FF) + xOffset;
-        gBackgroundPositions.bg[0].y = (((gBg0YPosition / 4) + gUnk_3004e20.unk_6) & 0x1FF) + yOffset;
+        gBackgroundPositions.bg[0].x = (((gBg0XPosition / 4) + gBg0Movement.xOffset) & 0x1FF) + xOffset;
+        gBackgroundPositions.bg[0].y = (((gBg0YPosition / 4) + gBg0Movement.yOffset) & 0x1FF) + yOffset;
     }
 
     bg3X = ((gBg3XPosition / 4) + gBg3Movement.xOffset) & 0x1FF;

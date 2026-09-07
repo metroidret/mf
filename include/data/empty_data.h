@@ -21,12 +21,12 @@ extern const struct PowerBomb sPowerBomb_Empty;
 
 extern const struct ScreenShake sScreenShake_Empty;
 
-extern const struct Unk_3004e20 sUnk_3c88cc;
+extern const struct Bg0Movement sBg0Movement_Empty;
 
 extern const struct Bg3Movement sBg3Movement_Empty;
 
 extern const struct Unk_3004e30 sUnk_3c88dc;
 
-extern const struct Unk_3004e4c sUnk_3c88e4;
+extern const struct WaterMovement sWaterMovement_Empty;
 
 #endif /* EMPTY_DATA_H */

@@ -130,12 +130,12 @@ u32 InGameHandler(void)
 
         if (!gDisableDrawingSamusAndScrollingFlag)
         {
-            ProcessGeneralScrolling();
+            ScrollProcessGeneral();
             SamusCallUpdateGraphics();
         }
         else if (gDisableScrolling == 0x2)
         {
-            ProcessGeneralScrolling();
+            ScrollProcessGeneral();
         }
 
         ProjectileUpdate();

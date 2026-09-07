@@ -181,6 +181,30 @@
 #define SCREEN_SIZE_X_BLOCKS (SUB_PIXEL_TO_BLOCK(SCREEN_SIZE_X_SUB_PIXEL))
 #define SCREEN_SIZE_Y_BLOCKS (SUB_PIXEL_TO_BLOCK(SCREEN_SIZE_Y_SUB_PIXEL))
 
+/**
+ * @brief How many blocks of padding there is on each X edge of a room
+ * 
+ */
+#define SCREEN_X_PADDING 2
+
+/**
+ * @brief How many blocks of padding there is on each X edge of a room, in sub-pixel
+ * 
+ */
+#define SCREEN_X_BLOCK_PADDING (BLOCK_TO_SUB_PIXEL(SCREEN_X_PADDING))
+
+/**
+ * @brief How many blocks of padding there is on each Y edge of a room
+ * 
+ */
+#define SCREEN_Y_PADDING 2
+
+/**
+ * @brief How many blocks of padding there is on each Y edge of a room, in sub-pixel
+ * 
+ */
+#define SCREEN_Y_BLOCK_PADDING (BLOCK_TO_SUB_PIXEL(SCREEN_Y_PADDING))
+
 #define INCTEXT(x)  {0}
 #define SHIFT_JIS(x) {0}
 

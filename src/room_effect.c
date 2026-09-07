@@ -23,7 +23,7 @@
 #include "structs/display.h"
 #include "structs/escape.h"
 #include "structs/event.h"
-#include "structs/menus/pause_debug.h"
+#include "structs/menus/boot_debug.h"
 #include "structs/power_bomb.h"
 #include "structs/room.h"
 #include "structs/samus.h"
@@ -368,15 +368,15 @@ void RoomEffectSetTransparency(void)
 
     if (gDebugFlag)
     {
-        if (gPauseDebugOptions.bld.whole.alpha != 0)
+        if (gBootDebugOptions.bld.whole.alpha != 0)
         {
-            gIoRegisters.bldalpha_eva = gPauseDebugOptions.bld.split.alpha_eva;
-            gIoRegisters.bldalpha_evb = gPauseDebugOptions.bld.split.alpha_evb;
+            gIoRegisters.bldalpha_eva = gBootDebugOptions.bld.split.alpha_eva;
+            gIoRegisters.bldalpha_evb = gBootDebugOptions.bld.split.alpha_evb;
             WRITE_16(REG_BLDALPHA, C_16_2_8(gIoRegisters.bldalpha_evb, gIoRegisters.bldalpha_eva));
         }
 
-        if (gPauseDebugOptions.bld.whole.cnt != 0)
-            gIoRegisters.bldcnt = gPauseDebugOptions.bld.whole.cnt;
+        if (gBootDebugOptions.bld.whole.cnt != 0)
+            gIoRegisters.bldcnt = gBootDebugOptions.bld.whole.cnt;
     }
 }
 
@@ -1261,12 +1261,12 @@ void RoomEffectProcessEventBased(void)
             }
             else if (gEventBasedEffectInfo.stage == 1)
             {
-                if (++gUnk_3004e4c.unk_8 > 0x27F)
+                if (++gWaterMovement.unk_8 > 0x27F)
                 {
                     SoundStop(SOUND_11E);
                     gWaterLowered = 1;
                     gUnk_3004e3a = 1;
-                    gUnk_3004e4c.unk_8 = 0x280;
+                    gWaterMovement.unk_8 = 0x280;
                     action = 2;
                 }
 

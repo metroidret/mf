@@ -29,12 +29,21 @@ enum RoomEffect {
     EFFECT_HAZE_COUNT
 };
 
+enum Bg0MovementType {
+    BG0_MOVEMENT_NONE,
+    BG0_MOVEMENT_WATER,     // 8 frames, X++
+    BG0_MOVEMENT_2,         // 4 frames, X++
+    BG0_MOVEMENT_FOG,       // 8 frames, Y++
+    BG0_MOVEMENT_SNOWFLAKES // 8 frames, Y--
+};
+
 enum BgProperty {
     BG_PROP_NONE,
 
     BG_PROP_RLE_COMPRESSED = 1 << 4,
     BG_PROP_LZ77_COMPRESSED = 1 << 6,
 
+    BG_PROP_11 = BG_PROP_RLE_COMPRESSED | 1,
     BG_PROP_DISABLE_TRANSPARENCY = BG_PROP_RLE_COMPRESSED | 2,
     BG_PROP_13 = BG_PROP_RLE_COMPRESSED | 3, // Main elevator room?
     BG_PROP_14 = BG_PROP_RLE_COMPRESSED | 4,

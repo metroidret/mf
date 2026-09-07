@@ -3840,7 +3840,7 @@ _0808052C: .4byte gIsLoadingFile
 Sram_ResetForDemo: @ 0x08080530
 	push {r4, r5, lr}
 	sub sp, #4
-	ldr r1, _080805F0 @ =gPauseDebugOptions
+	ldr r1, _080805F0 @ =gBootDebugOptions
 	ldr r0, _080805F4 @ =0x085822E4
 	ldm r0!, {r2, r3, r4}
 	stm r1!, {r2, r3, r4}
@@ -3933,7 +3933,7 @@ _08080584:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080805F0: .4byte gPauseDebugOptions
+_080805F0: .4byte gBootDebugOptions
 _080805F4: .4byte 0x085822E4
 _080805F8: .4byte gButtonAssignments
 _080805FC: .4byte 0x085822C8
@@ -3972,7 +3972,7 @@ Sram_CheckLoadSaveFile: @ 0x08080664
 	ldr r0, [r0]
 	str r0, [r2]
 	str r1, [r2, #4]
-	ldr r1, _080806C4 @ =gPauseDebugOptions
+	ldr r1, _080806C4 @ =gBootDebugOptions
 	ldr r0, _080806C8 @ =0x085822E4
 	ldm r0!, {r2, r3, r4}
 	stm r1!, {r2, r3, r4}
@@ -4011,7 +4011,7 @@ Sram_CheckLoadSaveFile: @ 0x08080664
 	.align 2, 0
 _080806BC: .4byte gButtonAssignments
 _080806C0: .4byte 0x085822C8
-_080806C4: .4byte gPauseDebugOptions
+_080806C4: .4byte gBootDebugOptions
 _080806C8: .4byte 0x085822E4
 _080806CC: .4byte gIsLoadingFile
 _080806D0: .4byte 0x03000B94

@@ -41,6 +41,15 @@ struct RoomEntry {
 
 extern struct RoomEntry gCurrentRoomEntry;
 
+struct ScreenBlockPadding {
+    u16 right;
+    u16 left;
+    u16 top;
+    u16 bottom;
+};
+
+extern struct ScreenBlockPadding gScreenBlockPadding;
+
 struct Bg3Movement {
     u8 direction;
     u8 timer;
@@ -49,6 +58,16 @@ struct Bg3Movement {
 };
 
 extern struct Bg3Movement gBg3Movement;
+
+struct Bg0Movement {
+    u8 type;
+    u8 counter;
+    u16 unused;
+    u16 xOffset;
+    u16 yOffset;
+};
+
+extern struct Bg0Movement gBg0Movement;
 
 struct HorizontalTilemap {
     u8 tileCount;
@@ -116,35 +135,28 @@ extern u16 gDecompBg3Map[2048];
 extern u8 gSpritesetEntryUsed;
 extern u8 gScrollCounter;
 
-struct Unk_3004e10 {
-    s16 unk_0;
-    s16 unk_2;
-    s16 unk_4;
-    s16 unk_6;
-};
-
-extern struct Unk_3004e10 gUnk_3004e10;
-
-struct Unk_3004e20 {
-    u8 unk_0;
-    u16 unk_2;
-    u16 unk_4;
-    u16 unk_6;
-};
-
-extern struct Unk_3004e20 gUnk_3004e20;
-
+// Used for Nightmare shadow and SR388
 struct Unk_3004e30 {
-    u32 unk_0[2];
+    u8 unk_0; // stage?
+    u8 unk_1;
+    u8 unk_2; // flag?
+    u8 unk_3; // count?
+    u8 unk_4; // direction? (index to movement table)
+    s8 unk_5; // Y speed offset?
+    u16 unk_6; // timer?
 };
 
 extern struct Unk_3004e30 gUnk_3004e30;
 
-struct Unk_3004e4c {
-    u8 unk_0[8]; // Padding
+struct WaterMovement {
+    u8 moving;
+    u8 unk_1;
+    u8 stage;
+    s16 yOffset;
+    u16 unk_6;
     s16 unk_8;
 };
 
-extern struct Unk_3004e4c gUnk_3004e4c;
+extern struct WaterMovement gWaterMovement;
 
 #endif /* ROOM_STRUCTS_H */

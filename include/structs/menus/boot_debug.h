@@ -1,10 +1,9 @@
-#ifndef PAUSE_DEBUG_STRUCTS_H
-#define PAUSE_DEBUG_STRUCTS_H
+#ifndef BOOT_DEBUG_STRUCTS_H
+#define BOOT_DEBUG_STRUCTS_H
 
 #include "types.h"
-#include "oam.h"
 
-struct PauseDebugOptions {
+struct BootDebugOptions {
     union {
         struct {
             u16 cnt;
@@ -25,6 +24,6 @@ struct PauseDebugOptions {
     u8 mapScanLRAndStereo;
 };
 
-extern struct PauseDebugOptions gPauseDebugOptions;
+extern struct BootDebugOptions gBootDebugOptions;
 
-#endif /* PAUSE_DEBUG_STRUCTS_H */
+#endif /* BOOT_DEBUG_STRUCTS_H */

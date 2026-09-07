@@ -21,27 +21,13 @@ enum ScrollSubData {
     SCROLL_SUB_DATA_EXTENDED_DIRECTION,
     SCROLL_SUB_DATA_EXTENDED_VALUE,
 
-    SCROLL_SUB_DATA_END
+    SCROLL_SUB_DATA_COUNT
 };
 
-#define SCROLL_DATA_SIZE(nbrScrolls) (2 + SCROLL_SUB_DATA_END * nbrScrolls)
-
-enum LockScreenType {
-    LOCK_SCREEN_TYPE_NONE,
-    LOCK_SCREEN_TYPE_POSITION,
-    LOCK_SCREEN_TYPE_MIDDLE
-};
+#define SCROLL_DATA_SIZE(nbrScrolls) (2 + SCROLL_SUB_DATA_COUNT * nbrScrolls)
 
 #define SCROLL_NOT_WITHIN_FLAG 0
 #define SCROLL_WITHIN_FLAG 2
-
-enum ScrollVelocityCap {
-    SCROLL_VELOCITY_CAP_SET_DEFAULT,
-    SCROLL_VELOCITY_CAP_SET_SLOW,
-    SCROLL_VELOCITY_CAP_SET_FAST,
-
-    SCROLL_VELOCITY_CAP_END
-};
 
 enum Bg3ScrollingType {
     BG3_SCROLLING_TYPE_NONE,
@@ -61,16 +47,24 @@ struct Scroll {
     u16 yEnd;
 };
 
+#define FRONT_WIDE_CAMERA_DISTANCE BLOCK_TO_SUB_PIXEL(2)
+
+enum FrontWideCameraDirection {
+    FRONT_WIDE_NONE = 0,
+    FRONT_WIDE_RIGHT = 1 << 0,
+    FRONT_WIDE_LEFT = 1 << 1
+};
+
 struct Camera {
     u16 xPosition;
-    u16 unk_2;
+    u16 prevXPosition;
     u16 yPosition;
     s8 xVelocity;
     s8 yVelocity;
-    u8 unk_8;
-    u8 unk_9;
-    u8 unk_a;
-    u16 unk_c;
+    s8 frontWideDirection;
+    s8 ladderFrontWideDirection;
+    s8 frontWideXVelocity;
+    u16 frontWideTargetXPosition;
 };
 
 struct LockScreen {
@@ -91,7 +85,7 @@ extern u8 gDisableScrolling;
 // TODO: Copied from mzm, delete any that aren't needed
 // extern u16 gSlowScrollingTimer;
 // extern u8 gSkipDoorTransition;
-// extern struct Scroll gCurrentScrolls[2];
+extern struct Scroll gCurrentScrolls[2];
 extern struct Camera gCamera;
 // extern struct LockScreen gLockScreen;
 // extern s8 gScreenYOffset;
@@ -99,6 +93,6 @@ extern struct Camera gCamera;
 
 // extern u8 gNoClipLockCamera;
 // extern struct CameraScrollVelocityCaps gScrollingVelocityCaps;
-// extern const u8* gCurrentRoomScrollDataPointer;
+extern const u8* gCurrentRoomScrollDataPointer;
 
 #endif /* SCROLL_STRUCT_H */

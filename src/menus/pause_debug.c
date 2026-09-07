@@ -11,9 +11,9 @@
 #include "constants/connection.h"
 #include "constants/samus.h"
 
-#include "structs/menus/pause_debug.h"
 #include "structs/connection.h"
 #include "structs/event.h"
+#include "structs/menus/boot_debug.h"
 #include "structs/samus.h"
 #include "structs/sprite.h"
 
@@ -223,7 +223,7 @@ u32 PauseDebugModifyValues(void)
 
                 // Sync security hatch level
                 gSecurityHatchLevel = gEquipment.securityHatchLevel;
-                gPauseDebugOptions.securityHatchLevel = gSecurityHatchLevel;
+                gBootDebugOptions.securityHatchLevel = gSecurityHatchLevel;
             }
             break;
 
@@ -238,7 +238,7 @@ u32 PauseDebugModifyValues(void)
             }
 
             // Sync downloaded maps
-            gPauseDebugOptions.downloadedMaps = gEquipment.downloadedMaps;
+            gBootDebugOptions.downloadedMaps = gEquipment.downloadedMaps;
             break;
 
         case PAUSE_DEBUG_SECTION_EVENT:
@@ -364,7 +364,7 @@ u32 PauseDebugModifyValues(void)
 
             // Sync security hatch level
             gSecurityHatchLevel = gEquipment.securityHatchLevel;
-            gPauseDebugOptions.securityHatchLevel = gEquipment.securityHatchLevel;
+            gBootDebugOptions.securityHatchLevel = gEquipment.securityHatchLevel;
 
             PauseDebugDrawEventText(gEventCounter);
 

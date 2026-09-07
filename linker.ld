@@ -83,6 +83,7 @@ SECTIONS {
         . = 0x000000e8; gWindow1Border = .;
         . = 0x000000f0; gScreenShakeY = .;
         . = 0x000000f4; gScreenShakeX = .;
+        . = 0x000000f8; gCurrentScrolls = .;
         . = 0x00000110; gCurrentPowerBomb = .;
         . = 0x00000124; gCamera = .;
         . = 0x00000138; gInGameTimer = .;
@@ -152,7 +153,7 @@ SECTIONS {
         . = 0x00000b8b; gIsLoadingFile = .;
         . = 0x00000b8d; gMostRecentSaveFile = .;
         . = 0x00000b8f; gUnk_3000b8f = .;
-        . = 0x00000bd0; gPauseDebugOptions = .;
+        . = 0x00000bd0; gBootDebugOptions = .;
         . = 0x00000bdc; gCurrentCutscene = .;
         . = 0x00000bde; gMainGameMode = .;
         . = 0x00000be0; gSubGameMode1 = .;
@@ -252,9 +253,9 @@ SECTIONS {
         . = 0x00004dec; gHatchData = .;
         . = 0x00004e04; gHatchDoorIds = .;
         . = 0x00004e0c; gDoorPositionStart = .;
-        . = 0x00004e10; gUnk_3004e10 = .;
+        . = 0x00004e10; gScreenBlockPadding = .;
         . = 0x00004e18; gBg3Movement = .;
-        . = 0x00004e20; gUnk_3004e20 = .;
+        . = 0x00004e20; gBg0Movement = .;
         . = 0x00004e28; gTilesetTransparentColor = .;
         . = 0x00004e30; gUnk_3004e30 = .;
         . = 0x00004e38; gSamusDoorPositionOffset = .;
@@ -266,7 +267,7 @@ SECTIONS {
         . = 0x00004e42; gUnk_3004e42 = .;
         . = 0x00004e44; gUnk_3004e44 = .;
         . = 0x00004e48; gUnk_3004e48 = .;
-        . = 0x00004e4c; gUnk_3004e4c = .;
+        . = 0x00004e4c; gWaterMovement = .;
         . = 0x00004e58; gColorFading = .;
         . = 0x00004e60; gBrokenBlocks = .;
         . = 0x00004ee0; gUnk_3004ee0 = .;
@@ -283,6 +284,7 @@ SECTIONS {
         . = 0x00005318; gClipdataCodePointer = .;
         . = 0x0000531c; gAnimatedGraphicsData = .;
         . = 0x000053dc; gTankAnimations = .;
+        . = 0x000053e8; gCurrentRoomScrollDataPointer = .;
 
         . = 0x00005408; *libgcc.a:dp-bit.o(.bss);
         . = 0x00005420; *libgcc.a:fp-bit.o(.bss);
@@ -454,8 +456,9 @@ SECTIONS {
         src/clipdata.o(.text);
         src/connection.o(.text);
         src/animated_graphics.o(.text);
+        src/scroll.o(.text);
 
-        asm/disasm_0x08069b04.o(.text);
+        asm/disasm_0x0806acbc.o(.text);
 
         src/sound_event.o(.text);
 
@@ -630,6 +633,7 @@ SECTIONS {
         src/data/empty_data.o(.rodata);
         src/data/connection_data.o(.rodata);
         src/data/animated_graphics_data.o(.rodata);
+        src/data/scroll_data.o(.rodata);
         src/data/demo_data.o(.rodata);
         src/data/hud_data.o(.rodata);
         src/data/particle_data.o(.rodata);
