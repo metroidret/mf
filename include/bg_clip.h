@@ -5,6 +5,8 @@
 
 // TODO: Add remaining functions
 
-void BgClipSetBg1BlockTilemapValue(u16 value, u16 yPosition, u16 xPosition);
+void BgClipSetBg1BlockValue(u16 value, u16 yPosition, u16 xPosition);
+void BgClipSetBg1BlockValueCommon(u16 value, u16 yPosition, u16 xPosition);
+void BgClipSetBg1TilemapValue(u16 value, u16 yPosition, u16 xPosition);
 
 #endif /* BG_CLIP_H */

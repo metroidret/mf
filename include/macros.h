@@ -11,6 +11,8 @@
 #define GET_OAM_DATA_SIZE(size) (((size) - 1) / OAM_PART_SIZE)
 
 #define OPPOSITE_DIRECTION(dir) ((dir) ^ (KEY_RIGHT | KEY_LEFT))
+
+#define CAST_TO_ARRAY(type, sizes, ptr) (*((type (*)sizes)((ptr))))
 #define ARRAY_SIZE(a) ((int)(sizeof((a)) / sizeof((a)[0])))
 #define OFFSET_OF(type, element) ((int)&(((type*)0)->element))
 #define CHECK_ALL_FLAGS(value, flags) (((value) & (flags)) == (flags))
@@ -169,6 +171,7 @@
 #define SUB_PIXEL_TO_PIXEL_(pixel) (DIV_SHIFT(pixel, SUB_PIXEL_RATIO))
 #define PIXEL_TO_SUB_PIXEL(pixel) ((s32)((pixel) * SUB_PIXEL_RATIO))
 #define SUB_PIXEL_TO_BLOCK(pixel) ((pixel) / BLOCK_SIZE)
+#define SUB_PIXEL_TO_BLOCK_(pixel) (DIV_SHIFT((pixel), BLOCK_SIZE))
 #define BLOCK_TO_SUB_PIXEL(block) ((s32)((block) * BLOCK_SIZE))
 #define BLOCK_TO_PIXEL(block) ((s32)((block) * PIXEL_PER_BLOCK))
 #define VELOCITY_TO_SUB_PIXEL(velocity) (DIV_SHIFT((velocity), 8))

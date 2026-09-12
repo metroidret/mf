@@ -56,6 +56,7 @@ SECTIONS {
         . = 0x0000002e; gLastDoorUsed = .;
         . = 0x0000002f; gLastDoorProperties = .;
         . = 0x00000030; gDisplayLocationName = .;
+        . = 0x00000033; gNumberOfNeverReformBlocks = .;
         . = 0x00000044; gEffectYPosition = .;
         . = 0x00000046; gDoorUnlockTimer = .;
         . = 0x00000047; gUnk_3000047 = .;
@@ -269,8 +270,9 @@ SECTIONS {
         . = 0x00004e48; gUnk_3004e48 = .;
         . = 0x00004e4c; gWaterMovement = .;
         . = 0x00004e58; gColorFading = .;
-        . = 0x00004e60; gBrokenBlocks = .;
-        . = 0x00004ee0; gUnk_3004ee0 = .;
+        . = 0x00004e60; gBrokenReformBlocks = .;
+        . = 0x00004ee0; gBrokenNonReformBlocks = .;
+        . = 0x00004f60; gBrokenBlockBg1Values = .;
         . = 0x00004fa0; gEventBasedEffectInfo = .;
         . = 0x00004fa8; gBombChains = .;
         . = 0x00004fb8; gActiveBombChainTypes = .;
@@ -457,8 +459,9 @@ SECTIONS {
         src/connection.o(.text);
         src/animated_graphics.o(.text);
         src/scroll.o(.text);
+        src/block.o(.text);
 
-        asm/disasm_0x0806acbc.o(.text);
+        asm/disasm_0x0806c008.o(.text);
 
         src/sound_event.o(.text);
 
@@ -634,6 +637,7 @@ SECTIONS {
         src/data/connection_data.o(.rodata);
         src/data/animated_graphics_data.o(.rodata);
         src/data/scroll_data.o(.rodata);
+        src/data/block_data.o(.rodata);
         src/data/demo_data.o(.rodata);
         src/data/hud_data.o(.rodata);
         src/data/particle_data.o(.rodata);
@@ -1071,6 +1075,7 @@ SECTIONS {
     .data : ALIGN(2) {
         src/room.o(.data);
         src/scroll.o(.data);
+        src/block.o(.data);
         src/sound_event.o(.data);
         src/particle.o(.data);
         src/projectile.o(.data);

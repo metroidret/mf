@@ -9,7 +9,4 @@ extern const s8 sBg3LeftToRightMovement[128];
 
 extern const u16 sNightmareShadowPositions[5][2];
 
-
-extern const s8 sEndingSamusPosingSineTable[128];
-
 #endif /* SCROLL_DATA_H */

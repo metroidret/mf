@@ -7,7 +7,7 @@
 #include "constants/audio.h"
 
 #include "data/ending_data.h"
-#include "data/scroll_data.h" // TODO: This is for sEndingSamusPosingSineTable, change this later
+#include "data/block_data.h" // TODO: This is for sEndingSamusPosingSineTable, change this later
 
 #include "structs/ending.h"
 #include "structs/samus.h"

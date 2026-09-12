@@ -112,7 +112,7 @@ s32 unk_689f0(void)
         else
             continue;
 
-        BgClipSetBg1BlockTilemapValue(clipdata, yPosition, xPosition);
+        BgClipSetBg1TilemapValue(clipdata, yPosition, xPosition);
     }
 
     gUnk_3004e48[1]++;
@@ -241,7 +241,7 @@ u32 ClipdataProcess(u16 yPosition, u16 xPosition)
     if (gCurrentClipdataAffectingAction != CAA_NONE)
     {
         // Apply CCAA if there's one
-        BlockApplyCcaa(collision.tileY, collision.tileX, type);
+        BlockApplyClipdataAction(collision.tileY, collision.tileX, type);
         gCurrentClipdataAffectingAction = CAA_NONE;
     }
 

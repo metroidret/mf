@@ -2,6 +2,7 @@
 
 #include "globals.h"
 #include "macros.h"
+#include "block.h"
 
 #include "data/clipdata_data.h"
 #include "data/clipdata_types_tilemap.h"
@@ -97,7 +98,7 @@ void RoomLoad(void)
     RoomSetInitialTilemap(0);
     RoomSetInitialTilemap(1);
     RoomSetInitialTilemap(2);
-    unk_6b890();
+    BlockRedrawBrokenBlocks();
     AnimatedGraphicsLoad();
     AnimatedGraphicsResetTanks();
     HazeSetBackgroundEffect();
@@ -314,7 +315,7 @@ void RoomLoadBackgrounds(void)
  */
 void RoomRemoveNeverReformBlocksAndCollectedTanks(void)
 {
-    RemoveNeverReformBlocks();
+    BlockRemoveNeverReformBlocks();
     RemoveCollectedTanks();
 }
 
@@ -426,11 +427,11 @@ void RoomReset(void)
 
     EventCheckRoomHasEventTrigger(gCurrentRoom + 1);
 
-    for (i = 0; i < ARRAY_SIZE(gBrokenBlocks); i++)
-        gBrokenBlocks[i] = sBrokenBlock_Empty;
+    for (i = 0; i < ARRAY_SIZE(gBrokenReformBlocks); i++)
+        gBrokenReformBlocks[i] = sBrokenBlock_Empty;
     
-    for (i = 0; i < ARRAY_SIZE(gUnk_3004ee0); i++)
-        gUnk_3004ee0[i] = sBrokenBlock_Empty;
+    for (i = 0; i < ARRAY_SIZE(gBrokenNonReformBlocks); i++)
+        gBrokenNonReformBlocks[i] = sBrokenBlock_Empty;
 
     for (i = 0; i < ARRAY_SIZE(gBombChains); i++)
         gBombChains[i] = sBombChain_Empty;
@@ -1356,9 +1357,9 @@ void RoomUpdate(void)
     if (gSubGameMode1 == 2)
     {
         CheckTouchingSpecialClipdata();
-        UpdateBrokenBlocks();
-        UpdateNonReformBlocksAnimation();
-        UpdateBombChains();
+        BlockUpdateBrokenBlocks();
+        BlockUpdateNonReformBlocksAnimation();
+        BlockUpdateBombChains();
         RoomEffectUpdateEventBased();
         UpdateHatches();
 

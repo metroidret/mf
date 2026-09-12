@@ -112,6 +112,13 @@ enum HatchState {
     HATCH_STATE_COUNT
 };
 
+/**
+ * @brief Represents the number of areas for arrays that store data related to each area
+ * (ex: never reform blocks, visited minimap tiles)
+ * 
+ */
+#define MAX_AMOUNT_OF_AREAS 8
+
 #define HATCH_VERTICAL_SIZE 4
 
 #endif /* CONNECTION_CONSTANTS_H */

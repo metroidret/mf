@@ -108,7 +108,7 @@ void PowerBombExplosion(void)
                 {
                     clipdata = GET_CLIP_BLOCK(horizontalAxis, yPositionTop);
                     if (clipdata != 0)
-                        BlockApplyCcaa(yPositionTop, horizontalAxis, clipdata);
+                        BlockApplyClipdataAction(yPositionTop, horizontalAxis, clipdata);
 
                     yPositionTop--;
                 }
@@ -119,7 +119,7 @@ void PowerBombExplosion(void)
                 {
                     clipdata = GET_CLIP_BLOCK(horizontalAxis, yPositionBottom);
                     if (clipdata != 0)
-                        BlockApplyCcaa(yPositionBottom, horizontalAxis, clipdata);
+                        BlockApplyClipdataAction(yPositionBottom, horizontalAxis, clipdata);
 
                     yPositionBottom++;
                 }
@@ -148,7 +148,7 @@ void PowerBombExplosion(void)
             {
                 clipdata = GET_CLIP_BLOCK(yPositionTop, verticalAxis);
                 if (clipdata != 0)
-                    BlockApplyCcaa(verticalAxis, yPositionTop, clipdata);
+                    BlockApplyClipdataAction(verticalAxis, yPositionTop, clipdata);
 
                 yPositionTop--;
             }
@@ -159,7 +159,7 @@ void PowerBombExplosion(void)
             {
                 clipdata = GET_CLIP_BLOCK(yPositionBottom, verticalAxis);
                 if (clipdata != 0)
-                    BlockApplyCcaa(verticalAxis, yPositionBottom, clipdata);
+                    BlockApplyClipdataAction(verticalAxis, yPositionBottom, clipdata);
 
                 yPositionBottom++;
             }

@@ -23,7 +23,7 @@
 #include "structs/sa_x.h"
 #include "structs/screen_shake.h"
 
-void SamusApplyScrewSpeedboosterDamageToEnvironment(u16, u16, u16);
+void BlockApplySpeedBoosterScrewAttackDamage(u16, u16, u16);
 
 /**
  * @brief 4D60 | 68 | Copies Samus data to the Samus data copy and resets Samus data
@@ -5604,22 +5604,22 @@ void SamusCheckScrewSpeedboosterAffectingEnvironment(void)
     yBottom = gSamusData.yPosition;
 
     // Destroy the top left and right blocks
-    SamusApplyScrewSpeedboosterDamageToEnvironment(xLeft, yTop, action);
-    SamusApplyScrewSpeedboosterDamageToEnvironment(xRight, yTop, action);
+    BlockApplySpeedBoosterScrewAttackDamage(xLeft, yTop, action);
+    BlockApplySpeedBoosterScrewAttackDamage(xRight, yTop, action);
 
     if (gSamusCollisionData.horizontalMovingDirection & KEY_RIGHT)
     {
         // Destroy bottom right block
-        SamusApplyScrewSpeedboosterDamageToEnvironment(xRight, yTop + BLOCK_SIZE, action);
+        BlockApplySpeedBoosterScrewAttackDamage(xRight, yTop + BLOCK_SIZE, action);
         // Destroy below bottom right block
-        SamusApplyScrewSpeedboosterDamageToEnvironment(xRight, yBottom, action);
+        BlockApplySpeedBoosterScrewAttackDamage(xRight, yBottom, action);
     }
     else
     {
         // Destroy bottom left block
-        SamusApplyScrewSpeedboosterDamageToEnvironment(xLeft, yTop + BLOCK_SIZE, action);
+        BlockApplySpeedBoosterScrewAttackDamage(xLeft, yTop + BLOCK_SIZE, action);
         // Destroy below bottom left block
-        SamusApplyScrewSpeedboosterDamageToEnvironment(xLeft, yBottom, action);
+        BlockApplySpeedBoosterScrewAttackDamage(xLeft, yBottom, action);
     }
 
     if (gSamusCollisionData.standingStatus == STANDING_GROUND)
@@ -5628,8 +5628,8 @@ void SamusCheckScrewSpeedboosterAffectingEnvironment(void)
         action = SDA_SPEED_BOOSTER_ON_GROUND;
     }
 
-    SamusApplyScrewSpeedboosterDamageToEnvironment(xLeft, yBottom, action);
-    SamusApplyScrewSpeedboosterDamageToEnvironment(xRight, yBottom, action);
+    BlockApplySpeedBoosterScrewAttackDamage(xLeft, yBottom, action);
+    BlockApplySpeedBoosterScrewAttackDamage(xRight, yBottom, action);
 }
 
 /**

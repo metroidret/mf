@@ -235,8 +235,6 @@ static s8 sNightmareShadowYVelocityOffsets[16] = {
 	-4, 0, 0, 0, -2, 0, 0, -2
 };
 
-static u8 sBlob_79bb50_79bbcc[] = INCBIN_U8("data/Blob_79bb50_79bbcc.bin");
-
 
 /**
  * @brief 69b04 | 64 | Processes the current scrolls

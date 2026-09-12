@@ -15,10 +15,13 @@ const struct BrokenBlock sBrokenBlock_Empty = {
 };
 
 const struct BombChain sBombChain_Empty = {
-    .unk_0 = 0,
-    .unk_1 = 0,
-    .unk_2 = 0,
-    .unk_3 = 0
+    .currentOffset = 0,
+    .srcXPosition = 0,
+    .srcYPosition = 0,
+    .type = 0,
+    .padding = 0,
+    .negativeActive = FALSE,
+    .positiveActive = FALSE
 };
 
 const struct HatchData sHatchData_Empty = {

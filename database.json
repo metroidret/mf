@@ -12873,10 +12873,10 @@
     "size": 1
   },
   {
-    "path": "Blob_3c92d0_3c94d0.bin",
-    "count": "0x200",
+    "path": "Blob_3c942c_3c94d0.bin",
+    "count": "0xA4",
     "addr": {
-      "us": "0x3C92D0"
+      "us": "0x3C942C"
     },
     "size": 1
   },
@@ -27481,10 +27481,10 @@
     "size": 1
   },
   {
-    "path": "Blob_79bb50_79bbcc.bin",
-    "count": "0x7C",
+    "path": "Blob_79bb64_79bbcc.bin",
+    "count": "0x68",
     "addr": {
-      "us": "0x79BB50"
+      "us": "0x79BB64"
     },
     "size": 1
   },
