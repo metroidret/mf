@@ -233,6 +233,22 @@ enum SamusDestructingAction {
     SDA_SPEED_BOOSTER_ON_GROUND
 };
 
+// --- Energy and ammo ---
+#define STARTING_ENERGY 99
+
+#ifndef REGION_JP
+#define MISSILE_INCREASE_AMOUNT 5
+#define ENERGY_INCREASE_AMOUNT 100
+#define POWER_BOMB_INCREASE_AMOUNT 2
+
+// Default 255
+#define MAX_MISSILE_AMOUNT (MISSILE_INCREASE_AMOUNT * 51)
+// Default 2099
+#define MAX_ENERGY_AMOUNT (ENERGY_INCREASE_AMOUNT * 20 + STARTING_ENERGY)
+// Default 254
+#define MAX_POWER_BOMB_AMOUNT (POWER_BOMB_INCREASE_AMOUNT * 127)
+#endif // REGION_JP
+
 // --- Flags ---
 
 #define SMF_NONE 0

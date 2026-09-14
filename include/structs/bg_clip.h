@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#include "constants/connection.h"
+
 // Macros
 
 /**
@@ -51,8 +53,29 @@ struct BackgroundsData {
     u16 clipdataHeight;
 };
 
+struct LastTankCollected {
+    u16 behavior;
+    u8 xPosition;
+    u8 yPosition;
+};
+
 // Globals
 
+#define COLLECTED_TANKS_SIZE 256
+#define COLLECTED_TANKS_INFO_SIZE 4
+#define MAX_AMOUNT_OF_COLLECTED_TANKS_PER_AREA (COLLECTED_TANKS_SIZE / COLLECTED_TANKS_INFO_SIZE)
+
+#ifdef USE_EWRAM_SYMBOLS
+extern u8 gCollectedTanks[MAX_AMOUNT_OF_AREAS][COLLECTED_TANKS_SIZE];
+#else
+#define gCollectedTanks CAST_TO_ARRAY(u8, [MAX_AMOUNT_OF_AREAS][COLLECTED_TANKS_SIZE], EWRAM_BASE + 0x37200)
+#endif // USE_EWRAM_SYMBOLS
+
+extern bools8 gCollectingTank;
+extern u8 gNumberOfCollectedTanks[MAX_AMOUNT_OF_AREAS];
+
 extern struct BackgroundsData gBackgroundsData;
+
+extern struct LastTankCollected gLastTankCollected;
 
 #endif /* BG_CLIP_STRUCT_H */

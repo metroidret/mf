@@ -712,7 +712,7 @@ void RoomEffectStartHatchLockAnimation(u8 hatch, u8 arg1, u8 newState)
     gHatchData[hatch].state = state;
     gHatchData[hatch].currentAnimation = 4; // TODO: Enum
 
-    UpdateHatchAnimation(hatch);
+    BgClipUpdateHatchAnimation(hatch);
 
     gHatchData[hatch].state = newState;
     gHatchData[hatch].currentAnimation = 0; // TODO: Enum

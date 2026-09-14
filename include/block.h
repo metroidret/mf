@@ -22,7 +22,7 @@ void BlockUpdateBrokenBlocks(void);
 void BlockUpdateNonReformBlocksAnimation(void);
 void BlockRedrawBrokenBlocks(void);
 void BlockUpdateBrokenBlockAnimation(struct BrokenBlock* pBlock, u8 index);
-bools32 BlockStoreBrokenReformBlock(BlockType type, u16 xPosition, u16 yPosition, boolu8 advanceStage);
+bools32 BlockStoreBrokenReformBlock(BlockType type, u16 xPosition, u16 yPosition, boolu8 skipAdvanceStage);
 bools32 BlockStoreRevealedBlock(BlockType type, u16 xPosition, u16 yPosition);
 bools32 BlockCheckSamusInReformingBlock(u16 yPosition, u16 xPosition);
 bools32 BlockStartBombChain(BombChainType type, u16 xPosition, u16 yPosition);

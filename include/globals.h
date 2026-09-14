@@ -60,7 +60,6 @@ extern u8 gNotPressingUp;
 extern u16 gButtonInputCopy;
 extern u16 gChangedInput;
 extern u8 gDisableSoftReset;
-extern boolu8 gCollectingTankFlag;
 
 extern u16 gBg0XPosition;
 extern u16 gBg0YPosition;

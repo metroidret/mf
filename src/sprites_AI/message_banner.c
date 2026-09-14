@@ -247,7 +247,7 @@ void MessageBannerRemovalInit(void)
     {
         gPreventMovementTimer = 0;
         if (roomSlot == 18 || roomSlot == 19 || roomSlot == 20)
-            FinishCollectingTank();
+            BgClipFinishCollectingTank();
     }
 
     gCurrentSprite.pOam = sMessageBannerOam_Removal;

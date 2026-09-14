@@ -316,7 +316,7 @@ void RoomLoadBackgrounds(void)
 void RoomRemoveNeverReformBlocksAndCollectedTanks(void)
 {
     BlockRemoveNeverReformBlocks();
-    RemoveCollectedTanks();
+    BgClipRemoveCollectedTanks();
 }
 
 /**
@@ -400,7 +400,7 @@ void RoomReset(void)
         return;
 
     gDisableScrolling = FALSE;
-    gCollectingTankFlag = FALSE;
+    gCollectingTank = FALSE;
     gUnk_3000050 = 0;
     gDisablePauseFlag = FALSE;
     gBackdropColor = 0;
@@ -863,7 +863,7 @@ void RoomLoadDoors(void)
         {
             gHatchData[currHatch].state = 1;
             gHatchData[currHatch].currentAnimation = 4;
-            UpdateHatchAnimation(currHatch);
+            BgClipUpdateHatchAnimation(currHatch);
             gHatchData[currHatch].state = 3;
             gHatchData[currHatch].currentAnimation = 0;
         }
@@ -875,7 +875,7 @@ void RoomLoadDoors(void)
         {
             gHatchData[hatchSlot].state = 1;
             gHatchData[hatchSlot].currentAnimation = 4;
-            UpdateHatchAnimation(hatchSlot);
+            BgClipUpdateHatchAnimation(hatchSlot);
             gHatchData[hatchSlot].state = 2;
             gHatchData[hatchSlot].currentAnimation = 0;
         }
@@ -1356,12 +1356,12 @@ void RoomUpdate(void)
     
     if (gSubGameMode1 == 2)
     {
-        CheckTouchingSpecialClipdata();
+        BgClipCheckTouchingSpecialClipdata();
         BlockUpdateBrokenBlocks();
         BlockUpdateNonReformBlocksAnimation();
         BlockUpdateBombChains();
         RoomEffectUpdateEventBased();
-        UpdateHatches();
+        BgClipUpdateHatches();
 
         if (gRoomEventTrigger != 0)
             EventCheckRoomEventTrigger();

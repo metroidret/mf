@@ -46,7 +46,7 @@ SECTIONS {
         . = 0x00000022; gDisableMusicFlag = .;
         . = 0x00000024; gSkipDoorTransition = .;
         . = 0x00000025; gDisableSoftReset = .;
-        . = 0x00000026; gCollectingTankFlag = .;
+        . = 0x00000026; gCollectingTank = .;
         . = 0x00000027; gDisableAnimatedGraphicsTimer = .;
         . = 0x00000028; gAnimatedGraphicsToUpdate = .;
         . = 0x0000002a; gDisableDoorsAndTanks = .;
@@ -57,6 +57,7 @@ SECTIONS {
         . = 0x0000002f; gLastDoorProperties = .;
         . = 0x00000030; gDisplayLocationName = .;
         . = 0x00000033; gNumberOfNeverReformBlocks = .;
+        . = 0x0000003b; gNumberOfCollectedTanks = .;
         . = 0x00000044; gEffectYPosition = .;
         . = 0x00000046; gDoorUnlockTimer = .;
         . = 0x00000047; gUnk_3000047 = .;
@@ -274,6 +275,7 @@ SECTIONS {
         . = 0x00004ee0; gBrokenNonReformBlocks = .;
         . = 0x00004f60; gBrokenBlockBg1Values = .;
         . = 0x00004fa0; gEventBasedEffectInfo = .;
+        . = 0x00004fa4; gLastTankCollected = .;
         . = 0x00004fa8; gBombChains = .;
         . = 0x00004fb8; gActiveBombChainTypes = .;
         . = 0x00004fbc; gDefaultTransparency = .;
@@ -460,8 +462,9 @@ SECTIONS {
         src/animated_graphics.o(.text);
         src/scroll.o(.text);
         src/block.o(.text);
+        src/bg_clip.o(.text);
 
-        asm/disasm_0x0806c008.o(.text);
+        asm/disasm_0x0806cf0c.o(.text);
 
         src/sound_event.o(.text);
 

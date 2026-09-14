@@ -168,7 +168,7 @@ bools32 BlockCheckClipdataAction(struct ClipdataBlockData* pClipBlock)
         case BLOCK_LIFE_TYPE_TANK:
             if (sClipdataActionDamageTypes[gCurrentClipdataAffectingAction] & TANK_WEAKNESS)
             {
-                if (RevealHiddenTank(pClipBlock))
+                if (BgClipRevealHiddenTank(pClipBlock))
                     blockAffected = TRUE;
             }
             break;
@@ -492,7 +492,7 @@ bools32 BlockCheckRevealOrDestroyNonBombBlock(struct ClipdataBlockData* pClipBlo
         BlockStoreRevealedBlock(blockType, pClipBlock->xPosition, pClipBlock->yPosition))
     {
         BgClipSetBg1BlockValueCommon(sReformingBlocksTilemapValue[blockType], pClipBlock->yPosition, pClipBlock->xPosition);
-        SetClipdataBlockValue(sReformingBlocksTilemapValue[blockType], pClipBlock->yPosition, pClipBlock->xPosition);
+        BgClipSetClipdataBlockValue(sReformingBlocksTilemapValue[blockType], pClipBlock->yPosition, pClipBlock->xPosition);
     }
 
     return FALSE;
@@ -539,7 +539,7 @@ bools32 BlockApplyClipdataAction(u16 yPosition, u16 xPosition, u16 trueClip)
         case CAA_BOMB:
         case CAA_MISSILE:
         case CAA_POWER_BOMB:
-            if (CheckProjectileHitHatch(block.xPosition, block.yPosition) || BlockCheckClipdataAction(&block))
+            if (BgClipCheckProjectileHitHatch(block.xPosition, block.yPosition) || BlockCheckClipdataAction(&block))
                 blockAffected = TRUE;
             break;
         
@@ -571,19 +571,19 @@ bools32 BlockApplyClipdataAction(u16 yPosition, u16 xPosition, u16 trueClip)
         case CAA_REMOVE_SOLID:
             if (!BlockUpdateMakeSolidBlock(FALSE, xPosition, yPosition))
                 BgClipSetBg1BlockValue(0, yPosition, xPosition);
-            SetClipdataBlockValue(CLIPDATA_AIR, yPosition, xPosition);
+            BgClipSetClipdataBlockValue(CLIPDATA_AIR, yPosition, xPosition);
             break;
         
         case CAA_MAKE_SOLID:
             blockAffected = BlockUpdateMakeSolidBlock(TRUE, xPosition, yPosition);
             if (blockAffected)
-                SetClipdataBlockValue(CLIPDATA_TILEMAP_SOLID_SPRITE | CLIPDATA_TILEMAP_FLAG, yPosition, xPosition);
+                BgClipSetClipdataBlockValue(CLIPDATA_TILEMAP_SOLID_SPRITE | CLIPDATA_TILEMAP_FLAG, yPosition, xPosition);
             break;
         
         case CAA_MAKE_SOLID_STOP_ENEMY:
             blockAffected = BlockUpdateMakeSolidBlock(TRUE, xPosition, yPosition);
             if (blockAffected)
-                SetClipdataBlockValue(CLIPDATA_TILEMAP_STOP_ENEMY | CLIPDATA_TILEMAP_FLAG, yPosition, xPosition);
+                BgClipSetClipdataBlockValue(CLIPDATA_TILEMAP_STOP_ENEMY | CLIPDATA_TILEMAP_FLAG, yPosition, xPosition);
             break;
     }
 
@@ -765,7 +765,7 @@ void BlockUpdateBrokenBlocks(void)
             else
             {
                 pBlock->stage = BROKEN_BLOCK_STAGE_INTACT;
-                SetClipdataBlockValue(sReformingBlocksTilemapValue[pBlock->type], pBlock->yPosition, pBlock->xPosition);
+                BgClipSetClipdataBlockValue(sReformingBlocksTilemapValue[pBlock->type], pBlock->yPosition, pBlock->xPosition);
             }
         }
         else if (pBlock->stage == 7)
@@ -778,7 +778,7 @@ void BlockUpdateBrokenBlocks(void)
         else
         {
             if (pBlock->stage == 1)
-                ClearBg1BlockValue(pBlock->yPosition, pBlock->xPosition);
+                BgClipClearClipAndBg1BlockValue(pBlock->yPosition, pBlock->xPosition);
 
             updateStage = TRUE;
         }
@@ -940,10 +940,10 @@ void BlockUpdateBrokenBlockAnimation(struct BrokenBlock* pBlock, u8 index)
  * @param type Block type
  * @param xPosition X Position
  * @param yPosition Y Position
- * @param skipRedraw Skips redrawing the block
+ * @param skipStageAdvance Skips advancing the stage to 2 and drawing the block
  * @return s32 bool, could store
  */
-bools32 BlockStoreBrokenReformBlock(BlockType type, u16 xPosition, u16 yPosition, boolu8 skipRedraw)
+bools32 BlockStoreBrokenReformBlock(BlockType type, u16 xPosition, u16 yPosition, boolu8 skipStageAdvance)
 {
     s32 found;
     s32 i;
@@ -984,10 +984,10 @@ bools32 BlockStoreBrokenReformBlock(BlockType type, u16 xPosition, u16 yPosition
         gBrokenReformBlocks[i].stage = 1;
         gBrokenReformBlocks[i].type = type;
 
-        if (!skipRedraw)
+        if (!skipStageAdvance)
         {
             gBrokenReformBlocks[i].stage = 2;
-            ClearBg1BlockValue(yPosition, xPosition);
+            BgClipClearClipAndBg1BlockValue(yPosition, xPosition);
             BlockUpdateBrokenBlockAnimation(&gBrokenReformBlocks[i], i);
         }
     }
