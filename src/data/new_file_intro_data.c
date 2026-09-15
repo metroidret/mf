@@ -784,21 +784,21 @@ const struct FrameData sOam_598088[5] = {
     [4] = FRAME_DATA_TERMINATOR
 };
 
-const u16 sIntroSamusShipPal[16 * 5] = INCBIN_U16("data/new_file_intro/samus_ship.pal");
-const u16 sPal_598150[16 * 2] = INCBIN_U16("data/new_file_intro/598150.pal"); // Loaded to PALRAM but not used?
+const u16 sIntroSamusShipPal[5 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_ship.pal");
+const u16 sPal_598150[2 * PAL_ROW] = INCBIN_U16("data/new_file_intro/598150.pal"); // Loaded to PALRAM but not used?
 
 const u32 sIntroSamusHelmetCloseupTilemap[172] = INCBIN_U32("data/new_file_intro/samus_helmet_closeup.tm.lz");
 
 static const u8 sBlob_598440_598818[] = INCBIN_U8("data/Blob_598440_598818.bin");
 
-const u16 sIntroSamusHelmetCloseupPal[16 * 4] = INCBIN_U16("data/new_file_intro/samus_helmet_closeup.pal");
+const u16 sIntroSamusHelmetCloseupPal[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_helmet_closeup.pal");
 
 const u32 sIntroSamusShipFlyingTextTilemap[125] = INCBIN_U32("data/new_file_intro/samus_ship_flying_text.tm.lz");
 
-const u16 sPal_598a8c[16 * 1] = INCBIN_U16("data/new_file_intro/598a8c.pal");
-const u16 sIntroSamusCloseupGrayscalePal[16 * 4] = INCBIN_U16("data/new_file_intro/samus_helmet_closeup_grayscale.pal");
+const u16 sPal_598a8c[1 * PAL_ROW] = INCBIN_U16("data/new_file_intro/598a8c.pal");
+const u16 sIntroSamusCloseupGrayscalePal[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_helmet_closeup_grayscale.pal");
 
-const u16 sSr388SpaceAndSurfacePal[256] = INCBIN_U16("data/new_file_intro/sr388_space_and_surface.pal");
+const u16 sSr388SpaceAndSurfacePal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/sr388_space_and_surface.pal");
 
 const u32 sIntroSr388SurfaceTilemap[551] = INCBIN_U32("data/new_file_intro/sr388_surface.tm.lz");
 const u32 sIntroSr388SpaceBgTilemap[265] = INCBIN_U32("data/new_file_intro/sr388_space_bg.tm.lz");
@@ -1175,12 +1175,12 @@ const struct FrameData sOam_59a178[8] = {
 };
 
 const u32 sIntroSr388SpaceAndSurfaceObjGfx[3538] = INCBIN_U32("data/new_file_intro/sr388_space_and_surface_objects.gfx.lz");
-const u16 sIntroSr388SpaceAndSurfaceObjPal[16 * 16] = INCBIN_U16("data/new_file_intro/sr388_space_and_surface_objects.pal");
+const u16 sIntroSr388SpaceAndSurfaceObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/sr388_space_and_surface_objects.pal");
 
 const u8 sArray_59db00[8] = {20, 30, 40, 50, 40, 30, 0, 0};
 
 const u32 sIntroHornoadEncounterObjGfx[4252] = INCBIN_U32("data/new_file_intro/hornoad_encounter_obj.gfx.lz");
-const u16 sIntroHornoadEncounterObjPal[16 * 16] = INCBIN_U16("data/new_file_intro/hornoad_encounter_obj.pal");
+const u16 sIntroHornoadEncounterObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/hornoad_encounter_obj.pal");
 
 static const u16 sOamFrame_5a1f78[OAM_DATA_SIZE(5)] = {
 	5,
@@ -2063,7 +2063,7 @@ const struct FrameData sIntroInSr388HornoadOam_IdleUnused[2] = {
 };
 
 // 5a2b68
-const struct FrameData sHornoadInSr388Oam_JumpingUnused[5] = {
+const struct FrameData sIntroInSr388HornoadOam_JumpingUnused[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a1f98,
 		.timer = 4
@@ -2084,7 +2084,7 @@ const struct FrameData sHornoadInSr388Oam_JumpingUnused[5] = {
 };
 
 // 5a2b90
-const struct FrameData sHornoadInSr388Oam_BouncingUnused[3] = {
+const struct FrameData sIntroInSr388HornoadOam_BouncingUnused[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2018,
 		.timer = 3
@@ -2097,7 +2097,7 @@ const struct FrameData sHornoadInSr388Oam_BouncingUnused[3] = {
 };
 
 // 5a2ba8
-const struct FrameData sHornoadInSr388Oam_Shaking[5] = {
+const struct FrameData sIntroInSr388HornoadOam_Shaking[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2078,
 		.timer = 6
@@ -2118,7 +2118,7 @@ const struct FrameData sHornoadInSr388Oam_Shaking[5] = {
 };
 
 // 5a2bd0
-const struct FrameData sHornoadInSr388Oam_Panting[5] = {
+const struct FrameData sIntroInSr388HornoadOam_Panting[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a20b8,
 		.timer = 8
@@ -2139,7 +2139,7 @@ const struct FrameData sHornoadInSr388Oam_Panting[5] = {
 };
 
 // 5a2bf8
-const struct FrameData sHornoadInSr388Oam_Chomping[12] = {
+const struct FrameData sIntroInSr388HornoadOam_Chomping[12] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2272,
 		.timer = 4
@@ -2200,7 +2200,7 @@ const struct FrameData sOam_5a2c58[3] = {
 };
 
 // 5a2c70
-const struct FrameData sHornoadInSr388Oam_Biting[5] = {
+const struct FrameData sIntroInSr388HornoadOam_Biting[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a216c,
 		.timer = 10
@@ -2221,7 +2221,7 @@ const struct FrameData sHornoadInSr388Oam_Biting[5] = {
 };
 
 // 5a2c98
-const struct FrameData sHornoadInSr388Oam_Jumping[5] = {
+const struct FrameData sIntroInSr388HornoadOam_Jumping[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a21d2,
 		.timer = 4
@@ -2242,7 +2242,7 @@ const struct FrameData sHornoadInSr388Oam_Jumping[5] = {
 };
 
 // 5a2cc0
-const struct FrameData sHornoadInSr388Oam_Bouncing[3] = {
+const struct FrameData sIntroInSr388HornoadOam_Bouncing[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2252,
 		.timer = 3
@@ -2255,7 +2255,7 @@ const struct FrameData sHornoadInSr388Oam_Bouncing[3] = {
 };
 
 // 5a2cd8
-const struct FrameData sHornoadInSr388Oam_MidAir[3] = {
+const struct FrameData sIntroInSr388HornoadOam_MidAir[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2332,
 		.timer = 4
@@ -2317,7 +2317,7 @@ const struct FrameData sOam_5a2d38[3] = {
 };
 
 // 5a2d50
-const struct FrameData sBslResearcherInSr388Oam_Turning[3] = {
+const struct FrameData sIntroInSr388BslResearcherOam_Turning[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a26be,
 		.timer = 4
@@ -2330,7 +2330,7 @@ const struct FrameData sBslResearcherInSr388Oam_Turning[3] = {
 };
 
 // 5a2d68
-const struct FrameData sBslResearcherInSr388Oam_Idle[2] = {
+const struct FrameData sIntroInSr388BslResearcherOam_Idle[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5a26d8,
 		.timer = 4
@@ -2414,7 +2414,7 @@ const struct FrameData sIntroInSr388MissileTrailOam[6] = {
 };
 
 // 5a2e08
-const struct FrameData sIntroInSr388MissileOam_Exploding[6] = {
+const struct FrameData sIntroInSr388MissileExplodingOam_Small[6] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2a02,
 		.timer = 6
@@ -3748,7 +3748,7 @@ const struct FrameData sOam_5a4084[11] = {
 };
 
 // 5a40dc
-const struct FrameData sSamusInSr388Oam_IdleLeft[4] = {
+const struct FrameData sIntroInSr388SamusOam_IdleLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a30de,
             .timer = 16
@@ -3777,7 +3777,7 @@ const struct FrameData sOam_5a40fc[3] = {
 };
 
 // 5a4114
-const struct FrameData sSamusInSr388Oam_IdleRight[4] = {
+const struct FrameData sIntroInSr388SamusOam_IdleRight[4] = {
     [0] = {
             .pFrame = sOamFrame_5a31a6,
             .timer = 16
@@ -3806,7 +3806,7 @@ const struct FrameData sOam_5a4134[3] = {
 };
 
 // 5a414c
-const struct FrameData sSamusInSr388Oam_MissileArmedLeft[4] = {
+const struct FrameData sIntroInSr388SamusOam_MissileArmedLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a3256,
             .timer = 16
@@ -3823,7 +3823,7 @@ const struct FrameData sSamusInSr388Oam_MissileArmedLeft[4] = {
 };
 
 // 5a416c
-const struct FrameData sSamusInSr388Oam_FiringMissileLeft[3] = {
+const struct FrameData sIntroInSr388SamusOam_FiringMissileLeft[3] = {
     [0] = {
             .pFrame = sOamFrame_5a32fe,
             .timer = 4
@@ -3920,7 +3920,7 @@ const struct FrameData sOam_5a4214[3] = {
 };
 
 // 5a422c
-const struct FrameData sSamusInSr388Oam_MissileArmedUpLeft[4] = {
+const struct FrameData sIntroInSr388SamusOam_MissileArmedUpLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a3576,
             .timer = 16
@@ -3937,7 +3937,7 @@ const struct FrameData sSamusInSr388Oam_MissileArmedUpLeft[4] = {
 };
 
 // 5a424c
-const struct FrameData sSamusInSr388Oam_FiringMissileUpLeft[3] = {
+const struct FrameData sIntroInSr388SamusOam_FiringMissileUpLeft[3] = {
     [0] = {
             .pFrame = sOamFrame_5a360c,
             .timer = 4
@@ -3978,7 +3978,7 @@ const struct FrameData sOam_5a4284[3] = {
 };
 
 // 5a429c
-const struct FrameData sSamusInSr388Oam_TurningRight[4] = {
+const struct FrameData sIntroInSr388SamusOam_TurningRight[4] = {
     [0] = {
             .pFrame = sOamFrame_5a371e,
             .timer = 2
@@ -3995,7 +3995,7 @@ const struct FrameData sSamusInSr388Oam_TurningRight[4] = {
 };
 
 // 5a42bc
-const struct FrameData sSamusInSr388Oam_TurningLeft[4] = {
+const struct FrameData sIntroInSr388SamusOam_TurningLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a376a,
             .timer = 2
@@ -4217,7 +4217,7 @@ const struct FrameData sIntroInSr388SamusOam_WalkingLeft[11] = {
 };
 
 // 5a4474
-const struct FrameData sSamusInSr388Oam_WalkingRight[11] = {
+const struct FrameData sIntroInSr388SamusOam_WalkingRight[11] = {
     [0] = {
             .pFrame = sOamFrame_5a3e9e,
             .timer = 5
@@ -4266,7 +4266,7 @@ const u32 sIntroHornoadEncounterBgGfx[4027] = INCBIN_U32("data/new_file_intro/ho
 const u32 sTilemap_5a83b8[196] = INCBIN_U32("data/new_file_intro/5a83b8.tm.lz");
 const u32 sTilemap_5a86c8[479] = INCBIN_U32("data/new_file_intro/5a86c8.tm.lz");
 
-const u16 sPal_5a8e44[16 * 16] = INCBIN_U16("data/new_file_intro/5a8e44.pal");
+const u16 sPal_5a8e44[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5a8e44.pal");
 
 const u32 sTilemap_5a9044[135] = INCBIN_U32("data/new_file_intro/5a9044.tm.lz");
 
@@ -4276,7 +4276,7 @@ const u16 sPal_5a9440[15 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5a9440.pal
 static const u8 sBlob_5a9620_60093c[] = INCBIN_U8("data/Blob_5a9620_60093c.bin");
 
 const u32 sIntroSamusSittingGfx[4818] = INCBIN_U32("data/new_file_intro/samus_sitting.gfx.lz");
-const u16 sIntroSamusSittingPal[16 * 16] = INCBIN_U16("data/new_file_intro/samus_sitting.pal");
+const u16 sIntroSamusSittingPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_sitting.pal");
 const u32 sIntroSamusSittingTilemap[171] = INCBIN_U32("data/new_file_intro/samus_sitting.tm.lz");
 
 static const u8 sBlob_605930_605d08[] = INCBIN_U8("data/Blob_605930_605d08.bin");
@@ -4285,8 +4285,8 @@ const u32 sTitleScreenSpaceBackgroundGfx[830] = INCBIN_U32("data/menus/title_scr
 
 static const u8 sBlob_606a00_609020[] = INCBIN_U8("data/Blob_606a00_609020.bin");
 
-const u16 sPal_609020[16 * 8] = INCBIN_U16("data/new_file_intro/609020.pal");
-const u16 sTitleScreenSpaceBackgroundPal[16 * 8] = INCBIN_U16("data/menus/title_screen/space_background.pal");
+const u16 sPal_609020[8 * PAL_ROW] = INCBIN_U16("data/new_file_intro/609020.pal");
+const u16 sTitleScreenSpaceBackgroundPal[8 * PAL_ROW] = INCBIN_U16("data/menus/title_screen/space_background.pal");
 
 const u32 sTitleScreenSpaceBackgroundTilemap[172] = INCBIN_U32("data/menus/title_screen/space_background.tm.lz");
 
@@ -4301,8 +4301,8 @@ const u32 sIntroBslSpaceBgGfx[4421] = INCBIN_U32("data/new_file_intro/bsl_space_
 
 static const u8 sBlob_6101b8_612e48[] = INCBIN_U8("data/Blob_6101b8_612e48.bin");
 
-const u16 sIntroBslSpaceBgPal[16 * 8] = INCBIN_U16("data/new_file_intro/bsl_space_bg.pal");
-const u16 sPal_612f48[16 * 16] = INCBIN_U16("data/new_file_intro/612f48.pal");
+const u16 sIntroBslSpaceBgPal[8 * PAL_ROW] = INCBIN_U16("data/new_file_intro/bsl_space_bg.pal");
+const u16 sPal_612f48[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/612f48.pal");
 
 const u32 sNextPageArrowGfx[8] = INCBIN_U32("data/new_file_intro/next_page_arrow.gfx");
 
@@ -4342,7 +4342,7 @@ const struct FrameData sIntroNextPageArrowOam[5] = {
     [4] = FRAME_DATA_TERMINATOR
 };
 
-const u16 sNextPageArrowPal[16 * 1] = INCBIN_U16("data/new_file_intro/next_page_arrow.pal");
+const u16 sNextPageArrowPal[1 * PAL_ROW] = INCBIN_U16("data/new_file_intro/next_page_arrow.pal");
 
 static const u8 sBlob_6131c8_63a19c[] = INCBIN_U8("data/Blob_6131c8_63a19c.bin");
 

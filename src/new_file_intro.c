@@ -3091,7 +3091,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleLeft;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
                 pOam->stage = 1;
             }
         }
@@ -3102,7 +3102,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_TurningRight;
+                pOam->pOam = sIntroInSr388SamusOam_TurningRight;
                 pOam->stage = 2;
             }
         }
@@ -3114,7 +3114,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleRight;
+                pOam->pOam = sIntroInSr388SamusOam_IdleRight;
                 pOam->stage = 3;
                 INTRO_DATA.unk_20C = 0;
             }
@@ -3126,7 +3126,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_TurningLeft;
+                pOam->pOam = sIntroInSr388SamusOam_TurningLeft;
                 pOam->stage = 4;
             }
         }
@@ -3138,7 +3138,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleLeft;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
                 pOam->stage = 5;
             }
         }
@@ -3168,7 +3168,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_WalkingRight;
+                pOam->pOam = sIntroInSr388SamusOam_WalkingRight;
                 pOam->stage = 1;
                 pOam->xPosition++;
             }
@@ -3213,7 +3213,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleLeft;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
                 pOam->stage = 4;
             }
         }
@@ -3244,7 +3244,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleLeft;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
                 pOam->stage = 6;
             }
         }
@@ -3255,7 +3255,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_TurningRight;
+                pOam->pOam = sIntroInSr388SamusOam_TurningRight;
                 pOam->stage = 7;
             }
         }
@@ -3267,7 +3267,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleRight;
+                pOam->pOam = sIntroInSr388SamusOam_IdleRight;
                 pOam->stage = 8;
             }
         }
@@ -3278,7 +3278,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_TurningLeft;
+                pOam->pOam = sIntroInSr388SamusOam_TurningLeft;
                 pOam->stage = 9;
             }
         }
@@ -3290,7 +3290,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_IdleLeft;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
                 pOam->stage = 10;
             }
         }
@@ -3321,7 +3321,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                     pOam->timer = 0;
                     pOam->animationDurationCounter = 0;
                     pOam->currentAnimationFrame = 0;
-                    pOam->pOam = sSamusInSr388Oam_IdleLeft;
+                    pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
                     INTRO_DATA.subStage = 4;
                     pOam->stage = 0;
                 }
@@ -3342,7 +3342,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_MissileArmedLeft;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedLeft;
                 pOam->stage = 1;
             }
         }
@@ -3353,7 +3353,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_FiringMissileLeft;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileLeft;
                 
                 NewFileIntroInSr388SetupOam(6, pOam->xPosition - 20, pOam->yPosition - 22);
                 
@@ -3368,7 +3368,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_MissileArmedLeft;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedLeft;
                 pOam->stage = 3;
             }
         }
@@ -3388,7 +3388,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
             {
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_MissileArmedUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
                 return;
             }
             else if (pOam->timer == 10)
@@ -3396,7 +3396,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_FiringMissileUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
                 
                 NewFileIntroInSr388SetupOam(7, pOam->xPosition - 20, pOam->yPosition - 40);
                 
@@ -3411,7 +3411,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_MissileArmedUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
                 pOam->stage = 6;
             }
         }
@@ -3422,7 +3422,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_FiringMissileUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
                 
                 NewFileIntroInSr388SetupOam(14, pOam->xPosition - 20, pOam->yPosition - 40);
                 
@@ -3437,7 +3437,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_MissileArmedUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
                 pOam->stage = 8;
             }   
         }
@@ -3448,7 +3448,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_FiringMissileUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
                 
                 NewFileIntroInSr388SetupOam(14, pOam->xPosition - 20, pOam->yPosition - 40);
                 
@@ -3463,7 +3463,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sSamusInSr388Oam_MissileArmedUpLeft;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
                 pOam->stage = 10;
             }
         }
@@ -3530,7 +3530,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Turning;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Turning;
                 pOam->stage = 18;
             }
         }
@@ -3542,7 +3542,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Idle;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
                 pOam->stage = 19;
             }
         }
@@ -3568,7 +3568,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Idle;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
                 pOam->stage = 21;
             }
             else
@@ -3598,7 +3598,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Idle;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
                 pOam->stage = 23;
             }
         }
@@ -3671,7 +3671,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Turning;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Turning;
                 pOam->stage = 18;
             }
         }
@@ -3683,7 +3683,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Idle;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
                 pOam->stage = 19;
             }
         }
@@ -3709,7 +3709,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Idle;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
                 pOam->stage = 21;
             }
             else
@@ -3739,7 +3739,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sBslResearcherInSr388Oam_Idle;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
                 pOam->stage = 23;
             }
         }
@@ -3785,7 +3785,7 @@ void unk_8b660(struct SpecialCutsceneOam* pOam)
     }
     else if (pOam->stage == 1)
     {
-        pOam->pOam = sHornoadInSr388Oam_JumpingUnused;
+        pOam->pOam = sIntroInSr388HornoadOam_JumpingUnused;
 
         if (pOam->unk_8 == 0)
         {
@@ -3806,7 +3806,7 @@ void unk_8b660(struct SpecialCutsceneOam* pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_BouncingUnused;
+            pOam->pOam = sIntroInSr388HornoadOam_BouncingUnused;
             pOam->stage = 2;
         }
 
@@ -3886,7 +3886,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_Chomping;
+            pOam->pOam = sIntroInSr388HornoadOam_Chomping;
             pOam->stage = 1;
         }
     }
@@ -3900,7 +3900,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_Chomping;
+            pOam->pOam = sIntroInSr388HornoadOam_Chomping;
             pOam->stage = 2;
         }
     }
@@ -3915,13 +3915,13 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_Biting;
+            pOam->pOam = sIntroInSr388HornoadOam_Biting;
             pOam->stage = 3;
         }
     }
     else if (pOam->stage == 3)
     {
-        pOam->pOam = sHornoadInSr388Oam_Jumping;
+        pOam->pOam = sIntroInSr388HornoadOam_Jumping;
 
         var0 = pOam->timer * sHornoadJumpVelocityHigh[pOam->unk_4] >> 2;
         var2 = var0 + (u16)pOam->spawnY;
@@ -3937,7 +3937,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             {
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sHornoadInSr388Oam_MidAir;
+                pOam->pOam = sIntroInSr388HornoadOam_MidAir;
             }
             else if (pOam->unk_4 > 10)
             {
@@ -3952,7 +3952,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_Bouncing;
+            pOam->pOam = sIntroInSr388HornoadOam_Bouncing;
             pOam->unk_4 = 0;
             pOam->stage = 4;
         }
@@ -3965,7 +3965,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_Panting;
+            pOam->pOam = sIntroInSr388HornoadOam_Panting;
             pOam->stage = 5;
         }
     }
@@ -3978,13 +3978,13 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sHornoadInSr388Oam_Biting;
+            pOam->pOam = sIntroInSr388HornoadOam_Biting;
             pOam->stage = 6;
         }
     }
     else if (pOam->stage == 6)
     {
-        pOam->pOam = sHornoadInSr388Oam_Jumping;
+        pOam->pOam = sIntroInSr388HornoadOam_Jumping;
 
         var0 = pOam->timer * sHornoadJumpVelocityHigh[pOam->unk_4] >> 1;
         do { pOam->spawnY += 0; } while (0);
@@ -4015,7 +4015,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sHornoadInSr388Oam_MidAir;
+                pOam->pOam = sIntroInSr388HornoadOam_MidAir;
             }
             else if (pOam->unk_4 > 10)
             {
@@ -4034,7 +4034,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
                 pOam->currentAnimationFrame = 0;
-                pOam->pOam = sHornoadInSr388Oam_Shaking;
+                pOam->pOam = sIntroInSr388HornoadOam_Shaking;
                 pOam->unk_4 = 1;
                 WRITE_16(REG_MOSAIC, sXParasiteMosaicValues[1] * 16);
                 pOam->unk_18_5 = 1;
@@ -4210,7 +4210,7 @@ void NewFileIntroProcessHorizontalMissile(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sIntroInSr388MissileOam_Exploding;
+            pOam->pOam = sIntroInSr388MissileExplodingOam_Small;
             pOam->stage = 1;
         }
     }
@@ -4398,7 +4398,7 @@ void NewFileIntroProcessSecondDiagonalMissile(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sIntroInSr388MissileOam_Exploding;
+            pOam->pOam = sIntroInSr388MissileExplodingOam_Small;
             pOam->stage = 1;
         }
     }
@@ -4507,7 +4507,7 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1);
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
-        INTRO_DATA.oam[slot].pOam = sHornoadInSr388Oam_Panting;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_Panting;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHornoad;
     }
     else if (type == 10)
