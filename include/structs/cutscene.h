@@ -23,6 +23,7 @@ struct SpecialCutsceneOam {
     u8 unk_18_0 : 1;
     u8 unk_18_1 : 2;
     u8 unk_18_3 : 2;
+    u8 unk_18_5 : 1;
     u8 unk_19;
     u8 unk_1A_0 : 2;
     u8 unk_1A_2 : 2;

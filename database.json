@@ -26393,14 +26393,6 @@
     "size": 2
   },
   {
-    "path": "Blob_5a1f78_5a44cc.bin",
-    "count": "0x2554",
-    "addr": {
-      "us": "0x5A1F78"
-    },
-    "size": 1
-  },
-  {
     "path": "new_file_intro/hornoad_encounter_bg.gfx.lz",
     "count": "0xFBB",
     "addr": {
@@ -26441,10 +26433,26 @@
     "size": 4
   },
   {
-    "path": "Blob_5a9260_60093c.bin",
-    "count": "0x576DC",
+    "path": "new_file_intro/5a9260.pal",
+    "count": "0xF0",
     "addr": {
       "us": "0x5A9260"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5a9440.pal",
+    "count": "0xF0",
+    "addr": {
+      "us": "0x5A9440"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_5a9620_60093c.bin",
+    "count": "0x5731C",
+    "addr": {
+      "us": "0x5A9620"
     },
     "size": 1
   },
