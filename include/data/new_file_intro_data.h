@@ -77,7 +77,7 @@ extern const struct FrameData sIntroInSr388BslResearcherOam_Idle[2];
 extern const struct FrameData sIntroInSr388MissileOam_Horizontal[3];
 extern const struct FrameData sIntroInSr388MissileOam_Diagonal[3];
 extern const struct FrameData sIntroInSr388MissileTrailOam[6];
-extern const struct FrameData sIntroInSr388MissileExplodingOam_Small[6];
+extern const struct FrameData sIntroInSr388MissileExplosionOam_Small[6];
 extern const struct FrameData sIntroInSr388MissileExplosionOam_Big[11];
 
 extern const struct FrameData sIntroInSr388XParasiteOam_Floating[7];

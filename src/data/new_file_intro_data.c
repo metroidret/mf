@@ -2053,7 +2053,6 @@ const struct FrameData sOam_5a2af0[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2b58
 const struct FrameData sIntroInSr388HornoadOam_IdleUnused[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5a1f78,
@@ -2062,7 +2061,6 @@ const struct FrameData sIntroInSr388HornoadOam_IdleUnused[2] = {
 	[1] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2b68
 const struct FrameData sIntroInSr388HornoadOam_JumpingUnused[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a1f98,
@@ -2083,7 +2081,6 @@ const struct FrameData sIntroInSr388HornoadOam_JumpingUnused[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2b90
 const struct FrameData sIntroInSr388HornoadOam_BouncingUnused[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2018,
@@ -2096,7 +2093,6 @@ const struct FrameData sIntroInSr388HornoadOam_BouncingUnused[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2ba8
 const struct FrameData sIntroInSr388HornoadOam_Shaking[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2078,
@@ -2117,7 +2113,6 @@ const struct FrameData sIntroInSr388HornoadOam_Shaking[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2bd0
 const struct FrameData sIntroInSr388HornoadOam_Panting[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a20b8,
@@ -2138,7 +2133,6 @@ const struct FrameData sIntroInSr388HornoadOam_Panting[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2bf8
 const struct FrameData sIntroInSr388HornoadOam_Chomping[12] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2272,
@@ -2199,7 +2193,6 @@ const struct FrameData sOam_5a2c58[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2c70
 const struct FrameData sIntroInSr388HornoadOam_Biting[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a216c,
@@ -2220,7 +2213,6 @@ const struct FrameData sIntroInSr388HornoadOam_Biting[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2c98
 const struct FrameData sIntroInSr388HornoadOam_Jumping[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5a21d2,
@@ -2241,7 +2233,6 @@ const struct FrameData sIntroInSr388HornoadOam_Jumping[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2cc0
 const struct FrameData sIntroInSr388HornoadOam_Bouncing[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2252,
@@ -2254,7 +2245,6 @@ const struct FrameData sIntroInSr388HornoadOam_Bouncing[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2cd8
 const struct FrameData sIntroInSr388HornoadOam_MidAir[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2332,
@@ -2267,7 +2257,6 @@ const struct FrameData sIntroInSr388HornoadOam_MidAir[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2cf0
 const struct FrameData sIntroInSr388BslResearcherOam_Walking[7] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2584,
@@ -2316,7 +2305,6 @@ const struct FrameData sOam_5a2d38[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2d50
 const struct FrameData sIntroInSr388BslResearcherOam_Turning[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a26be,
@@ -2329,7 +2317,6 @@ const struct FrameData sIntroInSr388BslResearcherOam_Turning[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2d68
 const struct FrameData sIntroInSr388BslResearcherOam_Idle[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5a26d8,
@@ -2362,7 +2349,6 @@ const struct FrameData sOam_5a2d98[2] = {
 	[1] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2da8
 const struct FrameData sIntroInSr388MissileOam_Horizontal[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2730,
@@ -2375,7 +2361,6 @@ const struct FrameData sIntroInSr388MissileOam_Horizontal[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5A2DC0
 const struct FrameData sIntroInSr388MissileOam_Diagonal[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5a274c,
@@ -2388,7 +2373,6 @@ const struct FrameData sIntroInSr388MissileOam_Diagonal[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2dd8
 const struct FrameData sIntroInSr388MissileTrailOam[6] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2768,
@@ -2413,8 +2397,7 @@ const struct FrameData sIntroInSr388MissileTrailOam[6] = {
 	[5] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2e08
-const struct FrameData sIntroInSr388MissileExplodingOam_Small[6] = {
+const struct FrameData sIntroInSr388MissileExplosionOam_Small[6] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2a02,
 		.timer = 6
@@ -2438,7 +2421,6 @@ const struct FrameData sIntroInSr388MissileExplodingOam_Small[6] = {
 	[5] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2e38
 const struct FrameData sIntroInSr388MissileExplosionOam_Big[11] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2790,
@@ -2483,7 +2465,6 @@ const struct FrameData sIntroInSr388MissileExplosionOam_Big[11] = {
 	[10] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2e90
 const struct FrameData sIntroInSr388XParasiteOam_Floating[7] = {
 	[0] = {
 		.pFrame = sOamFrame_5a29d2,
@@ -2512,7 +2493,6 @@ const struct FrameData sIntroInSr388XParasiteOam_Floating[7] = {
 	[6] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2ec8
 const struct FrameData sIntroInSr388CaveEntranceBgOam[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2a84,
@@ -2521,7 +2501,6 @@ const struct FrameData sIntroInSr388CaveEntranceBgOam[2] = {
 	[1] = FRAME_DATA_TERMINATOR
 };
 
-// 5a2ed8
 const struct FrameData sIntroInSr388BlackRectangeOam[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5a2ac8,
@@ -3747,7 +3726,6 @@ const struct FrameData sOam_5a4084[11] = {
     [10] = FRAME_DATA_TERMINATOR
 };
 
-// 5a40dc
 const struct FrameData sIntroInSr388SamusOam_IdleLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a30de,
@@ -3776,7 +3754,6 @@ const struct FrameData sOam_5a40fc[3] = {
     [2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a4114
 const struct FrameData sIntroInSr388SamusOam_IdleRight[4] = {
     [0] = {
             .pFrame = sOamFrame_5a31a6,
@@ -3805,7 +3782,6 @@ const struct FrameData sOam_5a4134[3] = {
     [2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a414c
 const struct FrameData sIntroInSr388SamusOam_MissileArmedLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a3256,
@@ -3822,7 +3798,6 @@ const struct FrameData sIntroInSr388SamusOam_MissileArmedLeft[4] = {
     [3] = FRAME_DATA_TERMINATOR
 };
 
-// 5a416c
 const struct FrameData sIntroInSr388SamusOam_FiringMissileLeft[3] = {
     [0] = {
             .pFrame = sOamFrame_5a32fe,
@@ -3919,7 +3894,6 @@ const struct FrameData sOam_5a4214[3] = {
     [2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a422c
 const struct FrameData sIntroInSr388SamusOam_MissileArmedUpLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a3576,
@@ -3936,7 +3910,6 @@ const struct FrameData sIntroInSr388SamusOam_MissileArmedUpLeft[4] = {
     [3] = FRAME_DATA_TERMINATOR
 };
 
-// 5a424c
 const struct FrameData sIntroInSr388SamusOam_FiringMissileUpLeft[3] = {
     [0] = {
             .pFrame = sOamFrame_5a360c,
@@ -3977,7 +3950,6 @@ const struct FrameData sOam_5a4284[3] = {
     [2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a429c
 const struct FrameData sIntroInSr388SamusOam_TurningRight[4] = {
     [0] = {
             .pFrame = sOamFrame_5a371e,
@@ -3994,7 +3966,6 @@ const struct FrameData sIntroInSr388SamusOam_TurningRight[4] = {
     [3] = FRAME_DATA_TERMINATOR
 };
 
-// 5a42bc
 const struct FrameData sIntroInSr388SamusOam_TurningLeft[4] = {
     [0] = {
             .pFrame = sOamFrame_5a376a,
@@ -4171,7 +4142,6 @@ const struct FrameData sOam_5a4404[3] = {
     [2] = FRAME_DATA_TERMINATOR
 };
 
-// 5a441c
 const struct FrameData sIntroInSr388SamusOam_WalkingLeft[11] = {
     [0] = {
             .pFrame = sOamFrame_5a3d10,
@@ -4216,7 +4186,6 @@ const struct FrameData sIntroInSr388SamusOam_WalkingLeft[11] = {
     [10] = FRAME_DATA_TERMINATOR
 };
 
-// 5a4474
 const struct FrameData sIntroInSr388SamusOam_WalkingRight[11] = {
     [0] = {
             .pFrame = sOamFrame_5a3e9e,
@@ -4321,7 +4290,6 @@ static const u16 sOamFrame_613178[OAM_DATA_SIZE(1)] = {
     OAM_ENTRY(-4, -2, OAM_DIMS_8x8, OAM_NO_FLIP, 1023, 15, 0),
 };
 
-// 613180
 const struct FrameData sIntroNextPageArrowOam[5] = {
     [0] = {
             .pFrame = sOamFrame_613168,

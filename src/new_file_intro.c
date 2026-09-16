@@ -4,6 +4,7 @@
 #include "constants/game_state.h"
 #include "constants/audio.h"
 #include "constants/text.h"
+#include "constants/new_file_intro.h"
 
 #include "structs/cutscene.h"
 
@@ -33,9 +34,9 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
 boolu32 NewFileIntroSr388Preview(void);
 void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition, s16 arg3);
 void NewFileIntroInSr388Vblank(void);
-u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
+u8 NewFileIntroInSr388SetupOam(IntroInSr388OamType type, s16 xPosition, s16 yPosition);
 boolu32 NewFileIntroInSr388(void);
-void NewFileIntroGetPositionOfOamByType(u8 type, s16* pXPosition, s16* pYPosition);
+void NewFileIntroGetPositionOfOamByType(IntroInSr388OamType type, s16* pXPosition, s16* pYPosition);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -2812,14 +2813,14 @@ void NewFileIntroInSr388Init(void)
     WRITE_16(REG_BG0HOFS, -8);
     WRITE_16(REG_BG0VOFS, 0);
 
-    NewFileIntroInSr388SetupOam(50, 250, 200);
-    NewFileIntroInSr388SetupOam(255, 0, 0);
-    NewFileIntroInSr388SetupOam(255, 0, 0);
-    NewFileIntroInSr388SetupOam(1, 234, 200);
-    NewFileIntroInSr388SetupOam(2, 288, 200);
-    NewFileIntroInSr388SetupOam(3, 312, 100);
-    NewFileIntroInSr388SetupOam(11, 0, 0);
-    NewFileIntroInSr388SetupOam(12, 304 - gBg2XPosition, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_NEXT_PAGE_ARROW, 250, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_UNK_255, 0, 0);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_UNK_255, 0, 0);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_SAMUS, 234, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_LEFT_RESEARCHER, 288, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_RIGHT_RESEARCHER, 312, 100);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_UNK_11, 0, 0);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_CAVE_ENTRANCE_BG, 304 - gBg2XPosition, 200);
 
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -3236,7 +3237,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 INTRO_DATA.unk_216 = -1;
                 
                 if (gBg2XPosition == 56)
-                    NewFileIntroInSr388SetupOam(9, 0, 128);
+                    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_HORNOAD, 0, 128);
             }
             else
             {
@@ -3355,7 +3356,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->currentAnimationFrame = 0;
                 pOam->pOam = sIntroInSr388SamusOam_FiringMissileLeft;
                 
-                NewFileIntroInSr388SetupOam(6, pOam->xPosition - 20, pOam->yPosition - 22);
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 22);
                 
                 pOam->stage = 2;
             }
@@ -3374,7 +3375,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
         }
         else if (pOam->stage == 3)
         {
-            NewFileIntroGetPositionOfOamByType(6, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, &x, &y);
             
             if (x == 300)
             {
@@ -3398,7 +3399,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->currentAnimationFrame = 0;
                 pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
                 
-                NewFileIntroInSr388SetupOam(7, pOam->xPosition - 20, pOam->yPosition - 40);
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_FIRST_DIAGONAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 40);
                 
                 pOam->stage = 5;
             }
@@ -3424,7 +3425,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->currentAnimationFrame = 0;
                 pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
                 
-                NewFileIntroInSr388SetupOam(14, pOam->xPosition - 20, pOam->yPosition - 40);
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_SECOND_DIAGONAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 40);
                 
                 pOam->stage = 7;
             }
@@ -3450,7 +3451,7 @@ void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
                 pOam->currentAnimationFrame = 0;
                 pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
                 
-                NewFileIntroInSr388SetupOam(14, pOam->xPosition - 20, pOam->yPosition - 40);
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_SECOND_DIAGONAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 40);
                 
                 pOam->stage = 9;
             }
@@ -3490,7 +3491,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
     {
         if (gBg2YPosition > 47)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             pOam->xPosition = x + pOam->unk_8;
             pOam->yPosition = y;
@@ -3501,7 +3502,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
     }
     else if (INTRO_DATA.subStage == 1 || INTRO_DATA.subStage == 2)
     {
-        NewFileIntroGetPositionOfOamByType(1, &x, &y);
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
         
         pOam->xPosition = x + pOam->unk_8;
         pOam->yPosition = y;
@@ -3511,7 +3512,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
     {
         if (pOam->stage == 16)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition < x)
             {
@@ -3523,7 +3524,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
         }
         else if (pOam->stage == 17)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition > x + 10)
             {
@@ -3548,7 +3549,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
         }
         else if (pOam->stage == 19)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition > x + pOam->unk_8)
             {
@@ -3561,7 +3562,7 @@ void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam
         }
         else if (pOam->stage == 20)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition <= x + pOam->unk_8 - 7)
             {
@@ -3631,7 +3632,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
     {
         if (gBg2YPosition > 47)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             pOam->xPosition = x + pOam->unk_8;
             pOam->yPosition = y;
@@ -3642,7 +3643,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
     }
     else if (INTRO_DATA.subStage == 1 || INTRO_DATA.subStage == 2)
     {
-        NewFileIntroGetPositionOfOamByType(1, &x, &y);
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
         
         pOam->xPosition = x + pOam->unk_8;
         pOam->yPosition = y;
@@ -3652,7 +3653,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
     {
         if (pOam->stage == 16)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition < x)
             {
@@ -3664,7 +3665,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
         }
         else if (pOam->stage == 17)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition > x + 10)
             {
@@ -3689,7 +3690,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
         }
         else if (pOam->stage == 19)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition > x + pOam->unk_8 + 10)
             {
@@ -3702,7 +3703,7 @@ void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOa
         }
         else if (pOam->stage == 20)
         {
-            NewFileIntroGetPositionOfOamByType(1, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
             
             if (pOam->xPosition <= x + pOam->unk_8 - 10)
             {
@@ -3906,7 +3907,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
     }
     else if (pOam->stage == 2)
     {
-        NewFileIntroGetPositionOfOamByType(6, &x, &y);
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, &x, &y);
 
         pOam->spawnY = pOam->yPosition;
 
@@ -3971,7 +3972,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
     }
     else if (pOam->stage == 5)
     {
-        NewFileIntroGetPositionOfOamByType(6, &x, &y);
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, &x, &y);
 
         if (x == 300)
         {
@@ -4025,11 +4026,11 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
 
         if (pOam->unk_4 > 1)
         {
-            NewFileIntroGetPositionOfOamByType(7, &x, &y);
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_FIRST_DIAGONAL_MISSILE, &x, &y);
 
             if (pOam->xPosition >= x && pOam->yPosition >= y)
             {
-                NewFileIntroInSr388SetupOam(10, pOam->xPosition, pOam->yPosition);
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_EXPLOSION_BIG, pOam->xPosition, pOam->yPosition);
 
                 pOam->timer = 0;
                 pOam->animationDurationCounter = 0;
@@ -4090,7 +4091,7 @@ void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
                 pOam->timer = 0;
                 pOam->unk_18_5 = 0;
 
-                NewFileIntroGetPositionOfOamByType(1, &x, &y);
+                NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
 
                 pOam->spawnY = pOam->yPosition;
                 pOam->spawnX = x;
@@ -4202,7 +4203,7 @@ void NewFileIntroProcessHorizontalMissile(struct SpecialCutsceneOam *pOam)
         }
         else if (pOam->timer == 1)
         {
-            NewFileIntroInSr388SetupOam(8, pOam->xPosition + 12, pOam->yPosition + 2);
+            NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL, pOam->xPosition + 12, pOam->yPosition + 2);
         }
         
         if (pOam->xPosition < 32)
@@ -4210,7 +4211,7 @@ void NewFileIntroProcessHorizontalMissile(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sIntroInSr388MissileExplodingOam_Small;
+            pOam->pOam = sIntroInSr388MissileExplosionOam_Small;
             pOam->stage = 1;
         }
     }
@@ -4254,10 +4255,10 @@ void NewFileIntroProcessFirstDiagonalMissile(struct SpecialCutsceneOam *pOam)
         }
         else if (pOam->timer == 1)
         {
-            NewFileIntroInSr388SetupOam(8, pOam->xPosition + 10, pOam->yPosition + 12);
+            NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL, pOam->xPosition + 10, pOam->yPosition + 12);
         }
 
-        NewFileIntroGetPositionOfOamByType(9, &x, &y);
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORNOAD, &x, &y);
 
         if (pOam->xPosition <= x - 2 && pOam->yPosition <= y - 2)
         {
@@ -4390,7 +4391,7 @@ void NewFileIntroProcessSecondDiagonalMissile(struct SpecialCutsceneOam *pOam)
         }
         else if (pOam->timer == 1)
         {
-            NewFileIntroInSr388SetupOam(8, pOam->xPosition + 10, pOam->yPosition + 12);
+            NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL, pOam->xPosition + 10, pOam->yPosition + 12);
         }
         
         if (pOam->yPosition < 50)
@@ -4398,7 +4399,7 @@ void NewFileIntroProcessSecondDiagonalMissile(struct SpecialCutsceneOam *pOam)
             pOam->timer = 0;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sIntroInSr388MissileExplodingOam_Small;
+            pOam->pOam = sIntroInSr388MissileExplosionOam_Small;
             pOam->stage = 1;
         }
     }
@@ -4426,7 +4427,7 @@ void unk_8c084(struct SpecialCutsceneOam* pOam)
  * @brief 8c08c | 478 | Spawns an object for the 'hornoad encounter in SR388' cutscene
  * 
  */
-u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
+u8 NewFileIntroInSr388SetupOam(IntroInSr388OamType type, s16 xPosition, s16 yPosition)
 {
     u8 slot;
 
@@ -4446,20 +4447,20 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
     INTRO_DATA.oam[slot].type = type;
     INTRO_DATA.oam[slot].unk_18_0 = 1;
 
-    if (type == 1)
+    if (type == INTRO_IN_SR388_OAM_TYPE_SAMUS)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388SamusOam_WalkingLeft;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusInSr388;
     }
-    else if (type == 2)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_LEFT_RESEARCHER)
     {
         INTRO_DATA.oam[slot].unk_8 = 38;
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388BslResearcherOam_Walking;
         INTRO_DATA.oam[slot].pFunction = NewfileIntroProcessLeftBiologicalResearcher;
     }
-    else if (type == 3)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_RIGHT_RESEARCHER)
     {
         INTRO_DATA.oam[slot].unk_8 = 72;
         INTRO_DATA.oam[slot].currentAnimationFrame = 1;
@@ -4467,13 +4468,13 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
         INTRO_DATA.oam[slot].pOam = sIntroInSr388BslResearcherOam_Walking;
         INTRO_DATA.oam[slot].pFunction = NewfileIntroProcessRightBiologicalResearcher;
     }
-    else if (type == 4)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORNOAD_UNUSED)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_IdleUnused;
         INTRO_DATA.oam[slot].pFunction = unk_8b660;
     }
-    else if (type == 5)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORNOAD_UNUSED_2)
     {
         INTRO_DATA.oam[slot].unk_8 = 1;
         INTRO_DATA.oam[slot].unk_A = 2;
@@ -4481,7 +4482,7 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
         INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_IdleUnused;
         INTRO_DATA.oam[slot].pFunction = unk_8b660;
     }
-    else if (type == 6)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE)
     {
         INTRO_DATA.oam[slot].spawnX = xPosition;
         INTRO_DATA.oam[slot].spawnY = yPosition;
@@ -4489,7 +4490,7 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
         INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileOam_Horizontal;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHorizontalMissile;
     }
-    else if (type == 7)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_FIRST_DIAGONAL_MISSILE)
     {
         INTRO_DATA.oam[slot].spawnX = xPosition;
         INTRO_DATA.oam[slot].spawnY = yPosition;
@@ -4497,43 +4498,43 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
         INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileOam_Diagonal;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessFirstDiagonalMissile;
     }
-    else if (type == 8)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 1;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileTrailOam;
         INTRO_DATA.oam[slot].pFunction = unk_8be18;
     }
-    else if (type == 9)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORNOAD)
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1);
         INTRO_DATA.oam[slot].unk_1A_2 = 2;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_Panting;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHornoad;
     }
-    else if (type == 10)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_MISSILE_EXPLOSION_BIG)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 1;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileExplosionOam_Big;
         INTRO_DATA.oam[slot].pFunction = unk_8be18;
     }
-    else if (type == 11)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_UNK_11)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
         INTRO_DATA.oam[slot].pFunction = unk_8be44;
     }
-    else if (type == 12)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_CAVE_ENTRANCE_BG)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 3;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388CaveEntranceBgOam;
         INTRO_DATA.oam[slot].pFunction = unk_8bf1c;
     }
-    else if (type == 13)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_BLACK_RECTANGLE)
     {
         INTRO_DATA.oam[slot].unk_1A_2 = 3;
         INTRO_DATA.oam[slot].pOam = sIntroInSr388BlackRectangeOam;
         INTRO_DATA.oam[slot].pFunction = unk_8bf68;
     }
-    else if (type == 14)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_SECOND_DIAGONAL_MISSILE)
     {
         INTRO_DATA.oam[slot].spawnX = xPosition;
         INTRO_DATA.oam[slot].spawnY = yPosition;
@@ -4541,12 +4542,12 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
         INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileOam_Diagonal;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSecondDiagonalMissile;
     }
-    else if (type == 50)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_NEXT_PAGE_ARROW)
     {
         INTRO_DATA.oam[slot].pOam = sIntroNextPageArrowOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
     }
-    else if (type == 255)
+    else if (type == INTRO_IN_SR388_OAM_TYPE_UNK_255)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
         INTRO_DATA.oam[slot].pFunction = unk_8c084;
@@ -4559,7 +4560,7 @@ u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
  * @brief 8c504 | 38 | To document
  * 
  */
-void unk_8c504(u8 type, s16 xPosition, s16 yPosition, u16 arg3)
+void unk_8c504(IntroInSr388OamType type, s16 xPosition, s16 yPosition, u16 arg3)
 {
     u8 slot;
     
@@ -4580,7 +4581,7 @@ void NewFileIntro_Empty(void)
  * @brief 8c540 | 54 | Returns the X and Y position of a new file intro OAM
  * 
  */
-void NewFileIntroGetPositionOfOamByType(u8 type, s16* pXPosition, s16* pYPosition)
+void NewFileIntroGetPositionOfOamByType(IntroInSr388OamType type, s16* pXPosition, s16* pYPosition)
 {
     u8 slot;
 
