@@ -23,19 +23,19 @@ extern const struct FrameData sOam_598000[12];
 extern const struct FrameData sOam_598060[5];
 extern const struct FrameData sOam_598088[5];
 
-extern const u16 sIntroSamusShipPal[16 * 5];
-extern const u16 sPal_598150[16 * 2];
+extern const u16 sIntroSamusShipPal[5 * PAL_ROW];
+extern const u16 sPal_598150[2 * PAL_ROW];
 
 extern const u32 sIntroSamusHelmetCloseupTilemap[172];
 
-extern const u16 sIntroSamusHelmetCloseupPal[16 * 4];
+extern const u16 sIntroSamusHelmetCloseupPal[4 * PAL_ROW];
 
 extern const u32 sIntroSamusShipFlyingTextTilemap[125];
 
-extern const u16 sPal_598a8c[16 * 1];
-extern const u16 sIntroSamusCloseupGrayscalePal[16 * 4];
+extern const u16 sPal_598a8c[1 * PAL_ROW];
+extern const u16 sIntroSamusCloseupGrayscalePal[4 * PAL_ROW];
 
-extern const u16 sSr388SpaceAndSurfacePal[256];
+extern const u16 sSr388SpaceAndSurfacePal[16 * PAL_ROW];
 
 extern const u32 sIntroSr388SurfaceTilemap[551];
 extern const u32 sIntroSr388SpaceBgTilemap[265];
@@ -52,27 +52,70 @@ extern const struct FrameData sOam_59a168[2];
 extern const struct FrameData sOam_59a178[8];
 
 extern const u32 sIntroSr388SpaceAndSurfaceObjGfx[3538];
-extern const u16 sIntroSr388SpaceAndSurfaceObjPal[16 * 16];
+extern const u16 sIntroSr388SpaceAndSurfaceObjPal[16 * PAL_ROW];
+
+extern const u8 sArray_59db00[8];
 
 extern const u32 sIntroHornoadEncounterObjGfx[4252];
-extern const u16 sIntroHornoadEncounterObjPal[16 * 16];
+extern const u16 sIntroHornoadEncounterObjPal[16 * PAL_ROW];
+
+extern const struct FrameData sIntroInSr388HornoadOam_IdleUnused[2];
+extern const struct FrameData sIntroInSr388HornoadOam_JumpingUnused[5];
+extern const struct FrameData sIntroInSr388HornoadOam_BouncingUnused[3];
+extern const struct FrameData sIntroInSr388HornoadOam_Shaking[5];
+extern const struct FrameData sIntroInSr388HornoadOam_Panting[5];
+extern const struct FrameData sIntroInSr388HornoadOam_Chomping[12];
+extern const struct FrameData sIntroInSr388HornoadOam_Biting[5];
+extern const struct FrameData sIntroInSr388HornoadOam_Jumping[5];
+extern const struct FrameData sIntroInSr388HornoadOam_Bouncing[3];
+extern const struct FrameData sIntroInSr388HornoadOam_MidAir[3];
+
+extern const struct FrameData sIntroInSr388BslResearcherOam_Walking[7];
+extern const struct FrameData sIntroInSr388BslResearcherOam_Turning[3];
+extern const struct FrameData sIntroInSr388BslResearcherOam_Idle[2];
+
+extern const struct FrameData sIntroInSr388MissileOam_Horizontal[3];
+extern const struct FrameData sIntroInSr388MissileOam_Diagonal[3];
+extern const struct FrameData sIntroInSr388MissileTrailOam[6];
+extern const struct FrameData sIntroInSr388MissileExplosionOam_Small[6];
+extern const struct FrameData sIntroInSr388MissileExplosionOam_Big[11];
+
+extern const struct FrameData sIntroInSr388XParasiteOam_Floating[7];
+
+extern const struct FrameData sIntroInSr388CaveEntranceBgOam[2];
+extern const struct FrameData sIntroInSr388BlackRectangeOam[2];
+
+extern const struct FrameData sIntroInSr388SamusOam_IdleLeft[4];
+extern const struct FrameData sIntroInSr388SamusOam_IdleRight[4];
+extern const struct FrameData sIntroInSr388SamusOam_MissileArmedLeft[4];
+extern const struct FrameData sIntroInSr388SamusOam_FiringMissileLeft[3];
+extern const struct FrameData sIntroInSr388SamusOam_MissileArmedUpLeft[4];
+extern const struct FrameData sIntroInSr388SamusOam_FiringMissileUpLeft[3];
+extern const struct FrameData sIntroInSr388SamusOam_TurningRight[4];
+extern const struct FrameData sIntroInSr388SamusOam_TurningLeft[4];
+extern const struct FrameData sIntroInSr388SamusOam_WalkingLeft[11];
+extern const struct FrameData sIntroInSr388SamusOam_WalkingRight[11];
+
 extern const u32 sIntroHornoadEncounterBgGfx[4027];
 
 extern const u32 sTilemap_5a83b8[196];
 extern const u32 sTilemap_5a86c8[479];
 
-extern const u16 sPal_5a8e44[16 * 16];
+extern const u16 sPal_5a8e44[16 * PAL_ROW];
 
 extern const u32 sTilemap_5a9044[135];
 
+extern const u16 sPal_5a9260[15 * PAL_ROW];
+extern const u16 sPal_5a9440[15 * PAL_ROW];
+
 extern const u32 sIntroSamusSittingGfx[4818];
-extern const u16 sIntroSamusSittingPal[16 * 16];
+extern const u16 sIntroSamusSittingPal[16 * PAL_ROW];
 extern const u32 sIntroSamusSittingTilemap[171];
 
 extern const u32 sTitleScreenSpaceBackgroundGfx[830];
 
-extern const u16 sPal_609020[16 * 8];
-extern const u16 sTitleScreenSpaceBackgroundPal[16 * 8];
+extern const u16 sPal_609020[8 * PAL_ROW];
+extern const u16 sTitleScreenSpaceBackgroundPal[8 * PAL_ROW];
 
 extern const u32 sTitleScreenSpaceBackgroundTilemap[172];
 
@@ -80,15 +123,15 @@ extern const u8 sIntroSpaceTilemap[1320];
 extern const u8 sIntroBslTilemap[1586];
 
 extern const u32 sIntroBslSpaceBgGfx[4421];
-extern const u16 sIntroBslSpaceBgPal[16 * 8];
+extern const u16 sIntroBslSpaceBgPal[8 * PAL_ROW];
 
-extern const u16 sPal_612f48[16 * 16];
+extern const u16 sPal_612f48[16 * PAL_ROW];
 
 extern const u32 sNextPageArrowGfx[8];
 
-extern const struct FrameData sOam_613180[5];
+extern const struct FrameData sIntroNextPageArrowOam[5];
 
-extern const u16 sNextPageArrowPal[16 * 1];
+extern const u16 sNextPageArrowPal[1 * PAL_ROW];
 
 extern const u16 sCutsceneTextNone[2];
 

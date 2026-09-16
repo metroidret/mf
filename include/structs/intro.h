@@ -16,14 +16,16 @@ struct IntroData {
     u16 unk_E;
     u8 unk_10[256];
     u8 unk_110;
-    u8 unk_111[253];
+    u8 unk_111[251];
+    u16 unk_20C;
     u16 unk_20E;
     u16 timer;
     u8 unk_212;
     u8 unk_213;
     u8 subStage;
     u8 unk_215;
-    u8 unk_216[2];
+    s8 unk_216;
+    u8 unk_217;
     u8 unk_218;
     u8 unk_219[3];
     struct SpecialCutsceneOam oam[20];

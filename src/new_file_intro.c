@@ -4,6 +4,7 @@
 #include "constants/game_state.h"
 #include "constants/audio.h"
 #include "constants/text.h"
+#include "constants/new_file_intro.h"
 
 #include "structs/cutscene.h"
 
@@ -11,6 +12,9 @@
 #include "data/generic_data.h"
 #include "data/menus/title_screen.h"
 #include "data/sprite_data.h"
+#include "data/sprites/hornoad.h"
+#include "data/sprites/x_parasite.h"
+#include "data/projectile_data.h"
 
 void unk_99940(void); // For V-blank callback
 
@@ -30,7 +34,9 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
 boolu32 NewFileIntroSr388Preview(void);
 void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition, s16 arg3);
 void NewFileIntroInSr388Vblank(void);
-u8 NewFileIntroInSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
+u8 NewFileIntroInSr388SetupOam(IntroInSr388OamType type, s16 xPosition, s16 yPosition);
+boolu32 NewFileIntroInSr388(void);
+void NewFileIntroGetPositionOfOamByType(IntroInSr388OamType type, s16* pXPosition, s16* pYPosition);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -2134,12 +2140,12 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
     }
     else if (type == 200)
     {
-        INTRO_DATA.oam[slot].pOam = sOam_613180;
+        INTRO_DATA.oam[slot].pOam = sIntroNextPageArrowOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
     }
     else if (type == 201)
     {
-        INTRO_DATA.oam[slot].pOam = sOam_613180;
+        INTRO_DATA.oam[slot].pOam = sIntroNextPageArrowOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessOam_Empty;
     }
     
@@ -2718,7 +2724,7 @@ u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition)
     }
     else if (type == 50)
     {
-        INTRO_DATA.oam[slot].pOam = sOam_613180;
+        INTRO_DATA.oam[slot].pOam = sIntroNextPageArrowOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
     }
     
@@ -2738,7 +2744,7 @@ void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition
 }
 
  /**
- * @brief 8a5a4 | 94 | To document
+ * @brief 8a5a4 | 94 | V-blank for the SR388 preview cutscene
  * 
  */
 void NewFileIntroSr388PreviewVblank(void)
@@ -2758,7 +2764,7 @@ void NewFileIntroSr388PreviewVblank(void)
 }
 
  /**
- * @brief 8a638 | 254 | To document
+ * @brief 8a638 | 254 | Setup for the 'hornoad encounter in SR388' cutscene
  * 
  */
 void NewFileIntroInSr388Init(void)
@@ -2807,14 +2813,14 @@ void NewFileIntroInSr388Init(void)
     WRITE_16(REG_BG0HOFS, -8);
     WRITE_16(REG_BG0VOFS, 0);
 
-    NewFileIntroInSr388SetupOam(50, 250, 200);
-    NewFileIntroInSr388SetupOam(255, 0, 0);
-    NewFileIntroInSr388SetupOam(255, 0, 0);
-    NewFileIntroInSr388SetupOam(1, 234, 200);
-    NewFileIntroInSr388SetupOam(2, 288, 200);
-    NewFileIntroInSr388SetupOam(3, 312, 100);
-    NewFileIntroInSr388SetupOam(11, 0, 0);
-    NewFileIntroInSr388SetupOam(12, 304 - gBg2XPosition, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_NEXT_PAGE_ARROW, 250, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_UNK_255, 0, 0);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_UNK_255, 0, 0);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_SAMUS, 234, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_LEFT_RESEARCHER, 288, 200);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_RIGHT_RESEARCHER, 312, 100);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_UNK_11, 0, 0);
+    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_CAVE_ENTRANCE_BG, 304 - gBg2XPosition, 200);
 
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -2827,4 +2833,1801 @@ void NewFileIntroInSr388Init(void)
 
     CallbackSetVBlank(NewFileIntroInSr388Vblank);
 }
+
+ /**
+ * @brief 8a88c | 344 | Processes the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+boolu32 NewFileIntroInSr388Process(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+    
+    if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
+        INTRO_DATA.unk_218 = 1;
+    
+    INTRO_DATA.timer++;
+    
+    switch (INTRO_DATA.subStage)
+    {
+        case 0:
+            INTRO_DATA.unk_213++;
+            if (INTRO_DATA.unk_213 == 4)
+            {
+                INTRO_DATA.unk_213 = 0;
+            
+                if (gWrittenToBldy)
+                    gWrittenToBldy--;
+            }
+        
+            if (INTRO_DATA.timer == 2)
+            {
+                INTRO_DATA.timer = 0;
+                
+                gBg2YPosition++;
+                if (gBg2YPosition == 96)
+                    INTRO_DATA.subStage = 2;
+            }
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+        
+            gBg2XPosition += INTRO_DATA.unk_216;
+            break;
+        
+        case 1:
+        case 2:
+            INTRO_DATA.timer = 0;
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+        
+            gBg2XPosition += INTRO_DATA.unk_216;
+            break;
+        
+        case 3:
+            if (INTRO_DATA.timer == 1)
+                DMA3_FILL_32(0, VRAM_BASE + 0xD000, 0x1000);
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+        
+            gBg2XPosition += INTRO_DATA.unk_216;
+            break;
+        
+        case 4:
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            
+            gBg2XPosition += INTRO_DATA.unk_216;
+            INTRO_DATA.timer = 0;
+            break;
+        
+        case 5:
+            if (INTRO_DATA.timer == 1)
+            {
+                INTRO_DATA.unk_110 = 1;
+            }
+            else if (INTRO_DATA.timer == 30)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.unk_212 = 0;
+                INTRO_DATA.unk_E = 0;
+                INTRO_DATA.unk_C = 0;
+                INTRO_DATA.pText = sMonologueTextPointers[gLanguage][9];
+                INTRO_DATA.subStage = 6;
+            }
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+        
+        case 6:
+            INTRO_DATA.timer = 0;
+            
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
+            {
+                INTRO_DATA.unk_218 = 0;
+            }
+            else if (INTRO_DATA.unk_218 == 3)
+            {
+                INTRO_DATA.unk_218 = 0;
+                INTRO_DATA.subStage = 9;
+            }
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+        
+        case 7:
+            if (INTRO_DATA.timer == 10)
+            {
+                DMA3_FILL_32(0, VRAM_BASE + 0xD000, 0x1000);
+            }
+            else if (INTRO_DATA.timer == 11)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.unk_20C = 0;
+                INTRO_DATA.unk_212 = 0;
+                INTRO_DATA.unk_E = 0;
+                INTRO_DATA.unk_C = 0;
+                INTRO_DATA.pText = sMonologueTextPointers[gLanguage][10];
+                INTRO_DATA.subStage = 8;
+            }
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+        
+        case 8:
+            INTRO_DATA.timer = 0;
+        
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
+            {
+                INTRO_DATA.unk_218 = 0;
+            }
+            else if (INTRO_DATA.unk_218 == 3)
+            {
+                INTRO_DATA.unk_218 = 0;
+                INTRO_DATA.subStage = 9;
+            }
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+        
+        case 9:
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+        
+            gBg2XPosition += INTRO_DATA.unk_216;
+        
+            if (INTRO_DATA.timer > 50)
+            {
+                WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+                finished = TRUE;
+            }
+            break;
+    }
+    
+    IntroProcessText();
+    
+    return finished;
+}
+
+ /**
+ * @brief 8abd0 | 98 | Main handler for the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+boolu32 NewFileIntroInSr388(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    switch (INTRO_DATA.stage)
+    {
+        case 0:
+            NewFileIntroInSr388Init();
+            
+            INTRO_DATA.stage = 2;
+            break;
+        
+        case 1:
+            SpecialCutsceneFadeIn();
+
+            if (!gWrittenToBldy)
+                INTRO_DATA.stage = 2;
+            break;
+
+        case 2:
+            if (NewFileIntroInSr388Process())
+            {
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.stage = 3;
+                gWrittenToBldy = 0;
+            }
+            break;
+
+        case 3:
+            if (gWrittenToBldy < BLDY_MAX_VALUE)
+            {
+                gWrittenToBldy++;
+            }
+            else
+            {
+                INTRO_DATA.stage = 0;
+                INTRO_DATA.subStage = 0;
+                finished = TRUE;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+
+    return finished;
+}
+
+ /**
+ * @brief 8ac68 | 5d8 | Processes Samus in the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewFileIntroProcessSamusInSr388(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
+
+    pOam->timer++;
+    
+    if (INTRO_DATA.subStage == 0)
+    {
+        if (gBg2YPosition > 47)
+        {
+            pOam->yPosition = 240 - gBg2YPosition;
+            pOam->xPosition--;
+        }
+        
+        pOam->timer = 0;
+    }
+    else if (INTRO_DATA.subStage == 1)
+    {
+        pOam->yPosition = 240 - gBg2YPosition;
+        
+        if (pOam->stage == 0)
+        {
+            if (pOam->timer < 20)
+            {
+                pOam->xPosition--;
+            }
+            else if (pOam->timer < 70)
+            {
+                INTRO_DATA.unk_216 = -1;
+            }
+            else if (pOam->timer == 70)
+            {
+                INTRO_DATA.unk_216 = 0;
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
+                pOam->stage = 1;
+            }
+        }
+        else if (pOam->stage == 1)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_TurningRight;
+                pOam->stage = 2;
+            }
+        }
+        else if (pOam->stage == 2)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleRight;
+                pOam->stage = 3;
+                INTRO_DATA.unk_20C = 0;
+            }
+        }
+        else if (pOam->stage == 3)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_TurningLeft;
+                pOam->stage = 4;
+            }
+        }
+        else if (pOam->stage == 4)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
+                pOam->stage = 5;
+            }
+        }
+        else if (pOam->stage == 5)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->stage = 0;
+                INTRO_DATA.subStage = 2;
+            }
+        }
+    }
+    else if (INTRO_DATA.subStage == 2)
+    {
+        pOam->stage = 3;
+        INTRO_DATA.subStage = 3;
+    }
+    else if (INTRO_DATA.subStage == 3)
+    {
+        if (pOam->stage == 0)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_WalkingRight;
+                pOam->stage = 1;
+                pOam->xPosition++;
+            }
+        }
+        else if (pOam->stage == 1)
+        {
+            if (pOam->xPosition < 260)
+            {
+                pOam->xPosition++;
+            }
+            else
+            {
+                pOam->xPosition = 260;
+                pOam->timer = 0;
+                pOam->stage = 2;
+            }
+        }
+        else if (pOam->stage == 2)
+        {
+            if (pOam->timer == 1)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_WalkingLeft;
+                pOam->stage = 3;
+            }
+        }
+        else if (pOam->stage == 3)
+        {
+            if (pOam->xPosition > 140)
+            {
+                pOam->xPosition--;
+            }
+            else if (gBg2XPosition > 108)
+            {
+                INTRO_DATA.unk_216 = -1;
+            }
+            else
+            {
+                INTRO_DATA.unk_216 = 0;
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
+                pOam->stage = 4;
+            }
+        }
+        else if (pOam->stage == 4)
+        {
+            if (pOam->timer == 60)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->stage = 5;
+            }
+        }
+        else if (pOam->stage == 5)
+        {
+            pOam->pOam = sIntroInSr388SamusOam_WalkingLeft;
+            
+            if (gBg2XPosition > 40)
+            {
+                INTRO_DATA.unk_216 = -1;
+                
+                if (gBg2XPosition == 56)
+                    NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_HORNOAD, 0, 128);
+            }
+            else
+            {
+                INTRO_DATA.unk_216 = 0;
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
+                pOam->stage = 6;
+            }
+        }
+        else if (pOam->stage == 6)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_TurningRight;
+                pOam->stage = 7;
+            }
+        }
+        else if (pOam->stage == 7)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleRight;
+                pOam->stage = 8;
+            }
+        }
+        else if (pOam->stage == 8)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_TurningLeft;
+                pOam->stage = 9;
+            }
+        }
+        else if (pOam->stage == 9)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
+                pOam->stage = 10;
+            }
+        }
+        else if (pOam->stage == 10)
+        {
+            if (pOam->timer == 30)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_WalkingLeft;
+                pOam->stage = 11;
+            }
+        }
+        else if (pOam->stage == 11)
+        {
+            pOam->pOam = sIntroInSr388SamusOam_WalkingLeft;
+            
+            if (pOam->timer == 1)
+            {
+                if (gBg2XPosition != 0)
+                {
+                    INTRO_DATA.unk_216 = -1;
+                }
+                else
+                {
+                    INTRO_DATA.unk_216 = 0;
+                    pOam->timer = 0;
+                    pOam->animationDurationCounter = 0;
+                    pOam->currentAnimationFrame = 0;
+                    pOam->pOam = sIntroInSr388SamusOam_IdleLeft;
+                    INTRO_DATA.subStage = 4;
+                    pOam->stage = 0;
+                }
+            }
+            else
+            {
+                pOam->timer = 0;
+                INTRO_DATA.unk_216 = 0;
+            }
+        }
+    }
+    else if (INTRO_DATA.subStage == 4)
+    {
+        if (pOam->stage == 0)
+        {
+            if (pOam->timer == 60)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedLeft;
+                pOam->stage = 1;
+            }
+        }
+        else if (pOam->stage == 1)
+        {
+            if (pOam->timer == 60)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileLeft;
+                
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 22);
+                
+                pOam->stage = 2;
+            }
+        }
+        else if (pOam->stage == 2)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedLeft;
+                pOam->stage = 3;
+            }
+        }
+        else if (pOam->stage == 3)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, &x, &y);
+            
+            if (x == 300)
+            {
+                pOam->timer = 0;
+                pOam->stage = 4;
+            }
+        }
+        else if (pOam->stage == 4)
+        {
+            if (pOam->timer == 8)
+            {
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
+                return;
+            }
+            else if (pOam->timer == 10)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
+                
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_FIRST_DIAGONAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 40);
+                
+                pOam->stage = 5;
+            }
+        }
+        else if (pOam->stage == 5)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
+                pOam->stage = 6;
+            }
+        }
+        else if (pOam->stage == 6)
+        {
+            if (pOam->timer == 130)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
+                
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_SECOND_DIAGONAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 40);
+                
+                pOam->stage = 7;
+            }
+        }
+        else if (pOam->stage == 7)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
+                pOam->stage = 8;
+            }   
+        }
+        else if (pOam->stage == 8)
+        {
+            if (pOam->timer == 78)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_FiringMissileUpLeft;
+                
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_SECOND_DIAGONAL_MISSILE, pOam->xPosition - 20, pOam->yPosition - 40);
+                
+                pOam->stage = 9;
+            }
+        }
+        else if (pOam->stage == 9)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388SamusOam_MissileArmedUpLeft;
+                pOam->stage = 10;
+            }
+        }
+    }
+    else if (INTRO_DATA.subStage > 4)
+    {
+        pOam->animationDurationCounter = 0;
+    }
+}
+
+ /**
+ * @brief 8b240 | 20c | Processes the left BSL guy in the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewfileIntroProcessLeftBiologicalResearcher(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
+
+    pOam->timer++;
+    
+    if (INTRO_DATA.subStage == 0)
+    {
+        if (gBg2YPosition > 47)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            pOam->xPosition = x + pOam->unk_8;
+            pOam->yPosition = y;
+        }
+        
+        pOam->timer = 0;
+        pOam->stage = 20;
+    }
+    else if (INTRO_DATA.subStage == 1 || INTRO_DATA.subStage == 2)
+    {
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+        
+        pOam->xPosition = x + pOam->unk_8;
+        pOam->yPosition = y;
+        pOam->stage = 20;
+    }
+    else if (INTRO_DATA.subStage == 3)
+    {
+        if (pOam->stage == 16)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition < x)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->stage = 17;
+            }
+        }
+        else if (pOam->stage == 17)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition > x + 10)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Turning;
+                pOam->stage = 18;
+            }
+        }
+        else if (pOam->stage == 18)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
+                pOam->stage = 19;
+            }
+        }
+        else if (pOam->stage == 19)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition > x + pOam->unk_8)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Walking;
+                pOam->stage = 20;
+            }
+        }
+        else if (pOam->stage == 20)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition <= x + pOam->unk_8 - 7)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
+                pOam->stage = 21;
+            }
+            else
+            {
+                pOam->xPosition--;
+            }
+        }
+        else if (pOam->stage == 21)
+        {
+            if (gBg2XPosition < 98)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Walking;
+                pOam->stage = 22;
+            }
+        }
+        else if (pOam->stage == 22)
+        {
+            if (gBg2XPosition > 45)
+            {
+                pOam->xPosition--;
+            }
+            else
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
+                pOam->stage = 23;
+            }
+        }
+    }
+    else if (INTRO_DATA.subStage == 4)
+    {
+        pOam->timer = 0;
+    }
+    else if (INTRO_DATA.subStage > 4)
+    {
+        pOam->animationDurationCounter = 0;
+    }
+    
+    pOam->xPosition -= INTRO_DATA.unk_216;
+}
+
+ /**
+ * @brief 8b44c | 214 | Processes the right BSL guy in the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewfileIntroProcessRightBiologicalResearcher(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
+
+    pOam->timer++;
+    
+    if (INTRO_DATA.subStage == 0)
+    {
+        if (gBg2YPosition > 47)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            pOam->xPosition = x + pOam->unk_8;
+            pOam->yPosition = y;
+        }
+        
+        pOam->timer = 0;
+        pOam->stage = 20;
+    }
+    else if (INTRO_DATA.subStage == 1 || INTRO_DATA.subStage == 2)
+    {
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+        
+        pOam->xPosition = x + pOam->unk_8;
+        pOam->yPosition = y;
+        pOam->stage = 20;
+    }
+    else if (INTRO_DATA.subStage == 3)
+    {
+        if (pOam->stage == 16)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition < x)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->stage = 17;
+            }
+        }
+        else if (pOam->stage == 17)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition > x + 10)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Turning;
+                pOam->stage = 18;
+            }
+        }
+        else if (pOam->stage == 18)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
+                pOam->stage = 19;
+            }
+        }
+        else if (pOam->stage == 19)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition > x + pOam->unk_8 + 10)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Walking;
+                pOam->stage = 20;
+            }
+        }
+        else if (pOam->stage == 20)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+            
+            if (pOam->xPosition <= x + pOam->unk_8 - 10)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
+                pOam->stage = 21;
+            }
+            else
+            {
+                pOam->xPosition--;
+            }
+        }
+        else if (pOam->stage == 21)
+        {
+            if (gBg2XPosition < 103)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Walking;
+                pOam->stage = 22;
+            }
+        }
+        else if (pOam->stage == 22)
+        {
+            if (gBg2XPosition > 52)
+            {
+                pOam->xPosition--;
+            }
+            else
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388BslResearcherOam_Idle;
+                pOam->stage = 23;
+            }
+        }
+    }
+    else if (INTRO_DATA.subStage == 4)
+    {
+        pOam->timer = 0;
+    }
+    else if (INTRO_DATA.subStage > 4)
+    {
+        pOam->animationDurationCounter = 0;
+    }
+    
+    pOam->xPosition -= INTRO_DATA.unk_216;
+}
+
+ /**
+ * @brief 8b660 | 174 | Processes the hornoad in the SR388 cutscene (unused?)
+ * 
+ */
+void unk_8b660(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    u32 timer;
+    u8 tmp;
+    s16 y;
+    
+    pOam->timer++;
+
+    if (pOam->stage == 0)
+    {
+        pOam->spawnY = pOam-> yPosition;
+        pOam->unk_4 = 0;
+        pOam->pOam = sIntroInSr388HornoadOam_IdleUnused;
+
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->pOam = sIntroInSr388HornoadOam_JumpingUnused;
+
+        if (pOam->unk_8 == 0)
+        {
+            timer = pOam->timer;
+            y = sHornoadJumpVelocityHigh[pOam->unk_4] * timer >> 2;
+        }
+        else
+        {
+            timer = pOam->timer;
+            tmp = timer; // From permuter
+            y = sHornoadJumpVelocityLow[pOam->unk_4] * tmp >> 2;
+        }
+        
+        pOam->yPosition = pOam->spawnY + y;
+        if (pOam->yPosition > 144)
+        {
+            pOam->yPosition = 144;
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_BouncingUnused;
+            pOam->stage = 2;
+        }
+
+        if (y < 0)
+            pOam->xPosition += 2;
+        else
+            pOam->xPosition += 1;
+
+        if (pOam->animationDurationCounter == 4 && pOam->currentAnimationFrame == 2)
+            pOam->xPosition += 8;
+
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            pOam->spawnY = pOam->yPosition;
+            pOam->unk_4++;
+
+            if (pOam->unk_4 == 10)
+                pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            pOam->animationDurationCounter = 0;
+
+        if (pOam->timer == sArray_59db00[pOam->unk_A])
+        {
+            pOam->unk_A++;
+            if (pOam->unk_A == 6)
+                pOam->unk_A = 0;
+
+            if (!pOam->unk_8)
+                pOam->unk_8 = 1;
+            else
+                pOam->unk_8 = 0;
+
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->stage = 0;
+        }
+    }
+
+    pOam->xPosition -= INTRO_DATA.unk_216;
+    if (pOam->xPosition > 260)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8b7d4 | 4c8 | Processes the hornoad in the SR388 cutscene
+ * 
+ */
+void NewFileIntroProcessHornoad(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+    s16 var0;
+    s16 var1;
+    s32 var2;
+    s32 spawnY;
+    s32 xPos;
+    s16 x;
+    s16 y;
+
+    pOam->timer++;
+
+    if (pOam->stage == 0)
+    {
+        pOam->spawnY = pOam->yPosition;
+
+        if (pOam->timer == 150)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_Chomping;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->spawnY = pOam->yPosition;
+
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_Chomping;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, &x, &y);
+
+        pOam->spawnY = pOam->yPosition;
+
+        if (x - pOam->xPosition < 25)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_Biting;
+            pOam->stage = 3;
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        pOam->pOam = sIntroInSr388HornoadOam_Jumping;
+
+        var0 = pOam->timer * sHornoadJumpVelocityHigh[pOam->unk_4] >> 2;
+        var2 = var0 + (u16)pOam->spawnY;
+        pOam->yPosition = var2;
+
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            pOam->spawnY = var2;
+
+            pOam->unk_4++;
+            if (pOam->unk_4 == 5)
+            {
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388HornoadOam_MidAir;
+            }
+            else if (pOam->unk_4 > 10)
+            {
+                pOam->unk_4 = 10;
+            }
+        }
+
+        if (pOam->yPosition > 128)
+        {
+            pOam->spawnY = 128;
+            pOam->yPosition = 128;
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_Bouncing;
+            pOam->unk_4 = 0;
+            pOam->stage = 4;
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_Panting;
+            pOam->stage = 5;
+        }
+    }
+    else if (pOam->stage == 5)
+    {
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE, &x, &y);
+
+        if (x == 300)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388HornoadOam_Biting;
+            pOam->stage = 6;
+        }
+    }
+    else if (pOam->stage == 6)
+    {
+        pOam->pOam = sIntroInSr388HornoadOam_Jumping;
+
+        var0 = pOam->timer * sHornoadJumpVelocityHigh[pOam->unk_4] >> 1;
+        do { pOam->spawnY += 0; } while (0);
+        spawnY = (u16)pOam->spawnY;
+        var2 = var0;
+        pOam->yPosition = var2 + spawnY;
+        pOam->xPosition++;
+
+        if (pOam->currentAnimationFrame == 2 && pOam->animationDurationCounter == 4)
+        {
+            xPos = (u16)pOam->xPosition;
+            xPos += 8;
+            pOam->xPosition = xPos;
+        }
+        else
+        {
+            var0 += 0;
+        }
+
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            pOam->spawnY = pOam->yPosition;
+
+            pOam->unk_4++;
+            if (pOam->unk_4 == 5)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388HornoadOam_MidAir;
+            }
+            else if (pOam->unk_4 > 10)
+            {
+                pOam->unk_4 = 10;
+            }
+        }
+
+        if (pOam->unk_4 > 1)
+        {
+            NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_FIRST_DIAGONAL_MISSILE, &x, &y);
+
+            if (pOam->xPosition >= x && pOam->yPosition >= y)
+            {
+                NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_EXPLOSION_BIG, pOam->xPosition, pOam->yPosition);
+
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388HornoadOam_Shaking;
+                pOam->unk_4 = 1;
+                WRITE_16(REG_MOSAIC, sXParasiteMosaicValues[1] * 16);
+                pOam->unk_18_5 = 1;
+                pOam->stage = 7;
+            }
+        }
+    }
+    else if (pOam->stage == 7)
+    {
+        if (pOam->timer == 2)
+        {
+            pOam->timer = 0;
+            pOam->unk_4++;
+            WRITE_16(REG_MOSAIC, sXParasiteMosaicValues[pOam->unk_4] * 16);
+        }
+
+        if (pOam->unk_A == 1)
+        {
+            if (pOam->unk_4 == 15)
+            {
+                pOam->timer = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroInSr388XParasiteOam_Floating;
+                pOam->xPosition -= 4;
+                pOam->yPosition -= 10;
+                pOam->unk_A = 0;
+                pOam->stage = 8;
+            }
+        }
+        else
+        {
+            if (pOam->unk_4 == 29)
+            {
+                pOam->unk_A++;
+                pOam->unk_4 = 1;
+            }
+        }
+    }
+    else if (pOam->stage == 8)
+    {
+        if (pOam->timer == 2)
+        {
+            pOam->timer = 0;
+            pOam->unk_4++;
+            WRITE_16(REG_MOSAIC, sXParasiteMosaicValues[pOam->unk_4] * 16);
+        }
+
+        if (pOam->unk_A == 1)
+        {
+            if (pOam->unk_4 == 29)
+            {
+                pOam->timer = 0;
+                pOam->unk_18_5 = 0;
+
+                NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_SAMUS, &x, &y);
+
+                pOam->spawnY = pOam->yPosition;
+                pOam->spawnX = x;
+                pOam->unk_4 = x - pOam->xPosition;
+                pOam->unk_A = 63;
+                pOam->stage = 9;
+            }
+        }
+        else
+        {
+            if (pOam->unk_4 == 29)
+            {
+                pOam->unk_A++;
+                pOam->unk_4 = 1;
+            }
+        }
+    }
+    else if (pOam->stage == 9)
+    {
+        if (pOam->timer != 10)
+        {
+            if (pOam->timer > 30)
+            {
+                pOam->timer = 0;
+                pOam->stage = 10;
+            }
+        }
+    }
+    else if (pOam->stage == 10)
+    {
+        pOam->unk_A++;
+        if (pOam->unk_A > 255)
+            pOam->unk_A -= 256;
+
+        var0 = pOam->unk_A;
+        var1 = pOam->unk_A * 2;
+        if (var1 > 255)
+            var1 -= 256;
+
+        pOam->xPosition = pOam->spawnX + ((pOam->unk_4 * COS(var1) * SIN(var0)) >> 16);
+        pOam->yPosition = pOam->spawnY + ((pOam->unk_4 * COS(var1) * COS(var0)) >> 16);
+
+        if (pOam->unk_A > 159)
+        {
+            pOam->unk_A = 0;
+            pOam->timer = 0;
+            pOam->unk_4 = 0;
+            pOam->spawnY = 0;
+            pOam->spawnX = 0;
+            pOam->stage = 11;
+        }
+        else if (pOam->unk_A > 155)
+        {
+            pOam->spawnX--;
+            pOam->spawnY++;
+        }
+        else if (pOam->unk_A > 119)
+        {
+            pOam->spawnY++;
+        }
+    }
+    else if (pOam->stage == 11)
+    {
+        pOam->unk_18_1 = 3;
+
+        pOam->scaling += Q_8_8(0.5f);
+        if (pOam->scaling >= Q_8_8(2))
+            pOam->stage = 12;
+    }
+    else if (pOam->stage == 12)
+    {
+        pOam->scaling -= Q_8_8(1.f / 16);
+        if (pOam->scaling <= Q_8_8(0.56f))
+        {
+            INTRO_DATA.subStage = 5;
+            pOam->stage = 13;
+        }
+    }
+    else if (pOam->stage == 13)
+    {
+        pOam->animationDurationCounter = 0;
+    }
+
+    pOam->xPosition -= INTRO_DATA.unk_216;
+}
+
+ /**
+ * @brief 8bc9c | b4 | Processes the horizontal missile in the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewFileIntroProcessHorizontalMissile(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+
+    pOam->timer++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->xPosition = pOam->spawnX - (pOam->timer * sNormalMissileVelocity[pOam->unk_4] >> 2);
+        
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            
+            if (pOam->unk_4 < 6)
+                pOam->unk_4++;
+            
+            pOam->spawnX = pOam->xPosition;
+        }
+        else if (pOam->timer == 1)
+        {
+            NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL, pOam->xPosition + 12, pOam->yPosition + 2);
+        }
+        
+        if (pOam->xPosition < 32)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388MissileExplosionOam_Small;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+ /**
+ * @brief 8bd50 | c8 | Processes the first diagonal missile in the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewFileIntroProcessFirstDiagonalMissile(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
+
+    pOam->timer++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->xPosition = pOam->spawnX - (pOam->timer * (sNormalMissileVelocity[pOam->unk_4] + 1) >> 2);
+        pOam->yPosition = pOam->spawnY - (pOam->timer * (sNormalMissileVelocity[pOam->unk_4] + 1) >> 2);
+        
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            
+            if (pOam->unk_4 < 6)
+                pOam->unk_4++;
+            
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+        }
+        else if (pOam->timer == 1)
+        {
+            NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL, pOam->xPosition + 10, pOam->yPosition + 12);
+        }
+
+        NewFileIntroGetPositionOfOamByType(INTRO_IN_SR388_OAM_TYPE_HORNOAD, &x, &y);
+
+        if (pOam->xPosition <= x - 2 && pOam->yPosition <= y - 2)
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+ /**
+ * @brief 8be18 | 2c | To document
+ * 
+ */
+void unk_8be18(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    
+    frame = &pOam->pOam[pOam->currentAnimationFrame];
+    if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8be44 | d8 | To document
+ * 
+ */
+void unk_8be44(struct SpecialCutsceneOam *pOam)
+{
+    if (pOam->stage == 0)
+    {
+        pOam->yPosition = gBg2YPosition;
+        pOam->xPosition = gBg2XPosition;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        if (pOam->yPosition + 1 < gBg2YPosition)
+        {
+            pOam->yPosition = gBg2YPosition;
+            gBg3YPosition++;
+        }
+        
+        if (pOam->xPosition - 1 > gBg2XPosition)
+        {
+            pOam->xPosition = gBg2XPosition;
+            gBg3XPosition--;
+        }
+    }
+    
+    if (pOam->unk_4 == 0)
+    {
+        gBg1XPosition = gBg2XPosition + 256;
+        gBg1YPosition = gBg2YPosition - 96;
+        
+        if (gBg1XPosition < 120)
+        {
+            WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~DCNT_BG1);
+            WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+            
+            gWrittenToBldalpha_Eva = gWrittenToBldalpha_Evb = 0;
+            pOam->unk_4 = 1;
+        }
+    }
+    
+    if (gBg2XPosition == 0)
+        pOam->type = 0;
+}
+
+ /**
+ * @brief 8bf1c | 4c | To document
+ * 
+ */
+void unk_8bf1c(struct SpecialCutsceneOam* pOam)
+{
+    if (gBg2YPosition > 23)
+        pOam->yPosition = 216 - gBg2YPosition;
+
+    pOam->xPosition -= INTRO_DATA.unk_216;
+    if (pOam->xPosition > 302)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8bf68 | 48 | To document
+ * 
+ */
+void unk_8bf68(struct SpecialCutsceneOam* pOam)
+{
+    if (gBg2YPosition > 23)
+        pOam->yPosition = 216 - gBg2YPosition;
+
+    pOam->xPosition -= INTRO_DATA.unk_216;
+    if (pOam->xPosition > 250)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 8bfb0 | d4 | Processes the second and subsequent diagonal missiles in the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewFileIntroProcessSecondDiagonalMissile(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+
+    pOam->timer++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->xPosition = pOam->spawnX - (pOam->timer * (sNormalMissileVelocity[pOam->unk_4] + 1) >> 2);
+        pOam->yPosition = pOam->spawnY - (pOam->timer * (sNormalMissileVelocity[pOam->unk_4] + 1) >> 2);
+        
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+            
+            if (pOam->unk_4 < 6)
+                pOam->unk_4++;
+            
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+        }
+        else if (pOam->timer == 1)
+        {
+            NewFileIntroInSr388SetupOam(INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL, pOam->xPosition + 10, pOam->yPosition + 12);
+        }
+        
+        if (pOam->yPosition < 50)
+        {
+            pOam->timer = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroInSr388MissileExplosionOam_Small;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+ /**
+ * @brief 8c084 | 8 | To document
+ * 
+ */
+void unk_8c084(struct SpecialCutsceneOam* pOam)
+{
+    pOam->type = 0;
+}
+
+ /**
+ * @brief 8c08c | 478 | Spawns an object for the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+u8 NewFileIntroInSr388SetupOam(IntroInSr388OamType type, s16 xPosition, s16 yPosition)
+{
+    u8 slot;
+
+    for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
+    {
+        if (INTRO_DATA.oam[slot].type == 0)
+            break;
+    }
+
+    if (slot > 19)
+        return 20;
+    
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], sizeof(struct SpecialCutsceneOam));
+
+    INTRO_DATA.oam[slot].xPosition = xPosition;
+    INTRO_DATA.oam[slot].yPosition = yPosition;
+    INTRO_DATA.oam[slot].type = type;
+    INTRO_DATA.oam[slot].unk_18_0 = 1;
+
+    if (type == INTRO_IN_SR388_OAM_TYPE_SAMUS)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388SamusOam_WalkingLeft;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusInSr388;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_LEFT_RESEARCHER)
+    {
+        INTRO_DATA.oam[slot].unk_8 = 38;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388BslResearcherOam_Walking;
+        INTRO_DATA.oam[slot].pFunction = NewfileIntroProcessLeftBiologicalResearcher;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_RIGHT_RESEARCHER)
+    {
+        INTRO_DATA.oam[slot].unk_8 = 72;
+        INTRO_DATA.oam[slot].currentAnimationFrame = 1;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388BslResearcherOam_Walking;
+        INTRO_DATA.oam[slot].pFunction = NewfileIntroProcessRightBiologicalResearcher;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORNOAD_UNUSED)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_IdleUnused;
+        INTRO_DATA.oam[slot].pFunction = unk_8b660;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORNOAD_UNUSED_2)
+    {
+        INTRO_DATA.oam[slot].unk_8 = 1;
+        INTRO_DATA.oam[slot].unk_A = 2;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_IdleUnused;
+        INTRO_DATA.oam[slot].pFunction = unk_8b660;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORIZONTAL_MISSILE)
+    {
+        INTRO_DATA.oam[slot].spawnX = xPosition;
+        INTRO_DATA.oam[slot].spawnY = yPosition;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileOam_Horizontal;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHorizontalMissile;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_FIRST_DIAGONAL_MISSILE)
+    {
+        INTRO_DATA.oam[slot].spawnX = xPosition;
+        INTRO_DATA.oam[slot].spawnY = yPosition;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileOam_Diagonal;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessFirstDiagonalMissile;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_MISSILE_TRAIL)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 1;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileTrailOam;
+        INTRO_DATA.oam[slot].pFunction = unk_8be18;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_HORNOAD)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1);
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388HornoadOam_Panting;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHornoad;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_MISSILE_EXPLOSION_BIG)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 1;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileExplosionOam_Big;
+        INTRO_DATA.oam[slot].pFunction = unk_8be18;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_UNK_11)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_8be44;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_CAVE_ENTRANCE_BG)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 3;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388CaveEntranceBgOam;
+        INTRO_DATA.oam[slot].pFunction = unk_8bf1c;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_BLACK_RECTANGLE)
+    {
+        INTRO_DATA.oam[slot].unk_1A_2 = 3;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388BlackRectangeOam;
+        INTRO_DATA.oam[slot].pFunction = unk_8bf68;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_SECOND_DIAGONAL_MISSILE)
+    {
+        INTRO_DATA.oam[slot].spawnX = xPosition;
+        INTRO_DATA.oam[slot].spawnY = yPosition;
+        INTRO_DATA.oam[slot].unk_1A_2 = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroInSr388MissileOam_Diagonal;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSecondDiagonalMissile;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_NEXT_PAGE_ARROW)
+    {
+        INTRO_DATA.oam[slot].pOam = sIntroNextPageArrowOam;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
+    }
+    else if (type == INTRO_IN_SR388_OAM_TYPE_UNK_255)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_8c084;
+    }
+
+    return slot;
+}
+
+ /**
+ * @brief 8c504 | 38 | To document
+ * 
+ */
+void unk_8c504(IntroInSr388OamType type, s16 xPosition, s16 yPosition, u16 arg3)
+{
+    u8 slot;
+    
+    slot = NewFileIntroInSr388SetupOam(type, xPosition, yPosition);
+    INTRO_DATA.oam[slot].unk_8 = arg3;
+}
+
+ /**
+ * @brief 8c53c | 4 | Empty function
+ * 
+ */
+void NewFileIntro_Empty(void)
+{
+    return;
+}
+
+ /**
+ * @brief 8c540 | 54 | Returns the X and Y position of a new file intro OAM
+ * 
+ */
+void NewFileIntroGetPositionOfOamByType(IntroInSr388OamType type, s16* pXPosition, s16* pYPosition)
+{
+    u8 slot;
+
+    for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
+    {
+        if (INTRO_DATA.oam[slot].type == type)
+        {
+            *pXPosition = INTRO_DATA.oam[slot].xPosition;
+            *pYPosition = INTRO_DATA.oam[slot].yPosition;
+            
+            return;
+        }
+    }
+
+    // Default values if not found
+    *pXPosition = 300;
+    *pYPosition = 200;
+}
+
+ /**
+ * @brief 8c594 | dc | V-blank for the 'hornoad encounter in SR388' cutscene
+ * 
+ */
+void NewFileIntroInSr388Vblank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
+
+    WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
+
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+
+    WRITE_16(REG_BG1HOFS, gBg1XPosition);
+    WRITE_16(REG_BG1VOFS, gBg1YPosition);
+    WRITE_16(REG_BG2HOFS, gBg2XPosition);
+    WRITE_16(REG_BG2VOFS, gBg2YPosition);
+    WRITE_16(REG_BG3HOFS, gBg3XPosition);
+    WRITE_16(REG_BG3VOFS, gBg3YPosition);
+
+    if (INTRO_DATA.unk_110 == 1)
+    {
+        INTRO_DATA.unk_110 = 0;
+
+        DMA3_COPY_32(sPal_5a9440, PALRAM_OBJ, 15 * PAL_ROW_SIZE / sizeof(u32));
+        DMA3_COPY_32(sPal_5a9260, PALRAM_BASE, 15 * PAL_ROW_SIZE / sizeof(u32));
+    }
+}
+
+
 
