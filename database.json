@@ -26569,10 +26569,178 @@
     "size": 4
   },
   {
-    "path": "Blob_5bf838_60093c.bin",
-    "count": "0x41104",
+    "path": "new_file_intro/5bf838.pal",
+    "count": "0x40",
     "addr": {
       "us": "0x5BF838"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bf8b8.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BF8B8"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bf938.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BF938"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bf9b8.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BF9B8"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfa38.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFA38"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfab8.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFAB8"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfb38.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFB38"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfbb8.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFBB8"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfc38.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFC38"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfcb8.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFCB8"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfd38.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFD38"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5bfdb8.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x5BFDB8"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/suit_covered_in_parasites.gfx.lz",
+    "count": "0x1086",
+    "addr": {
+      "us": "0x5BFE38"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/hazmat_team.gfx.lz",
+    "count": "0x1333",
+    "addr": {
+      "us": "0x5C4050"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_found.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5C8D1C"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/suit_covered_in_parasites.tm.lz",
+    "count": "0x181",
+    "addr": {
+      "us": "0x5C8F1C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/hazmat_team.tm.lz",
+    "count": "0x18B",
+    "addr": {
+      "us": "0x5C9520"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/suit_removal_surgery.gfx.lz",
+    "count": "0x1B5B",
+    "addr": {
+      "us": "0x5C9B4C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/suit_removal_surgery.tm.lz",
+    "count": "0x227",
+    "addr": {
+      "us": "0x5D08B8"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/metroid_vaccine_vial.gfx.lz",
+    "count": "0xDC5",
+    "addr": {
+      "us": "0x5D1154"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/metroid_vaccine_vial.tm.lz",
+    "count": "0x181",
+    "addr": {
+      "us": "0x5D4868"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5d4e6c_60093c.bin",
+    "count": "0x2BAD0",
+    "addr": {
+      "us": "0x5D4E6C"
     },
     "size": 1
   },

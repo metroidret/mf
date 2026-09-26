@@ -15887,7 +15887,34 @@ const u32 sIntroSamusNervousSystemBg3Tilemap[369] = INCBIN_U32("data/new_file_in
 const u32 sIntroSamusNervousSystemBg2Tilemap[63] = INCBIN_U32("data/new_file_intro/samus_nervous_system_bg2.tm.lz");
 const u32 sIntroSamusNervousSystemBg1Tilemap[68] = INCBIN_U32("data/new_file_intro/samus_nervous_system_bg1.tm.lz");
 
-static const u8 sBlob_5bf838_60093c[] = INCBIN_U8("data/Blob_5bf838_60093c.bin");
+const u16 sPal_5bf838[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bf838.pal");
+const u16 sPal_5bf8b8[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bf8b8.pal");
+const u16 sPal_5bf938[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bf938.pal");
+const u16 sPal_5bf9b8[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bf9b8.pal");
+const u16 sPal_5bfa38[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfa38.pal");
+const u16 sPal_5bfab8[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfab8.pal");
+const u16 sPal_5bfb38[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfb38.pal");
+const u16 sPal_5bfbb8[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfbb8.pal");
+const u16 sPal_5bfc38[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfc38.pal");
+const u16 sPal_5bfcb8[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfcb8.pal");
+const u16 sPal_5bfd38[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfd38.pal");
+const u16 sPal_5bfdb8[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5bfdb8.pal");
+
+const u32 sIntroVariaSuitCoveredInXParasitesGfx[4230] = INCBIN_U32("data/new_file_intro/suit_covered_in_parasites.gfx.lz");
+const u32 sIntroHazmatTeamGfx[4915] = INCBIN_U32("data/new_file_intro/hazmat_team.gfx.lz");
+
+const u16 sIntroSamusFoundPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_found.pal");
+
+const u32 sIntroVariaSuitCoveredInXParasitesTilemap[385] = INCBIN_U32("data/new_file_intro/suit_covered_in_parasites.tm.lz");
+const u32 sIntroHazmatTeamTilemap[395] = INCBIN_U32("data/new_file_intro/hazmat_team.tm.lz");
+
+const u32 sIntroSuitRemovalSurgeryGfx[7003] = INCBIN_U32("data/new_file_intro/suit_removal_surgery.gfx.lz");
+const u32 sIntroSuitRemovalSurgeryTilemap[551] = INCBIN_U32("data/new_file_intro/suit_removal_surgery.tm.lz");
+
+const u32 sIntroMetroidVaccineVialGfx[3525] = INCBIN_U32("data/new_file_intro/metroid_vaccine_vial.gfx.lz");
+const u32 sIntroMetroidVaccineVialTilemap[385] = INCBIN_U32("data/new_file_intro/metroid_vaccine_vial.tm.lz");
+
+static const u8 sBlob_5d4e6c_60093c[] = INCBIN_U8("data/Blob_5d4e6c_60093c.bin");
 
 const u32 sIntroSamusSittingGfx[4818] = INCBIN_U32("data/new_file_intro/samus_sitting.gfx.lz");
 const u16 sIntroSamusSittingPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_sitting.pal");
