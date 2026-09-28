@@ -1078,7 +1078,12 @@ u8 SamusCheckShooting(void)
 
     if (gSamusData.newProjectile == NEW_PROJ_NONE && gSamusData.cooldownTimer == 0)
     {
+#ifdef BUGFIX
+        if ((gChangedInput & KEY_B) && gSamusData.chargeBeamCounter < CHARGE_BEAM_THRESHOLD)
+#else // !BUGFIX
+        // BUG: Pressing B during a door transition can cancel a charged beam
         if (gChangedInput & KEY_B)
+#endif // BUGFIX
         {
             if (!(gSamusData.weaponHighlighted & WH_MISSILES))
             {
@@ -7181,7 +7186,7 @@ void SamusUpdateGraphics(u8 direction)
                     else if (gEquipment.suitMiscStatus & SMF_VARIA_SUIT)
 #ifdef BUGFIX
                         pPalette = sSamusPal_Default_Row0_Varia;
-#else // !BUFIX
+#else // !BUGFIX
                         pPalette = sSamusPal_Default_Row0_Fusion + PAL_ROW;
 #endif // BUGFIX
                     else
