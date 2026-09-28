@@ -156,6 +156,33 @@ extern const u32 sIntroSamusNervousSystemBg3Tilemap[369];
 extern const u32 sIntroSamusNervousSystemBg2Tilemap[63];
 extern const u32 sIntroSamusNervousSystemBg1Tilemap[68];
 
+extern const u16 sPal_5bf838[4 * PAL_ROW];
+extern const u16 sPal_5bf8b8[4 * PAL_ROW];
+extern const u16 sPal_5bf938[4 * PAL_ROW];
+extern const u16 sPal_5bf9b8[4 * PAL_ROW];
+extern const u16 sPal_5bfa38[4 * PAL_ROW];
+extern const u16 sPal_5bfab8[4 * PAL_ROW];
+extern const u16 sPal_5bfb38[4 * PAL_ROW];
+extern const u16 sPal_5bfbb8[4 * PAL_ROW];
+extern const u16 sPal_5bfc38[4 * PAL_ROW];
+extern const u16 sPal_5bfcb8[4 * PAL_ROW];
+extern const u16 sPal_5bfd38[4 * PAL_ROW];
+extern const u16 sPal_5bfdb8[4 * PAL_ROW];
+
+extern const u32 sIntroVariaSuitCoveredInXParasitesGfx[4230];
+extern const u32 sIntroHazmatTeamGfx[4915];
+
+extern const u16 sIntroSamusFoundPal[16 * PAL_ROW];
+
+extern const u32 sIntroVariaSuitCoveredInXParasitesTilemap[385];
+extern const u32 sIntroHazmatTeamTilemap[395];
+
+extern const u32 sIntroSuitRemovalSurgeryGfx[7003];
+extern const u32 sIntroSuitRemovalSurgeryTilemap[551];
+
+extern const u32 sIntroMetroidVaccineVialGfx[3525];
+extern const u32 sIntroMetroidVaccineVialTilemap[385];
+
 extern const u32 sIntroSamusSittingGfx[4818];
 extern const u16 sIntroSamusSittingPal[16 * PAL_ROW];
 extern const u32 sIntroSamusSittingTilemap[171];
