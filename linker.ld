@@ -491,7 +491,7 @@ SECTIONS {
         src/menus/title_screen.o(.text);
         src/new_file_intro.o(.text);
 
-        asm/disasm_0x08088240.o(.text);
+        asm/disasm_0x0808F5C4.o(.text);
 
         src/sa_x_close_up.o(.text);
 
