@@ -221,7 +221,7 @@ extern const struct FrameData sOam_5f4878[8];
 extern const struct FrameData sOam_5f48b8[6];
 extern const struct FrameData sOam_5f48e8[26];
 extern const struct FrameData sOam_5f49b8[6];
-extern const struct FrameData sOam_5f49e8[3];
+extern const struct FrameData sIntroSamusCuredScreenGlareOam[3];
 
 extern const u16 sIntroApproachingBslObjPal[16 * PAL_ROW];
 

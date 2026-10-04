@@ -46,10 +46,10 @@ u8 NewFileIntroFindOamByType(IntroSamusGettingCuredOamType type);
 u8 NewFileIntroSamusFoundSetupOam(IntroSamusFoundOamType type, s16 xPosition, s16 yPosition);
 void NewFileIntroSamusFoundVblank(void);
 boolu32 NewFileIntroSamusFound(void);
-u8 NewFileIntroSamusCuredSetupOam(u8 type, s16 xPosition, s16 yPosition);
+u8 NewFileIntroSamusCuredSetupOam(IntroSamusCuredOamType type, s16 xPosition, s16 yPosition);
 void NewFileIntroSamusCuredVblank(void);
 boolu32 NewFileIntroSamusCured(void);
-void unk_8f5c0(struct SpecialCutsceneOam* pOam);
+void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -6596,8 +6596,8 @@ void NewFileIntroSamusCuredInit(void)
     gBg3XPosition = 0;
     gBg3YPosition = 256;
 
-    NewFileIntroSamusCuredSetupOam(200, 260, 0);
-    NewFileIntroSamusCuredSetupOam(1, 0, 0);
+    NewFileIntroSamusCuredSetupOam(INTRO_SAMUS_CURED_OAM_TYPE_NEXT_PAGE_ARROW, 260, 0);
+    NewFileIntroSamusCuredSetupOam(INTRO_SAMUS_CURED_OAM_TYPE_SCREEN_SCROLLER, 0, 0);
 
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -6775,7 +6775,7 @@ boolu32 NewFileIntroSamusCuredProcess(void)
             break;
         
         case 8:
-            if (INTRO_DATA.timer == 8)
+            if (INTRO_DATA.timer == CONVERT_SECONDS(2.f / 15))
             {
                 INTRO_DATA.timer = 0;
                 
@@ -6831,7 +6831,7 @@ boolu32 NewFileIntroSamusCuredProcess(void)
         case 11:
             if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 6))
             {
-                NewFileIntroSamusCuredSetupOam(30, 120, 64);
+                NewFileIntroSamusCuredSetupOam(INTRO_SAMUS_CURED_OAM_TYPE_SCREEN_GLARE, SCREEN_X_MIDDLE, 64);
             }
             else if (INTRO_DATA.timer == TWO_THIRD_SECOND)
             {
@@ -6916,7 +6916,7 @@ boolu32 NewFileIntroSamusCured(void)
  * @brief 8f280 | 104 | Processes the screen scrolling in the Samus cured cutscene
  * 
  */
-void NewFileIntroProcessSamusCuredScrolling(struct SpecialCutsceneOam *pOam)
+void NewFileIntroSamusCuredProcessScrolling(struct SpecialCutsceneOam *pOam)
 {
     APPLY_DELTA_TIME_INC(pOam->timer);
 
@@ -6978,7 +6978,7 @@ void NewFileIntroProcessSamusCuredScrolling(struct SpecialCutsceneOam *pOam)
  * @brief 8f384 | 140 | Spawns an OAM for the intro Samus cured cutscene
  * 
  */
-u8 NewFileIntroSamusCuredSetupOam(u8 type, s16 xPosition, s16 yPosition)
+u8 NewFileIntroSamusCuredSetupOam(IntroSamusCuredOamType type, s16 xPosition, s16 yPosition)
 {
     u8 slot;
 
@@ -6997,20 +6997,20 @@ u8 NewFileIntroSamusCuredSetupOam(u8 type, s16 xPosition, s16 yPosition)
     INTRO_DATA.oam[slot].yPosition = yPosition;
     INTRO_DATA.oam[slot].type = type;
     INTRO_DATA.oam[slot].unk_18_0 = 1;
-    
-    if (type == 1)
+
+    if (type == INTRO_SAMUS_CURED_OAM_TYPE_SCREEN_SCROLLER)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
-        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusCuredScrolling;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroSamusCuredProcessScrolling;
     }
-    else if (type == 30)
+    else if (type == INTRO_SAMUS_CURED_OAM_TYPE_SCREEN_GLARE)
     {
         SoundPlay(SOUND_12D);
         INTRO_DATA.oam[slot].priority = 2;
-        INTRO_DATA.oam[slot].pOam = sOam_5f49e8;
-        INTRO_DATA.oam[slot].pFunction = unk_8f5c0;
+        INTRO_DATA.oam[slot].pOam = sIntroSamusCuredScreenGlareOam;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroSamusCuredProcessOam_Empty;
     }
-    else if (type == 200)
+    else if (type == INTRO_SAMUS_CURED_OAM_TYPE_NEXT_PAGE_ARROW)
     {
         INTRO_DATA.oam[slot].pOam = sIntroNextPageArrowOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessTextCursor;
@@ -7051,7 +7051,7 @@ void NewFileIntroSamusCuredVblank(void)
  * @brief 8f5c0 | 4 | Intro Samus cured OAM handler (empty)
  * 
  */
-void unk_8f5c0(struct SpecialCutsceneOam* pOam)
+void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam)
 {
     return;
 }

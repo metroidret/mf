@@ -18559,7 +18559,7 @@ const struct FrameData sOam_5f49b8[6] = {
 	[5] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f49e8[3] = {
+const struct FrameData sIntroSamusCuredScreenGlareOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_5f40da,
 		.timer = 3
