@@ -26737,10 +26737,122 @@
     "size": 4
   },
   {
-    "path": "Blob_5d4e6c_60093c.bin",
-    "count": "0x2BAD0",
+    "path": "new_file_intro/samus_reborn_bg_top.gfx.lz",
+    "count": "0x19D8",
     "addr": {
       "us": "0x5D4E6C"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_reborn_bg_bottom.gfx.lz",
+    "count": "0xDD1",
+    "addr": {
+      "us": "0x5DB5CC"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_reborn_bg.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5DED10"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/samus_reborn_bg_top.tm.lz",
+    "count": "0x227",
+    "addr": {
+      "us": "0x5DEF10"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/samus_reborn_bg_bottom.tm.lz",
+    "count": "0x170",
+    "addr": {
+      "us": "0x5DF7AC"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5dfd6c_5e116c.bin",
+    "count": "0x1400",
+    "addr": {
+      "us": "0x5DFD6C"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/approaching_bsl_obj.gfx.lz",
+    "count": "0xE1E",
+    "addr": {
+      "us": "0x5E116C"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5e49e4_5edf70.bin",
+    "count": "0x958C",
+    "addr": {
+      "us": "0x5E49E4"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/samus_monologue_bg.gfx.lz",
+    "count": "0xCD2",
+    "addr": {
+      "us": "0x5EDF70"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5f12b8_5f2610.bin",
+    "count": "0x1358",
+    "addr": {
+      "us": "0x5F12B8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_5f4a00_5f5254.bin",
+    "count": "0x854",
+    "addr": {
+      "us": "0x5F4A00"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/approaching_bsl_obj.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5F5254"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_5f5454_5f6018.bin",
+    "count": "0xBC4",
+    "addr": {
+      "us": "0x5F5454"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/samus_monologue_bg.tm.lz",
+    "count": "0x16F",
+    "addr": {
+      "us": "0x5F6018"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5f65d4_60093c.bin",
+    "count": "0xA368",
+    "addr": {
+      "us": "0x5F65D4"
     },
     "size": 1
   },
@@ -27793,10 +27905,10 @@
     "size": 1
   },
   {
-    "path": "Blob_79c314_79c3c8.bin",
-    "count": "0xB4",
+    "path": "Blob_79c394_79c3c8.bin",
+    "count": "0x34",
     "addr": {
-      "us": "0x79C314"
+      "us": "0x79C394"
     },
     "size": 1
   },
