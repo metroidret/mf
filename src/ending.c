@@ -6,8 +6,8 @@
 #include "constants/game_state.h"
 #include "constants/audio.h"
 
-#include "data/color_fading_data.h" // TODO: This is for sEndingSamusPosingSineTable, change this later
 #include "data/ending_data.h"
+#include "data/haze_data.h"
 
 #include "structs/ending.h"
 #include "structs/samus.h"

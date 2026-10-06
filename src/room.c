@@ -27,6 +27,7 @@
 #include "structs/demo.h"
 #include "structs/display.h"
 #include "structs/event.h"
+#include "structs/haze.h"
 #include "structs/power_bomb.h"
 #include "structs/room.h"
 #include "structs/sa_x.h"
@@ -157,7 +158,7 @@ void RoomLoadTileset(void)
 
     gTilesetTransparentColor.transparentColor = tileset.pPalette[0];
     WRITE_16(PALRAM_BASE, 0);
-    gTilesetTransparentColor.field_2 = 0;
+    gTilesetTransparentColor.unk_2 = 0;
 
     bgGfxSize = C_16_2_8(((u8*)tileset.pBackgroundGraphics)[2],
         ((u8*)tileset.pBackgroundGraphics)[1]);

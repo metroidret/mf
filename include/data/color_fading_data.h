@@ -9,7 +9,4 @@ extern const struct ColorFadingColorInfo sColorFadingSpeeds[COLOR_FADING_SPEED_C
 
 extern const struct ColorMultiplier sMonochromeMultiplier;
 
-
-extern const s8 sEndingSamusPosingSineTable[128];
-
 #endif /* COLOR_FADING_DATA_H */

@@ -38,7 +38,7 @@ const struct HatchData sHatchData_Empty = {
 
 const struct PowerBomb sPowerBomb_Empty = {
     .animationState = 0,
-    .unk_1 = 0,
+    .stage = 0,
     .semiMinorAxis = 0,
     .unk_3 = 0,
     .xPosition = 0,

@@ -10,7 +10,8 @@
 
 struct TilesetTransparentColor {
     u16 transparentColor;
-    u16 field_2;
+    u16 unk_2;
+    u16 unk_4;
 };
 
 extern struct TilesetTransparentColor gTilesetTransparentColor;

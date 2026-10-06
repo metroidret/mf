@@ -11,6 +11,7 @@
 
 struct InGameData {
     u8 clipdataCode[640];
+    u8 hazeCode[512];
 };
 
 union NonGameplayRam {
@@ -157,16 +158,6 @@ struct BackgroundPositions {
 };
 
 extern struct BackgroundPositions gBackgroundPositions;
-
-struct Haze {
-    void* pAffected;
-    u16 unk_4;
-    u8 size;
-    u8 enabled:7;
-    u8 active:1;
-};
-
-extern struct Haze gHazeInfo;
 
 extern u16 gBackdropColor;
 

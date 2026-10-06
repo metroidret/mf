@@ -289,6 +289,10 @@ SECTIONS {
         . = 0x0000531c; gAnimatedGraphicsData = .;
         . = 0x000053dc; gTankAnimations = .;
         . = 0x000053e8; gCurrentRoomScrollDataPointer = .;
+        . = 0x000053ec; gHazeLoops = .;
+        . = 0x000053f8; gUnk_30053f8 = .;
+        . = 0x000053f9; gUnk_30053f9 = .;
+        . = 0x000053fc; gHazeProcessCodePointer = .;
 
         . = 0x00005408; *libgcc.a:dp-bit.o(.bss);
         . = 0x00005420; *libgcc.a:fp-bit.o(.bss);
@@ -463,12 +467,9 @@ SECTIONS {
         src/bg_clip.o(.text);
         src/color_effects.o(.text);
         src/color_fading.o(.text);
-
-        asm/disasm_0x0806ed84.o(.text);
-
+        src/haze.o(.text);
         src/animated_palette.o(.text);
         src/sound_event.o(.text);
-
         src/demo.o(.text);
         src/hud.o(.text);
         src/escape.o(.text);
@@ -643,6 +644,7 @@ SECTIONS {
         src/data/scroll_data.o(.rodata);
         src/data/block_data.o(.rodata);
         src/data/color_fading_data.o(.rodata);
+        src/data/haze_data.o(.rodata);
         src/data/animated_palette_data.o(.rodata);
         src/data/demo_data.o(.rodata);
         src/data/hud_data.o(.rodata);
@@ -1082,6 +1084,8 @@ SECTIONS {
         src/room.o(.data);
         src/scroll.o(.data);
         src/block.o(.data);
+        src/color_effects.o(.data);
+        src/haze.o(.data);
         src/sound_event.o(.data);
         src/particle.o(.data);
         src/projectile.o(.data);

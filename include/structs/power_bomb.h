@@ -4,9 +4,18 @@
 #include "types.h"
 #include "oam.h"
 
+MAKE_ENUM(u8, PowerBombState) {
+    PB_STATE_NONE,
+    PB_STATE_UNK_1,
+    PB_STATE_UNK_2,
+    PB_STATE_EXPLODING,
+    PB_STATE_IMPLODING,
+    PB_STATE_ENDING
+};
+
 struct PowerBomb {
     u8 animationState;
-    u8 unk_1;
+    u8 stage;
     u8 semiMinorAxis;
     u8 unk_3;
     u16 xPosition;

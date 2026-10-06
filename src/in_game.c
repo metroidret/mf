@@ -11,6 +11,7 @@
 
 #include "structs/bg_clip.h"
 #include "structs/demo.h"
+#include "structs/haze.h"
 #include "structs/samus.h"
 #include "structs/sa_x.h"
 

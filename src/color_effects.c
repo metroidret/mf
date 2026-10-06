@@ -10,6 +10,13 @@
 #include "structs/animated_graphics.h"
 #include "structs/color_effects.h"
 
+s32 (*sBlendWhiteBlackFunctionPointers[4])(u8, u8, u8, u8) = {
+    ColorEffectBlendFromWhite,
+    ColorEffectBlendToWhite,
+    ColorEffectBlendFromBlack,
+    ColorEffectBlendToBlack,
+};
+
 /**
  * @brief 6cf0c | 14 | Copies palette RAM to EWRAM palettes 2 and 1
  * 

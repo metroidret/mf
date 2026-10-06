@@ -25,8 +25,44 @@ static BlockFunc_T sNonReformDestroyFunctionPointers[BLOCK_SUB_TYPE_COUNT] = {
     [BLOCK_SUB_TYPE_BOMB_CHAIN] = BlockDestroyBombChainBlock
 };
 
-static u8 sBlob_79bb64_79bbcc[] = INCBIN_U8("data/Blob_79bb64_79bbcc.bin");
-
+static u8 sUnk_79bb64[12][3] = {
+    {
+        0x43, 0x63, 0x44
+    },
+    {
+        0x43, 0x63, 0x44
+    },
+    {
+        0x64, 0x45, 0x65
+    },
+    {
+        0x64, 0x45, 0x65
+    },
+    {
+        0x46, 0x66, 0x47
+    },
+    {
+        0x46, 0x66, 0x47
+    },
+    {
+        0x67, 0x48, 0x68
+    },
+    {
+        0x67, 0x48, 0x68
+    },
+    {
+        0x49, 0x69, 0x4A
+    },
+    {
+        0x49, 0x69, 0x4A
+    },
+    {
+        0x6A, 0x4B, 0x6B
+    },
+    {
+        0x6A, 0x4B, 0x6B
+    },
+};
 
 /**
  * @brief 6acbc | 224 | Checks if something should happen to a block depending on the current clipdata action

@@ -222,7 +222,7 @@ void PowerBombExplosionBegin(void)
 
     HazeSetupCode(0x8);
 
-    gCurrentPowerBomb.unk_1 = 0;
+    gCurrentPowerBomb.stage = 0;
     gCurrentPowerBomb.semiMinorAxis = 0x4;
 
     gCurrentPowerBomb.hitboxLeft = 0;
@@ -248,7 +248,7 @@ void PowerBombExplosionEnd(void)
     u8 evb;
     u8 done;
 
-    if (gCurrentPowerBomb.unk_1 == 0)
+    if (gCurrentPowerBomb.stage == 0)
     {
         WRITE_16(REG_BLDY, 0);
 
@@ -275,9 +275,9 @@ void PowerBombExplosionEnd(void)
         WRITE_16(REG_BG3CNT, gIoRegisters.bg3Cnt);
 
         gWrittenToDispcnt = gIoRegisters.dispcnt;
-        gCurrentPowerBomb.unk_1 = 1;
+        gCurrentPowerBomb.stage = 1;
     }
-    else if (gCurrentPowerBomb.unk_1 == 1)
+    else if (gCurrentPowerBomb.stage == 1)
     {
         // Fade BLDALPHA until it was the same as before the power bomb
         eva = LOW_BYTE(READ_16(REG_BLDALPHA));
@@ -307,12 +307,12 @@ void PowerBombExplosionEnd(void)
         gWrittenToBldalpha = C_16_2_8(evb, eva);
 
         if (done)
-            gCurrentPowerBomb.unk_1 = 2;
+            gCurrentPowerBomb.stage = 2;
     }
-    else if (gCurrentPowerBomb.unk_1 == 2)
+    else if (gCurrentPowerBomb.stage == 2)
     {
         gCurrentPowerBomb.animationState = 0;
         gCurrentPowerBomb.ownedBySaX = FALSE;
-        gCurrentPowerBomb.unk_1 = 0;
+        gCurrentPowerBomb.stage = 0;
     }
 }

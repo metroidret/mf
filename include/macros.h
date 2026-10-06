@@ -101,6 +101,15 @@
 #define C_16_2_8(high, low) ((high) << 8 | (low))
 
 /**
+ * @brief Constructs an @c u16 from 2 @c u8
+ * 
+ * @param high High
+ * @param low Low
+ * @return Value (low | high << 8)
+ */
+#define C_16_2_8_(high, low) ((low) | (high) << 8)
+
+/**
  * @brief Creates a signed 8-bit value from an @c s16
  * 
  * @param value Value
