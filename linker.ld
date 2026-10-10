@@ -487,6 +487,7 @@ SECTIONS {
         asm/disasm_0x08079afc.o(.text);
 
         src/menus/pause_debug.o(.text);
+        src/menus/events_debug.o(.text);
 
         asm/disasm_0x0807e678.o(.text);
 
