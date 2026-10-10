@@ -88,8 +88,3 @@ const void* const sPauseScreen_5761f0[8] = {
 const u8 sMaintainedInputDelays[7] = {
     15, 10, 6, 4, 4, 4, 2,
 };
-
-
-static const u8 sBlob_576217_581510[] = INCBIN_U8("data/Blob_576217_581510.bin");
-
-
