@@ -3,9 +3,11 @@
 
 #include "types.h"
 #include "oam.h"
+#include "gba.h"
 
 #include "constants/connection.h"
 #include "constants/event.h"
+#include "constants/minimap.h"
 #include "constants/menus/pause_debug.h"
 
 #define PAUSE_DEBUG_SECTION_INFO_TOP(section) (sDebugSectionInfo[(section)][0])
@@ -26,7 +28,12 @@ extern const u8 sStatusScreenSectionSizes[5];
 extern const u16 sPauseDebugNumbersIncrementValues[5];
 extern const u16 sPauseDebugNumbersMaxValues[3];
 
-// ... 
+// ...
+
+extern const u8 sMinimapHudColorMapping_Low[MINIMAP_TILE_TYPE_COUNT][PAL_ROW];
+extern const u8 sMinimapHudColorMapping_High[MINIMAP_TILE_TYPE_COUNT][PAL_ROW];
+
+// ...
 
 #define EVENT_NAME_SIZE 28
 extern const u8 sPauseDebugEventNames[EVENT_END][EVENT_NAME_SIZE];

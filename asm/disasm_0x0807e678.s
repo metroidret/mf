@@ -3801,7 +3801,7 @@ _08080424:
 	subs r0, #1
 	strh r0, [r4, #0x18]
 	strh r0, [r2]
-	bl LoadInitialMinimap
+	bl MinimapLoadInitial
 	ldr r0, _0808052C @ =gIsLoadingFile
 	strb r5, [r0]
 	add sp, #4

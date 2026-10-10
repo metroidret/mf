@@ -55,6 +55,8 @@ SECTIONS {
         . = 0x0000002e; gLastDoorUsed = .;
         . = 0x0000002f; gLastDoorProperties = .;
         . = 0x00000030; gDisplayLocationName = .;
+        . = 0x00000031; gMinimapX = .;
+        . = 0x00000032; gMinimapY = .;
         . = 0x00000033; gNumberOfNeverReformBlocks = .;
         . = 0x0000003b; gNumberOfCollectedTanks = .;
         . = 0x00000043; gCurrentHazeValue = .;
@@ -477,8 +479,9 @@ SECTIONS {
         src/particle.o(.text);
         src/oam_id.o(.text);
         src/event.o(.text);
+        src/minimap.o(.text);
 
-        asm/disasm_0x08074ffc.o(.text);
+        asm/disasm_0x0807552c.o(.text);
 
         src/text.o(.text);
 
@@ -1067,6 +1070,7 @@ SECTIONS {
         src/data/rooms/sector_6/bg3.o(.rodata);
 
         src/data/animated_tiles_data.o(.rodata);
+        src/data/menus/pause_screen_map_data.o(.rodata);
 
         src/data/event_data.o(.rodata);
         src/data/menus/pause_debug.o(.rodata);
@@ -1088,6 +1092,7 @@ SECTIONS {
         src/haze.o(.data);
         src/sound_event.o(.data);
         src/particle.o(.data);
+        src/minimap.o(.data);
         src/projectile.o(.data);
         src/new_file_intro.o(.data);
         src/ending.o(.data);

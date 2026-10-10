@@ -25881,10 +25881,18 @@
     "size": 1
   },
   {
-    "path": "Blob_561fa8_575a60.bin",
-    "count": "0x13AB8",
+    "path": "menus/pause_screen/minimap_tiles.gfx",
+    "count": "0x3800",
     "addr": {
       "us": "0x561FA8"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_5657a8_575a60.bin",
+    "count": "0x102B8",
+    "addr": {
+      "us": "0x5657A8"
     },
     "size": 1
   },
@@ -27873,10 +27881,10 @@
     "size": 1
   },
   {
-    "path": "Blob_79bddc_79c27c.bin",
-    "count": "0x4A0",
+    "path": "Blob_79be5c_79c27c.bin",
+    "count": "0x420",
     "addr": {
-      "us": "0x79BDDC"
+      "us": "0x79BE5C"
     },
     "size": 1
   },
