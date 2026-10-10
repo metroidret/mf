@@ -8052,24 +8052,4 @@ _0807910E:
 	.align 2, 0
 _08079114: .4byte 0x00000239
 
-	thumb_func_start GetCharacterWidth
-GetCharacterWidth: @ 0x08079118
-	push {lr}
-	lsls r0, r0, #0x10
-	lsrs r1, r0, #0x10
-	ldr r0, _0807912C @ =0x0000049F
-	cmp r1, r0
-	bhi _08079134
-	ldr r0, _08079130 @ =0x08576234
-	adds r0, r1, r0
-	ldrb r0, [r0]
-	b _08079136
-	.align 2, 0
-_0807912C: .4byte 0x0000049F
-_08079130: .4byte 0x08576234
-_08079134:
-	movs r0, #0xa
-_08079136:
-	pop {r1}
-	bx r1
-	.align 2, 0
+
