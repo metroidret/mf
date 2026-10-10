@@ -25905,18 +25905,10 @@
     "size": 1
   },
   {
-    "path": "Blob_576234_5766D4.bin",
-    "count": "0x4A0",
+    "path": "Blob_5766D3_581510.bin",
+    "count": "0xAE3D",
     "addr": {
-      "us": "576234"
-    },
-    "size": 1
-  },
-  {
-    "path": "Blob_5766D4_581510.bin",
-    "count": "0xAE3C",
-    "addr": {
-      "us": "5766D4"
+      "us": "5766D3"
     },
     "size": 1
   },
