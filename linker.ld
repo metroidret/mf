@@ -480,6 +480,8 @@ SECTIONS {
 
         asm/disasm_0x08074ffc.o(.text);
 
+        asm/disasm_0x0807813c.o(.text);
+
         src/text.o(.text);
 
         asm/disasm_0x08079afc.o(.text);
