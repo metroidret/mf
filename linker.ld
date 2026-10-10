@@ -487,7 +487,6 @@ SECTIONS {
         asm/disasm_0x08079afc.o(.text);
 
         src/menus/pause_debug.o(.text);
-        src/menus/events_debug.o(.text);
 
         asm/disasm_0x0807e678.o(.text);
 
@@ -1073,6 +1072,7 @@ SECTIONS {
 
         src/data/event_data.o(.rodata);
         src/data/menus/pause_debug.o(.rodata);
+        src/data/menus/events_debug.o(.rodata);
         src/data/sram_pointers.o(.rodata);
         src/data/projectile_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
