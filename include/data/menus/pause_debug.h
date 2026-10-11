@@ -26,6 +26,8 @@ extern const u8 sStatusScreenSectionSizes[5];
 extern const u16 sPauseDebugNumbersIncrementValues[5];
 extern const u16 sPauseDebugNumbersMaxValues[3];
 
+// ...
+extern const u8 sCharacterWidths[1184];
 // ... 
 
 #define EVENT_NAME_SIZE 28

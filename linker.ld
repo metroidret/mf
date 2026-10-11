@@ -1074,8 +1074,6 @@ SECTIONS {
 
         src/data/event_data.o(.rodata);
         src/data/menus/pause_debug.o(.rodata);
-        src/data/menus/characters.o(.rodata);
-        src/data/menus/events_debug.o(.rodata);
         src/data/sram_pointers.o(.rodata);
         src/data/projectile_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
