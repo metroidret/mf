@@ -91,8 +91,6 @@ static Func_T sProcessParticleFunctionPointers[PE_END] = {
     [PE_ESCAPE] = ParticleEscape,
 };
 
-static u8 sBlob_79bddc_79c27c[] = INCBIN_U8("data/Blob_79bddc_79c27c.bin");
-
 /**
  * @brief Checks if the current particle is on screen
  *

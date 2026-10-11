@@ -36,6 +36,19 @@
 #define VRAM_OBJ (void *)0x06010000
 #define VRAM_SIZE (96 * 0x400)
 
+/**
+ * @brief The number of pixels on one side of a tile
+ */
+#define TILE_DIM 8
+/**
+ * @brief The size of a tile in bytes
+ */
+#define TILE_SIZE 32
+/**
+ * @brief The size of a single pixel row of a tile in bytes
+ */
+#define TILE_PIXEL_ROW_SIZE (TILE_SIZE / TILE_DIM)
+
 #define OAM_BASE (void *)0x07000000
 #define OAM_SIZE 0x400
 

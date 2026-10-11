@@ -1,5 +1,8 @@
 #include "types.h"
 
+#define LOW_NIBBLE(value) ((value) & 0xF)
+#define HIGH_NIBBLE(value) ((value) >> 4)
+
 #define LOW_BYTE(value) ((value) & UCHAR_MAX)
 #define HIGH_BYTE(value) (((value) & UCHAR_MAX << 8) >> 8)
 
