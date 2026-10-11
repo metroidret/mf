@@ -29,11 +29,10 @@ extern const u16 sPauseDebugNumbersIncrementValues[5];
 extern const u16 sPauseDebugNumbersMaxValues[3];
 
 // ...
-
+extern const u8 sCharacterWidths[1184];
+// ...
 extern const u8 sMinimapHudColorMapping_Low[MINIMAP_TILE_TYPE_COUNT][PAL_ROW];
 extern const u8 sMinimapHudColorMapping_High[MINIMAP_TILE_TYPE_COUNT][PAL_ROW];
-
-// ...
 
 #define EVENT_NAME_SIZE 28
 extern const u8 sPauseDebugEventNames[EVENT_END][EVENT_NAME_SIZE];
