@@ -89,7 +89,7 @@ const u8 sMaintainedInputDelays[7] = {
     15, 10, 6, 4, 4, 4, 2,
 };
 
-static const u8 sBlob_576218_576234[] = INCBIN_U8("data/Blob_576218_576234.bin");
+static const u8 sBlob_576217_576234[] = INCBIN_U8("data/Blob_576217_576234.bin");
 
 const u8 sCharacterWidths[] = {
   0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,

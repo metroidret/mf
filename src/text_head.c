@@ -6,7 +6,7 @@
 
 #include "data/event_data.h"
 
-#include "data/menus/characters.h"
+#include "data/menus/pause_debug.h"
 
 extern const u8 sCharacterWidths[1184];
 
