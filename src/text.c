@@ -1,10 +1,12 @@
+#include "text.h"
+
 #include "globals.h"
 #include "new_file_intro.h"
 
+#include "data/event_data.h"
+
 #include "structs/event.h"
 #include "structs/samus.h"
-
-#include "data/event_data.h"
 
 extern void DrawLocationTextCharacters(u8 param_1, u16** ppText);
 
