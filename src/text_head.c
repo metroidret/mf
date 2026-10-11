@@ -8,10 +8,9 @@
 
 #include "data/menus/pause_debug.h"
 
-extern const u8 sCharacterWidths[1184];
-
-u8 GetCharacterWidth(u16 idx) {
-    if (idx >= sizeof(sCharacterWidths))
+u8 GetCharacterWidth(u16 idx) 
+{
+    if (idx >= ARRAY_SIZE(sCharacterWidths))
         return 10; 
     return sCharacterWidths[idx];
 }
