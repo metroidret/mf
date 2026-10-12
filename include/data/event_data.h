@@ -9,7 +9,7 @@
 
 extern const struct EventLocationAndNavigationInfo sEventLocationAndNavigationInfo[EVENT_END];
 
-extern const u8 sNumberOfTanksPerArea[AREA_NORMAL_COUNT + 1][TANK_COUNT];
+extern const u8 sNumberOfTanksPerArea[AREA_NORMAL_COUNT + 1][TANK_NUM_COUNT];
 
 extern const u8 sObtainItemEvents[ABILITY_COUNT_END + 1];
 extern const struct AbilityRamValue sAbilityRamValues[ABILITY_COUNT_END];

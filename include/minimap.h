@@ -14,7 +14,4 @@ void MinimapCopyTileXFlippedGfx(u8** dst, u32* pTile, u8 palette);
 void MinimapCopyTileYFlippedGfx(u8** dst, u32* pTile, u8 palette);
 void MinimapCopyTileXYFlippedGfx(u8** dst, u32* pTile, u8 palette);
 
-// TODO: Move to menus/pause_screen_map.h
-s32 MinimapCheckIsTileExplored(u8, u8);
-
 #endif /* MINIMAP_H */

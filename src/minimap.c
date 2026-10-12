@@ -16,14 +16,12 @@
 #include "structs/room.h"
 #include "structs/samus.h"
 
-static u32 sExploredMinimapBitFlags[32] = {
+u32 sExploredMinimapBitFlags[32] = {
     1 << 0, 1 << 1, 1 << 2, 1 << 3, 1 << 4, 1 << 5, 1 << 6, 1 << 7,
     1 << 8, 1 << 9, 1 << 10, 1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15,
     1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20, 1 << 21, 1 << 22, 1 << 23,
     1 << 24, 1 << 25, 1 << 26, 1 << 27, 1 << 28, 1 << 29, 1 << 30, 1 << 31,
 };
-
-static u8 sBlob_79be5c_79c27c[] = INCBIN_U8("data/Blob_79be5c_79c27c.bin");
 
 /**
  * @brief 74ffc | 88 | Loads the initial minimap data
@@ -62,7 +60,7 @@ void MinimapUpdate(void)
     if (gMinimapUpdateFlag == MINIMAP_UPDATE_FLAG_LOWER_LINE)
     {
         MinimapSetTileAsExplored();
-        MinimapUpdateForExploredTiles();
+        MinimapCheckUpdateVisitedTile();
     }
 
     MinimapHudDraw();
@@ -170,7 +168,7 @@ void MinimapCheckOnTransition(void)
     if (gMinimapUpdateFlag == MINIMAP_UPDATE_FLAG_LOWER_LINE)
     {
         MinimapSetTileAsExplored();
-        MinimapUpdateForExploredTiles();
+        MinimapCheckUpdateVisitedTile();
     }
 
     gMinimapUpdateFlag = MINIMAP_UPDATE_FLAG_UPPER_LINE;

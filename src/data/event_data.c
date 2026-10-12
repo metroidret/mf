@@ -1325,46 +1325,46 @@ const struct EventLocationAndNavigationInfo sEventLocationAndNavigationInfo[EVEN
     },
 };
 
-const u8 sNumberOfTanksPerArea[AREA_NORMAL_COUNT + 1][TANK_COUNT] = {
+const u8 sNumberOfTanksPerArea[AREA_NORMAL_COUNT + 1][TANK_NUM_COUNT] = {
     [AREA_MAIN_DECK] = {
-        [TANK_ENERGY] = 3,
-        [TANK_MISSILE] = 7,
-        [TANK_POWER_BOMB] = 3
+        [TANK_NUM_ENERGY] = 3,
+        [TANK_NUM_MISSILE] = 7,
+        [TANK_NUM_POWER_BOMB] = 3
     },
     [AREA_SECTOR_1] = {
-        [TANK_ENERGY] = 3,
-        [TANK_MISSILE] = 6,
-        [TANK_POWER_BOMB] = 3
+        [TANK_NUM_ENERGY] = 3,
+        [TANK_NUM_MISSILE] = 6,
+        [TANK_NUM_POWER_BOMB] = 3
     },
     [AREA_SECTOR_2] = {
-        [TANK_ENERGY] = 3,
-        [TANK_MISSILE] = 9,
-        [TANK_POWER_BOMB] = 5
+        [TANK_NUM_ENERGY] = 3,
+        [TANK_NUM_MISSILE] = 9,
+        [TANK_NUM_POWER_BOMB] = 5
     },
     [AREA_SECTOR_3] = {
-        [TANK_ENERGY] = 3,
-        [TANK_MISSILE] = 7,
-        [TANK_POWER_BOMB] = 6
+        [TANK_NUM_ENERGY] = 3,
+        [TANK_NUM_MISSILE] = 7,
+        [TANK_NUM_POWER_BOMB] = 6
     },
     [AREA_SECTOR_4] = {
-        [TANK_ENERGY] = 2,
-        [TANK_MISSILE] = 9,
-        [TANK_POWER_BOMB] = 4
+        [TANK_NUM_ENERGY] = 2,
+        [TANK_NUM_MISSILE] = 9,
+        [TANK_NUM_POWER_BOMB] = 4
     },
     [AREA_SECTOR_5] = {
-        [TANK_ENERGY] = 3,
-        [TANK_MISSILE] = 4,
-        [TANK_POWER_BOMB] = 8
+        [TANK_NUM_ENERGY] = 3,
+        [TANK_NUM_MISSILE] = 4,
+        [TANK_NUM_POWER_BOMB] = 8
     },
     [AREA_SECTOR_6] = {
-        [TANK_ENERGY] = 3,
-        [TANK_MISSILE] = 6,
-        [TANK_POWER_BOMB] = 3
+        [TANK_NUM_ENERGY] = 3,
+        [TANK_NUM_MISSILE] = 6,
+        [TANK_NUM_POWER_BOMB] = 3
     },
     [AREA_NORMAL_COUNT] = {
-        [TANK_ENERGY] = 20,
-        [TANK_MISSILE] = 48,
-        [TANK_POWER_BOMB] = 32
+        [TANK_NUM_ENERGY] = 20,
+        [TANK_NUM_MISSILE] = 48,
+        [TANK_NUM_POWER_BOMB] = 32
     },
 };
 

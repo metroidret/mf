@@ -85,15 +85,15 @@ const u8 sMinimapHudColorMapping_High[MINIMAP_TILE_TYPE_COUNT][PAL_ROW] = {
     }
 };
 
-const void* const sPauseScreen_5761f0[8] = {
-    [0] = VRAM_OBJ + 0x3700 + 0x60 * 1,
-    [1] = VRAM_OBJ + 0x3700 + 0x60 * 2,
-    [2] = VRAM_OBJ + 0x3B00 + 0x60 * 1,
-    [3] = VRAM_OBJ + 0x3B00 + 0x60 * 2,
-    [4] = VRAM_OBJ + 0x3F00 + 0x60 * 1,
-    [5] = VRAM_OBJ + 0x3F00 + 0x60 * 2,
-    [6] = VRAM_OBJ + 0x3300 + 0x60 * 1,
-    [7] = VRAM_OBJ + 0x3300 + 0x60 * 2,
+const void* const sMapScreenTimeTankVramAddresses[MAP_SCREEN_TANK_TIME_COUNT] = {
+    [MAP_SCREEN_CURR_ENERGY_IDX] = VRAM_OBJ + 0x3700 + 0x60 * 1,
+    [MAP_SCREEN_TOTAL_ENERGY_IDX] = VRAM_OBJ + 0x3700 + 0x60 * 2,
+    [MAP_SCREEN_CURR_MISSILE_IDX] = VRAM_OBJ + 0x3B00 + 0x60 * 1,
+    [MAP_SCREEN_TOTAL_MISSILE_IDX] = VRAM_OBJ + 0x3B00 + 0x60 * 2,
+    [MAP_SCREEN_CURR_POWER_BOMB_IDX] = VRAM_OBJ + 0x3F00 + 0x60 * 1,
+    [MAP_SCREEN_TOTAL_POWER_BOMB_IDX] = VRAM_OBJ + 0x3F00 + 0x60 * 2,
+    [MAP_SCREEN_IGT_HOURS_IDX] = VRAM_OBJ + 0x3300 + 0x60 * 1,
+    [MAP_SCREEN_IGT_MINUTES_IDX] = VRAM_OBJ + 0x3300 + 0x60 * 2,
 };
 
 const u8 sMaintainedInputDelays[7] = {

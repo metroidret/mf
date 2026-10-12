@@ -480,8 +480,9 @@ SECTIONS {
         src/oam_id.o(.text);
         src/event.o(.text);
         src/minimap.o(.text);
+        src/menus/pause_screen_map.o(.text);
 
-        asm/disasm_0x0807552c.o(.text);
+        asm/disasm_0x080765f8.o(.text);
 
         src/text_head.o(.text);
 
@@ -1097,6 +1098,7 @@ SECTIONS {
         src/sound_event.o(.data);
         src/particle.o(.data);
         src/minimap.o(.data);
+        src/menus/pause_screen_map.o(.data);
         src/projectile.o(.data);
         src/new_file_intro.o(.data);
         src/ending.o(.data);

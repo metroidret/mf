@@ -14,7 +14,11 @@ struct MenuOam {
     u8 animationDurationCounter;
     u8 currentAnimationFrame;
     u8 oamId;
-    u8 status;
+    u8 priority:2;
+    u8 objMode:2;
+    u8 ended:1;
+    u8 notDrawn:1;
+    u8 exists:2;
 };
 
 struct PauseScreenData {

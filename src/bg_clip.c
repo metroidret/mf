@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "macros.h"
 #include "connection.h"
-#include "minimap.h"
+#include "menus/pause_screen_map.h"
 #include "sound_event.h"
 
 #include "data/block_data.h"
@@ -245,8 +245,8 @@ void BgClipCheckTouchingTransitionOrTank(void)
         // Check is a tank (hidden tanks not broken aren't tanks yet)
         if (i != TANK_TYPE_NONE)
         {
-            // Check the tile is explored
-            if (MinimapCheckIsTileExplored(xPositions[sBlockTouchOffsets[j][1]], yPositions[sBlockTouchOffsets[j][0]]))
+            // Check the tile is visited
+            if (MinimapCheckIsTileVisited(xPositions[sBlockTouchOffsets[j][1]], yPositions[sBlockTouchOffsets[j][0]]))
             {
                 gCollectingTank = TRUE;
 
@@ -873,6 +873,7 @@ void BgClipSetTankAsCollected(u16 xPosition, u16 yPosition, u8 tankType)
 
     i = gCurrentArea;
     maxCount = MAX_AMOUNT_OF_COLLECTED_TANKS_PER_AREA;
+    // Main Deck has twice as much space
     if (i != AREA_MAIN_DECK)
         i++;
     else

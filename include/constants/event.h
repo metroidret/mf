@@ -443,13 +443,12 @@ enum TimerEvent {
     ESCAPE_ORBIT_CHANGE,
 };
 
-// TODO: Move?
-enum TankType {
-    TANK_ENERGY,
-    TANK_MISSILE,
-    TANK_POWER_BOMB,
+enum TankNumberType {
+    TANK_NUM_ENERGY,
+    TANK_NUM_MISSILE,
+    TANK_NUM_POWER_BOMB,
 
-    TANK_COUNT
+    TANK_NUM_COUNT
 };
 
 #endif /* EVENT_CONSTANTS_H */
