@@ -191,6 +191,10 @@ extern const u32 sIntroSamusRebornBgBottomTilemap[368];
 
 extern const u32 sIntroApproachingBslObjGfx[3614];
 
+extern const u32 sData_5E49E4[4107];
+extern const u32 sData_5E8A10[2178];
+extern const u32 sData_5EAC18[3286];
+
 extern const u32 sIntroSamusMonologueBgGfx[3282];
 
 extern const struct FrameData sOam_5f4200[11];
@@ -223,8 +227,10 @@ extern const struct FrameData sOam_5f48e8[26];
 extern const struct FrameData sOam_5f49b8[6];
 extern const struct FrameData sIntroSamusCuredScreenGlareOam[3];
 
+extern const u16 sPal_5f5054[16 * PAL_ROW];
 extern const u16 sIntroApproachingBslObjPal[16 * PAL_ROW];
 
+extern const u32 sIntroTilemap_5f5a58[368];
 extern const u32 sIntroSamusMonologueBgTilemap[367];
 
 extern const u32 sIntroSamusSittingGfx[4818];
@@ -290,5 +296,9 @@ extern const u32 sIntroSamusHelmetCloseupBgGfx2[908];
 extern const u32 sIntroSamusHelmetCloseupBgGfx3[812];
 extern const u32 sIntroSamusHelmetCloseupBgGfx4[844];
 extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
+
+extern const u32 sIntroTilemap_662804[318];
+
+extern const u16 sIntroPal_663820[4 * PAL_ROW];
 
 #endif /* NEW_FILE_INTRO_DATA_H */

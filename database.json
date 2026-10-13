@@ -26793,12 +26793,28 @@
     "size": 4
   },
   {
-    "path": "Blob_5e49e4_5edf70.bin",
-    "count": "0x958C",
+    "path": "new_file_intro/5e49e4.gfx.lz",
+    "count": "0x100B",
     "addr": {
       "us": "0x5E49E4"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/5e8a10.gfx.lz",
+    "count": "0x882",
+    "addr": {
+      "us": "0x5E8A10"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/5eac18.gfx.lz",
+    "count": "0xCD6",
+    "addr": {
+      "us": "0x5EAC18"
+    },
+    "size": 4
   },
   {
     "path": "new_file_intro/samus_monologue_bg.gfx.lz",
@@ -26817,12 +26833,40 @@
     "size": 1
   },
   {
-    "path": "Blob_5f4a00_5f5254.bin",
-    "count": "0x854",
+    "path": "Blob_5f4a00_5f4ed4.bin",
+    "count": "0x4D4",
     "addr": {
       "us": "0x5F4A00"
     },
     "size": 1
+  },
+  {
+    "path": "new_file_intro/5f4ed4.pal",
+    "count": "0xC0",
+    "addr": {
+      "us": "0x5F4ED4"
+    },
+    "size": 2
+  },
+
+
+
+
+  {
+    "path": "Blob_5f4a00_5f5054.bin",
+    "count": "0x654",
+    "addr": {
+      "us": "0x5F4A00"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/5f5054.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5F5054"
+    },
+    "size": 2
   },
   {
     "path": "new_file_intro/approaching_bsl_obj.pal",
@@ -26833,12 +26877,20 @@
     "size": 2
   },
   {
-    "path": "Blob_5f5454_5f6018.bin",
-    "count": "0xBC4",
+    "path": "Blob_5f5454_5f5a58.bin",
+    "count": "0x604",
     "addr": {
       "us": "0x5F5454"
     },
     "size": 1
+  },
+  {
+    "path": "new_file_intro/5f5a58.tm.lz",
+    "count": "0x170",
+    "addr": {
+      "us": "0x5F5A58"
+    },
+    "size": 4
   },
   {
     "path": "new_file_intro/samus_monologue_bg.tm.lz",
@@ -27265,10 +27317,42 @@
     "size": 4
   },
   {
-    "path": "Blob_64e470_682fac.bin",
-    "count": "0x34B3C",
+    "path": "Blob_64e470_662804.bin",
+    "count": "0x14394",
     "addr": {
       "us": "0x64E470"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/662804.tm.lz",
+    "count": "0x13E",
+    "addr": {
+      "us": "0x662804"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_662cfc_663820.bin",
+    "count": "0xB24",
+    "addr": {
+      "us": "0x662CFC"
+    },
+    "size": 1
+  },
+  {
+    "path": "new_file_intro/663820.pal",
+    "count": "0x40",
+    "addr": {
+      "us": "0x663820"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_6638a0_682fac.bin",
+    "count": "0x1F70C",
+    "addr": {
+      "us": "0x6638A0"
     },
     "size": 1
   },

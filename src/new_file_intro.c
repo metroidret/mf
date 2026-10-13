@@ -15,6 +15,7 @@
 #include "data/sprites/hornoad.h"
 #include "data/sprites/x_parasite.h"
 #include "data/projectile_data.h"
+#include "data/audio.h"
 
 void unk_99940(void); // For V-blank callback
 
@@ -50,6 +51,7 @@ u8 NewFileIntroSamusCuredSetupOam(IntroSamusCuredOamType type, s16 xPosition, s1
 void NewFileIntroSamusCuredVblank(void);
 boolu32 NewFileIntroSamusCured(void);
 void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam);
+void NewFileIntroArrivingAtBslVblank(void);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -7056,9 +7058,444 @@ void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam)
     return;
 }
 
+ /**
+ * @brief 8f5c4 | 230 | To document
+ * 
+ */
+void NewFileIntroArrivingAtBslInit(void)
+{
+    WRITE_16(REG_IME, FALSE);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
+    WRITE_16(REG_IME, TRUE);
+
+    CallbackSetVBlank(unk_99940);
+    
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+    
+    LZ77UncompVram(sIntroApproachingBslObjGfx, VRAM_OBJ);
+    
+    DMA3_COPY_32(sIntroApproachingBslObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+    
+    LZ77UncompVram(sData_5E8A10, VRAM_BASE);
+    LZ77UncompVram(sIntroSamusMonologueBgGfx, VRAM_BASE + 0x8000);
+    LZ77UncompVram(sIntroTilemap_5f5a58, VRAM_BASE + 0xF000);
+    LZ77UncompVram(sIntroSamusMonologueBgTilemap, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
+    
+    DMA3_COPY_32(sPal_5f5054, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    
+    SET_BACKDROP_COLOR(COLOR_BLACK);
+    
+    LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
+    LZ77UncompWram(sData_5EAC18, EWRAM_BASE + 0x1000);
+    LZ77UncompWram(sData_5E49E4, EWRAM_BASE + 0x9000);
+    
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 0);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+    
+    gBg0XPosition = -8;
+    gBg0YPosition = 8;
+    gBg2XPosition = 0;
+    gBg2YPosition = 0;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 30, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(2, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+    
+    gWrittenToBldy = BLDY_MAX_VALUE;
+    WRITE_16(REG_BLDY, BLDY_MAX_VALUE);
+    gWrittenToBldalpha_Eva = 0;
+    gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
+    
+    NewFileIntroArrivingAtBslSetupOam(24, 112, 80);
+    NewFileIntroArrivingAtBslSetupOam(25, 112, 80);
+    
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+    
+    INTRO_DATA.pText = sCutsceneTextNone;
+    
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
+    
+    WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
+    
+    CallbackSetVBlank(NewFileIntroArrivingAtBslVblank);
+}
+
+ /**
+ * @brief  |  | To document
+ * 
+ */
+boolu32 NewFileIntroArrivingAtBslProcess(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+    
+    if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW && gChangedInput & KEY_A && INTRO_DATA.unk_218 == 0)
+        INTRO_DATA.unk_218 = 1;
+
+    APPLY_DELTA_TIME_INC(INTRO_DATA.timer);
+
+    switch (INTRO_DATA.subStage)
+    {
+        case 0:
+            if (INTRO_DATA.timer == DELTA_TIME)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 2;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 1:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(.05f))
+            {
+                INTRO_DATA.timer = 0;
+                
+                if (gWrittenToBldalpha_Evb > 8)
+                    gWrittenToBldalpha_Evb--;
+                
+                if (gWrittenToBldalpha_Eva < BLDALPHA_MAX_VALUE)
+                    gWrittenToBldalpha_Eva += 2;
+                else
+                    INTRO_DATA.subStage = 2;
+                
+                if (gWrittenToBldalpha_Eva == 8)
+                {
+                    NewFileIntroArrivingAtBslSetupOam(24, 112, 80);
+                    NewFileIntroArrivingAtBslSetupOam(25, 112, 80);
+                }
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 2:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 6))
+            {
+                NewFileIntroArrivingAtBslSetupOam(26, 198, 36);
+            }
+            else if (INTRO_DATA.timer == TWO_THIRD_SECOND)
+            {
+                NewFileIntroArrivingAtBslSetupOam(255, 0, 0);
+                NewFileIntroArrivingAtBslSetupOam(23, 20, 192);
+                NewFileIntroArrivingAtBslSetupOam(20, 128, 192);
+                NewFileIntroArrivingAtBslSetupOam(21, 128, 192);
+                INTRO_DATA.subStage = 3;
+                INTRO_DATA.timer = 0;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            NewFileIntroProcessAdamText();
+            break;
+
+        case 3:
+            INTRO_DATA.timer = 0;
+            
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
+            {
+                INTRO_DATA.unk_218 = 0;
+                SoundPlay(515);
+            }
+            else if (INTRO_DATA.unk_218 == 3)
+            {
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~ DCNT_BG0);
+                INTRO_DATA.unk_218 = 0;
+                SoundPlay(515);
+                INTRO_DATA.subStage = 4;
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            NewFileIntroProcessAdamText();
+            break;
+
+        case 4:
+            INTRO_DATA.timer = 0;
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 5:
+            if (INTRO_DATA.timer == DELTA_TIME)
+            {
+                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[580].trackGroupNumber].pTrack, 0);
+            }
+            else if (INTRO_DATA.timer > CONVERT_SECONDS(.5f))
+            {
+                if (gWrittenToBldy < BLDY_MAX_VALUE)
+                {
+                    gWrittenToBldy++;
+                }
+                else
+                {
+                    WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~DCNT_BG2);
+                    WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG3);
+                    DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
+                    INTRO_DATA.timer = 0;
+                    INTRO_DATA.subStage = 6;
+                }
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 6:
+            INTRO_DATA.timer = 0;
+            
+            if (gWrittenToBldy)
+                gWrittenToBldy--;
+            else
+                INTRO_DATA.subStage = 7;
+            break;
+
+        case 7:
+            if (INTRO_DATA.timer == DELTA_TIME)
+            {
+                WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+                DMA3_FILL_32(0, VRAM_BASE, 0x4800);
+            }
+            else if (INTRO_DATA.timer == 2 * DELTA_TIME)
+            {
+                DMA3_COPY_32(EWRAM_BASE, VRAM_BASE + 0x4800, 0x800 / sizeof(u32));
+                DMA3_COPY_32(sIntroPal_663820, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
+                gBg0XPosition = 0;
+                gBg0YPosition = 4;
+            }
+            else if (INTRO_DATA.timer == 3 * DELTA_TIME)
+            {
+                WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 9, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG0);
+            }
+            else if (INTRO_DATA.timer == CONVERT_SECONDS(1))
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.unk_12 = 0;
+                INTRO_DATA.unk_10 = 0;
+                INTRO_DATA.unk_E = 0;
+                INTRO_DATA.unk_C = 0;
+                INTRO_DATA.unk_212 = 0;
+                INTRO_DATA.pText = sMonologueTextPointers[gLanguage][0];
+                INTRO_DATA.subStage = 8;
+                NewFileIntroArrivingAtBslSetupOam(100, 260, 0);
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 8:
+            INTRO_DATA.timer = 0;
+            
+            if (INTRO_DATA.unk_218 == 2 || INTRO_DATA.unk_218 == 4)
+            {
+                INTRO_DATA.unk_218 = 0;
+            }
+            else if (INTRO_DATA.unk_218 == 3)
+            {
+                INTRO_DATA.unk_218 = 0;
+                INTRO_DATA.subStage = 9;
+            }
+            
+            if (NewFileIntroCheckMonologueEnded())
+            {
+                INTRO_DATA.subStage = 9;
+                INTRO_DATA.unk_218 = 0;
+            }
+            
+            if (INTRO_DATA.unk_213 == 0)
+            {
+                INTRO_DATA.unk_213 = 100;
+            }
+            else if (INTRO_DATA.unk_213 == 1)
+            {
+                INTRO_DATA.unk_213 = 100;
+                SpecialCutsceneProcessMonologue();
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 9:
+            if (INTRO_DATA.timer == DELTA_TIME)
+            {
+                gWrittenToBldalpha_Evb = 0;
+                gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
+                FadeMusic(256);
+            }
+            else if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 6))
+            {
+                INTRO_DATA.timer = 0;
+                WRITE_16(REG_BLDCNT, BLDCNT_BG0_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG3_SECOND_TARGET_PIXEL);
+                INTRO_DATA.subStage = 10;
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 10:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 15))
+            {
+                INTRO_DATA.timer = 0;
+                
+                if (gWrittenToBldalpha_Evb < BLDALPHA_MAX_VALUE)
+                    gWrittenToBldalpha_Evb++;
+                
+                if (gWrittenToBldalpha_Eva)
+                    gWrittenToBldalpha_Eva--;
+                
+                if (gWrittenToBldalpha_Evb == BLDALPHA_MAX_VALUE && !gWrittenToBldalpha_Eva)
+                {
+                    WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~DCNT_BG0);
+                    INTRO_DATA.subStage = 11;
+                }
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 11:
+            if (INTRO_DATA.timer == DELTA_TIME)
+            {
+                DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
+                gWrittenToBldalpha_Eva = BLDALPHA_MAX_VALUE;
+                gWrittenToBldalpha_Evb = 0;
+            }
+            else if (INTRO_DATA.timer < 6 * DELTA_TIME)
+            {
+                DMA3_COPY_32(EWRAM_BASE - 0x3000 + INTRO_DATA.timer * 0x2000, VRAM_BASE + 0xC000 + INTRO_DATA.timer * 0x2000, 0x2000 / sizeof(u32));
+            }
+            else if (INTRO_DATA.timer < 10 * DELTA_TIME)
+            {
+                DMA3_COPY_32(EWRAM_BASE - 0x3000 + INTRO_DATA.timer * 0x2000, VRAM_BASE - 0xC000 + INTRO_DATA.timer * 0x2000, 0x2000 / sizeof(u32));
+            }
+            else if (INTRO_DATA.timer == 10 * DELTA_TIME)
+            {
+                LZ77UncompVram(sData_5F65D8, VRAM_BASE + 0xE800);
+            }
+            else if (INTRO_DATA.timer == 11 * DELTA_TIME)
+            {
+                LZ77UncompVram(sData_5F5454, VRAM_BASE + 0xF000);
+                WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG1);
+            }
+            else if (INTRO_DATA.timer == 12 * DELTA_TIME)
+            {
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~DCNT_BG3);
+                WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 29, BGCNT_LOW_MID_PRIORITY, BGCNT_SIZE_256x256));
+                WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 30, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
+                WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_SECOND_TARGET_PIXEL 
+                        | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
+                DMA3_COPY_32(sData_5F4ED4, PALRAM_BASE + 4 * PAL_ROW_SIZE, 12 * PAL_ROW_SIZE / sizeof(u32));
+                gBg2XPosition = 0;
+                gBg2YPosition = 0;
+                gBg3XPosition = 0;
+                gBg3YPosition = 0;
+            }
+            else if (INTRO_DATA.timer == CONVERT_SECONDS(.5f))
+            {
+                WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG3);
+                INTRO_DATA.timer = 0;
+                NewFileIntroArrivingAtBslSetupOam(255, 0, 0);
+                NewFileIntroArrivingAtBslSetupOam(3, 208, 100);
+                NewFileIntroArrivingAtBslSetupOam(4, 208, 100);
+                NewFileIntroArrivingAtBslSetupOam(5, 208, 100);
+                NewFileIntroArrivingAtBslSetupOam(1, 196, 100);
+                NewFileIntroArrivingAtBslSetupOam(2, 6, 78);
+                NewFileIntroArrivingAtBslSetupOam(7, 0, 0);
+                NewFileIntroArrivingAtBslSetupOam(8, 0, 0);
+                SoundPlay_3b1c(581);
+                INTRO_DATA.subStage = 12;
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 12:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 15))
+            {
+                INTRO_DATA.timer = 0;
+                
+                if (gWrittenToBldalpha_Evb < BLDALPHA_MAX_VALUE)
+                    gWrittenToBldalpha_Evb++;
+                
+                if (gWrittenToBldalpha_Eva)
+                    gWrittenToBldalpha_Eva--;
+
+                if (gWrittenToBldalpha_Evb == BLDALPHA_MAX_VALUE)
+                {
+                    if (!gWrittenToBldalpha_Eva)
+                    {
+                        WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~DCNT_BG1);
+                        INTRO_DATA.subStage = 13;
+                    }
+                }
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 13:
+            INTRO_DATA.timer = 0;
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 14:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(4.f / 3))
+            {
+                INTRO_DATA.timer = 0;
+                gWrittenToBldy = 0;
+                WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+                finished = TRUE;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+    
+    return finished;
+}
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+ /**
+ * @brief  |  | To document
+ * 
+ */

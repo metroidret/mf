@@ -15924,7 +15924,10 @@ static const u8 sBlob_5dfd6c_5e116c[] = INCBIN_U8("data/Blob_5dfd6c_5e116c.bin")
 
 const u32 sIntroApproachingBslObjGfx[3614] = INCBIN_U32("data/new_file_intro/approaching_bsl_obj.gfx.lz");
 
-static const u8 sBlob_5e49e4_5edf70[] = INCBIN_U8("data/Blob_5e49e4_5edf70.bin");
+// new stuff
+const u32 sData_5E49E4[4107] = INCBIN_U32("data/new_file_intro/5e49e4.gfx.lz");
+const u32 sData_5E8A10[2178] = INCBIN_U32("data/new_file_intro/5e8a10.gfx.lz");
+const u32 sData_5EAC18[3286] = INCBIN_U32("data/new_file_intro/5eac18.gfx.lz");
 
 const u32 sIntroSamusMonologueBgGfx[3282] = INCBIN_U32("data/new_file_intro/samus_monologue_bg.gfx.lz");
 
@@ -18571,12 +18574,19 @@ const struct FrameData sIntroSamusCuredScreenGlareOam[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-static const u8 sBlob_5f4a00_5f5254[] = INCBIN_U8("data/Blob_5f4a00_5f5254.bin");
+static const u8 sBlob_5f4a00_5f5054[] = INCBIN_U8("data/Blob_5f4a00_5f5054.bin");
+
+
+
+static const u8 sBlob_5f4a00_5f5054[] = INCBIN_U8("data/Blob_5f4a00_5f5054.bin");
+
+const u16 sPal_5f5054[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5f5054.pal");
 
 const u16 sIntroApproachingBslObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/approaching_bsl_obj.pal");
 
-static const u8 sBlob_5f5454_5f6018[] = INCBIN_U8("data/Blob_5f5454_5f6018.bin");
+static const u8 sBlob_5f5454_5f5a58[] = INCBIN_U8("data/Blob_5f5454_5f5a58.bin");
 
+const u32 sIntroTilemap_5f5a58[368] = INCBIN_U32("data/new_file_intro/5f5a58.tm.lz");
 const u32 sIntroSamusMonologueBgTilemap[367] = INCBIN_U32("data/new_file_intro/samus_monologue_bg.tm.lz");
 
 static const u8 sBlob_5f65d4_60093c[] = INCBIN_U8("data/Blob_5f65d4_60093c.bin");
@@ -18692,5 +18702,12 @@ const u32 sIntroSamusHelmetCloseupBgGfx3[812] = INCBIN_U32("data/new_file_intro/
 const u32 sIntroSamusHelmetCloseupBgGfx4[844] = INCBIN_U32("data/new_file_intro/samus_helmet_closeup_bg_4.gfx.lz");
 const u32 sIntroSamusHelmetCloseupBgGfx5[403] = INCBIN_U32("data/new_file_intro/samus_helmet_closeup_bg_5.gfx.lz");
 
-static const u8 sBlob_64e470_682fac[] = INCBIN_U8("data/Blob_64e470_682fac.bin");
+static const u8 sBlob_64e470_662804[] = INCBIN_U8("data/Blob_64e470_662804.bin");
 
+const u32 sIntroTilemap_662804[318] = INCBIN_U32("data/new_file_intro/662804.tm.lz");
+
+static const u8 sBlob_662cfc_663820[] = INCBIN_U8("data/Blob_662cfc_663820.bin");
+
+const u16 sIntroPal_663820[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/663820.pal");
+
+static const u8 sBlob_6638a0_682fac[] = INCBIN_U8("data/Blob_6638a0_682fac.bin");
