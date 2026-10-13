@@ -12,8 +12,6 @@
 #include "structs/event.h"
 #include "structs/samus.h"
 
-u32 TextGetCharacterWidth(u16 idx);
-
 static u32 sArray_79c128[9] = {
     [0] = UINT_MAX ^ (UINT_MAX << 0 * sizeof(u32)),
     [1] = UINT_MAX ^ (UINT_MAX << 1 * sizeof(u32)),
@@ -143,7 +141,7 @@ void TextDrawCharacter(u16 charId, u32* dst, u8 width, u8 indent, u8 color)
  * @brief 79308 | 130 | Draws a text character for a pause debug message
  * 
  */
-void TextDrawCharacterPauseDebug(u16 charId, u32* dst, u8 color) 
+void TextDrawCharacterPauseDebug(u16 charId, u32* dst, u8 color)
 {
     s32 pass;
     u32 pixel1;
@@ -208,7 +206,7 @@ void TextDrawCharacterPauseDebug(u16 charId, u32* dst, u8 color)
  * @brief 79438 | 21c | Draws a text character for a message
  * 
  */
-void TextDrawCharacterForMessage(u16 charID, u32* dst, u8 width, u8 indent, u8 color)
+static void TextDrawCharacterForMessage(u16 charID, u32* dst, u8 width, u8 indent, u8 color)
 {
     u32 passtmp;
     u32 pixel1;
@@ -300,7 +298,7 @@ void TextDrawCharacterForMessage(u16 charID, u32* dst, u8 width, u8 indent, u8 c
  * @brief 79654 | ec | Draws text characters for a location text banner
  * 
  */
-void TextDrawLocationTextCharacters(u8 param_1, const u16** ppText) 
+static void TextDrawLocationTextCharacters(u8 param_1, const u16** ppText) 
 {
     void* dst;
     s32 indent;
