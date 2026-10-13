@@ -588,7 +588,7 @@ void PauseDebugDrawEventText(u8 event)
         // Converts a char from 0b12345678 to 0b1_23045678
         character = ((sPauseDebugEventNames[event][i] & 0xE0) << 1) | (sPauseDebugEventNames[event][i] & 0x1F);
 
-        DrawCharacterPauseDebug(character, &dst[i * PAUSE_DEBUG_TILE_SIZE * 2], 0);
+        TextDrawCharacterPauseDebug(character, &dst[i * PAUSE_DEBUG_TILE_SIZE * 2], 0);
     }
 }
 

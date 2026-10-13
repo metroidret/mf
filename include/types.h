@@ -38,7 +38,7 @@ typedef s32 bools32;
 
 #define INT_MIN (-2147483648)
 #define INT_MAX (2147483647)
-#define UINT_MAX ((u32)4294967295)
+#define UINT_MAX ((u32)0xFFFFFFFF)
 
 // The amount of sub pixels a single visible pixel contains
 #define SUB_PIXEL_RATIO 4

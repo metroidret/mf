@@ -422,7 +422,7 @@ u8 LocationTextCheckLoad(void)
         gSpriteData[0].roomSlot = locationText;
 
         gfxSlot = LocationTextLoadGfx();
-        DrawLocationText(locationText, gfxSlot);
+        TextDrawLocationText(locationText, gfxSlot);
         return gfxSlot;
     }
 
@@ -464,7 +464,7 @@ u8 LocationTextCheckLoad(void)
             gSpriteData[0].roomSlot = locationText;
     
             gfxSlot = LocationTextLoadGfx();
-            DrawLocationText(locationText, gfxSlot);
+            TextDrawLocationText(locationText, gfxSlot);
             
             if (locationText < LT_NAVIGATION_ROOM)
             {

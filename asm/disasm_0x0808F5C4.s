@@ -17306,7 +17306,7 @@ _0809809E:
 	lsls r0, r0, #0x13
 	adds r4, r4, r0
 	ldrh r0, [r2]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	mov r8, r0
 	ldr r0, [r5]
 	ldrh r0, [r0]
@@ -17319,7 +17319,7 @@ _0809809E:
 	movs r1, #0
 	str r1, [sp]
 	adds r1, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrh r0, [r5, #0xc]
 	cmp r0, #0x1b
 	bhi _0809813A
@@ -17764,7 +17764,7 @@ _0809840E:
 	ldr r1, _080984A4 @ =0x0600D000
 	adds r4, r4, r1
 	ldrh r0, [r3]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	mov r8, r0
 	ldr r0, [r5]
 	ldrh r0, [r0]
@@ -17776,7 +17776,7 @@ _0809840E:
 	ldrb r3, [r6]
 	str r7, [sp]
 	adds r1, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldr r1, [r5]
 	ldrh r0, [r1]
 	cmp r0, #0x40
@@ -18066,7 +18066,7 @@ _0809865A:
 	ldr r1, _080986E4 @ =0x0600D000
 	adds r4, r4, r1
 	ldrh r0, [r6]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r7, r0, #0
 	ldr r0, [r5]
 	ldrh r0, [r0]
@@ -18078,7 +18078,7 @@ _0809865A:
 	mov r1, r8
 	str r1, [sp]
 	adds r1, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrh r0, [r5, #0xc]
 	cmp r0, #0x1f
 	bhi _080986CA
@@ -18363,7 +18363,7 @@ _0809889E:
 	ldr r1, _08098938 @ =0x0600D000
 	adds r4, r4, r1
 	ldrh r0, [r6]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r7, r0, #0
 	ldr r0, [r5]
 	ldrh r0, [r0]
@@ -18375,7 +18375,7 @@ _0809889E:
 	mov r1, r8
 	str r1, [sp]
 	adds r1, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldr r1, [r5]
 	ldrh r0, [r1]
 	cmp r0, #0x40
@@ -26860,7 +26860,7 @@ _0809CB9E:
 	ldr r0, _0809CC44 @ =0x06008000
 	adds r4, r4, r0
 	ldrh r0, [r2]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r6, r0, #0
 	ldr r0, [r5, #0xc]
 	ldrh r0, [r0]
@@ -26870,7 +26870,7 @@ _0809CB9E:
 	movs r1, #0
 	str r1, [sp]
 	adds r1, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrh r0, [r5]
 	cmp r0, #0x1b
 	bhi _0809CC32

@@ -5015,7 +5015,7 @@ _080A060E:
 	cmp r0, #0x5a
 	bne _080A062C
 	ldrh r0, [r4]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r5, r0, #2
 	b _080A063C
 	.align 2, 0
@@ -5046,7 +5046,7 @@ _080A063C:
 	movs r1, #0
 	str r1, [sp]
 	adds r1, r7, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	mov r3, r8
 	ldrb r0, [r3, #0x13]
 	adds r0, r0, r5
@@ -5380,7 +5380,7 @@ _080A08BC:
 	ldr r1, [sp, #0x38]
 	adds r7, r1, r0
 	movs r0, #0x5a
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r5, r0, #3
 	lsls r2, r5, #0x18
 	lsrs r2, r2, #0x18
@@ -5388,7 +5388,7 @@ _080A08BC:
 	str r4, [sp]
 	movs r0, #0x5a
 	adds r1, r7, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrb r0, [r6, #0x13]
 	adds r2, r0, r5
 	strb r2, [r6, #0x13]
@@ -5447,7 +5447,7 @@ _080A0962:
 	str r1, [sp]
 	adds r1, r7, #0
 	movs r2, #8
-	bl DrawCharacter
+	bl TextDrawCharacter
 	mov r3, r8
 	ldrb r0, [r3, #0x13]
 	adds r0, #8
@@ -5645,7 +5645,7 @@ _080A0B00:
 	adds r4, r4, r0
 	str r4, [sp, #4]
 	ldrh r0, [r1]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r5, r0, #0
 	ldr r0, [r6, #4]
 	ldrh r0, [r0]
@@ -5657,7 +5657,7 @@ _080A0B00:
 	lsrs r1, r1, #0x18
 	str r1, [sp]
 	ldr r1, [sp, #4]
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrb r0, [r6, #0x13]
 	adds r0, r0, r5
 	strb r0, [r6, #0x13]
@@ -6080,7 +6080,7 @@ _080A0E80:
 	cmp r0, #0x5a
 	bne _080A0EA8
 	ldrh r0, [r5]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r4, r0, #3
 	b _080A0EB6
 	.align 2, 0
@@ -6111,7 +6111,7 @@ _080A0EB6:
 	movs r1, #0
 	str r1, [sp]
 	adds r1, r6, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrb r0, [r7, #0x13]
 	adds r0, r0, r4
 	strb r0, [r7, #0x13]
@@ -6223,7 +6223,7 @@ _080A0F90:
 	adds r4, r4, r0
 	adds r4, r4, r7
 	ldrh r0, [r1]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	adds r5, r0, #0
 	ldr r0, [r6, #4]
 	ldrh r0, [r0]
@@ -6233,7 +6233,7 @@ _080A0F90:
 	movs r1, #0
 	str r1, [sp]
 	adds r1, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 	ldrb r0, [r6, #0x13]
 	adds r0, r0, r5
 	strb r0, [r6, #0x13]

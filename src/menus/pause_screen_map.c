@@ -61,7 +61,7 @@ static u8 sUnk_79bebc[4] = {
     4, 5, 6, 7
 };
 
-static u8 sBlob_79bec0_79c27c[] = INCBIN_U8("data/Blob_79bec0_79c27c.bin");
+static u8 sBlob_79bec0_79c128[] = INCBIN_U8("data/Blob_79bec0_79c128.bin");
 
 /**
  * @brief 7552c | 214 | Pause screen map main loop
