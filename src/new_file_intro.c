@@ -187,14 +187,14 @@ static u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
 
 static u8 sBlob_79c5c0_79cdd8[] = INCBIN_U8("data/Blob_79c5c0_79cdd8.bin");
 
-u16** sLocationTextPointers[LANGUAGE_COUNT] = {
-    (u16**)0x879c680,
-    (u16**)0x879c7a8,
-    (u16**)0x879c8d0,
-    (u16**)0x879c9f8,
-    (u16**)0x879cb20,
-    (u16**)0x879cc48,
-    (u16**)0x879cd70
+const u16** sLocationTextPointers[LANGUAGE_COUNT] = {
+    (const u16**)0x879c680,
+    (const u16**)0x879c7a8,
+    (const u16**)0x879c8d0,
+    (const u16**)0x879c9f8,
+    (const u16**)0x879cb20,
+    (const u16**)0x879cc48,
+    (const u16**)0x879cd70
 };
 
 u16** sMessageTextPointers[LANGUAGE_COUNT] = {

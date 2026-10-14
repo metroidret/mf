@@ -660,7 +660,7 @@ _08079FE0:
 	b _0807A0EC
 _08079FE6:
 	ldrh r0, [r6]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	ldr r4, _0807A01C @ =gNonGameplayRam
 	strb r0, [r4, #0x16]
 	ldrb r0, [r4, #0x18]
@@ -733,7 +733,7 @@ _0807A060:
 	ldrb r1, [r4, #0x1e]
 	str r1, [sp]
 	mov r1, r8
-	bl DrawCharacter
+	bl TextDrawCharacter
 	cmp r7, #0
 	bne _0807A0BA
 	ldrh r0, [r6]
@@ -967,7 +967,7 @@ _0807A228:
 	strb r0, [r1]
 _0807A22E:
 	ldrh r0, [r4]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	ldr r2, _0807A2D8 @ =gNonGameplayRam
 	strb r0, [r2, #0x16]
 	ldrh r1, [r2, #0x22]
@@ -1016,7 +1016,7 @@ _0807A278:
 	movs r1, #0
 	str r1, [sp]
 	adds r1, r7, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 _0807A292:
 	ldrh r0, [r5, #0x22]
 	ldrb r2, [r5, #0x16]
@@ -3936,7 +3936,7 @@ _0807B96E:
 	cmp r5, #0
 	beq _0807B9C2
 	ldrh r0, [r7]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	mov r8, r0
 	adds r5, r6, r0
 	cmp r5, #0xe0
@@ -3976,7 +3976,7 @@ _0807B9A2:
 	movs r3, #0
 	str r3, [sp]
 	adds r3, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 _0807B9C2:
 	adds r7, #2
 	add r6, r8
@@ -4107,7 +4107,7 @@ _0807BABA:
 	cmp r5, #0
 	beq _0807BB0E
 	ldrh r0, [r6]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	mov r8, r0
 	adds r5, r7, r0
 	cmp r5, #0xe0
@@ -4147,7 +4147,7 @@ _0807BAEE:
 	movs r3, #0
 	str r3, [sp]
 	adds r3, r4, #0
-	bl DrawCharacter
+	bl TextDrawCharacter
 _0807BB0E:
 	adds r6, #2
 	add r7, r8
@@ -4209,7 +4209,7 @@ _0807BB80:
 	cmp r5, #0
 	beq _0807BBB2
 	ldrh r0, [r6]
-	bl GetCharacterWidth
+	bl TextGetCharacterWidth
 	mov r8, r0
 	adds r5, r7, r0
 	movs r0, #0xe0
@@ -4228,7 +4228,7 @@ _0807BB80:
 	ands r3, r7
 	movs r4, #0
 	str r4, [sp]
-	bl DrawCharacter
+	bl TextDrawCharacter
 _0807BBB2:
 	adds r6, #2
 	add r7, r8

@@ -4,6 +4,24 @@
 #include "types.h"
 
 /**
+ * @brief Mask to get the parameter type of special text parameters
+ * 
+ */
+#define CHAR_MASK           C_16_2_8(0xFF, 0)
+
+/**
+ * @brief Text parameter to add an arbitrary horizontal spacing
+ * 
+ */
+#define CHAR_WIDTH_MASK     C_16_2_8(0x80, 0)
+
+/**
+ * @brief Text parameter to change the current horizontal cursor position
+ * 
+ */
+#define CHAR_INDENT_MASK    C_16_2_8(0x83, 0)
+
+/**
  * @brief Indicates that the next page arrow should be displayed
  * 
  */

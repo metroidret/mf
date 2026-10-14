@@ -18692,5 +18692,5 @@ const u32 sIntroSamusHelmetCloseupBgGfx3[812] = INCBIN_U32("data/new_file_intro/
 const u32 sIntroSamusHelmetCloseupBgGfx4[844] = INCBIN_U32("data/new_file_intro/samus_helmet_closeup_bg_4.gfx.lz");
 const u32 sIntroSamusHelmetCloseupBgGfx5[403] = INCBIN_U32("data/new_file_intro/samus_helmet_closeup_bg_5.gfx.lz");
 
-static const u8 sBlob_64e470_72eee0[] = INCBIN_U8("data/Blob_64e470_72eee0.bin");
+static const u8 sBlob_64e470_682fac[] = INCBIN_U8("data/Blob_64e470_682fac.bin");
 
