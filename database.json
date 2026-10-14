@@ -27273,7 +27273,7 @@
     "size": 1
   },
   {
-    "path": "new_file_intro/text_characters.gfx",
+    "path": "text_characters.gfx",
     "count": "0x30000",
     "addr": {
       "us": "0x682FAC"

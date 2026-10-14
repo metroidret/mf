@@ -28,17 +28,17 @@ typedef s8 bools8;
 typedef s16 bools16;
 typedef s32 bools32;
 
-#define SCHAR_MIN (-128)
-#define SCHAR_MAX (127)
-#define UCHAR_MAX (255)
+#define SCHAR_MIN 0x80
+#define SCHAR_MAX 0x7F
+#define UCHAR_MAX 0xFF
 
-#define SHORT_MIN (-32768)
-#define SHORT_MAX (32767)
-#define USHORT_MAX (65535)
+#define SHORT_MIN 0x8000
+#define SHORT_MAX 0x7FFF
+#define USHORT_MAX 0xFFFF
 
-#define INT_MIN (-2147483648)
-#define INT_MAX (2147483647)
-#define UINT_MAX ((u32)0xFFFFFFFF)
+#define INT_MIN 0x80000000
+#define INT_MAX 0x7FFFFFFF
+#define UINT_MAX 0xFFFFFFFF
 
 // The amount of sub pixels a single visible pixel contains
 #define SUB_PIXEL_RATIO 4

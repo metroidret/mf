@@ -302,9 +302,9 @@ static void TextDrawLocationTextCharacters(u8 param_1, const u16** ppText)
 {
     void* dst;
     s32 indent;
+    u32 indentClamped;
     boolu32 drawFlag;
     u32 width;
-    u32 permuter_var;
 
     if (param_1 == 1)
     {
@@ -346,8 +346,8 @@ static void TextDrawLocationTextCharacters(u8 param_1, const u16** ppText)
         {
             width = TextGetCharacterWidth(**ppText);
             drawFlag = (indent >> 3) * 32;
-            permuter_var = indent & 7;
-            TextDrawCharacterForMessage(**ppText, dst + drawFlag, width, permuter_var, 0);
+            indentClamped = MOD_AND(indent, 8);
+            TextDrawCharacterForMessage(**ppText, dst + drawFlag, width, indentClamped, 0);
         }
         
         *ppText += 1;
