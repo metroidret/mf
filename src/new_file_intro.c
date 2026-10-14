@@ -52,6 +52,10 @@ void NewFileIntroSamusCuredVblank(void);
 boolu32 NewFileIntroSamusCured(void);
 void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam);
 void NewFileIntroArrivingAtBslVblank(void);
+boolu32 NewFileIntroArrivingAtBsl(void);
+u8 NewFileIntroArrivingAtBslSetupOam(u8 type, s16 xPosition, s16 yPosition);
+u8 NewFileIntroGetPositionAndSlotOfOamByType(u8 type, s16* pXPosition, s16* pYPosition);
+void unk_90d5c(struct SpecialCutsceneOam* pOam);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -7481,21 +7485,906 @@ boolu32 NewFileIntroArrivingAtBslProcess(void)
     return finished;
 }
 
+ /**
+ * @brief 8ff44 | 90 | Main handler of the arriving at BSL cutscene
+ * 
+ */
+boolu32 NewFileIntroArrivingAtBsl(void)
+{
+    boolu32 finished;
 
+    finished = FALSE;
+    
+    switch (INTRO_DATA.stage)
+    {
+        case 0:
+            NewFileIntroArrivingAtBslInit();
+            INTRO_DATA.stage = 1;
+            break;
+        
+        case 1:
+            gWrittenToBldy = 0;
+            SoundPlay(SOUND_244);
+            
+            if (!gWrittenToBldy)
+                INTRO_DATA.stage = 2;
+            break;
+        
+        case 2:
+            if (NewFileIntroArrivingAtBslProcess())
+            {
+                INTRO_DATA.subStage = 0;
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.stage = 3;
+            }
+            break;
+        
+        case 3:
+            if (gWrittenToBldy < BLDY_MAX_VALUE)
+            {
+                gWrittenToBldy++;
+            }
+            else
+            {
+                INTRO_DATA.stage = 0;
+                finished = TRUE;
+            }
+        
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+    
+    return finished;
+}
 
+ /**
+ * @brief 8ffd4 | 270 | To document
+ * 
+ */
+void NewFileIntroProcessSamusShipArrivingAtBsl(struct SpecialCutsceneOam *pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
 
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        
+        if (pOam->unk_A == 20)
+        {
+            pOam->unk_A = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->timer++;
+        if (pOam->timer == CONVERT_SECONDS(1.f / 30))
+        {
+            pOam->timer = 0;
+            pOam->scaling--;
+        }
 
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A >> 3);
+        
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->spawnX = pOam->spawnX - (pOam->unk_A >> 3);
+            pOam->spawnY = pOam->yPosition;
+            pOam->timer = 0;
+            pOam->unk_A = 0;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        if (pOam->unk_A == 2)
+        {
+            NewFileIntroArrivingAtBslSetupOam(6, pOam->xPosition, pOam->yPosition);
+            pOam->rotation -= 1;
+        }
+        else if (pOam->unk_A == 4)
+        {
+            pOam->unk_A = 0;
+            pOam->stage = 3;
+            pOam->rotation -= 1;
+        }
+        
+        pOam->scaling--;
+        pOam->animationDurationCounter = 0;
+    }
+    else if (pOam->stage == 3)
+    {
+        pOam->scaling -= 2;
+        
+        NewFileIntroGetPositionAndSlotOfOamByType(2, &x, &y);
+        
+        if (pOam->rotation > Q_8_8(15.f / 16))
+            pOam->rotation--;
 
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 1);
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A << 1);
 
+        if (pOam->unk_A == 10)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 4;
+        }
+        
+        pOam->animationDurationCounter = 0;
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->scaling -= 4;
+        
+        NewFileIntroGetPositionAndSlotOfOamByType(2, &x, &y);
+        
+        if (pOam->rotation > Q_8_8(15.f / 16))
+            pOam->rotation--;
+        
+        pOam->yPosition = pOam->spawnY - pOam->unk_A;
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A << 2);
+        
+        if (x - pOam->xPosition > -20)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 5;
+        }
+        
+        pOam->animationDurationCounter = 0;
+    }
+    else if (pOam->stage == 5)
+    {
+        pOam->scaling -= 2;
+        
+        NewFileIntroGetPositionAndSlotOfOamByType(2, &x, &y);
+        
+        if ((u8)(pOam->rotation - Q_8_8(.04f)) > Q_8_8(.745f))
+            pOam->rotation++;
 
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 1);
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A << 1);
+        
+        if (x - pOam->xPosition > 10)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 6;
+        }
+        
+        pOam->animationDurationCounter = 0;
+    }
+    else if (pOam->stage == 6)
+    {
+        pOam->scaling--;
 
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 2);
+        pOam->xPosition = pOam->spawnX - (pOam->unk_A >> 1);
+    
+        if ((u8)(pOam->rotation - Q_8_8(.04f)) > Q_8_8(.745f))
+        {
+            pOam->rotation++;
+        }
+        else
+        {
+            pOam->unk_A = 0;
+            pOam->timer = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 7;
+        }
+    
+        pOam->animationDurationCounter = 0;
+    }
+    else if (pOam->stage == 7)
+    {
+        if ((u8)(pOam->rotation - Q_8_8(1.f / 16)) > Q_8_8(.72f))
+        {
+            pOam->timer++;
+            if (pOam->timer == CONVERT_SECONDS(.05f))
+            {
+                pOam->timer = 0;
+                pOam->rotation++;
+            }
+        }
+        
+        pOam->yPosition = pOam->spawnY - (pOam->unk_A >> 2);
+        pOam->xPosition = (pOam->unk_A >> 1) + pOam->spawnX;
+        
+        pOam->scaling -= 2;
+        if (pOam->scaling < Q_8_8(1.f / 8))
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+            INTRO_DATA.subStage = 14;
+        }
+        
+        pOam->animationDurationCounter = 0;
+    }
+    
+    if (pOam->scaling <= Q_8_8(1))
+        pOam->affineMode = 1;
+}
 
+ /**
+ * @brief 90244 | 20 | To document
+ * 
+ */
+void NewFileIntroProcessBslPreview(struct SpecialCutsceneOam* pOam)
+{
+    pOam->timer++;
+    if (pOam->timer == CONVERT_SECONDS(1.f / 10))
+    {
+        pOam->timer = 0;
+        pOam->xPosition++;
+    }
+}
 
+ /**
+ * @brief 90264 | 1ac | To document
+ * 
+ */
+void NewFileIntroProcessSamusShipArrivingAtBslThrusters(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    u8 slot;
+    s16 x;
+    s16 y;
 
+    frame = &pOam->pOam[pOam->currentAnimationFrame];
+    if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+    {
+        pOam->currentAnimationFrame = 0;
+        pOam->animationDurationCounter = 0;
+    }
 
+    pOam->timer++;
+    if (pOam->timer == 4)
+    {
+        pOam->timer = 0;
 
+        switch (pOam->type)
+        {
+            case 3:
+                slot = NewFileIntroGetPositionAndSlotOfOamByType(4, &x, &y);
+                if (slot == ARRAY_SIZE(INTRO_DATA.oam))
+                {
+                    pOam->type = 0;
+                    pOam->unk_18_0 = 0;
+                    break;
+                }
+
+                pOam->scaling = INTRO_DATA.oam[slot].scaling;
+                pOam->affineMode = INTRO_DATA.oam[slot].affineMode;
+                pOam->xPosition = x;
+                pOam->yPosition = y;
+                break;
+
+            case 4:
+                slot = NewFileIntroGetPositionAndSlotOfOamByType(5, &x, &y);
+                if (slot == ARRAY_SIZE(INTRO_DATA.oam))
+                {
+                    pOam->type = 0;
+                    pOam->unk_18_0 = 0;
+                    break;
+                }
+
+                pOam->scaling = INTRO_DATA.oam[slot].scaling;
+                pOam->affineMode = INTRO_DATA.oam[slot].affineMode;
+                pOam->xPosition = x;
+                pOam->yPosition = y;
+                break;
+
+            case 5:
+                slot = NewFileIntroGetPositionAndSlotOfOamByType(1, &x, &y);
+                if (slot == ARRAY_SIZE(INTRO_DATA.oam))
+                {
+                    pOam->type = 0;
+                    pOam->unk_18_0 = 0;
+                    break;
+                }
+
+                pOam->scaling = INTRO_DATA.oam[slot].scaling;
+                pOam->affineMode = INTRO_DATA.oam[slot].affineMode;
+
+                if (INTRO_DATA.oam[slot].stage < 2)
+                {
+                    pOam->yPosition = y;
+
+                    switch (INTRO_DATA.oam[slot].currentAnimationFrame)
+                    {
+                        case 0:
+                            pOam->xPosition = x + 12;
+                            break;
+                
+                        case 1:
+                            pOam->xPosition = x + 10;
+                            break;
+                
+                        case 2:
+                            pOam->xPosition = x + 8;
+                            break;
+                
+                        case 3:
+                            pOam->xPosition = x + 6;
+                            break;
+                
+                        case 4:
+                            pOam->xPosition = x + 5;
+                            break;
+                
+                        case 5:
+                            pOam->xPosition = x + 4;
+                            break;
+                
+                        case 6:
+                            pOam->xPosition = x + 3;
+                            break;
+                
+                        case 7:
+                            pOam->xPosition = x + 2;
+                            break;
+                
+                        case 8:
+                            pOam->xPosition = x + 1;
+                            break;
+
+                        default:
+                            pOam->xPosition = x;
+                            break;
+                    }
+                }
+                else
+                {
+                    pOam->yPosition = y;
+                    pOam->xPosition = x;
+                }
+                break;
+        }
+    }
+}
+
+ /**
+ * @brief 90410 | 2c | To document
+ * 
+ */
+void NewFileIntroProcessSamusShipArrivingAtBslThrusterExplosion(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    
+    frame = &pOam->pOam[pOam->currentAnimationFrame];
+    if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+}
+
+ /**
+ * @brief 9043c | 8 | To document
+ * 
+ */
+void unk_9043c(struct SpecialCutsceneOam* pOam)
+{
+    pOam->type = 0;
+}
+
+ /**
+ * @brief 90444 | 34 | To document
+ * 
+ */
+void NewFileIntroProcessSamusArrivingAtBslScrolling(struct SpecialCutsceneOam* pOam)
+{
+    pOam->timer++;
+    if (pOam->timer == TWO_THIRD_SECOND)
+    {
+        pOam->timer = 0;
+        
+        if (pOam->xPosition < 16)
+        {
+            pOam->xPosition++;
+            gBg3XPosition++;
+        }
+    }
+}
+
+ /**
+ * @brief 90478 | 34 | To document
+ * 
+ */
+void unk_90478(struct SpecialCutsceneOam* pOam)
+{
+    u8 temp_r0;
+
+    pOam->timer++;
+    if (pOam->timer == CONVERT_SECONDS(.5f))
+    {
+        pOam->timer = 0;
+        
+        if (pOam->xPosition < 16)
+        {
+            pOam->xPosition++;
+            gBg2XPosition--;
+        }
+    }
+}
+
+ /**
+ * @brief 904ac | 19c | To document
+ * 
+ */
+void NewFileIntroProcessAdamPanel(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+
+    if (pOam->stage == 0)
+    {
+        pOam->animationDurationCounter = 0;
+        pOam->currentAnimationFrame = 0;
+            
+        if (pOam->yPosition > 128)
+        {
+            pOam->yPosition -= 8;
+            return;
+        }
+            
+        pOam->yPosition = 128;
+            
+        if (pOam->type == 20)
+            SoundPlay(522);
+            
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter)
+        {
+            if (frame[1].timer == 0)
+            {
+                pOam->animationDurationCounter = 0;
+                pOam->stage = 2;
+            }
+            
+            if (pOam->type != 20)
+                return;
+
+            if (pOam->currentAnimationFrame == 10)
+                NewFileIntroArrivingAtBslSetupOam(22, pOam->xPosition, pOam->yPosition);
+        }
+        
+        if (pOam->type == 20)
+        {
+            if (pOam->currentAnimationFrame == 11)
+            {
+                if (pOam->animationDurationCounter == 15)
+                {
+                    INTRO_DATA.unk_212 = 0;
+                    INTRO_DATA.unk_E = 0;
+                    INTRO_DATA.unk_C = 0;
+                    INTRO_DATA.pText = sMonologueTextPointers[gLanguage][18];
+                }
+            }
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        pOam->animationDurationCounter = 0;
+        pOam->timer++;
+        if (pOam->timer == 1)
+        {
+            pOam->timer = 0;
+            pOam->stage = 3;
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        pOam->animationDurationCounter = 0;
+        
+        if (INTRO_DATA.subStage == 4)
+        {
+            pOam->currentAnimationFrame = 0;
+            
+            if (pOam->type == 20)
+            {
+                pOam->pOam = sOam_5f4310;
+                SoundPlay(523);
+            }
+            else if (pOam->type == 21)
+            {
+                pOam->pOam = sOam_5f43e0;
+            }
+            
+            pOam->stage = 4;
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        if (pOam->currentAnimationFrame == 11 && pOam->animationDurationCounter == 3)
+        {
+            if (pOam->type == 20)
+                SpecialCutsceneDestroyOamOfType(22);
+            
+            pOam->animationDurationCounter = 0;
+            pOam->stage = 5;
+        }
+    }
+    else if (pOam->stage == 5)
+    {
+        pOam->animationDurationCounter = 0;
+        
+        if (pOam->yPosition < 192)
+        {
+            pOam->yPosition += 8;
+        }
+        else
+        {
+            if (pOam->type == 20)
+                INTRO_DATA.subStage = 5;
+
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+ /**
+ * @brief 90648 | 88 | To document
+ * 
+ */
+void unk_90648(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+
+    frame = &pOam->pOam[pOam->currentAnimationFrame];
+    
+    if (pOam->stage == 0)
+    {
+        if (pOam->currentAnimationFrame == 3)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sOam_5f48b8;
+            pOam->stage = 1;
+        }
+        
+        if (INTRO_DATA.subStage == 4)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sOam_5f4470;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        if (INTRO_DATA.subStage == 4)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sOam_5f4470;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            pOam->animationDurationCounter = 0;
+    }
+}
+
+ /**
+ * @brief 906d0 | 8c | To document
+ * 
+ */
+void NewFileIntroProcessAdamTextCursor(struct SpecialCutsceneOam* pOam)
+{
+    if (*INTRO_DATA.pText == CHAR_TERMINATOR)
+    {
+        pOam->xPosition = 290;
+    }
+    else if (*INTRO_DATA.pText != CHAR_NEW_LINE)
+    {
+        if (*INTRO_DATA.pText == CHAR_NEW_PAGE)
+        {
+            pOam->xPosition = 290;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sOam_5f1da0;
+        }
+        else if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW)
+        {
+            pOam->xPosition = SCREEN_X_MIDDLE;
+            pOam->yPosition = 154;
+            pOam->pOam = sOam_5f1c50;
+        }
+        else
+        {
+            pOam->xPosition = INTRO_DATA.unk_C * 8 + INTRO_DATA.unk_212 + 14;
+            pOam->yPosition = INTRO_DATA.unk_E * 8 + 132;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+        }
+    }
+    else
+    {
+        pOam->xPosition = INTRO_DATA.unk_C * 8 + INTRO_DATA.unk_212 + 14;
+        pOam->yPosition = INTRO_DATA.unk_E * 8 + 132;
+        pOam->animationDurationCounter = 0;
+        pOam->currentAnimationFrame = 0;
+    }
+}
+
+ /**
+ * @brief 9075c | 9c | To document
+ * 
+ */
+void NewFileIntroProcessBslPopUp(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+
+    frame = &pOam->pOam[pOam->currentAnimationFrame];
+    
+    if (pOam->stage == 0)
+    {
+        if (pOam->currentAnimationFrame == 1 && pOam->animationDurationCounter == 1)
+            SoundPlay(284);
+        
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->animationDurationCounter = 0;
+        
+        if (INTRO_DATA.subStage == 4)
+        {
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sOam_5f4258;
+            SoundPlay(285);
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+ /**
+ * @brief 907f8 | 30 | To document
+ * 
+ */
+void NewFileIntroProcessMonologueCursor(struct SpecialCutsceneOam* pOam)
+{
+    if (*INTRO_DATA.pText == CHAR_NEXT_PAGE_ARROW)
+    {
+        pOam->xPosition = 118;
+        pOam->yPosition = INTRO_DATA.unk_E * 8 + 24;
+    }
+    else
+    {
+        pOam->xPosition = 260;
+    }
+}
+
+ /**
+ * @brief 90828 | 438 | To document
+ * 
+ */
+u8 NewFileIntroArrivingAtBslSetupOam(u8 type, s16 xPosition, s16 yPosition)
+{
+    u8 slot;
+
+    for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
+    {
+        if (INTRO_DATA.oam[slot].type == 0)
+            break;
+    }
+
+    if (slot >= ARRAY_SIZE(INTRO_DATA.oam))
+        return ARRAY_SIZE(INTRO_DATA.oam);
+    
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], sizeof(struct SpecialCutsceneOam));
+
+    INTRO_DATA.oam[slot].xPosition = xPosition;
+    INTRO_DATA.oam[slot].yPosition = yPosition;
+    INTRO_DATA.oam[slot].type = type;
+    INTRO_DATA.oam[slot].unk_18_0 = 1;
+
+    if (type == 1)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
+        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4d3c;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBsl;
+    }
+    else if (type == 2)
+    {
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4d94;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslPreview;
+    }
+    else if (type == 3)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4e34;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusters;
+    }
+    else if (type == 4)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4e34;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusters;
+    }
+    else if (type == 5)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4e34;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusters;
+    }
+    else if (type == 6)
+    {
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4da4;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusterExplosion;
+    }
+    else if (type == 7)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusArrivingAtBslScrolling;
+    }
+    else if (type == 8)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_90478;
+    }
+    else if (type == 20)
+    {
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f42a8;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessAdamPanel;
+    }
+    else if (type == 21)
+    {
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4378;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessAdamPanel;
+    }
+    else if (type == 22)
+    {
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4448;
+        INTRO_DATA.oam[slot].pFunction = unk_90648;
+    }
+    else if (type == 23)
+    {
+        INTRO_DATA.oam[slot].pOam = sOam_5f1da0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessAdamTextCursor;
+    }
+    else if (type == 24)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sOam_5f48e8;
+        INTRO_DATA.oam[slot].pFunction = unk_90d5c;
+    }
+    else if (type == 25)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sOam_5f49b8;
+        INTRO_DATA.oam[slot].pFunction = unk_90d5c;
+    }
+    else if (type == 26)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sOam_5f4200;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslPopUp;
+    }
+    else if (type == 30)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroSamusCuredScreenGlareOam;
+        INTRO_DATA.oam[slot].pFunction = unk_90d5c;
+    }
+    else if (type == 100)
+    {
+        INTRO_DATA.oam[slot].priority = 1;
+        INTRO_DATA.oam[slot].pOam = sOam_5f1c50;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessMonologueCursor;
+    }
+    else if (type == 255)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = unk_9043c;
+    }
+
+    return slot;
+}
+
+ /**
+ * @brief 90c60 | 9c | To document
+ * 
+ */
+void NewFileIntroArrivingAtBslVblank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
+    
+    WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+    WRITE_16(REG_BG0HOFS, gBg0XPosition);
+    WRITE_16(REG_BG0VOFS, gBg0YPosition);
+    WRITE_16(REG_BG2HOFS, gBg2XPosition);
+    WRITE_16(REG_BG2VOFS, gBg2YPosition);
+    WRITE_16(REG_BG3HOFS, gBg3XPosition);
+    WRITE_16(REG_BG3VOFS, gBg3YPosition);
+    
+    unk_98158();
+}
+
+ /**
+ * @brief 90cfc | 60 | To document
+ * 
+ */
+u8 NewFileIntroGetPositionAndSlotOfOamByType(u8 type, s16* pXPosition, s16* pYPosition)
+{
+    u8 slot;
+
+    for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
+    {
+        if (INTRO_DATA.oam[slot].type == type)
+        {
+            *pXPosition = INTRO_DATA.oam[slot].xPosition;
+            *pYPosition = INTRO_DATA.oam[slot].yPosition;
+        
+            return slot;
+        }
+    }
+
+    // Default values if not found
+    *pXPosition = 300;
+    *pYPosition = 200;
+        
+    return ARRAY_SIZE(INTRO_DATA.oam);
+}
+
+ /**
+ * @brief 90d5c | 4 | To document
+ * 
+ */
+void unk_90d5c(struct SpecialCutsceneOam* pOam)
+{
+    return;
+}
 
  /**
  * @brief  |  | To document
  * 
  */
+
