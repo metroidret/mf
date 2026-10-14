@@ -227,11 +227,14 @@ extern const struct FrameData sOam_5f48e8[26];
 extern const struct FrameData sOam_5f49b8[6];
 extern const struct FrameData sIntroSamusCuredScreenGlareOam[3];
 
+extern const u16 sPal_5f4ed4[12 * PAL_ROW];
 extern const u16 sPal_5f5054[16 * PAL_ROW];
 extern const u16 sIntroApproachingBslObjPal[16 * PAL_ROW];
 
+extern const u32 sIntroTilemap_5f5454[385];
 extern const u32 sIntroTilemap_5f5a58[368];
-extern const u32 sIntroSamusMonologueBgTilemap[367];
+extern const u32 sIntroSamusMonologueBgTilemap[368];
+extern const u32 sIntroTilemap_5f65d8[238];
 
 extern const u32 sIntroSamusSittingGfx[4818];
 extern const u16 sIntroSamusSittingPal[16 * PAL_ROW];

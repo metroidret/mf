@@ -7059,7 +7059,7 @@ void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam)
 }
 
  /**
- * @brief 8f5c4 | 230 | To document
+ * @brief 8f5c4 | 230 | Setup for the arriving at BSL cutscene
  * 
  */
 void NewFileIntroArrivingAtBslInit(void)
@@ -7133,7 +7133,7 @@ void NewFileIntroArrivingAtBslInit(void)
 }
 
  /**
- * @brief  |  | To document
+ * @brief 8f7f4 | 750 | Processes the arriving at BSL cutscene
  * 
  */
 boolu32 NewFileIntroArrivingAtBslProcess(void)
@@ -7391,11 +7391,11 @@ boolu32 NewFileIntroArrivingAtBslProcess(void)
             }
             else if (INTRO_DATA.timer == 10 * DELTA_TIME)
             {
-                LZ77UncompVram(sData_5F65D8, VRAM_BASE + 0xE800);
+                LZ77UncompVram(sIntroTilemap_5f65d8, VRAM_BASE + 0xE800);
             }
             else if (INTRO_DATA.timer == 11 * DELTA_TIME)
             {
-                LZ77UncompVram(sData_5F5454, VRAM_BASE + 0xF000);
+                LZ77UncompVram(sIntroTilemap_5f5454, VRAM_BASE + 0xF000);
                 WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 31, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
                 WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG1);
             }
@@ -7406,7 +7406,7 @@ boolu32 NewFileIntroArrivingAtBslProcess(void)
                 WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 30, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
                 WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_SECOND_TARGET_PIXEL 
                         | BLDCNT_BG3_SECOND_TARGET_PIXEL | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
-                DMA3_COPY_32(sData_5F4ED4, PALRAM_BASE + 4 * PAL_ROW_SIZE, 12 * PAL_ROW_SIZE / sizeof(u32));
+                DMA3_COPY_32(sPal_5f4ed4, PALRAM_BASE + 4 * PAL_ROW_SIZE, 12 * PAL_ROW_SIZE / sizeof(u32));
                 gBg2XPosition = 0;
                 gBg2YPosition = 0;
                 gBg3XPosition = 0;

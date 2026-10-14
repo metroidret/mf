@@ -18574,22 +18574,18 @@ const struct FrameData sIntroSamusCuredScreenGlareOam[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-static const u8 sBlob_5f4a00_5f5054[] = INCBIN_U8("data/Blob_5f4a00_5f5054.bin");
+static const u8 sBlob_5f4a00_5f4ed4[] = INCBIN_U8("data/Blob_5f4a00_5f4ed4.bin");
 
-
-
-static const u8 sBlob_5f4a00_5f5054[] = INCBIN_U8("data/Blob_5f4a00_5f5054.bin");
-
+const u16 sPal_5f4ed4[12 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5f4ed4.pal");
 const u16 sPal_5f5054[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5f5054.pal");
-
 const u16 sIntroApproachingBslObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/approaching_bsl_obj.pal");
 
-static const u8 sBlob_5f5454_5f5a58[] = INCBIN_U8("data/Blob_5f5454_5f5a58.bin");
-
+const u32 sIntroTilemap_5f5454[385] = INCBIN_U32("data/new_file_intro/5f5454.tm.lz");
 const u32 sIntroTilemap_5f5a58[368] = INCBIN_U32("data/new_file_intro/5f5a58.tm.lz");
-const u32 sIntroSamusMonologueBgTilemap[367] = INCBIN_U32("data/new_file_intro/samus_monologue_bg.tm.lz");
+const u32 sIntroSamusMonologueBgTilemap[368] = INCBIN_U32("data/new_file_intro/samus_monologue_bg.tm.lz");
+const u32 sIntroTilemap_5f65d8[238] = INCBIN_U32("data/new_file_intro/5f65d8.tm.lz");
 
-static const u8 sBlob_5f65d4_60093c[] = INCBIN_U8("data/Blob_5f65d4_60093c.bin");
+static const u8 sBlob_5f6990_60093c[] = INCBIN_U8("data/Blob_5f6990_60093c.bin");
 
 const u32 sIntroSamusSittingGfx[4818] = INCBIN_U32("data/new_file_intro/samus_sitting.gfx.lz");
 const u16 sIntroSamusSittingPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/samus_sitting.pal");

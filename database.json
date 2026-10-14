@@ -26848,18 +26848,6 @@
     },
     "size": 2
   },
-
-
-
-
-  {
-    "path": "Blob_5f4a00_5f5054.bin",
-    "count": "0x654",
-    "addr": {
-      "us": "0x5F4A00"
-    },
-    "size": 1
-  },
   {
     "path": "new_file_intro/5f5054.pal",
     "count": "0x100",
@@ -26877,12 +26865,12 @@
     "size": 2
   },
   {
-    "path": "Blob_5f5454_5f5a58.bin",
-    "count": "0x604",
+    "path": "new_file_intro/5f5454.tm.lz",
+    "count": "0x181",
     "addr": {
       "us": "0x5F5454"
     },
-    "size": 1
+    "size": 4
   },
   {
     "path": "new_file_intro/5f5a58.tm.lz",
@@ -26894,17 +26882,25 @@
   },
   {
     "path": "new_file_intro/samus_monologue_bg.tm.lz",
-    "count": "0x16F",
+    "count": "0x170",
     "addr": {
       "us": "0x5F6018"
     },
     "size": 4
   },
   {
-    "path": "Blob_5f65d4_60093c.bin",
-    "count": "0xA368",
+    "path": "new_file_intro/5f65d8.tm.lz",
+    "count": "0xEE",
     "addr": {
-      "us": "0x5F65D4"
+      "us": "0x5F65D8"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5f6990_60093c.bin",
+    "count": "0x9FAC",
+    "addr": {
+      "us": "0x5F6990"
     },
     "size": 1
   },
