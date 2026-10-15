@@ -15924,9 +15924,9 @@ static const u8 sBlob_5dfd6c_5e116c[] = INCBIN_U8("data/Blob_5dfd6c_5e116c.bin")
 
 const u32 sIntroApproachingBslObjGfx[3614] = INCBIN_U32("data/new_file_intro/approaching_bsl_obj.gfx.lz");
 
-const u32 sData_5E49E4[4107] = INCBIN_U32("data/new_file_intro/5e49e4.gfx.lz");
-const u32 sData_5E8A10[2178] = INCBIN_U32("data/new_file_intro/5e8a10.gfx.lz");
-const u32 sData_5EAC18[3286] = INCBIN_U32("data/new_file_intro/5eac18.gfx.lz");
+const u32 sIntroFlyingToBslBgGfx[4107] = INCBIN_U32("data/new_file_intro/5e49e4.gfx.lz");
+const u32 sIntroArrivingAtBslSpaceMapBgGfx[2178] = INCBIN_U32("data/new_file_intro/space_map_bg");
+const u32 sIntroFlyingToBslObjGfx[3286] = INCBIN_U32("data/new_file_intro/5eac18.gfx.lz");
 
 const u32 sIntroSamusMonologueBgGfx[3282] = INCBIN_U32("data/new_file_intro/samus_monologue_bg.gfx.lz");
 
@@ -16850,7 +16850,7 @@ const struct FrameData sOam_5f1c28[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f1c50[5] = {
+const struct FrameData sIntroArrivingAtBslMonologueCursorOam[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5f1424,
 		.timer = 8
@@ -17018,7 +17018,7 @@ const struct FrameData sOam_5f1d78[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f1da0[2] = {
+const struct FrameData sIntroArrivingAtBslAdamTextCursorOam[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5f13ee,
 		.timer = 30
@@ -19715,7 +19715,7 @@ static const u16 sOamFrame_5f41f6[OAM_DATA_SIZE(1)] = {
 	OAM_ENTRY(0, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 149, 5, 0),
 };
 
-const struct FrameData sOam_5f4200[11] = {
+const struct FrameData sIntroArrivingAtBslBslPopupOam_Opening[11] = {
 	[0] = {
 		.pFrame = sOamFrame_5f3130,
 		.timer = 84
@@ -19759,7 +19759,7 @@ const struct FrameData sOam_5f4200[11] = {
 	[10] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4258[10] = {
+const struct FrameData sIntroArrivingAtBslBslPopupOam_Closing[10] = {
 	[0] = {
 		.pFrame = sOamFrame_5f279a,
 		.timer = 2
@@ -19799,7 +19799,7 @@ const struct FrameData sOam_5f4258[10] = {
 	[9] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f42a8[13] = {
+const struct FrameData sIntroArrivingAtBslAdamPanelFrameOam_Opening[13] = {
 	[0] = {
 		.pFrame = sOamFrame_5f27f0,
 		.timer = 1
@@ -19851,7 +19851,7 @@ const struct FrameData sOam_5f42a8[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4310[13] = {
+const struct FrameData sIntroArrivingAtBslAdamPanelFrameOam_Closing[13] = {
 	[0] = {
 		.pFrame = sOamFrame_5f2c08,
 		.timer = 2
@@ -19903,7 +19903,7 @@ const struct FrameData sOam_5f4310[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4378[13] = {
+const struct FrameData sIntroArrivingAtBslAdamPanelBackgroundOam_Opening[13] = {
 	[0] = {
 		.pFrame = sOamFrame_5f2c8e,
 		.timer = 1
@@ -19955,7 +19955,7 @@ const struct FrameData sOam_5f4378[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f43e0[13] = {
+const struct FrameData sIntroArrivingAtBslAdamPanelBackgroundOam_Closing[13] = {
 	[0] = {
 		.pFrame = sOamFrame_5f309a,
 		.timer = 2
@@ -20007,7 +20007,7 @@ const struct FrameData sOam_5f43e0[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4448[5] = {
+const struct FrameData sIntroArrivingAtBslAdamLensOam_Opening[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5f30d2,
 		.timer = 8
@@ -20027,7 +20027,7 @@ const struct FrameData sOam_5f4448[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4470[5] = {
+const struct FrameData sIntroArrivingAtBslAdamLensOam_Closing[5] = {
 	[0] = {
 		.pFrame = sOamFrame_5f310e,
 		.timer = 8
@@ -20575,7 +20575,7 @@ const struct FrameData sOam_5f4878[8] = {
 	[7] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f48b8[6] = {
+const struct FrameData sIntroArrivingAtBslAdamLensOam_Glowing[6] = {
 	[0] = {
 		.pFrame = sOamFrame_5f310e,
 		.timer = 8
@@ -20599,7 +20599,7 @@ const struct FrameData sOam_5f48b8[6] = {
 	[5] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f48e8[26] = {
+const struct FrameData sIntroArrivingAtBslShipTrajectoryOam[26] = {
 	[0] = {
 		.pFrame = sOamFrame_5f3cd4,
 		.timer = 3
@@ -20703,7 +20703,7 @@ const struct FrameData sOam_5f48e8[26] = {
 	[25] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f49b8[6] = {
+const struct FrameData sIntroArrivingAtBslPlanetsAndShipOam[6] = {
 	[0] = {
 		.pFrame = sOamFrame_5f3ae2,
 		.timer = 8
@@ -20961,7 +20961,7 @@ static const u16 sOamFrame_5f4d14[OAM_DATA_SIZE(6)] = {
 	OAM_ENTRY(104, -4, OAM_DIMS_16x8, OAM_X_FLIP, 734, 3, 0),
 };
 
-const struct FrameData sOam_5f4d3c[11] = {
+const struct FrameData sIntroArrivingAtBslSamusShipOam[11] = {
 	[0] = {
 		.pFrame = sOamFrame_5f4a00,
 		.timer = 50
@@ -21005,7 +21005,7 @@ const struct FrameData sOam_5f4d3c[11] = {
 	[10] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4d94[2] = {
+const struct FrameData sIntroArrivingAtBslBslOam[2] = {
 	[0] = {
 		.pFrame = sOamFrame_5f4abc,
 		.timer = 4
@@ -21013,7 +21013,7 @@ const struct FrameData sOam_5f4d94[2] = {
 	[1] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4da4[18] = {
+const struct FrameData sIntroArrivingAtBslThrusterExplosionOam[18] = {
 	[0] = {
 		.pFrame = sOamFrame_5f4adc,
 		.timer = 1
@@ -21085,7 +21085,7 @@ const struct FrameData sOam_5f4da4[18] = {
 	[17] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_5f4e34[4] = {
+const struct FrameData sIntroArrivingAtBslThrustersOam[4] = {
 	[0] = {
 		.pFrame = sOamFrame_5f4afe,
 		.timer = 1
@@ -21104,11 +21104,11 @@ const struct FrameData sOam_5f4e34[4] = {
 static const u8 sBlob_5f4e54_5f4ed4[] = INCBIN_U8("data/Blob_5f4e54_5f4ed4.bin");
 
 const u16 sPal_5f4ed4[12 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5f4ed4.pal");
-const u16 sPal_5f5054[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/5f5054.pal");
+const u16 sIntroArrivingAtBslSpaceMapPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/space_map.pal");
 const u16 sIntroApproachingBslObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/approaching_bsl_obj.pal");
 
 const u32 sIntroTilemap_5f5454[385] = INCBIN_U32("data/new_file_intro/5f5454.tm.lz");
-const u32 sIntroTilemap_5f5a58[368] = INCBIN_U32("data/new_file_intro/5f5a58.tm.lz");
+const u32 sIntroArrivingAtBslSpaceMapTilemap[368] = INCBIN_U32("data/new_file_intro/5f5a58.tm.lz");
 const u32 sIntroSamusMonologueBgTilemap[368] = INCBIN_U32("data/new_file_intro/samus_monologue_bg.tm.lz");
 const u32 sIntroTilemap_5f65d8[238] = INCBIN_U32("data/new_file_intro/5f65d8.tm.lz");
 

@@ -191,15 +191,15 @@ extern const u32 sIntroSamusRebornBgBottomTilemap[368];
 
 extern const u32 sIntroApproachingBslObjGfx[3614];
 
-extern const u32 sData_5E49E4[4107];
-extern const u32 sData_5E8A10[2178];
-extern const u32 sData_5EAC18[3286];
+extern const u32 sIntroFlyingToBslBgGfx[4107];
+extern const u32 sIntroArrivingAtBslSpaceMapBgGfx[2178];
+extern const u32 sIntroFlyingToBslObjGfx[3286];
 
 extern const u32 sIntroSamusMonologueBgGfx[3282];
 
 extern const struct FrameData sOam_5f1c00[5];
 extern const struct FrameData sOam_5f1c28[5];
-extern const struct FrameData sOam_5f1c50[5];
+extern const struct FrameData sIntroArrivingAtBslMonologueCursorOam[5];
 extern const struct FrameData sOam_5f1c78[7];
 extern const struct FrameData sOam_5f1cb0[5];
 extern const struct FrameData sOam_5f1cd8[5];
@@ -207,7 +207,7 @@ extern const struct FrameData sOam_5f1d00[5];
 extern const struct FrameData sOam_5f1d28[5];
 extern const struct FrameData sOam_5f1d50[5];
 extern const struct FrameData sOam_5f1d78[5];
-extern const struct FrameData sOam_5f1da0[2];
+extern const struct FrameData sIntroArrivingAtBslAdamTextCursorOam[2];
 extern const struct FrameData sOam_5f1db0[3];
 extern const struct FrameData sOam_5f1dc8[2];
 extern const struct FrameData sOam_5f1dd8[8];
@@ -254,14 +254,14 @@ extern const struct FrameData sOam_5f25e0[2];
 extern const struct FrameData sOam_5f25f0[2];
 extern const struct FrameData sOam_5f2600[2];
 
-extern const struct FrameData sOam_5f4200[11];
-extern const struct FrameData sOam_5f4258[10];
-extern const struct FrameData sOam_5f42a8[13];
-extern const struct FrameData sOam_5f4310[13];
-extern const struct FrameData sOam_5f4378[13];
-extern const struct FrameData sOam_5f43e0[13];
-extern const struct FrameData sOam_5f4448[5];
-extern const struct FrameData sOam_5f4470[5];
+extern const struct FrameData sIntroArrivingAtBslBslPopupOam_Opening[11];
+extern const struct FrameData sIntroArrivingAtBslBslPopupOam_Closing[10];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelFrameOam_Opening[13];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelFrameOam_Closing[13];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelBackgroundOam_Opening[13];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelBackgroundOam_Closing[13];
+extern const struct FrameData sIntroArrivingAtBslAdamLensOam_Opening[5];
+extern const struct FrameData sIntroArrivingAtBslAdamLensOam_Closing[5];
 extern const struct FrameData sOam_5f4498[2];
 extern const struct FrameData sOam_5f44a8[11];
 extern const struct FrameData sOam_5f4500[11];
@@ -279,22 +279,22 @@ extern const struct FrameData sOam_5f47b8[8];
 extern const struct FrameData sOam_5f47f8[8];
 extern const struct FrameData sOam_5f4838[8];
 extern const struct FrameData sOam_5f4878[8];
-extern const struct FrameData sOam_5f48b8[6];
-extern const struct FrameData sOam_5f48e8[26];
-extern const struct FrameData sOam_5f49b8[6];
+extern const struct FrameData sIntroArrivingAtBslAdamLensOam_Glowing[6];
+extern const struct FrameData sIntroArrivingAtBslShipTrajectoryOam[26];
+extern const struct FrameData sIntroArrivingAtBslPlanetsAndShipOam[6];
 extern const struct FrameData sIntroSamusCuredScreenGlareOam[3];
 
-extern const struct FrameData sOam_5f4d3c[11];
-extern const struct FrameData sOam_5f4d94[2];
-extern const struct FrameData sOam_5f4da4[18];
-extern const struct FrameData sOam_5f4e34[4];
+extern const struct FrameData sIntroArrivingAtBslSamusShipOam[11];
+extern const struct FrameData sIntroArrivingAtBslBslOam[2];
+extern const struct FrameData sIntroArrivingAtBslThrusterExplosionOam[18];
+extern const struct FrameData sIntroArrivingAtBslThrustersOam[4];
 
 extern const u16 sPal_5f4ed4[12 * PAL_ROW];
-extern const u16 sPal_5f5054[16 * PAL_ROW];
+extern const u16 sIntroArrivingAtBslSpaceMapPal[16 * PAL_ROW];
 extern const u16 sIntroApproachingBslObjPal[16 * PAL_ROW];
 
 extern const u32 sIntroTilemap_5f5454[385];
-extern const u32 sIntroTilemap_5f5a58[368];
+extern const u32 sIntroArrivingAtBslSpaceMapTilemap[368];
 extern const u32 sIntroSamusMonologueBgTilemap[368];
 extern const u32 sIntroTilemap_5f65d8[238];
 
