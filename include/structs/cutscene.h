@@ -21,7 +21,7 @@ struct SpecialCutsceneOam {
     u8 unk_16;
     u8 unk_17;
     u8 unk_18_0 : 1;
-    u8 affineMode : 2;
+    u32 affineMode : 2;         // Can't be u8
     u8 unk_18_3 : 2;
     u8 unk_18_5 : 1;
     u8 unk_19;

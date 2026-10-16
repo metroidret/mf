@@ -14,7 +14,9 @@ struct IntroData {
     u16 unk_A;
     u16 unk_C;
     u16 unk_E;
-    u8 unk_10[256];
+    u16 unk_10;
+    u16 unk_12;
+    u8 unk_14[252];
     u8 unk_110;
     u8 unk_111;
     u8 unk_112[26];

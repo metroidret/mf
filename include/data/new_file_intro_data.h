@@ -191,16 +191,77 @@ extern const u32 sIntroSamusRebornBgBottomTilemap[368];
 
 extern const u32 sIntroApproachingBslObjGfx[3614];
 
+extern const u32 sIntroFlyingToBslBgGfx[4107];
+extern const u32 sIntroArrivingAtBslSpaceMapBgGfx[2178];
+extern const u32 sIntroFlyingToBslObjGfx[3286];
+
 extern const u32 sIntroSamusMonologueBgGfx[3282];
 
-extern const struct FrameData sOam_5f4200[11];
-extern const struct FrameData sOam_5f4258[10];
-extern const struct FrameData sOam_5f42a8[13];
-extern const struct FrameData sOam_5f4310[13];
-extern const struct FrameData sOam_5f4378[13];
-extern const struct FrameData sOam_5f43e0[13];
-extern const struct FrameData sOam_5f4448[5];
-extern const struct FrameData sOam_5f4470[5];
+extern const struct FrameData sOam_5f1c00[5];
+extern const struct FrameData sOam_5f1c28[5];
+extern const struct FrameData sIntroArrivingAtBslMonologueCursorOam[5];
+extern const struct FrameData sOam_5f1c78[7];
+extern const struct FrameData sOam_5f1cb0[5];
+extern const struct FrameData sOam_5f1cd8[5];
+extern const struct FrameData sOam_5f1d00[5];
+extern const struct FrameData sOam_5f1d28[5];
+extern const struct FrameData sOam_5f1d50[5];
+extern const struct FrameData sOam_5f1d78[5];
+extern const struct FrameData sIntroArrivingAtBslAdamTextCursorOam[2];
+extern const struct FrameData sOam_5f1db0[3];
+extern const struct FrameData sOam_5f1dc8[2];
+extern const struct FrameData sOam_5f1dd8[8];
+extern const struct FrameData sOam_5f1e18[8];
+extern const struct FrameData sOam_5f1e58[7];
+extern const struct FrameData sOam_5f1e90[2];
+extern const struct FrameData sOam_5f1ea0[33];
+extern const struct FrameData sOam_5f1fa8[33];
+extern const struct FrameData sOam_5f20b0[33];
+extern const struct FrameData sOam_5f21b8[33];
+extern const struct FrameData sOam_5f22c0[5];
+extern const struct FrameData sOam_5f22e8[5];
+extern const struct FrameData sOam_5f2310[5];
+extern const struct FrameData sOam_5f2338[5];
+extern const struct FrameData sOam_5f2360[2];
+extern const struct FrameData sOam_5f2370[2];
+extern const struct FrameData sOam_5f2380[2];
+extern const struct FrameData sOam_5f2390[2];
+extern const struct FrameData sOam_5f23a0[2];
+extern const struct FrameData sOam_5f23b0[2];
+extern const struct FrameData sOam_5f23c0[2];
+extern const struct FrameData sOam_5f23d0[10];
+extern const struct FrameData sOam_5f2420[7];
+extern const struct FrameData sOam_5f2458[7];
+extern const struct FrameData sOam_5f2490[5];
+extern const struct FrameData sOam_5f24b8[5];
+extern const struct FrameData sOam_5f24e0[2];
+extern const struct FrameData sOam_5f24f0[2];
+extern const struct FrameData sOam_5f2500[2];
+extern const struct FrameData sOam_5f2510[2];
+extern const struct FrameData sOam_5f2520[2];
+extern const struct FrameData sOam_5f2530[2];
+extern const struct FrameData sOam_5f2540[2];
+extern const struct FrameData sOam_5f2550[2];
+extern const struct FrameData sOam_5f2560[2];
+extern const struct FrameData sOam_5f2570[2];
+extern const struct FrameData sOam_5f2580[2];
+extern const struct FrameData sOam_5f2590[2];
+extern const struct FrameData sOam_5f25a0[2];
+extern const struct FrameData sOam_5f25b0[2];
+extern const struct FrameData sOam_5f25c0[2];
+extern const struct FrameData sOam_5f25d0[2];
+extern const struct FrameData sOam_5f25e0[2];
+extern const struct FrameData sOam_5f25f0[2];
+extern const struct FrameData sOam_5f2600[2];
+
+extern const struct FrameData sIntroArrivingAtBslBslPopupOam_Opening[11];
+extern const struct FrameData sIntroArrivingAtBslBslPopupOam_Closing[10];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelFrameOam_Opening[13];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelFrameOam_Closing[13];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelBackgroundOam_Opening[13];
+extern const struct FrameData sIntroArrivingAtBslAdamPanelBackgroundOam_Closing[13];
+extern const struct FrameData sIntroArrivingAtBslAdamLensOam_Opening[5];
+extern const struct FrameData sIntroArrivingAtBslAdamLensOam_Closing[5];
 extern const struct FrameData sOam_5f4498[2];
 extern const struct FrameData sOam_5f44a8[11];
 extern const struct FrameData sOam_5f4500[11];
@@ -218,14 +279,24 @@ extern const struct FrameData sOam_5f47b8[8];
 extern const struct FrameData sOam_5f47f8[8];
 extern const struct FrameData sOam_5f4838[8];
 extern const struct FrameData sOam_5f4878[8];
-extern const struct FrameData sOam_5f48b8[6];
-extern const struct FrameData sOam_5f48e8[26];
-extern const struct FrameData sOam_5f49b8[6];
+extern const struct FrameData sIntroArrivingAtBslAdamLensOam_Glowing[6];
+extern const struct FrameData sIntroArrivingAtBslShipTrajectoryOam[26];
+extern const struct FrameData sIntroArrivingAtBslPlanetsAndShipOam[6];
 extern const struct FrameData sIntroSamusCuredScreenGlareOam[3];
 
+extern const struct FrameData sIntroArrivingAtBslSamusShipOam[11];
+extern const struct FrameData sIntroArrivingAtBslBslOam[2];
+extern const struct FrameData sIntroArrivingAtBslThrusterExplosionOam[18];
+extern const struct FrameData sIntroArrivingAtBslThrustersOam[4];
+
+extern const u16 sPal_5f4ed4[12 * PAL_ROW];
+extern const u16 sIntroArrivingAtBslSpaceMapPal[16 * PAL_ROW];
 extern const u16 sIntroApproachingBslObjPal[16 * PAL_ROW];
 
-extern const u32 sIntroSamusMonologueBgTilemap[367];
+extern const u32 sIntroTilemap_5f5454[385];
+extern const u32 sIntroArrivingAtBslSpaceMapTilemap[368];
+extern const u32 sIntroSamusMonologueBgTilemap[368];
+extern const u32 sIntroTilemap_5f65d8[238];
 
 extern const u32 sIntroSamusSittingGfx[4818];
 extern const u16 sIntroSamusSittingPal[16 * PAL_ROW];
@@ -290,5 +361,9 @@ extern const u32 sIntroSamusHelmetCloseupBgGfx2[908];
 extern const u32 sIntroSamusHelmetCloseupBgGfx3[812];
 extern const u32 sIntroSamusHelmetCloseupBgGfx4[844];
 extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
+
+extern const u32 sIntroTilemap_662804[318];
+
+extern const u16 sIntroPal_663820[4 * PAL_ROW];
 
 #endif /* NEW_FILE_INTRO_DATA_H */
