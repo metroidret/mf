@@ -26889,12 +26889,76 @@
     "size": 4
   },
   {
-    "path": "Blob_5f6990_60093c.bin",
-    "count": "0x9FAC",
+    "path": "Blob_5f6990_5f7190.bin",
+    "count": "0x800",
     "addr": {
       "us": "0x5F6990"
     },
     "size": 1
+  },
+  {
+    "path": "new_file_intro/landing_on_bsl_bg.gfx.lz",
+    "count": "0xE71",
+    "addr": {
+      "us": "0x5F7190"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/landing_on_bsl_obj.gfx.lz",
+    "count": "0xCE1",
+    "addr": {
+      "us": "0x5FAB54"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/landing_on_bsl_bg.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5FF708"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5ff908.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5FF908"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/5ffb08.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5FFB08"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/landing_on_bsl_obj.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x5FFD08"
+    },
+    "size": 2
+  },
+  {
+    "path": "new_file_intro/landing_on_bsl_space.tm.lz",
+    "count": "0x101",
+    "addr": {
+      "us": "0x5FFF08"
+    },
+    "size": 4
+  },
+  {
+    "path": "new_file_intro/landing_on_bsl_hangar.tm.lz",
+    "count": "0x18C",
+    "addr": {
+      "us": "0x60030C"
+    },
+    "size": 4
   },
   {
     "path": "new_file_intro/samus_sitting.gfx.lz",

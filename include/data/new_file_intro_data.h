@@ -298,6 +298,36 @@ extern const u32 sIntroArrivingAtBslSpaceMapTilemap[368];
 extern const u32 sIntroSamusMonologueBgTilemap[368];
 extern const u32 sIntroTilemap_5f65d8[238];
 
+extern const u32 sIntroLandingOnBslBgGfx[3697];
+extern const u32 sIntroLandingOnBslObjGfx[3297];
+
+extern const struct FrameData sIntroBslHangarDoorOam_Opening[10];
+extern const struct FrameData sIntroBslHangarDoorOam_Closing[10];
+extern const struct FrameData sIntroBslHangarDoorOam_Top[2];
+extern const struct FrameData sIntroBslHangarDoorOam_Bottom[2];
+extern const struct FrameData sIntroBslHangarDoorOam_Closed[2];
+
+extern const struct FrameData sIntroShipLandingOam_ExtendingLandingGear[11];
+extern const struct FrameData sIntroShipLandingOam_Idle[2];
+extern const struct FrameData sIntroShipLandingOam_Hovering[8];
+extern const struct FrameData sIntroShipLandingOam_ExtendedLandingGearHovering[5];
+extern const struct FrameData sIntroShipLandingOam_ExtendedLandingGearIdle[2];
+extern const struct FrameData sIntroShipLandingSmokeOam_1[6];
+extern const struct FrameData sIntroShipLandingSmokeOam_2[6];
+extern const struct FrameData sIntroShipLandingOam_Unused1[2];
+extern const struct FrameData sIntroShipLandingOam_Unused2[2];
+extern const struct FrameData sIntroShipLandingOam[2];
+extern const struct FrameData sIntroShipLandingOam_RetractingLandingGear[15];
+extern const struct FrameData sIntroBslLandingLightsOam[7];
+extern const struct FrameData sIntroShipLandingOam_FarAway[2];
+
+extern const u16 sIntroLandingOnBslBgPal[16 * PAL_ROW];
+extern const u16 sIntroPal_5ff908[16 * PAL_ROW];
+extern const u16 sIntroPal_5ffb08[16 * PAL_ROW];
+extern const u16 sIntroLandingOnBslObjPal[16 * PAL_ROW];
+extern const u32 sIntroLandingOnBslSpaceTilemap[257];
+extern const u32 sIntroLandingOnBslHangarTilemap[396];
+
 extern const u32 sIntroSamusSittingGfx[4818];
 extern const u16 sIntroSamusSittingPal[16 * PAL_ROW];
 extern const u32 sIntroSamusSittingTilemap[171];
