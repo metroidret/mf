@@ -22,7 +22,13 @@ struct IntroData {
     u8 unk_112[26];
     u8 unk_12C;
     u8 unk_12D;
-    u8 unk_12E[197];
+    u8 unk_12E[26];
+    u8 unk_148;
+    u8 unk_149;
+    u8 unk_14A[166];
+    u8 unk_1F0;
+    u8 unk_1F1;
+    u8 unk_1F2;
     u8 unk_1F3;
     u8 unk_1F4;
     u8 unk_1F5;
@@ -35,7 +41,7 @@ struct IntroData {
     u8 subStage;
     u8 unk_215;
     s8 unk_216;
-    u8 unk_217;
+    s8 unk_217;
     u8 unk_218;
     u8 unk_219[3];
     struct SpecialCutsceneOam oam[20];

@@ -1,5 +1,6 @@
 #include "globals.h"
 #include "new_file_intro.h"
+#include "music_wrappers.h"
 
 #include "constants/game_state.h"
 #include "constants/audio.h"
@@ -18,44 +19,7 @@
 #include "data/audio.h"
 
 void unk_99940(void); // For V-blank callback
-
 u8 SpecialCutsceneGetRandomNumber(void);
-u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descendingSearchOrder);
-boolu32 NewFileIntroSamusDrifting(void);
-static void NewFileIntroSamusShipFlyingInit(void);
-static boolu32 NewFileIntroSamusShipFlyingProcess(void);
-static boolu32 NewFileIntroSamusShipFlying(void);
-static void NewFileIntroSamusFaintingInit(void);
-static boolu32 NewFileIntroSamusFaintingProcess(void);
-static boolu32 NewFileIntroSamusFainting(void);
-void NewFileIntroProcessOam_Empty(void);
-void NewFileIntroProcessTextCursor(struct SpecialCutsceneOam* pOam);
-void NewFileIntroSr388PreviewVblank(void);
-u8 NewFileIntroSr388SetupOam(u8 type, s16 xPosition, s16 yPosition);
-boolu32 NewFileIntroSr388Preview(void);
-void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition, s16 arg3);
-void NewFileIntroInSr388Vblank(void);
-u8 NewFileIntroInSr388SetupOam(IntroInSr388OamType type, s16 xPosition, s16 yPosition);
-boolu32 NewFileIntroInSr388(void);
-void NewFileIntroGetPositionOfOamByType(IntroInSr388OamType type, s16* pXPosition, s16* pYPosition);
-void NewFileIntroSamusGettingCuredVblank(void);
-u8 NewFileIntroSamusGettingCuredSetupOam(IntroSamusGettingCuredOamType type, s16 xPosition, s16 yPosition);
-void NewFileIntroSamusGettingCuredNervousSystemVblank(void);
-boolu32 NewFileIntroSamusGettingCured(void);
-void NewFileIntroSamusGettingCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam);
-u8 NewFileIntroFindOamByType(IntroSamusGettingCuredOamType type);
-u8 NewFileIntroSamusFoundSetupOam(IntroSamusFoundOamType type, s16 xPosition, s16 yPosition);
-void NewFileIntroSamusFoundVblank(void);
-boolu32 NewFileIntroSamusFound(void);
-u8 NewFileIntroSamusCuredSetupOam(IntroSamusCuredOamType type, s16 xPosition, s16 yPosition);
-void NewFileIntroSamusCuredVblank(void);
-boolu32 NewFileIntroSamusCured(void);
-void NewFileIntroSamusCuredProcessOam_Empty(struct SpecialCutsceneOam* pOam);
-void NewFileIntroArrivingAtBslVblank(void);
-boolu32 NewFileIntroArrivingAtBsl(void);
-u8 NewFileIntroArrivingAtBslSetupOam(IntroArrivingAtBslOamType type, s16 xPosition, s16 yPosition);
-u8 NewFileIntroGetPositionAndSlotOfOamByType(IntroArrivingAtBslOamType type, s16* pXPosition, s16* pYPosition);
-void NewFileIntroArrivingAtBslProcessOam_Empty(struct SpecialCutsceneOam* pOam);
 
 static u16* sMonologueTextPointersJapanese[19];
 static u16* sMonologueTextPointersEnglish[19];
@@ -582,7 +546,7 @@ boolu32 unk_87920(void)
  * @brief 87970 | 94 | V-blank for the new file intro Samus ship flying cutscene
  * 
  */
-static void NewFileIntroSamusShipFlyingVblank(void) 
+void NewFileIntroSamusShipFlyingVblank(void) 
 {
     DMA3_COPY_32(gOamData, OAM_BASE, 256);
 
@@ -602,7 +566,7 @@ static void NewFileIntroSamusShipFlyingVblank(void)
  * @brief 87a04 | 264 | Setup for the new file intro Samus ship flying cutscene
  * 
  */
-static void NewFileIntroSamusShipFlyingInit(void) 
+void NewFileIntroSamusShipFlyingInit(void) 
 {
     u16 i;
     
@@ -675,7 +639,7 @@ static void NewFileIntroSamusShipFlyingInit(void)
  * @brief 87C68 | 188 | Processes the new file intro Samus ship flying cutscene
  * 
  */
-static boolu32 NewFileIntroSamusShipFlyingProcess(void) 
+boolu32 NewFileIntroSamusShipFlyingProcess(void) 
 {
     boolu32 result;
 
@@ -744,7 +708,7 @@ static boolu32 NewFileIntroSamusShipFlyingProcess(void)
  * @brief 87df0 | a0 | Main handler for new file intro Samus ship flying cutscene
  * 
  */
-static boolu32 NewFileIntroSamusShipFlying(void)
+boolu32 NewFileIntroSamusShipFlying(void)
 {
     boolu32 result;
 
@@ -794,7 +758,7 @@ static boolu32 NewFileIntroSamusShipFlying(void)
  * @brief 87e90 | 1d8 | Setup for the new file intro Samus fainting cutscene
  * 
  */
-static void NewFileIntroSamusFaintingInit(void)
+void NewFileIntroSamusFaintingInit(void)
 {
     CallbackSetVBlank(unk_99940);
 
@@ -857,7 +821,7 @@ static void NewFileIntroSamusFaintingInit(void)
  * @brief 88068 | 13c | Processes the new file intro Samus fainting cutscene
  * 
  */
-static boolu32 NewFileIntroSamusFaintingProcess(void)
+boolu32 NewFileIntroSamusFaintingProcess(void)
 {
     boolu32 finished;
 
@@ -927,7 +891,7 @@ static boolu32 NewFileIntroSamusFaintingProcess(void)
  * @brief 881a4 | 9c | Main handler for the new file intro Samus fainting cutscene
  * 
  */
-static boolu32 NewFileIntroSamusFainting(void)
+boolu32 NewFileIntroSamusFainting(void)
 {
     boolu32 finished;
 
@@ -1056,7 +1020,7 @@ void NewFileIntroSamusDriftingInit(void)
  * @brief 884ac | c8 | V-blank for the 'Samus losing conciousness' cutscene
  * 
  */
-static void NewFileIntroSamusLosingConsciousnessVblank(void)
+void NewFileIntroSamusLosingConsciousnessVblank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
@@ -2124,7 +2088,7 @@ u8 NewFileIntroSetupOam(u8 type, s16 xPosition, s16 yPosition, boolu8 descending
             return 20;
     }
     
-    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], 36);
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], sizeof(struct SpecialCutsceneOam));
 
     INTRO_DATA.oam[slot].xPosition = xPosition;
     INTRO_DATA.oam[slot].yPosition = yPosition;
@@ -5253,7 +5217,7 @@ void NewFileIntroProcessXInNervousSystem_1(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->unk_A++;
         if (pOam->unk_A == 20)
@@ -5335,7 +5299,7 @@ void NewFileIntroProcessXInNervousSystem_2(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->unk_A++;
         if (pOam->unk_A == 20)
@@ -5395,7 +5359,7 @@ void NewFileIntroProcessXInNervousSystem_3(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->unk_A++;
         if (pOam->unk_A == 40)
@@ -5456,7 +5420,7 @@ void NewFileIntroProcessXInNervousSystem_4(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->unk_A++;
         if (pOam->unk_A == 40)
@@ -5516,7 +5480,7 @@ void NewFileIntroProcessXInNervousSystem_5(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->unk_A++;
         if (pOam->unk_A == 60)
@@ -5577,7 +5541,7 @@ void NewFileIntroProcessXInNervousSystem_6(struct SpecialCutsceneOam *pOam)
         }
     }
     
-    if (gNonGameplayRam.intro.subStage == 5)
+    if (INTRO_DATA.subStage == 5)
     {
         pOam->unk_A++;
         if (pOam->unk_A == 60)
@@ -7716,7 +7680,7 @@ void NewFileIntroProcessSamusShipArrivingAtBsl(struct SpecialCutsceneOam *pOam)
     }
     
     if (pOam->scaling <= Q_8_8(1))
-        pOam->affineMode = 1;
+        pOam->affineMode = OAM_AFFINE_MODE_AFFINE;
 }
 
  /**
@@ -8213,7 +8177,7 @@ u8 NewFileIntroArrivingAtBslSetupOam(IntroArrivingAtBslOamType type, s16 xPositi
     if (type == INTRO_ARRIVING_AT_BSL_OAM_TYPE_SHIP)
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
-        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_DOUBLE_SIZED;
         INTRO_DATA.oam[slot].priority = 1;
         INTRO_DATA.oam[slot].pOam = sIntroArrivingAtBslSamusShipOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBsl;
@@ -8228,7 +8192,7 @@ u8 NewFileIntroArrivingAtBslSetupOam(IntroArrivingAtBslOamType type, s16 xPositi
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
         INTRO_DATA.oam[slot].priority = 1;
-        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_DOUBLE_SIZED;
         INTRO_DATA.oam[slot].pOam = sIntroArrivingAtBslThrustersOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusters;
     }
@@ -8236,7 +8200,7 @@ u8 NewFileIntroArrivingAtBslSetupOam(IntroArrivingAtBslOamType type, s16 xPositi
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
         INTRO_DATA.oam[slot].priority = 1;
-        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_DOUBLE_SIZED;
         INTRO_DATA.oam[slot].pOam = sIntroArrivingAtBslThrustersOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusters;
     }
@@ -8244,7 +8208,7 @@ u8 NewFileIntroArrivingAtBslSetupOam(IntroArrivingAtBslOamType type, s16 xPositi
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1.5f);
         INTRO_DATA.oam[slot].priority = 1;
-        INTRO_DATA.oam[slot].affineMode = 3;
+        INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_DOUBLE_SIZED;
         INTRO_DATA.oam[slot].pOam = sIntroArrivingAtBslThrustersOam;
         INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessSamusShipArrivingAtBslThrusters;
     }
@@ -8382,7 +8346,1145 @@ void NewFileIntroArrivingAtBslProcessOam_Empty(struct SpecialCutsceneOam* pOam)
 }
 
  /**
- * @brief  |  | To document
+ * @brief 90d60 | 1f4 | Setup for the landing on BSL cutscene
  * 
  */
+void NewFileIntroLandingOnBslInit(void)
+{
+    WRITE_16(REG_IME, FALSE);
+    WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
+    WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
+    WRITE_16(REG_IME, TRUE);
+
+    CallbackSetVBlank(unk_99940);
+
+    DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
+
+    LZ77UncompVram(sIntroLandingOnBslObjGfx, VRAM_OBJ);
+
+    DMA3_COPY_32(sIntroLandingOnBslObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+
+    LZ77UncompVram(sIntroLandingOnBslBgGfx, VRAM_BASE);
+    LZ77UncompVram(sIntroLandingOnBslHangarTilemap, VRAM_BASE + 0xF000);
+    LZ77UncompVram(sIntroLandingOnBslSpaceTilemap, VRAM_BASE + 0xF800);
+    LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
+
+    DMA3_COPY_32(sIntroLandingOnBslBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+
+    gBg2XPosition = 0;
+    gBg2YPosition = 40;
+    gBg3XPosition = 0;
+    gBg3YPosition = 0;
+
+    WRITE_16(REG_BG0HOFS, 0);
+    WRITE_16(REG_BG0VOFS, 0);
+    WRITE_16(REG_BG1HOFS, 0);
+    WRITE_16(REG_BG1VOFS, 0);
+    WRITE_16(REG_BG2HOFS, 0);
+    WRITE_16(REG_BG2VOFS, 40);
+    WRITE_16(REG_BG3HOFS, 0);
+    WRITE_16(REG_BG3VOFS, 0);
+
+    WRITE_16(REG_BG0CNT, CREATE_BGCNT(2, 28, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG2CNT, CREATE_BGCNT(0, 30, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
+    WRITE_16(REG_BG3CNT, CREATE_BGCNT(0, 31, BGCNT_LOW_PRIORITY, BGCNT_SIZE_256x256));
+
+    WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
+    gWrittenToBldy = BLDY_MAX_VALUE;
+    WRITE_16(REG_BLDY, BLDY_MAX_VALUE);
+
+    NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_BG_SCROLLER, SCREEN_X_MIDDLE, 0, FALSE);
+    NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_LANDING_LIGHTS, 128, 100 - gBg2YPosition, TRUE);
+    NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR, 128, 72 - gBg2YPosition, FALSE);
+    NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_LIGHT, 0, 0, FALSE);
+    SpecialCutsceneProcessOam();
+    SpecialCutsceneDrawAllOam();
+
+    INTRO_DATA.pText = sCutsceneTextNone;
+
+    DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
+
+    WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
+
+    CallbackSetVBlank(NewFileIntroLandingOnBslVblank);
+}
+
+ /**
+ * @brief 90f54 | 128 | Processes the landing on BSL cutscene
+ * 
+ */
+boolu32 NewFileIntroLandingOnBslProcess(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    APPLY_DELTA_TIME_INC(INTRO_DATA.timer);
+
+    switch (INTRO_DATA.subStage)
+    {
+        case 0:
+            if (gWrittenToBldy)
+            {
+                gWrittenToBldy--;
+            }
+            else
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 1;
+                PlayMusic(MUSIC_MAIN_DECK_AMBIENCE, 13);
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 1:
+            if (gBg2YPosition == 0)
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 2;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 2:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(1 + 1.f / 6))
+            {
+                INTRO_DATA.timer = 0;
+                NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP, 128, 50, FALSE);
+                INTRO_DATA.subStage = 3;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 3:
+            INTRO_DATA.timer = 0;
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 4:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(1.5f))
+            {
+                INTRO_DATA.timer = 0;
+                INTRO_DATA.subStage = 5;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+
+        case 5:
+            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 30))
+            {
+                INTRO_DATA.timer = 0;
+    
+                if (gWrittenToBldy < BLDY_MAX_VALUE)
+                    gWrittenToBldy++;
+                else
+                    finished = TRUE;
+            }
+
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+
+    return finished;
+}
+
+ /**
+ * @brief 9107c | 88 | Main handler for the landing on BSL cutscene
+ * 
+ */
+boolu32 NewFileIntroLandingOnBsl(void)
+{
+    boolu32 finished;
+
+    finished = FALSE;
+
+    switch (INTRO_DATA.stage)
+    {
+        case 0:
+            NewFileIntroLandingOnBslInit();
+            INTRO_DATA.stage = 2;
+            break;
+
+        case 1:
+            SpecialCutsceneFadeIn();
+
+            if (!gWrittenToBldy)
+                INTRO_DATA.stage = 2;
+            break;
+        
+        case 2:
+            if (NewFileIntroLandingOnBslProcess())
+            {
+                INTRO_DATA.subStage = 0;
+                INTRO_DATA.unk_213 = 0;
+                INTRO_DATA.stage = 3;
+            }
+            break;
+        
+        case 3:
+            if (gWrittenToBldy < BLDY_MAX_VALUE)
+            {
+                gWrittenToBldy++;
+            }
+            else
+            {
+                INTRO_DATA.stage = 0;
+                finished = TRUE;
+            }
+            
+            SpecialCutsceneProcessOam();
+            SpecialCutsceneDrawAllOam();
+            break;
+    }
+
+    return finished;
+}
+
+ /**
+ * @brief 91104 | 74 | Handles the background scrolling in the landing on BSL cutscene
+ * 
+ */
+void NewFileIntroProcessLandingOnBslScroll(struct SpecialCutsceneOam* pOam)
+{
+    INTRO_DATA.unk_217 = 0;
+
+    APPLY_DELTA_TIME_INC(pOam->timer);
+
+    if (pOam->stage == 0)
+    {
+        pOam->yPosition = gBg2YPosition;
+        pOam->timer = 0;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        INTRO_DATA.unk_217 = 0;
+
+        if (pOam->timer == 4)
+        {
+            pOam->timer = 0;
+
+            if (pOam->yPosition > 0)
+            {
+                INTRO_DATA.unk_217 = -1;
+                pOam->yPosition--;
+                gBg2YPosition = pOam->yPosition;
+            }
+            else
+            {
+                INTRO_DATA.unk_217 = 0;
+                pOam->type = 0;
+            }
+        }
+    }
+    else
+    {
+        pOam->timer = 0;
+    }
+}
+
+ /**
+ * @brief 91178 | a4 | Processes the hangar door in the intro
+ * 
+ */
+void NewFileIntroProcessBslDoor(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+
+    if (pOam->stage == 0)
+    {
+        NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_PALETTE_CHANGER, 0, 0, FALSE);
+        pOam->animationDurationCounter = 0;
+        pOam->currentAnimationFrame = 0;
+        pOam->pOam = sIntroBslHangarDoorOam_Opening;
+        SoundPlay_3b1c(SOUND_246);
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_TOP, pOam->xPosition, pOam->yPosition, TRUE);
+        NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_BOTTOM, pOam->xPosition, pOam->yPosition, TRUE);
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+    
+    pOam->yPosition -= INTRO_DATA.unk_217;
+}
+
+ /**
+ * @brief 9121c | 7c | Processes the hangar door lights in the intro
+ * 
+ */
+void NewFileIntroProcessBslDoorLight(struct SpecialCutsceneOam* pOam)
+{
+    pOam->unk_A++;
+    if (pOam->unk_A == 8)
+    {
+        pOam->unk_A = 0;
+        INTRO_DATA.unk_110 = 1;
+        
+        if (INTRO_DATA.unk_111 < 5)
+            INTRO_DATA.unk_111++;
+        else
+            INTRO_DATA.unk_111 = 0;
+    }
+
+    APPLY_DELTA_TIME_INC(pOam->timer);
+    if (pOam->timer == 8)
+    {
+        pOam->timer = 0;
+        INTRO_DATA.unk_12C = 1;
+        
+        if (INTRO_DATA.unk_12D < 7)
+            INTRO_DATA.unk_12D++;
+        else
+            INTRO_DATA.unk_12D = 0;
+    }
+}
+
+ /**
+ * @brief 91298 | e8 | Processes the top half of the BSL hangar door in the intro
+ * 
+ */
+void NewFileIntroProcessBslDoorTop(struct SpecialCutsceneOam* pOam)
+{
+    s16 x;
+    s16 y;
+
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->unk_A = 0;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        if (pOam->unk_A == 8)
+        {
+            pOam->unk_A = 0;
+            
+            if (pOam->spawnY < 54)
+            {
+                pOam->spawnY++;
+                pOam->yPosition--;
+            }
+            else
+            {
+                pOam->stage = 2;
+            }
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        // Bug: Checks for a nonexistent OAM
+        NewFileIntroGetPositionAndSlotOfOamByType_2(INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP_UNUSED, &x, &y);
+
+        if (y > 90) // This is always true because the default Y for nonexistent OAMs is 200
+        {
+            pOam->unk_A = 0;
+            pOam->stage = 3;
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        if (pOam->unk_A == 8)
+        {
+            pOam->unk_A = 0;
+            
+            if (pOam->spawnY > 0)
+            {
+                pOam->spawnY--;
+                if (pOam->spawnY == 37)
+                    NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP_ARMS_EXTENDING, 0, 0, TRUE);
+
+                pOam->yPosition++;
+            }
+            else
+            {
+                // This branch appears to never get hit
+                pOam->stage = 4;
+                NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_UNUSED, pOam->xPosition, pOam->yPosition, TRUE);
+            }
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+    
+    pOam->yPosition -= INTRO_DATA.unk_217;
+}
+
+ /**
+ * @brief 91380 | c4 | Processes the bottom half of the BSL hangar door in the intro
+ * 
+ */
+void NewFileIntroProcessBslDoorBottom(struct SpecialCutsceneOam* pOam)
+{
+    s16 x;
+    s16 y;
+
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->unk_A = 0;
+        pOam->stage = 1;
+    }
+    else if (pOam->stage == 1)
+    {
+        if (pOam->unk_A == 8)
+        {
+            pOam->unk_A = 0;
+            
+            if (pOam->spawnY < 54)
+            {
+                pOam->spawnY++;
+                pOam->yPosition++;
+            }
+            else
+            {
+                pOam->stage = 2;
+            }
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        // Bug: Checks for a nonexistent OAM
+        NewFileIntroGetPositionAndSlotOfOamByType_2(INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP_UNUSED, &x, &y);
+        
+        if (y > 90) // This is always true because the default Y for nonexistent OAMs is 200
+        {
+            pOam->unk_A = 0;
+            pOam->stage = 3;
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        if (pOam->unk_A == 8)
+        {
+            pOam->unk_A = 0;
+            
+            if (pOam->spawnY > 0)
+            {
+                pOam->spawnY--;
+                pOam->yPosition--;
+            }
+            else
+            {
+                pOam->stage = 4;
+            }
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->type = 0;
+        pOam->unk_18_0 = 0;
+    }
+    
+    pOam->yPosition -= INTRO_DATA.unk_217;
+}
+
+ /**
+ * @brief 91444 | 64 | Processes the intro hangar palette changing effect
+ * 
+ */
+void NewFileIntroProcessHangarPalettes(struct SpecialCutsceneOam* pOam)
+{
+    if (pOam->stage == 0)
+    {
+        INTRO_DATA.unk_148 = 0;
+        INTRO_DATA.unk_149 = 5;
+        pOam->stage = 1;
+    }
+
+    pOam->unk_A++;
+    if (pOam->unk_A == 75)
+    {
+        pOam->unk_A = 0;
+        INTRO_DATA.unk_148 = 1;
+        
+        if (INTRO_DATA.unk_149 < 9)
+            INTRO_DATA.unk_149++;
+        else
+            pOam->type = 0;
+    }
+}
+
+ /**
+ * @brief 914a8 | 334 | Processes Samus' ship in the landing on BSL cutscene (unused)
+ * 
+ */
+void NewFileIntroProcessShipLanding_Unused(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
+
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        if (NewFileIntroGetPositionAndSlotOfOamByType_2(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_TOP, &x, &y) != ARRAY_SIZE(INTRO_DATA.oam))
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        NewFileIntroGetPositionAndSlotOfOamByType_2(INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_TOP, &x, &y);
+
+        pOam->yPosition = (pOam->unk_A >> 2) + pOam->spawnY;
+        if (pOam->yPosition - y > 8)
+        {
+            INTRO_DATA.unk_1F0 = 1;
+            INTRO_DATA.unk_1F1 = 1;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->unk_A = 0;
+            pOam->stage = 2;
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        APPLY_DELTA_TIME_INC(pOam->timer);
+
+        if (INTRO_DATA.unk_1F1 < 7)
+        {
+            pOam->yPosition = (pOam->unk_A >> 2) + pOam->spawnY;
+
+            if (pOam->timer == CONVERT_SECONDS(1.f / 5))
+            {
+                pOam->timer = 0;
+                INTRO_DATA.unk_1F0 = 1;
+                INTRO_DATA.unk_1F1++;
+                pOam->spawnX = pOam->xPosition;
+                pOam->spawnY = pOam->yPosition;
+                pOam->unk_A = 0;
+            }
+        }
+        else if (INTRO_DATA.unk_1F1 == 7)
+        {
+            if (pOam->unk_A == 2)
+            {
+                pOam->unk_A = 0;
+                pOam->yPosition++;
+            }
+
+            if (pOam->timer == CONVERT_SECONDS(1.f / 5))
+            {
+                pOam->timer = 0;
+                pOam->pOam = sIntroShipLandingOam_Unused2;
+                INTRO_DATA.unk_1F0 = 1;
+                INTRO_DATA.unk_1F1++;
+            }
+        }
+        else if (INTRO_DATA.unk_1F1 == 8)
+        {
+            if (pOam->unk_A == 2)
+            {
+                pOam->unk_A = 0;
+                pOam->yPosition++;
+            }
+
+            if (pOam->timer == CONVERT_SECONDS(1.f / 6))
+            {
+                pOam->timer = 0;
+                pOam->priority = 1;
+                INTRO_DATA.unk_1F0 = 1;
+                INTRO_DATA.unk_1F1++;
+            }
+        }
+        else if (INTRO_DATA.unk_1F1 < 14)
+        {
+            if (pOam->unk_A == 2)
+            {
+                pOam->unk_A = 0;
+                pOam->yPosition++;
+            }
+
+            if (pOam->timer == CONVERT_SECONDS(2.f / 15))
+            {
+                pOam->timer = 0;
+                INTRO_DATA.unk_1F0 = 1;
+                INTRO_DATA.unk_1F1++;
+            }
+        }
+        else if (INTRO_DATA.unk_1F1 == 14)
+        {
+            if (pOam->unk_A == 2)
+            {
+                pOam->unk_A = 0;
+                pOam->yPosition++;
+            }
+
+            if (pOam->timer == CONVERT_SECONDS(2.f / 15))
+            {
+                pOam->timer = 0;
+                pOam->pOam = sIntroShipLandingOam;
+                INTRO_DATA.unk_1F0 = 1;
+                INTRO_DATA.unk_1F1++;
+                pOam->spawnX = pOam->xPosition;
+                pOam->spawnY = pOam->yPosition;
+                pOam->unk_A = 0;
+                pOam->stage = 3;
+            }
+        }
+
+        if (pOam->yPosition > 80)
+            pOam->yPosition = 80;
+    }
+    else if (pOam->stage == 3)
+    {
+        if (pOam->unk_A == 20)
+        {
+            pOam->unk_A = 0;
+            pOam->stage = 4;
+            NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_SMOKE, pOam->xPosition, 150, FALSE);
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->unk_8++;
+        if (pOam->unk_8 > 255)
+            pOam->unk_8 -= 256;
+        
+        pOam->unk_A = 0;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->animationDurationCounter = 0;
+        pOam->currentAnimationFrame = 0;
+        pOam->affineMode = OAM_AFFINE_MODE_NORMAL;
+        pOam->pOam = sIntroShipLandingOam_Hovering;
+        pOam->stage = 5;
+    }
+    else if (pOam->stage == 5)
+    {
+        pOam->yPosition = (pOam->unk_A >> 4) + pOam->spawnY;
+        if (pOam->yPosition > 90 && pOam->currentAnimationFrame == 0 && pOam->animationDurationCounter == 1)
+        {
+            pOam->pOam = sIntroShipLandingOam_ExtendingLandingGear;
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 6;
+        }
+    }
+    else if (pOam->stage == 6)
+    {
+        pOam->yPosition = (pOam->unk_A >> 4) + pOam->spawnY;
+
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_ExtendedLandingGearIdle;
+            pOam->stage = 7;
+        }
+    }
+    else if (pOam->stage == 7)
+    {
+        pOam->yPosition = (pOam->unk_A >> 4) + pOam->spawnY;
+        if (pOam->yPosition > 103)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_ExtendedLandingGearHovering;
+            pOam->stage = 8;
+        }
+    }
+    else if (pOam->stage == 8)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_ExtendedLandingGearIdle;
+            INTRO_DATA.subStage = 4;
+            pOam->stage = 9;
+        }
+    }
+}
+
+ /**
+ * @brief 917dc | cc | Processes the smoke in the landing on BSL cutscene
+ * 
+ */
+void NewFileIntroProcessShipLandingSmoke(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+    s16 x;
+    s16 y;
+
+    if (pOam->stage == 0)
+    {
+        NewFileIntroGetPositionAndSlotOfOamByType_2(INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP, &x, &y);
+        pOam->xPosition = x;
+        pOam->yPosition = 150;
+
+        if (y > 100)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->unk_A = 0;
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroShipLandingSmokeOam_2;
+                pOam->stage = 1;
+            }
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        NewFileIntroGetPositionAndSlotOfOamByType_2(INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP, &x, &y);
+        pOam->xPosition = x;
+        pOam->yPosition = 150;
+
+        if (y > 103)
+        {
+            frame = &pOam->pOam[pOam->currentAnimationFrame];
+            if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            {
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->stage = 2;
+            }
+        }
+    }
+    else if (pOam->stage == 2)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->type = 0;
+            pOam->unk_18_0 = 0;
+        }
+    }
+}
+
+ /**
+ * @brief 918a8 | 44 | Processes the hangar door closing in the intro (unused)
+ * 
+ */
+void NewFileIntroProcessBslDoorClosing_Unused(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+
+    if (pOam->stage == 0)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroBslHangarDoorOam_Closed;
+            pOam->stage = 1;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->animationDurationCounter = 0;
+    }
+}
+
+ /**
+ * @brief 918ec | 64 | Processes the ship arms extending in the landing on BSL cutscene
+ * 
+ */
+void NewFileIntroProcessExtendingShipArms(struct SpecialCutsceneOam* pOam)
+{
+    if (pOam->stage == 0)
+    {
+        INTRO_DATA.unk_148 = 0;
+        INTRO_DATA.unk_149 = 9;
+        pOam->stage = 1;
+    }
+    
+    pOam->unk_A++;
+    if (pOam->unk_A == 75)
+    {
+        pOam->unk_A = 0;
+        INTRO_DATA.unk_148 = 1;
+        
+        if (INTRO_DATA.unk_149 > 6)
+            INTRO_DATA.unk_149--;
+        else
+            pOam->type = 0;
+    }
+}
+
+ /**
+ * @brief 91950 | 1c | Processes the landing lights in the landing on BSL cutscene
+ * 
+ */
+void NewFileIntroProcessLandingLights(struct SpecialCutsceneOam* pOam)
+{
+    pOam->yPosition -= INTRO_DATA.unk_217;
+}
+
+ /**
+ * @brief 9196c | 208 | Processes Samus' ship in the landing on BSL cutscene
+ * 
+ */
+void NewFileIntroProcessShipLanding(struct SpecialCutsceneOam* pOam)
+{
+    const struct FrameData* frame;
+
+    pOam->unk_A++;
+    
+    if (pOam->stage == 0)
+    {
+        pOam->unk_A = 0;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->stage = 2;
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->yPosition = (pOam->unk_A >> 2) + pOam->spawnY;
+        pOam->unk_A = 0;
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->stage = 2;
+    }
+    else if (pOam->stage == 2)
+    {
+        if (pOam->scaling < Q_8_8(1))
+        {
+            pOam->scaling++;
+            if (pOam->scaling >= Q_8_8(1))
+            {
+                pOam->scaling = Q_8_8(1);
+                pOam->affineMode = OAM_AFFINE_MODE_NORMAL;
+            }
+            else if (pOam->scaling >= Q_8_8(.75f))
+            {
+                pOam->priority = 1;
+            }
+        }
+
+        pOam->yPosition = (pOam->unk_A >> 2) + pOam->spawnY;
+        if (pOam->yPosition > SCREEN_Y_MIDDLE)
+        {
+            pOam->yPosition = SCREEN_Y_MIDDLE;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = SCREEN_Y_MIDDLE;
+            pOam->unk_A = 0;
+
+            if (pOam->scaling == Q_8_8(1))
+            {
+                pOam->animationDurationCounter = 0;
+                pOam->currentAnimationFrame = 0;
+                pOam->pOam = sIntroShipLandingOam_Idle;
+                pOam->stage = 3;
+            }
+        }
+    }
+    else if (pOam->stage == 3)
+    {
+        if (pOam->unk_A > 4)
+        {
+            pOam->unk_A = 0;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_Hovering;
+            pOam->stage = 4;
+            NewFileIntroLandingOnBslSetupOam(INTRO_LANDING_ON_BSL_OAM_TYPE_SMOKE, pOam->xPosition, 150, FALSE);
+        }
+    }
+    else if (pOam->stage == 4)
+    {
+        pOam->unk_A = 0;
+        
+        if (pOam->currentAnimationFrame == 6)
+        {
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_Idle;
+            pOam->stage = 5;
+        }
+    }
+    else if (pOam->stage == 5)
+    {
+        if (pOam->unk_A > 10)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->stage = 6;
+        }
+    }
+    else if (pOam->stage == 6)
+    {
+        pOam->yPosition = (pOam->unk_A >> 3) + pOam->spawnY;
+        if (pOam->yPosition > 88)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_ExtendingLandingGear;
+            pOam->stage = 7;
+        }
+    }
+    else if (pOam->stage == 7)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+            pOam->animationDurationCounter = 0;
+
+        pOam->yPosition = (pOam->unk_A >> 3) + pOam->spawnY;
+        if (pOam->yPosition > 103)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_ExtendedLandingGearHovering;
+            pOam->stage = 8;
+        }
+    }
+    else if (pOam->stage == 8)
+    {
+        frame = &pOam->pOam[pOam->currentAnimationFrame];
+        if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->animationDurationCounter = 0;
+            pOam->currentAnimationFrame = 0;
+            pOam->pOam = sIntroShipLandingOam_ExtendedLandingGearIdle;
+            pOam->stage = 9;
+            INTRO_DATA.subStage = 4;
+        }
+    }
+
+    pOam->yPosition -= INTRO_DATA.unk_217;
+}
+
+ /**
+ * @brief 91b74 | 388 | Spawns a new OAM for the landing on BSL cutscene
+ * 
+ */
+u8 NewFileIntroLandingOnBslSetupOam(IntroLandingOnBslOamType type, s16 xPosition, s16 yPosition, boolu8 descendingSearch)
+{
+    s8 slot;
+
+    if (!descendingSearch)
+    {
+        for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
+        {
+            if (INTRO_DATA.oam[slot].type == 0)
+                break;
+        }
+
+        if (slot >= ARRAY_SIZE(INTRO_DATA.oam))
+            return ARRAY_SIZE(INTRO_DATA.oam);
+    }
+    else
+    {
+        for (slot = ARRAY_SIZE(INTRO_DATA.oam) - 1; slot >= 0; slot--)
+        {
+            if (INTRO_DATA.oam[slot].type == 0)
+                break;
+        }
+
+        if (slot < 0)
+            return ARRAY_SIZE(INTRO_DATA.oam);
+    }
+
+    DMA3_FILL_32(0, &INTRO_DATA.oam[slot], sizeof(struct SpecialCutsceneOam));
+
+    INTRO_DATA.oam[slot].xPosition = xPosition;
+    INTRO_DATA.oam[slot].yPosition = yPosition;
+    INTRO_DATA.oam[slot].type = type;
+    INTRO_DATA.oam[slot].unk_18_0 = 1;
+
+    if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_BG_SCROLLER)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessLandingOnBslScroll;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroBslHangarDoorOam_Closed;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslDoor;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_LIGHT)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslDoorLight;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_TOP)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroBslHangarDoorOam_Top;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslDoorTop;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_BOTTOM)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroBslHangarDoorOam_Bottom;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslDoorBottom;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_PALETTE_CHANGER)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessHangarPalettes;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP_UNUSED)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1);
+        INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_AFFINE;
+        INTRO_DATA.oam[slot].priority = 3;
+        INTRO_DATA.oam[slot].pOam = sIntroShipLandingOam_Unused1;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessShipLanding_Unused;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_SMOKE)
+    {
+        INTRO_DATA.oam[slot].pOam = sIntroShipLandingSmokeOam_1;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessShipLandingSmoke;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_DOOR_UNUSED)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroBslHangarDoorOam_Closing;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessBslDoorClosing_Unused;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP_ARMS_EXTENDING)
+    {
+        INTRO_DATA.oam[slot].unk_18_0 = 0;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessExtendingShipArms;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_LANDING_LIGHTS)
+    {
+        INTRO_DATA.oam[slot].priority = 2;
+        INTRO_DATA.oam[slot].pOam = sIntroBslLandingLightsOam;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessLandingLights;
+    }
+    else if (type == INTRO_LANDING_ON_BSL_OAM_TYPE_SHIP)
+    {
+        INTRO_DATA.oam[slot].scaling = Q_8_8(1.f / 128);
+        INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_AFFINE;
+        INTRO_DATA.oam[slot].priority = 3;
+        INTRO_DATA.oam[slot].pOam = sIntroShipLandingOam;
+        INTRO_DATA.oam[slot].pFunction = NewFileIntroProcessShipLanding;
+    }
+
+    return slot;
+}
+
+ /**
+ * @brief 91efc | 13c | V-blank for the landing on BSL cutscene
+ * 
+ */
+void NewFileIntroLandingOnBslVblank(void)
+{
+    DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
+    
+    WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
+    WRITE_16(REG_BLDY, gWrittenToBldy);
+    
+    WRITE_16(REG_BG2HOFS, gBg2XPosition);
+    WRITE_16(REG_BG2VOFS, gBg2YPosition);
+    WRITE_16(REG_BG3HOFS, gBg3XPosition);
+    WRITE_16(REG_BG3VOFS, gBg3YPosition);
+
+    if (INTRO_DATA.unk_110 == 1)
+    {
+        INTRO_DATA.unk_110 = 0;
+        DMA3_COPY_32(&sIntroPal_5ffb08[INTRO_DATA.unk_111 * PAL_ROW], PALRAM_OBJ + 10 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+    }
+
+    if (INTRO_DATA.unk_12C == 1)
+    {
+        INTRO_DATA.unk_12C = 0;
+        DMA3_COPY_32(&sIntroPal_5ff908[INTRO_DATA.unk_12D * PAL_ROW], PALRAM_OBJ + 8 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+    }
+
+    if (INTRO_DATA.unk_148 == 1)
+    {
+        INTRO_DATA.unk_148 = 0;
+        DMA3_COPY_32(&sIntroPal_5ffb08[INTRO_DATA.unk_149 * PAL_ROW], PALRAM_OBJ + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+        DMA3_COPY_32(&sIntroPal_5ffb08[INTRO_DATA.unk_149 * PAL_ROW], PALRAM_BASE + 11 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+    }
+}
+
+ /**
+ * @brief 92038 | 60 | Returns slot, X and Y position of a new file intro OAM
+ * 
+ */
+u8 NewFileIntroGetPositionAndSlotOfOamByType_2(IntroLandingOnBslOamType type, s16* pXPosition, s16* pYPosition)
+{
+    u8 slot;
+
+    for (slot = 0; slot < ARRAY_SIZE(INTRO_DATA.oam); slot++)
+    {
+        if (INTRO_DATA.oam[slot].type == type)
+        {
+            *pXPosition = INTRO_DATA.oam[slot].xPosition;
+            *pYPosition = INTRO_DATA.oam[slot].yPosition;
+        
+            return slot;
+        }
+    }
+
+    // Default values if not found
+    *pXPosition = 300;
+    *pYPosition = 200;
+        
+    return ARRAY_SIZE(INTRO_DATA.oam);
+}
+
+ /**
+ * @brief 92098 | 4 | Empty function
+ * 
+ */
+void unk_92098(void)
+{
+    return;
+}
 
