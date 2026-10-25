@@ -3,8 +3,6 @@
 
 #include "types.h"
 
-#define PAUSE_DEBUG_TILE_SIZE (QUARTER_BLOCK_SIZE / 2)
-
 enum PauseDebugSection {
     PAUSE_DEBUG_SECTION_BEAM,
     PAUSE_DEBUG_SECTION_MISSILE,

@@ -1159,8 +1159,8 @@ NavigationConversationHandler: @ 0x0807A3A4
 	bl unk_7b674
 	bl NavigationConversionScrollToTarget
 	bl unk_7b56c
-	bl NavigationConversationUpdatePanel
-	bl unk_78c44
+	bl NavConversationUpdateBottomTextBoxOam
+	bl NavConversationUpdateTopTextBoxOam
 	movs r7, #0
 	ldr r0, _0807A3D4 @ =gNonGameplayRam
 	ldrb r0, [r0, #7]
@@ -2030,7 +2030,7 @@ _0807AA8E:
 	ldrb r0, [r4]
 	ldr r5, _0807AAD0 @ =0x02034000
 	adds r1, r5, #0
-	bl GetMinimapData
+	bl MinimapGetData
 	ldrb r0, [r4]
 	bl MinimapSetVisitedTilesAndCollectedItems
 	ldr r1, _0807AAD4 @ =0x040000D4
@@ -2543,7 +2543,7 @@ NavigationConversationSetupOam: @ 0x0807AE54
 	adds r0, #1
 	strb r3, [r0]
 	movs r0, #1
-	bl PauseScreenSetNavigationTextPanelOam
+	bl NavConversationSetBottomTextBoxOam
 	movs r4, #0x73
 	adds r4, r4, r6
 	mov r8, r4
@@ -3200,7 +3200,7 @@ _0807B38C:
 	ldrb r0, [r4]
 	ldr r5, _0807B3F0 @ =0x02034000
 	adds r1, r5, #0
-	bl GetMinimapData
+	bl MinimapGetData
 	ldrb r0, [r4]
 	bl MinimapSetVisitedTilesAndCollectedItems
 	ldr r1, _0807B3F4 @ =0x040000D4
@@ -5933,13 +5933,13 @@ _0807C9C8:
 	ldr r0, _0807C9E8 @ =0x80000100
 	str r0, [r1, #8]
 	ldr r0, [r1, #8]
-	ldr r0, _0807C9EC @ =PauseScreenVBLank_Unused
+	ldr r0, _0807C9EC @ =PauseScreenVBlank_Unused
 	b _0807CDE4
 	.align 2, 0
 _0807C9E0: .4byte 0x040000D4
 _0807C9E4: .4byte 0x0857BEC4
 _0807C9E8: .4byte 0x80000100
-_0807C9EC: .4byte PauseScreenVBLank_Unused
+_0807C9EC: .4byte PauseScreenVBlank_Unused
 _0807C9F0:
 	ldr r1, _0807CA08 @ =0x0300000A
 	ldr r2, _0807CA0C @ =0x00001407
@@ -6089,7 +6089,7 @@ _0807CB20:
 	ldr r0, _0807CB48 @ =0x80000100
 	str r0, [r1, #8]
 	ldr r0, [r1, #8]
-	ldr r0, _0807CB4C @ =PauseScreenVBLank_Unused
+	ldr r0, _0807CB4C @ =PauseScreenVBlank_Unused
 	bl CallbackSetVBlank
 	ldr r1, _0807CB50 @ =gNonGameplayRam
 	ldr r2, _0807CB54 @ =0x00000265
@@ -6099,7 +6099,7 @@ _0807CB20:
 _0807CB40: .4byte 0x040000D4
 _0807CB44: .4byte 0x0872F0E0
 _0807CB48: .4byte 0x80000100
-_0807CB4C: .4byte PauseScreenVBLank_Unused
+_0807CB4C: .4byte PauseScreenVBlank_Unused
 _0807CB50: .4byte gNonGameplayRam
 _0807CB54: .4byte 0x00000265
 _0807CB58:
@@ -6393,7 +6393,7 @@ _0807CDD0:
 	ldr r0, _0807CE00 @ =0x80000100
 	str r0, [r1, #8]
 	ldr r0, [r1, #8]
-	ldr r0, _0807CE04 @ =PauseScreenVBLank
+	ldr r0, _0807CE04 @ =PauseScreenVBlank
 _0807CDE4:
 	bl CallbackSetVBlank
 _0807CDE8:
@@ -6409,7 +6409,7 @@ _0807CDEE:
 _0807CDF8: .4byte 0x040000D4
 _0807CDFC: .4byte 0x02035000
 _0807CE00: .4byte 0x80000100
-_0807CE04: .4byte PauseScreenVBLank
+_0807CE04: .4byte PauseScreenVBlank
 _0807CE08: .4byte gNonGameplayRam
 _0807CE0C: .4byte 0x00000265
 _0807CE10:

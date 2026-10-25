@@ -1715,7 +1715,7 @@ const struct MonologueEvent sMonologueEvents[6] = {
     },
 };
 
-const struct SecurityUnlockEvent sSecurityUnlockEvents[SECURITY_LEVEL_END - 1] = {
+const struct SecurityUnlockEvent sSecurityUnlockEvents[SECURITY_LEVEL_COUNT - 1] = {
     {
         .securityLevel = 1,
         .area = AREA_SECTOR_2,
@@ -1745,5 +1745,3 @@ const struct SecurityUnlockEvent sSecurityUnlockEvents[SECURITY_LEVEL_END - 1] =
         .soundEvent = SOUND_EVENT_UNLOCKED_SECURITY_LEVEL_4
     },
 };
-
-static const u8 sBlob_5760e8_576168[] = INCBIN_U8("data/Blob_5760e8_576168.bin");

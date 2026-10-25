@@ -7,7 +7,7 @@
 
 #include "data/event_data.h"
 #include "data/text_data.h"
-#include "data/menus/pause_debug.h"
+#include "data/menus/pause_screen_misc_data.h"
 
 #include "structs/event.h"
 #include "structs/samus.h"

@@ -19,7 +19,7 @@ extern u16 gMinimapData_Visited[MINIMAP_SIZE];
 extern u16 gMinimapData[MINIMAP_SIZE];
 extern u8 gMinimapHudGfx[3 * 3 * TILE_SIZE];
 extern u32 gVisitedMinimapTiles[MAX_AMOUNT_OF_AREAS * (MINIMAP_SIZE / 32)];
-#else
+#else // !USE_EWRAM_SYMBOLS
 #define gMinimapData_Visited CAST_TO_ARRAY(u16, [MINIMAP_SIZE], EWRAM_BASE + 0x34000)
 #define gMinimapData CAST_TO_ARRAY(u16, [MINIMAP_SIZE], EWRAM_BASE + 0x34800)
 #define gMinimapHudGfx CAST_TO_ARRAY(u8, [3 * 3 * TILE_SIZE], EWRAM_BASE + 0x35C00)

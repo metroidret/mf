@@ -32,8 +32,7 @@ extern union NonGameplayRam gNonGameplayRam;
 #define SA_X_CLOSE_UP_DATA gNonGameplayRam.saXCloseUp
 #define ENDING_DATA gNonGameplayRam.ending
 
-extern u8 gCommonSpriteGfxBackup[0x4000];
-extern u8 gRoomSpriteGfxBackup[0x4000];
+extern u8 gSpriteGfxBackup[0x8000];
 
 enum BackgroundPaletteRow {
     BG_PAL_ROW_BLOCKS,

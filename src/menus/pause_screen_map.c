@@ -5,13 +5,13 @@
 #include "gba/keys.h"
 
 #include "data/event_data.h"
-#include "data/menus/pause_debug.h"
-#include "data/menus/pause_screen_map_data.h"
+#include "data/menus/pause_screen_misc_data.h"
 
 #include "constants/audio.h"
 #include "constants/block.h"
 #include "constants/connection.h"
 #include "constants/event.h"
+#include "constants/menus/pause_screen.h"
 #include "constants/minimap.h"
 
 #include "structs/bg_clip.h"
@@ -22,46 +22,7 @@
 
 extern u32 sExploredMinimapBitFlags[32];
 
-// Minimap data?
-static u8* sUnk_79be5c[11] = {
-    (u8*)0x8572D48,
-    (u8*)0x8572F9C,
-    (u8*)0x8573748,
-    (u8*)0x857317C,
-    (u8*)0x8573538,
-    (u8*)0x857395C,
-    (u8*)0x8573364,
-    (u8*)0x8572D48,
-    (u8*)0x8572D48,
-    (u8*)0x8573B54,
-    (u8*)0x8572C4C,
-};
-
-// 4 byte struct?
-static u8 sUnk_79be88[32] = {
-    0x00, 0x00, 0x00, 0x00,
-    0x13, 0x36, 0x24, 0x8E,
-    0x14, 0x37, 0x24, 0x18,
-    0x15, 0x38, 0x24, 0x20,
-    0x16, 0x39, 0x24, 0x28,
-    0x17, 0x3A, 0x32, 0x0D,
-    0x18, 0x3B, 0x48, 0x0D,
-    0x19, 0x3C, 0x5E, 0x0D,
-};
-
-static u8* sUnk_79bea8[5] = {
-    (u8*)0x8576168,
-    (u8*)0x857616D,
-    (u8*)0x8576171,
-    (u8*)0x8576173,
-    (u8*)0x8576175,
-};
-
-static u8 sUnk_79bebc[4] = {
-    4, 5, 6, 7
-};
-
-static u8 sBlob_79bec0_79c128[] = INCBIN_U8("data/Blob_79bec0_79c128.bin");
+extern u8 sUnk_79bebc[4];
 
 /**
  * @brief 7552c | 214 | Pause screen map main loop
@@ -123,15 +84,15 @@ void PauseScreenMapHandler(void)
         
         if (gChangedInput & KEY_R)
         {
-            PAUSE_SCREEN_DATA.unk_28 = 6;
+            PAUSE_SCREEN_DATA.unk_28.unk_0 = 6;
             PAUSE_SCREEN_DATA.timer = 0;
-            PAUSE_SCREEN_DATA.pauseDebugEditingValue = 0;
+            PAUSE_SCREEN_DATA.subMenuStage = 0;
             action = 3;
         }
         else if (gChangedInput & KEY_L) {
-            PAUSE_SCREEN_DATA.unk_28 = 0xB;
+            PAUSE_SCREEN_DATA.unk_28.unk_0 = 0xB;
             PAUSE_SCREEN_DATA.timer = 0;
-            PAUSE_SCREEN_DATA.pauseDebugEditingValue = 0;
+            PAUSE_SCREEN_DATA.subMenuStage = 0;
             action = 3;
         }
     }
@@ -143,7 +104,7 @@ void PauseScreenMapHandler(void)
     {
         if (action == 1)
         {
-            unk_77840(1);
+            PauseScreenUpdateObjectiveTextBox(1);
         }
         else if (action == 2)
         {
@@ -154,7 +115,7 @@ void PauseScreenMapHandler(void)
             else if (PAUSE_SCREEN_DATA.unk_1 == 9)
                 action = 1;
             
-            unk_77840(action);
+            PauseScreenUpdateObjectiveTextBox(action);
         }
     }
     else
@@ -170,8 +131,8 @@ void PauseScreenMapHandler(void)
  */
 void PauseScreenMapSetSamusHeadPosition(void)
 {
-    PAUSE_SCREEN_DATA.oam[0x20].xPosition = gMinimapX * TILE_DIM;
-    PAUSE_SCREEN_DATA.oam[0x20].yPosition = gMinimapY * TILE_DIM;
+    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].xPosition = gMinimapX * TILE_DIM;
+    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].yPosition = gMinimapY * TILE_DIM;
 }
 
 /**
@@ -740,21 +701,21 @@ bools32 PauseScreenMapDownload(void)
         case 0:
             if (PAUSE_SCREEN_DATA.downloadMapTimer > CONVERT_SECONDS(2/15.f))
             {
-                PAUSE_SCREEN_DATA.oam[0x20].oamId = 0;
-                PAUSE_SCREEN_DATA.oam[0x20].animationDurationCounter = 0;
-                PAUSE_SCREEN_DATA.oam[0x20].currentAnimationFrame = 0;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].oamId = PAUSE_OAM_ID_NONE;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].animationDurationCounter = 0;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].currentAnimationFrame = 0;
 
-                PAUSE_SCREEN_DATA.oam[3].oamId = 0x11;
-                PAUSE_SCREEN_DATA.oam[3].animationDurationCounter = 0;
-                PAUSE_SCREEN_DATA.oam[3].currentAnimationFrame = 0;
-                PAUSE_SCREEN_DATA.oam[3].xPosition = 0x74;
-                PAUSE_SCREEN_DATA.oam[3].yPosition = -8;
-                PAUSE_SCREEN_DATA.oam[3].priority = 0;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].oamId = PAUSE_OAM_ID_DOWNLOAD_SCAN_LINE_LEADING;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].animationDurationCounter = 0;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].currentAnimationFrame = 0;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].xPosition = 0x74;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].yPosition = -8;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].priority = 0;
 
                 for (i = ARRAY_SIZE(sUnk_79bebc); i > 0;)
                 {
                     i -= 1;
-                    PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].oamId = 0;
+                    PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].oamId = PAUSE_OAM_ID_NONE;
                     PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].animationDurationCounter = 0;
                     PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].currentAnimationFrame = 0;
                     PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].xPosition = 0x74;
@@ -813,16 +774,17 @@ bools32 PauseScreenMapDownload(void)
 
             if (i)
             {
-                PAUSE_SCREEN_DATA.oam[3].yPosition = (PAUSE_SCREEN_DATA.unk_232 * 8) + PAUSE_SCREEN_DATA.downloadMapTimer - 5;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].yPosition =
+                    (PAUSE_SCREEN_DATA.unk_232 * 8) + PAUSE_SCREEN_DATA.downloadMapTimer - 5;
                 PAUSE_SCREEN_DATA.unk_234++;
                 if (PAUSE_SCREEN_DATA.unk_234 > 3)
                     PAUSE_SCREEN_DATA.unk_234 = 0;
 
                 i = PAUSE_SCREEN_DATA.unk_234;
-                PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].yPosition = PAUSE_SCREEN_DATA.oam[3].yPosition - 1;
-                if (i <= 2)
+                PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].yPosition = PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].yPosition - 1;
+                if (i < 3)
                 {
-                    PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].oamId = 0x10;
+                    PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].oamId = PAUSE_OAM_ID_DOWNLOAD_SCAN_LINE_TRAILING;
                     PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].animationDurationCounter = 0;
                     PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].currentAnimationFrame = 0;
                 }
@@ -847,17 +809,17 @@ bools32 PauseScreenMapDownload(void)
             break;
 
         case 5:
-            PAUSE_SCREEN_DATA.oam[0x20].oamId = 1;
-            PAUSE_SCREEN_DATA.oam[0x20].animationDurationCounter = 0;
-            PAUSE_SCREEN_DATA.oam[0x20].currentAnimationFrame = 0;
-            PAUSE_SCREEN_DATA.oam[3].oamId = 0;
-            PAUSE_SCREEN_DATA.oam[3].animationDurationCounter = 0;
-            PAUSE_SCREEN_DATA.oam[3].currentAnimationFrame = 0;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].oamId = PAUSE_OAM_ID_BLINKING_SQUARE;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].animationDurationCounter = 0;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_BLINKING_SQUARE].currentAnimationFrame = 0;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].oamId = PAUSE_OAM_ID_NONE;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].animationDurationCounter = 0;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_DOWNLOAD_SCAN_LINE_LEADING].currentAnimationFrame = 0;
 
             for (i = ARRAY_SIZE(sUnk_79bebc); i > 0;)
             {
                 i--;
-                PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].oamId = 0;
+                PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].oamId = PAUSE_OAM_ID_NONE;
                 PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].animationDurationCounter = 0;
                 PAUSE_SCREEN_DATA.oam[sUnk_79bebc[i]].currentAnimationFrame = 0;
             }

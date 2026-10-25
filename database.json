@@ -25889,16 +25889,224 @@
     "size": 1
   },
   {
-    "path": "Blob_5657a8_575a60.bin",
-    "count": "0x102B8",
+    "path": "menus/pause_screen/minimap_tiles.pal",
+    "count": "0x30",
     "addr": {
       "us": "0x5657A8"
     },
-    "size": 1
+    "size": 2
   },
   {
-    "path": "Blob_5760e8_576168.bin",
-    "count": "0x80",
+    "path": "menus/pause_screen/bg_565808.pal",
+    "count": "0xD0",
+    "addr": {
+      "us": "0x565808"
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/pause_screen/bg_5659a8.pal",
+    "count": "0xD0",
+    "addr": {
+      "us": "0x5659A8"
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/pause_screen/obj_565b48.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x565B48"
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/pause_screen/nav_conversation_samus.pal",
+    "count": "0x30",
+    "addr": {
+      "us": "0x565D48"
+    },
+    "size": 2
+  },
+  {
+    "path": "menus/pause_screen/bg.gfx.lz",
+    "count": "0x985",
+    "addr": {
+      "us": "0x56A254"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/nav_convo_room.gfx.lz",
+    "count": "0x586",
+    "addr": {
+      "us": "0x56C868"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/nav_convo_ship.gfx.lz",
+    "count": "0x627",
+    "addr": {
+      "us": "0x56DE80"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/obj.gfx.lz",
+    "count": "0xD4C",
+    "addr": {
+      "us": "0x56F71C"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/blank_minimap.tm.lz",
+    "count": "0x3F",
+    "addr": {
+      "us": "0x572C4C"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/main_deck_minimap.tm.lz",
+    "count": "0x95",
+    "addr": {
+      "us": "0x572D48"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sector_1_minimap.tm.lz",
+    "count": "0x78",
+    "addr": {
+      "us": "0x572F9C"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sector_3_minimap.tm.lz",
+    "count": "0x7A",
+    "addr": {
+      "us": "0x57317C"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sector_6_minimap.tm.lz",
+    "count": "0x75",
+    "addr": {
+      "us": "0x573364"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sector_4_minimap.tm.lz",
+    "count": "0x84",
+    "addr": {
+      "us": "0x573538"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sector_2_minimap.tm.lz",
+    "count": "0x85",
+    "addr": {
+      "us": "0x573748"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sector_5_minimap.tm.lz",
+    "count": "0x7E",
+    "addr": {
+      "us": "0x57395C"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/main_deck_no_lab_minimap.tm.lz",
+    "count": "0x94",
+    "addr": {
+      "us": "0x573B54"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/573da4.tm.lz",
+    "count": "0x3F",
+    "addr": {
+      "us": "0x573DA4"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/pause_debug.tm.lz",
+    "count": "0x97",
+    "addr": {
+      "us": "0x573EA0"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/map_screen_outline.tm.lz",
+    "count": "0x7B",
+    "addr": {
+      "us": "0x5740FC"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/nav_conversation_text_boxes.tm.lz",
+    "count": "0xB0",
+    "addr": {
+      "us": "0x5742E8"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/sleep.tm.lz",
+    "count": "0xC1",
+    "addr": {
+      "us": "0x5745A8"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/status_screen.tm.lz",
+    "count": "0x127",
+    "addr": {
+      "us": "0x5748AC"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/nav_conversation_room.tm.lz",
+    "count": "0x167",
+    "addr": {
+      "us": "0x574D48"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/5752e4.tm.lz",
+    "count": "0x41",
+    "addr": {
+      "us": "0x5752E4"
+    },
+    "size": 4
+  },
+  {
+    "path": "menus/pause_screen/nav_conversation_ship.tm.lz",
+    "count": "0x19E",
+    "addr": {
+      "us": "0x5753E8"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_5760e8_576142.bin",
+    "count": "0x5A",
     "addr": {
       "us": "0x5760E8"
     },
@@ -25913,10 +26121,26 @@
     "size": 1
   },
   {
-    "path": "Blob_5766D4_581510.bin",
-    "count": "0xAE3C",
+    "path": "Blob_5766D4_5766e0.bin",
+    "count": "0xC",
     "addr": {
       "us": "5766D4"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_5766e4_5767f0.bin",
+    "count": "0x10C",
+    "addr": {
+      "us": "5766E4"
+    },
+    "size": 1
+  },
+  {
+    "path": "Blob_576802_581510.bin",
+    "count": "0xAD0E",
+    "addr": {
+      "us": "576802"
     },
     "size": 1
   },

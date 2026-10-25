@@ -4,7 +4,7 @@
 #include "macros.h"
 #include "event.h"
 
-#include "data/menus/pause_debug.h"
+#include "data/menus/pause_screen_misc_data.h"
 #include "data/event_data.h"
 
 #include "constants/menus/pause_debug.h"
@@ -17,6 +17,8 @@
 #include "structs/samus.h"
 #include "structs/sprite.h"
 
+#define DEBUG_EDITING_VALUE subMenuStage
+
 // FIXME temp
 void Sram_QuickSave(u8);
 
@@ -26,12 +28,12 @@ void Sram_QuickSave(u8);
  */
 void PauseDebugHandler(void)
 {
-    if (gChangedInput & (KEY_B | KEY_L | KEY_R) && !PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+    if (gChangedInput & (KEY_B | KEY_L | KEY_R) && !PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
     {
-        PAUSE_SCREEN_DATA.unk_28 = 0x7;
+        PAUSE_SCREEN_DATA.unk_28.unk_0 = 0x7;
         PAUSE_SCREEN_DATA.timer = 0;
-        PAUSE_SCREEN_DATA.pauseDebugEditingValue = FALSE;
-        PAUSE_SCREEN_DATA.oam[0].oamId = 0;
+        PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = FALSE;
+        PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].oamId = PAUSE_OAM_ID_NONE;
         return;
     }
 
@@ -64,8 +66,8 @@ u32 PauseDebugModifyValues(void)
     u8 ebeQueuedBackup;
 
     // Get cursor tile position
-    cursorY = PAUSE_SCREEN_DATA.oam[0].yPosition / PAUSE_DEBUG_TILE_SIZE;
-    cursorX = PAUSE_SCREEN_DATA.oam[0].xPosition / PAUSE_DEBUG_TILE_SIZE;
+    cursorY = PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].yPosition / TILE_DIM;
+    cursorX = PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition / TILE_DIM;
 
     updateFlag = PAUSE_DEBUG_EDIT_NONE;
 
@@ -95,11 +97,12 @@ u32 PauseDebugModifyValues(void)
     }
 
     // Check stop editing mode
-    if (PAUSE_DEBUG_SECTION_INFO_SECTION(i) != PAUSE_DEBUG_SECTION_EVENT && gChangedInput & KEY_B && PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+    if (PAUSE_DEBUG_SECTION_INFO_SECTION(i) != PAUSE_DEBUG_SECTION_EVENT &&
+        (gChangedInput & KEY_B) && PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
     {
         // Reset cursor
-        PAUSE_SCREEN_DATA.pauseDebugEditingValue = FALSE;
-        UpdateMenuOamDataId(0, 0x1);
+        PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = FALSE;
+        UpdateMenuOamDataId(PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR, PAUSE_OAM_ID_BLINKING_SQUARE);
 
         if (PAUSE_DEBUG_SECTION_INFO_SECTION(i) == PAUSE_DEBUG_SECTION_IN_GAME_TIME)
             gMaxInGameTimeFlag = FALSE;
@@ -170,11 +173,11 @@ u32 PauseDebugModifyValues(void)
             if (gChangedInput & KEY_A)
             {
                 // Set editing value
-                PAUSE_SCREEN_DATA.oam[0].oamId = 0x9;
-                PAUSE_SCREEN_DATA.pauseDebugEditingValue = TRUE;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].oamId = PAUSE_OAM_ID_PAUSE_DEBUG_CURSOR_ARROWS;
+                PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = TRUE;
             }
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
                 break;
 
             // Handle editing
@@ -191,11 +194,11 @@ u32 PauseDebugModifyValues(void)
             if (gChangedInput & KEY_A)
             {
                 // Set editing value
-                PAUSE_SCREEN_DATA.oam[0].oamId = 0x9;
-                PAUSE_SCREEN_DATA.pauseDebugEditingValue = TRUE;
+                PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].oamId = PAUSE_OAM_ID_PAUSE_DEBUG_CURSOR_ARROWS;
+                PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = TRUE;
             }
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
                 break;
 
             // Handle editing
@@ -210,7 +213,7 @@ u32 PauseDebugModifyValues(void)
             if (gChangedInput & KEY_A)
             {
                 // Check is selecting level 0 and current level is already zero
-                if (gEquipment.securityHatchLevel == SECURITY_LEVEL_END - 1 - cursorX)
+                if (gEquipment.securityHatchLevel == SECURITY_LEVEL_COUNT - 1 - cursorX)
                 {
                     // This should result in 0xFF, or SECURITY_LEVEL_NO_HATCHES
                     gEquipment.securityHatchLevel = SECURITY_LEVEL_3 - cursorX;
@@ -245,13 +248,13 @@ u32 PauseDebugModifyValues(void)
             updateFlag = PAUSE_DEBUG_EDIT_NONE;
             editflag = FALSE;
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
             {
                 if (gChangedInput & KEY_A)
                 {
                     // Start edit mode
-                    PAUSE_SCREEN_DATA.pauseDebugEditingValue = TRUE;
-                    PAUSE_SCREEN_DATA.oam[0].oamId = 0x9;
+                    PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = TRUE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].oamId = PAUSE_OAM_ID_PAUSE_DEBUG_CURSOR_ARROWS;
     
                     updateFlag = PAUSE_DEBUG_EDIT_REDRAW_SECTION;
 
@@ -271,8 +274,8 @@ u32 PauseDebugModifyValues(void)
                 if (gChangedInput & (KEY_A | KEY_B))
                 {
                     // Stop edit mode
-                    PAUSE_SCREEN_DATA.pauseDebugEditingValue = FALSE;
-                    UpdateMenuOamDataId(0, 0x1);
+                    PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = FALSE;
+                    UpdateMenuOamDataId(PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR, PAUSE_OAM_ID_BLINKING_SQUARE);
 
                     updateFlag = PAUSE_DEBUG_EDIT_REDRAW_SECTION;
 
@@ -282,7 +285,7 @@ u32 PauseDebugModifyValues(void)
                 }
             }
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
                 break;
 
             if (!editflag)
@@ -311,13 +314,13 @@ u32 PauseDebugModifyValues(void)
                 {
                     // Move cursor to the right
                     if (cursorX != 0)
-                        PAUSE_SCREEN_DATA.oam[0].xPosition += PAUSE_DEBUG_TILE_SIZE;
+                        PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition += TILE_DIM;
                 }
                 else if (gChangedInput & KEY_LEFT)
                 {
                     // Move cursor to the left
                     if (cursorX < 2)
-                        PAUSE_SCREEN_DATA.oam[0].xPosition -= PAUSE_DEBUG_TILE_SIZE;
+                        PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition -= TILE_DIM;
                 }
                 else
                 {
@@ -384,13 +387,13 @@ u32 PauseDebugModifyValues(void)
             updateFlag = PAUSE_DEBUG_EDIT_NONE;
             editflag = FALSE;
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
             {
                 if (gChangedInput & KEY_A)
                 {
                     // Start edit mode
-                    PAUSE_SCREEN_DATA.pauseDebugEditingValue = TRUE;
-                    PAUSE_SCREEN_DATA.oam[0].oamId = 0x9;
+                    PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = TRUE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].oamId = PAUSE_OAM_ID_PAUSE_DEBUG_CURSOR_ARROWS;
                 }
             }
             else
@@ -398,12 +401,12 @@ u32 PauseDebugModifyValues(void)
                 if (gChangedInput & (KEY_A | KEY_B))
                 {
                     // Stop edit mode
-                    PAUSE_SCREEN_DATA.pauseDebugEditingValue = FALSE;
-                    UpdateMenuOamDataId(0, 0x1);
+                    PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = FALSE;
+                    UpdateMenuOamDataId(PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR, PAUSE_OAM_ID_BLINKING_SQUARE);
                 }
             }
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
                 break;
 
             if (editflag)
@@ -436,13 +439,13 @@ u32 PauseDebugModifyValues(void)
             {
                 // Move cursor to the right
                 if (cursorX != 0)
-                    PAUSE_SCREEN_DATA.oam[0].xPosition += PAUSE_DEBUG_TILE_SIZE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition += TILE_DIM;
             }
             else if (gChangedInput & KEY_LEFT)
             {
                 // Move cursor to the left
                 if (cursorX < 2)
-                    PAUSE_SCREEN_DATA.oam[0].xPosition -= PAUSE_DEBUG_TILE_SIZE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition -= TILE_DIM;
             }
 
             if (editflag)
@@ -455,13 +458,13 @@ u32 PauseDebugModifyValues(void)
         case PAUSE_DEBUG_SECTION_IN_GAME_TIME:
             updateFlag = PAUSE_DEBUG_EDIT_NONE;
 
-            if (!PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (!PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
             {
                 if (gChangedInput & KEY_A)
                 {
                     // Start edit mode
-                    PAUSE_SCREEN_DATA.oam[0].oamId = 0x9;
-                    PAUSE_SCREEN_DATA.pauseDebugEditingValue = TRUE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].oamId = PAUSE_OAM_ID_PAUSE_DEBUG_CURSOR_ARROWS;
+                    PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE = TRUE;
                     gMaxInGameTimeFlag = TRUE;
                     gInGameTimer.seconds = 0;
                     gInGameTimer.frames = 0;
@@ -524,13 +527,13 @@ u32 PauseDebugModifyValues(void)
             {
                 // Move cursor to the right
                 if (cursorX != 0)
-                    PAUSE_SCREEN_DATA.oam[0].xPosition += PAUSE_DEBUG_TILE_SIZE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition += TILE_DIM;
             }
             else if (gChangedInput & KEY_LEFT)
             {
                 // Move cursor to the left
                 if (cursorX < 5)
-                    PAUSE_SCREEN_DATA.oam[0].xPosition -= PAUSE_DEBUG_TILE_SIZE;
+                    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition -= TILE_DIM;
             }
 
             if (editflag)
@@ -588,7 +591,7 @@ void PauseDebugDrawEventText(u8 event)
         // Converts a char from 0b12345678 to 0b1_23045678
         character = ((sPauseDebugEventNames[event][i] & 0xE0) << 1) | (sPauseDebugEventNames[event][i] & 0x1F);
 
-        TextDrawCharacterPauseDebug(character, &dst[i * PAUSE_DEBUG_TILE_SIZE * 2], 0);
+        TextDrawCharacterPauseDebug(character, &dst[i * TILE_DIM * 2], 0);
     }
 }
 
@@ -749,7 +752,7 @@ void PauseDebugDrawSection(u8 section)
 
         for (j = 0; j <= PAUSE_DEBUG_SECTION_INFO_HSIZE(PAUSE_DEBUG_SECTION_EVENT); j++, dst++)
         {
-            if (PAUSE_SCREEN_DATA.pauseDebugEditingValue)
+            if (PAUSE_SCREEN_DATA.DEBUG_EDITING_VALUE)
                 palette = 9;
             else
                 palette = 3;
@@ -829,12 +832,12 @@ u32 PauseDebugModifiyAbilityCount(u8 cursorX)
     else if (gChangedInput & KEY_RIGHT)
     {
         if (cursorX != 0)
-            PAUSE_SCREEN_DATA.oam[0].xPosition += PAUSE_DEBUG_TILE_SIZE;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition += TILE_DIM;
     }
     else if (gChangedInput & KEY_LEFT)
     {
         if (cursorX == 0)
-            PAUSE_SCREEN_DATA.oam[0].xPosition -= PAUSE_DEBUG_TILE_SIZE;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition -= TILE_DIM;
     }
     else
     {
@@ -1055,7 +1058,7 @@ u32 PauseDebugModifyHealthAndAmmo(u8 cursorX, u8 section)
     {
         // Check move right
         if (cursorX != 0)
-            PAUSE_SCREEN_DATA.oam[0].xPosition += PAUSE_DEBUG_TILE_SIZE;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition += TILE_DIM;
 
         return FALSE;
     }
@@ -1064,7 +1067,7 @@ u32 PauseDebugModifyHealthAndAmmo(u8 cursorX, u8 section)
     {
         // Check move left
         if (cursorX < length)
-            PAUSE_SCREEN_DATA.oam[0].xPosition -= PAUSE_DEBUG_TILE_SIZE;
+            PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition -= TILE_DIM;
 
         return FALSE;
     }
@@ -1288,9 +1291,11 @@ void PauseDebugDrawEverything(void)
  */
 void PauseDebugSetupCursor(void)
 {
-    UpdateMenuOamDataId(0, 0x1);
+    UpdateMenuOamDataId(PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR, PAUSE_OAM_ID_BLINKING_SQUARE);
 
     // Start at the ability count section
-    PAUSE_SCREEN_DATA.oam[0].yPosition = PAUSE_DEBUG_SECTION_INFO_TOP(PAUSE_DEBUG_SECTION_ABILITY_COUNT) * PAUSE_DEBUG_TILE_SIZE;
-    PAUSE_SCREEN_DATA.oam[0].xPosition = PAUSE_DEBUG_SECTION_INFO_RIGHT(PAUSE_DEBUG_SECTION_ABILITY_COUNT) * PAUSE_DEBUG_TILE_SIZE;
+    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].yPosition =
+        PAUSE_DEBUG_SECTION_INFO_TOP(PAUSE_DEBUG_SECTION_ABILITY_COUNT) * TILE_DIM;
+    PAUSE_SCREEN_DATA.oam[PAUSE_OAM_IDX_PAUSE_DEBUG_CURSOR].xPosition =
+        PAUSE_DEBUG_SECTION_INFO_RIGHT(PAUSE_DEBUG_SECTION_ABILITY_COUNT) * TILE_DIM;
 }

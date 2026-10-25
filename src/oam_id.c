@@ -4,6 +4,8 @@
 /**
  * @brief 7486c | 24 | Updates the OAM ID of menu OAM data and resets its animation
  * 
+ * @param oamIndex OAM index
+ * @param oamId OAM ID
  */
 void UpdateMenuOamDataId(u8 oamIndex, u8 oamId)
 {    

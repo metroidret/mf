@@ -23,4 +23,20 @@ enum MinimapUpdateFlag {
     MINIMAP_UPDATE_FLAG_COUNT
 };
 
+enum MinimapArea {
+    MINIMAP_MAIN_DECK,
+    MINIMAP_SECTOR_1,
+    MINIMAP_SECTOR_2,
+    MINIMAP_SECTOR_3,
+    MINIMAP_SECTOR_4,
+    MINIMAP_SECTOR_5,
+    MINIMAP_SECTOR_6,
+    MINIMAP_7, // Copy of Main Deck
+    MINIMAP_8, // Copy of Main Deck
+    MINIMAP_MAIN_DECK_NO_LAB,
+    MINIMAP_BLANK,
+
+    MINIMAP_COUNT
+};
+
 #endif /* MINIMAP_CONSTANTS_H */

@@ -22,6 +22,6 @@ extern const u8 sEvent_57607D[13];
 extern const u8 sEvent_57608A[13];
 
 extern const struct MonologueEvent sMonologueEvents[6];
-extern const struct SecurityUnlockEvent sSecurityUnlockEvents[SECURITY_LEVEL_END - 1];
+extern const struct SecurityUnlockEvent sSecurityUnlockEvents[SECURITY_LEVEL_COUNT - 1];
 
 #endif /* EVENT_DATA_H */

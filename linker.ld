@@ -11,8 +11,7 @@ gUnk_Audio0x50 = 0x50;
 
 SECTIONS {
     ewram (NOLOAD) : ALIGN(4) {
-        . = 0x0001c000; gCommonSpriteGfxBackup = .;
-        . = 0x00020000; gRoomSpriteGfxBackup = .;
+        . = 0x0001c000; gSpriteGfxBackup = .;
         . = 0x00026000; gDecompClipdataMap = .;
         . = 0x00029000; gDecompBg0Map = .;
         . = 0x0002c000; gDecompBg1Map = .;
@@ -27,6 +26,7 @@ SECTIONS {
         . = 0x00000004; gWrittenToBldalpha = .;
         . = 0x00000006; gWrittenToBldcnt = .;
         . = 0x00000008; gWrittenToDispcnt = .;
+        . = 0x0000000a; gWrittenToBg3cnt = .;
         . = 0x0000000c; gWrittenToWinin_H = .;
         . = 0x0000000d; gWrittenToWinout_L = .;
         . = 0x0000000e; gBackdropColor = .;
@@ -295,6 +295,7 @@ SECTIONS {
         . = 0x000053f8; gUnk_30053f8 = .;
         . = 0x000053f9; gUnk_30053f9 = .;
         . = 0x000053fc; gHazeProcessCodePointer = .;
+        . = 0x00005400; gMaintainedInput = .;
 
         . = 0x00005408; *libgcc.a:dp-bit.o(.bss);
         . = 0x00005420; *libgcc.a:fp-bit.o(.bss);
@@ -481,9 +482,7 @@ SECTIONS {
         src/event.o(.text);
         src/minimap.o(.text);
         src/menus/pause_screen_map.o(.text);
-
-        asm/disasm_0x080765f8.o(.text);
-
+        src/menus/pause_screen.o(.text);
         src/text.o(.text);
 
         asm/disasm_0x08079afc.o(.text);
@@ -1071,10 +1070,9 @@ SECTIONS {
         src/data/rooms/sector_6/bg3.o(.rodata);
 
         src/data/animated_tiles_data.o(.rodata);
-        src/data/menus/pause_screen_map_data.o(.rodata);
-
+        src/data/menus/pause_screen_data.o(.rodata);
         src/data/event_data.o(.rodata);
-        src/data/menus/pause_debug.o(.rodata);
+        src/data/menus/pause_screen_misc_data.o(.rodata);
         src/data/sram_pointers.o(.rodata);
         src/data/projectile_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
@@ -1095,7 +1093,7 @@ SECTIONS {
         src/sound_event.o(.data);
         src/particle.o(.data);
         src/minimap.o(.data);
-        src/menus/pause_screen_map.o(.data);
+        src/menus/pause_screen.o(.data);
         src/text.o(.data);
         src/projectile.o(.data);
         src/new_file_intro.o(.data);

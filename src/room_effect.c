@@ -1754,7 +1754,7 @@ bools32 RoomEffectRecoveringSuitCutscene(void)
 
         case 3:
             gWrittenToDispcnt = gIoRegisters.dispcnt & ~DCNT_BG0;
-            DMA3_COPY_16(VRAM_BASE + 0x800, gCommonSpriteGfxBackup, 0x400);
+            DMA3_COPY_16(VRAM_BASE + 0x800, gSpriteGfxBackup, 0x400);
             nextStage = TRUE;
             break;
 
@@ -1958,7 +1958,7 @@ bools32 RoomEffectRecoveringSuitCutscene(void)
             break;
 
         case 16:
-            DMA3_COPY_16(gCommonSpriteGfxBackup, VRAM_BASE + 0x800, 0x400);
+            DMA3_COPY_16(gSpriteGfxBackup, VRAM_BASE + 0x800, 0x400);
             WRITE_16(REG_BG0CNT, gIoRegisters.bg0Cnt);
             nextStage = TRUE;
             break;

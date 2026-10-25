@@ -74,7 +74,7 @@ void SaXCloseUpInit(void)
 
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
-    DMA3_COPY_16(VRAM_OBJ, gCommonSpriteGfxBackup, ARRAY_SIZE(gCommonSpriteGfxBackup));
+    DMA3_COPY_16(VRAM_OBJ, gSpriteGfxBackup, 0x4000);
     CallLZ77UncompVram(sSaXCloseUpGfx, BGCNT_TO_VRAM_CHAR_BASE(0));
 
     DMA3_COPY_16(sSaXCloseUpPal, PALRAM_BASE, sizeof(sSaXCloseUpPal) / 2);

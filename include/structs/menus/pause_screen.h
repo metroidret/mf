@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "oam.h"
+#include "constants/menus/pause_screen.h"
 
 struct MenuOam {
     s16 yPosition;
@@ -21,13 +22,20 @@ struct MenuOam {
     u8 exists:2;
 };
 
+struct PSD_28 {
+    u8 unk_0;
+    u8 unk_1;
+    u8 unk_2;
+    u8 unk_3;
+};
+
 struct PauseScreenData {
     u8 unk_0;
     u8 unk_1;
     u8 enableDebug;
     u16 typeFlags;
     u8 timer;
-    u8 pauseDebugEditingValue;
+    u8 subMenuStage;
     u8 unk_8;
     u8 unk_9;
     u8 unk_A;
@@ -51,11 +59,8 @@ struct PauseScreenData {
     u8 unk_25;
     u8 unk_26;
     u8 unk_27;
-    u8 unk_28;
-    u8 unk_29;
-    u8 unk_2A;
-    u8 unk_2B;
-    struct MenuOam oam[40];
+    struct PSD_28 unk_28;
+    struct MenuOam oam[PAUSE_OAM_IDX_COUNT];
     u8 navTargetX;
     u8 navTargetY;
     u8 navTargetArea;
@@ -131,10 +136,10 @@ struct PauseScreenData {
     s8 mapBottomBorder;
     s8 mapViewX;
     s8 mapViewY;
-    s8 unk_25A;
-    s8 unk_25B;
-    s8 unk_25C;
-    s8 unk_25D;
+    s8 unk_25A; // mapRightEdge?
+    s8 unk_25B; // mapLeftEdge?
+    s8 unk_25C; // mapTopEdge?
+    s8 unk_25D; // mapBottomEdge
     u8 canScrollRight;
     u8 canScrollLeft;
     u8 canScrollUp;
@@ -169,5 +174,20 @@ struct PauseScreenData {
     u8 unk_283;
     u8 unk_284;
 };
+
+struct MaintainedInput {
+    u8 delay;
+    u8 set;
+};
+
+#ifdef USE_EWRAM_SYMBOLS
+extern u16 gPauseScreenBg0[0x400];
+extern u16 gPauseScreenSleepTilemap[0x800];
+#else // !USE_EWRAM_SYMBOLS
+#define gPauseScreenBg0 CAST_TO_ARRAY(u16, [0x400], EWRAM_BASE + 0xF800)
+#define gPauseScreenSleepTilemap CAST_TO_ARRAY(u16, [0x800], EWRAM_BASE + 0x10000)
+#endif // USE_EWRAM_SYMBOLS
+
+extern struct MaintainedInput gMaintainedInput;
 
 #endif /* PAUSE_SCREEN_MENU_STRUCTS_H */

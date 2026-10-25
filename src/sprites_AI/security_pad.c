@@ -127,7 +127,7 @@ void SecurityPadInit(void)
             break;
 
         default:
-            securityLevel = SECURITY_LEVEL_END;
+            securityLevel = SECURITY_LEVEL_COUNT;
     }
 
     gCurrentSprite.work3 = securityLevel;

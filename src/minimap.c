@@ -4,8 +4,8 @@
 #include "gba/memory.h"
 #include "globals.h"
 
-#include "data/menus/pause_debug.h"
-#include "data/menus/pause_screen_map_data.h"
+#include "data/menus/pause_screen_data.h"
+#include "data/menus/pause_screen_misc_data.h"
 
 #include "constants/connection.h"
 #include "constants/minimap.h"
@@ -32,7 +32,7 @@ void MinimapLoadInitial(void)
     s32 x;
     s32 y;
 
-    GetMinimapData(gPreviousArea, gMinimapData_Visited);
+    MinimapGetData(gPreviousArea, gMinimapData_Visited);
     DMA3_COPY_16(gMinimapData_Visited, gMinimapData,
         sizeof(gMinimapData_Visited) / sizeof(u16));
 
@@ -153,7 +153,7 @@ void MinimapCheckOnTransition(void)
     if (gPreviousArea != gCurrentArea)
     {
         gPreviousArea = gCurrentArea;
-        GetMinimapData(gPreviousArea, gMinimapData_Visited);
+        MinimapGetData(gPreviousArea, gMinimapData_Visited);
         DMA3_COPY_16(gMinimapData_Visited, gMinimapData, sizeof(gMinimapData_Visited) / sizeof(u16));
 
         MinimapSetVisitedTilesAndCollectedItems(gPreviousArea);
