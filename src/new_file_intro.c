@@ -126,7 +126,7 @@ static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx7
 };
 
-static const u32* sIntroSamusSittingBgGfxPointers[5] = {
+const u32* sIntroSamusSittingBgGfxPointers[5] = {
     sIntroSamusSittingBgGfx0,
     sIntroSamusSittingBgGfx1,
     sIntroSamusSittingBgGfx2,
@@ -143,7 +143,24 @@ static const u32* sIntroSamusHelmetCloseupBgGfxPointers[6] = {
     sIntroSamusHelmetCloseupBgGfx5
 };
 
-static u8 sBlob_79c448_79c5a4[] = INCBIN_U8("data/Blob_79c448_79c5a4.bin");
+const u32* sTitleIntroCollisionWarningBgGfxPointers[5] = {
+    (const u32*)0x0864e470,
+    (const u32*)0x0864eba8,
+    (const u32*)0x0864f48c,
+    (const u32*)0x0864fff0,
+    (const u32*)0x08650874
+};
+
+const u32* sTitleIntroCollisionWarningObjGfxPointers[6] = {
+    (const u32*)0x086510fc,
+    (const u32*)0x086517c0,
+    (const u32*)0x08651eec,
+    (const u32*)0x08652208,
+    (const u32*)0x08652594,
+    (const u32*)0x08652994
+};
+
+static u8 sBlob_79c474_79c5a4[] = INCBIN_U8("data/Blob_79c474_79c5a4.bin");
 
 static u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,
@@ -7203,7 +7220,7 @@ boolu32 NewFileIntroArrivingAtBslProcess(void)
         case 5:
             if (INTRO_DATA.timer == DELTA_TIME)
             {
-                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[580].trackGroupNumber].pTrack, 0);
+                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_244].trackGroupNumber].pTrack, 0);
             }
             else if (INTRO_DATA.timer > CONVERT_SECONDS(.5f))
             {

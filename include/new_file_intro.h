@@ -6,6 +6,9 @@
 #include "constants/new_file_intro.h"
 #include "constants/game_state.h"
 
+extern const u32* sIntroSamusSittingBgGfxPointers[5];
+extern const u32* sTitleIntroCollisionWarningBgGfxPointers[5];
+extern const u32* sTitleIntroCollisionWarningObjGfxPointers[6];
 extern const u16** sLocationTextPointers[LANGUAGE_COUNT];
 extern u16** sMessageTextPointers[LANGUAGE_COUNT];
 

@@ -494,6 +494,7 @@ SECTIONS {
         src/projectile.o(.text);
         src/menus/title_screen.o(.text);
         src/new_file_intro.o(.text);
+        src/intro.o(.text);
 
         asm/disasm_0x0808F5C4.o(.text);
 

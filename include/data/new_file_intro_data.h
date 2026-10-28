@@ -339,10 +339,35 @@ extern const u16 sTitleScreenSpaceBackgroundPal[8 * PAL_ROW];
 
 extern const u32 sTitleScreenSpaceBackgroundTilemap[172];
 
+extern const struct FrameData sOam_60ac08[2];
+extern const struct FrameData sOam_60ac18[2];
+extern const struct FrameData sOam_60ac28[2];
+extern const struct FrameData sOam_60ac38[2];
+extern const struct FrameData sOam_60ac48[2];
+extern const struct FrameData sOam_60ac58[2];
+extern const struct FrameData sOam_60ac68[2];
+extern const struct FrameData sOam_60ac78[2];
+extern const struct FrameData sOam_60ac88[2];
+extern const struct FrameData sOam_60ac98[7];
+extern const struct FrameData sOam_60acd0[5];
+extern const struct FrameData sOam_60acf8[2];
+extern const struct FrameData sOam_60ad08[2];
+extern const struct FrameData sOam_60ad18[2];
+extern const struct FrameData sOam_60ad28[2];
+extern const struct FrameData sOam_60ad38[2];
+extern const struct FrameData sOam_60ad48[12];
+extern const struct FrameData sOam_60ada8[5];
+extern const struct FrameData sOam_60add0[5];
+extern const struct FrameData sOam_60adf8[4];
+extern const struct FrameData sOam_60ae18[31];
+extern const struct FrameData sOam_60af10[26];
+extern const struct FrameData sOam_60afe0[45];
+
 extern const u8 sIntroSpaceTilemap[1320];
 extern const u8 sIntroBslTilemap[1586];
 
 extern const u32 sIntroBslSpaceBgGfx[4421];
+extern const u32 sTitleIntroBslObjGfx[2852];
 extern const u16 sIntroBslSpaceBgPal[8 * PAL_ROW];
 
 extern const u16 sPal_612f48[16 * PAL_ROW];
@@ -391,6 +416,13 @@ extern const u32 sIntroSamusHelmetCloseupBgGfx2[908];
 extern const u32 sIntroSamusHelmetCloseupBgGfx3[812];
 extern const u32 sIntroSamusHelmetCloseupBgGfx4[844];
 extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
+
+extern const u32 sIntroTilemap_658be0[385];
+extern const u16 sIntroPal_6591e4[16 * PAL_ROW];
+extern const u32 sIntroTilemap_6593e4[368];
+extern const u16 sIntroPal_6599a4[16 * PAL_ROW];
+
+extern const u16 sIntroPal_65c268[16 * PAL_ROW];
 
 extern const u32 sIntroTilemap_662804[318];
 
