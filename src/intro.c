@@ -247,15 +247,15 @@ void IntroShipAlertInit(void)
     for (i = 0; i <= 5; i++)
         LZ77UncompVram(sTitleIntroCollisionWarningObjGfxPointers[i], VRAM_OBJ + i * 0x1000);
 
-    DMA3_COPY_32(sIntroPal_65c268, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sTitleIntroCollisionWarningObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
 
     for (i = 0; i <= 4; i++)
         LZ77UncompVram(sTitleIntroCollisionWarningBgGfxPointers[i], VRAM_BASE + i * 0x1000);
-    
-    LZ77UncompVram(sIntroTilemap_6593e4, VRAM_BASE + 0xF000);
+
+    LZ77UncompVram(sTitleIntroCollisionWarningBgTilemap, VRAM_BASE + 0xF000);
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
 
-    DMA3_COPY_32(sIntroPal_6599a4, PALRAM_BASE, 8 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sTitleIntroCollisionWarningBgPal, PALRAM_BASE, 8 * PAL_ROW_SIZE / sizeof(u32));
 
     WRITE_16(REG_BG0HOFS, 0);
     WRITE_16(REG_BG0VOFS, 0);
@@ -281,11 +281,11 @@ void IntroShipAlertInit(void)
     gWrittenToBldalpha_Eva = gWrittenToBldalpha_Evb = 0;
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
     
-    IntroSetupOam(19, 96, 128, 0);
-    IntroSetupOam(20, 128, 96, 0);
-    IntroSetupOam(21, 128, 128, 0);
-    IntroSetupOam(22, 200, 38, 0);
-    IntroSetupOam(23, 210, 88, 0);
+    IntroSetupOam(19, 96, 128, FALSE);
+    IntroSetupOam(20, 128, 96, FALSE);
+    IntroSetupOam(21, 128, 128, FALSE);
+    IntroSetupOam(22, 200, 38, FALSE);
+    IntroSetupOam(23, 210, 88, FALSE);
     
     IntroSetupBigNumberOam(24, 210, 88, 210);
     IntroSetupBigNumberOam(25, 67, 151, 200);
@@ -402,13 +402,13 @@ void IntroSamusDriftingOutInit(void)
     
     LZ77UncompVram(sTitleIntroBslObjGfx, VRAM_OBJ);
 
-    DMA3_COPY_32(sPal_612f48, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sIntroSamusDriftingIntoAsteroidsObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
 
     LZ77UncompVram(sTitleScreenSpaceBackgroundGfx, VRAM_BASE);
     LZ77UncompVram(sTitleScreenSpaceBackgroundTilemap, VRAM_BASE + 0xF800);
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
     
-    DMA3_COPY_32(sPal_609020, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sIntroSamusDriftingIntoAsteroidsBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
     
     SET_BACKDROP_COLOR(COLOR_BLACK);
     
@@ -480,10 +480,10 @@ boolu32 IntroSamusDriftingOutProcess(void)
 	        {
 	            if (gWrittenToBldy == BLDY_MAX_VALUE)
 	            {
-	                PlayFadingSound(0x1EC, 0);
-	                PlayFadingSound(0x1ED, 0);
+	                PlayFadingSound(SOUND_1EC, 0);
+	                PlayFadingSound(SOUND_1ED, 0);
 	            }
-	
+
 	            gWrittenToBldy -= 2;
 	        }
 	        else
@@ -545,7 +545,7 @@ boolu32 IntroSamusDriftingOutProcess(void)
 	                INTRO_DATA.timer = 0;
 	
 	                if (!gWrittenToBldy)
-	                    ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[0x1EC].trackGroupNumber].pTrack, 30);
+	                    ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_1EC].trackGroupNumber].pTrack, 30);
 	
 	                gWrittenToBldy++;
 	            }
@@ -560,9 +560,9 @@ boolu32 IntroSamusDriftingOutProcess(void)
 	        SpecialCutsceneDrawAllOam();
 	        break;
     }
-    
+
     IntroProcessText();
-    
+
     return finished;
 }
 

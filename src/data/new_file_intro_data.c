@@ -22595,7 +22595,7 @@ const u32 sTitleScreenSpaceBackgroundGfx[830] = INCBIN_U32("data/menus/title_scr
 
 static const u8 sBlob_606a00_609020[] = INCBIN_U8("data/Blob_606a00_609020.bin");
 
-const u16 sPal_609020[8 * PAL_ROW] = INCBIN_U16("data/new_file_intro/609020.pal");
+const u16 sIntroSamusDriftingIntoAsteroidsBgPal[8 * PAL_ROW] = INCBIN_U16("data/new_file_intro/drifting_into_asteroids_bg.pal");
 const u16 sTitleScreenSpaceBackgroundPal[8 * PAL_ROW] = INCBIN_U16("data/menus/title_screen/space_background.pal");
 
 const u32 sTitleScreenSpaceBackgroundTilemap[172] = INCBIN_U32("data/menus/title_screen/space_background.tm.lz");
@@ -24534,7 +24534,7 @@ static const u8 padding[2] = {0, 0};
 const u32 sIntroBslSpaceBgGfx[4421] = INCBIN_U32("data/new_file_intro/bsl_space_bg.gfx.lz");
 const u32 sTitleIntroBslObjGfx[2852] = INCBIN_U32("data/intro/bsl_obj.gfx.lz");
 const u16 sIntroBslSpaceBgPal[8 * PAL_ROW] = INCBIN_U16("data/new_file_intro/bsl_space_bg.pal");
-const u16 sPal_612f48[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/612f48.pal");
+const u16 sIntroSamusDriftingIntoAsteroidsObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/drifting_into_asteroids_obj.pal");
 
 const u32 sNextPageArrowGfx[8] = INCBIN_U32("data/new_file_intro/next_page_arrow.gfx");
 
@@ -24622,12 +24622,12 @@ static const u8 sBlob_64e470_658be0[] = INCBIN_U8("data/Blob_64e470_658be0.bin")
 
 const u32 sIntroTilemap_658be0[385] = INCBIN_U32("data/intro/658be0.tm.lz");
 const u16 sIntroPal_6591e4[16 * PAL_ROW] = INCBIN_U16("data/intro/6591e4.pal");
-const u32 sIntroTilemap_6593e4[368] = INCBIN_U32("data/intro/6593e4.tm.lz");
-const u16 sIntroPal_6599a4[16 * PAL_ROW] = INCBIN_U16("data/intro/6599a4.pal");
+const u32 sTitleIntroCollisionWarningBgTilemap[368] = INCBIN_U32("data/intro/collision_warning_bg.tm.lz");
+const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW] = INCBIN_U16("data/intro/collision_warning_bg.pal");
 
 static const u8 sBlob_659ba4_65c268[] = INCBIN_U8("data/Blob_659ba4_65c268.bin");
 
-const u16 sIntroPal_65c268[16 * PAL_ROW] = INCBIN_U16("data/intro/65c268.pal");
+const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW] = INCBIN_U16("data/intro/collision_warning_obj.pal");
 
 static const u8 sBlob_65c468_662804[] = INCBIN_U8("data/Blob_65c468_662804.bin");
 

@@ -334,7 +334,7 @@ extern const u32 sIntroSamusSittingTilemap[171];
 
 extern const u32 sTitleScreenSpaceBackgroundGfx[830];
 
-extern const u16 sPal_609020[8 * PAL_ROW];
+extern const u16 sIntroSamusDriftingIntoAsteroidsBgPal[8 * PAL_ROW];
 extern const u16 sTitleScreenSpaceBackgroundPal[8 * PAL_ROW];
 
 extern const u32 sTitleScreenSpaceBackgroundTilemap[172];
@@ -370,7 +370,7 @@ extern const u32 sIntroBslSpaceBgGfx[4421];
 extern const u32 sTitleIntroBslObjGfx[2852];
 extern const u16 sIntroBslSpaceBgPal[8 * PAL_ROW];
 
-extern const u16 sPal_612f48[16 * PAL_ROW];
+extern const u16 sIntroSamusDriftingIntoAsteroidsObjPal[16 * PAL_ROW];
 
 extern const u32 sNextPageArrowGfx[8];
 
@@ -419,10 +419,10 @@ extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
 
 extern const u32 sIntroTilemap_658be0[385];
 extern const u16 sIntroPal_6591e4[16 * PAL_ROW];
-extern const u32 sIntroTilemap_6593e4[368];
-extern const u16 sIntroPal_6599a4[16 * PAL_ROW];
+extern const u32 sTitleIntroCollisionWarningBgTilemap[368];
+extern const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW];
 
-extern const u16 sIntroPal_65c268[16 * PAL_ROW];
+extern const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW];
 
 extern const u32 sIntroTilemap_662804[318];
 

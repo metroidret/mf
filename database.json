@@ -27233,7 +27233,7 @@
     "size": 1
   },
   {
-    "path": "new_file_intro/609020.pal",
+    "path": "new_file_intro/drifting_into_asteroids_bg.pal",
     "count": "0x80",
     "addr": {
       "us": "0x609020"
@@ -27305,7 +27305,7 @@
     "size": 2
   },
   {
-    "path": "new_file_intro/612f48.pal",
+    "path": "new_file_intro/drifting_into_asteroids_obj.pal",
     "count": "0x100",
     "addr": {
       "us": "0x612F48"
@@ -27617,7 +27617,7 @@
     "size": 2
   },
   {
-    "path": "intro/6593e4.tm.lz",
+    "path": "intro/collision_warning_bg.tm.lz",
     "count": "0x170",
     "addr": {
       "us": "0x6593E4"
@@ -27625,7 +27625,7 @@
     "size": 4
   },
   {
-    "path": "intro/6599a4.pal",
+    "path": "intro/collision_warning_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x6599A4"
@@ -27641,7 +27641,7 @@
     "size": 1
   },
   {
-    "path": "intro/65c268.pal",
+    "path": "intro/collision_warning_obj.pal",
     "count": "0x100",
     "addr": {
       "us": "0x65C268"
