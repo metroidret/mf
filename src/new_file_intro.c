@@ -9,7 +9,7 @@
 
 #include "structs/cutscene.h"
 
-#include "data/new_file_intro_data.h"
+#include "data/intro_data.h"
 #include "data/generic_data.h"
 #include "data/menus/title_screen.h"
 #include "data/sprite_data.h"
@@ -591,7 +591,7 @@ void NewFileIntroSamusShipFlyingInit(void)
     
     DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroBslObjectGfxPointers); i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
     DMA3_COPY_32(sIntroSamusShipPal, PALRAM_OBJ, 5 * PAL_ROW_SIZE / 4);
@@ -966,10 +966,10 @@ void NewFileIntroSamusDriftingInit(void)
     u16 i;
 
     CallbackSetVBlank(unk_99940);
-    
+
     DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
     
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroBslObjectGfxPointers); i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
     DMA3_COPY_32(sIntroSamusShipPal, PALRAM_OBJ, 5 * PAL_ROW_SIZE / 4);
@@ -1074,7 +1074,7 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroSamusHelmetCloseupBgGfxPointers); i++)
         LZ77UncompVram(sIntroSamusHelmetCloseupBgGfxPointers[i], VRAM_BASE + i * 0x1000);
     
     LZ77UncompVram(sIntroSamusHelmetCloseupTilemap, VRAM_BASE + 0xF000);
@@ -1145,7 +1145,7 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     
     DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
     
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroBslObjectGfxPointers); i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
     DMA3_COPY_32(sIntroSamusDriftingIntoAsteroidsObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / 4);
@@ -5100,7 +5100,7 @@ boolu32 NewFileIntroSamusGettingCuredNervousSystemProcess(void)
             {
                 INTRO_DATA.timer = 0;
                 INTRO_DATA.subStage = 0;
-                finished = 1;
+                finished = TRUE;
             }
 
             SpecialCutsceneProcessOam();

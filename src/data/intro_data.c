@@ -5,7 +5,7 @@
 
 #include "constants/text.h"
 
-#include "data/new_file_intro_data.h"
+#include "data/intro_data.h"
 
 static const u16 sOamFrame_597708[OAM_DATA_SIZE(1)] = {
     1,

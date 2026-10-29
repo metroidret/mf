@@ -4,7 +4,7 @@
 
 #include "data/audio.h"
 #include "data/generic_data.h"
-#include "data/new_file_intro_data.h"
+#include "data/intro_data.h"
 #include "data/sprite_data.h"
 
 // V-blank callbacks
@@ -33,7 +33,7 @@ void unk_9209c(void)
 
     DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroSamusSittingBgGfxPointers); i++)
         LZ77UncompVram(sIntroSamusSittingBgGfxPointers[i], VRAM_BASE + 0x8000 + i * 0x1000);
 
     LZ77UncompVram(sTitleIntroSpaceBgTilemap_Unused, VRAM_BASE + 0xE800);
@@ -244,12 +244,12 @@ void TitleIntroShipAlertInit(void)
     
     DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
     
-    for (i = 0; i <= 5; i++)
+    for (i = 0; i < ARRAY_SIZE(sTitleIntroCollisionWarningObjGfxPointers); i++)
         LZ77UncompVram(sTitleIntroCollisionWarningObjGfxPointers[i], VRAM_OBJ + i * 0x1000);
 
     DMA3_COPY_32(sTitleIntroCollisionWarningObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
 
-    for (i = 0; i <= 4; i++)
+    for (i = 0; i < ARRAY_SIZE(sTitleIntroCollisionWarningBgGfxPointers); i++)
         LZ77UncompVram(sTitleIntroCollisionWarningBgGfxPointers[i], VRAM_BASE + i * 0x1000);
 
     LZ77UncompVram(sTitleIntroCollisionWarningBgTilemap, VRAM_BASE + 0xF000);
@@ -630,7 +630,7 @@ boolu32 TitleIntroSamusShipCrashing(void)
             else
             {
                 INTRO_DATA.stage = 0;
-                finished = 1;
+                finished = TRUE;
             }
 
             SpecialCutsceneProcessOam();

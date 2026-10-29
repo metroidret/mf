@@ -1,7 +1,9 @@
-#ifndef NEW_FILE_INTRO_DATA_H
-#define NEW_FILE_INTRO_DATA_H
+#ifndef INTRO_DATA_H
+#define INTRO_DATA_H
 
 #include "types.h"
+
+#include "gba/memory.h"
 
 extern const struct FrameData sOam_597ec0[2];
 extern const struct FrameData sOam_597ed0[2];
@@ -428,4 +430,4 @@ extern const u32 sIntroTilemap_662804[318];
 
 extern const u16 sIntroPal_663820[4 * PAL_ROW];
 
-#endif /* NEW_FILE_INTRO_DATA_H */
+#endif /* INTRO_DATA_H */
