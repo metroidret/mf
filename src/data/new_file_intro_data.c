@@ -24532,7 +24532,7 @@ const u8 sIntroBslTilemap[1586] = INCBIN_U8("data/new_file_intro/bsl_bg.tm.lz");
 static const u8 padding[2] = {0, 0};
 
 const u32 sIntroBslSpaceBgGfx[4421] = INCBIN_U32("data/new_file_intro/bsl_space_bg.gfx.lz");
-const u32 sTitleIntroBslObjGfx[2852] = INCBIN_U32("data/intro/bsl_obj.gfx.lz");
+const u32 sTitleIntroBslObjGfx[2852] = INCBIN_U32("data/title_intro/bsl_obj.gfx.lz");
 const u16 sIntroBslSpaceBgPal[8 * PAL_ROW] = INCBIN_U16("data/new_file_intro/bsl_space_bg.pal");
 const u16 sIntroSamusDriftingIntoAsteroidsObjPal[16 * PAL_ROW] = INCBIN_U16("data/new_file_intro/drifting_into_asteroids_obj.pal");
 
@@ -24620,14 +24620,14 @@ const u32 sIntroSamusHelmetCloseupBgGfx5[403] = INCBIN_U32("data/new_file_intro/
 
 static const u8 sBlob_64e470_658be0[] = INCBIN_U8("data/Blob_64e470_658be0.bin");
 
-const u32 sIntroTilemap_658be0[385] = INCBIN_U32("data/intro/658be0.tm.lz");
-const u16 sIntroPal_6591e4[16 * PAL_ROW] = INCBIN_U16("data/intro/6591e4.pal");
-const u32 sTitleIntroCollisionWarningBgTilemap[368] = INCBIN_U32("data/intro/collision_warning_bg.tm.lz");
-const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW] = INCBIN_U16("data/intro/collision_warning_bg.pal");
+const u32 sTitleIntroSpaceBgTilemap_Unused[385] = INCBIN_U32("data/title_intro/space_bg_unused.tm.lz");
+const u16 sTitleIntroSamusSittingBgPal[16 * PAL_ROW] = INCBIN_U16("data/title_intro/samus_sitting_bg.pal");
+const u32 sTitleIntroCollisionWarningBgTilemap[368] = INCBIN_U32("data/title_intro/collision_warning_bg.tm.lz");
+const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW] = INCBIN_U16("data/title_intro/collision_warning_bg.pal");
 
 static const u8 sBlob_659ba4_65c268[] = INCBIN_U8("data/Blob_659ba4_65c268.bin");
 
-const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW] = INCBIN_U16("data/intro/collision_warning_obj.pal");
+const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW] = INCBIN_U16("data/title_intro/collision_warning_obj.pal");
 
 static const u8 sBlob_65c468_662804[] = INCBIN_U8("data/Blob_65c468_662804.bin");
 

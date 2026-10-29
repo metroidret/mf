@@ -331,10 +331,10 @@ static u16* sMonologueTextPointersSpanish[19] = {
 static u8 sBlob_79e868_79eca0[] = INCBIN_U8("data/Blob_79e868_79eca0.bin");
 
 /**
- * @brief 87610 | f8 | Handler for intro
+ * @brief 87610 | f8 | Handler for the title intro
  * 
  */
-boolu32 IntroHandler(void) 
+boolu32 TitleIntroHandler(void) 
 {
     boolu32 result;
 
@@ -372,7 +372,7 @@ boolu32 IntroHandler(void)
             break;
         
         case 2:
-            if (IntroSamusShipCrashing())
+            if (TitleIntroSamusShipCrashing())
                 gSubGameMode1 = 3;
             break;
         
@@ -535,7 +535,7 @@ boolu32 unk_87920(void)
             break;
 
         case 1:
-            done = IntroHandler();
+            done = TitleIntroHandler();
             break;
 
         case 2:

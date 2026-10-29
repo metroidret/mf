@@ -27289,7 +27289,7 @@
     "size": 4
   },
   {
-    "path": "intro/bsl_obj.gfx.lz",
+    "path": "title_intro/bsl_obj.gfx.lz",
     "count": "0xB24",
     "addr": {
       "us": "0x6101B8"
@@ -27601,7 +27601,7 @@
     "size": 1
   },
   {
-    "path": "intro/658be0.tm.lz",
+    "path": "title_intro/space_bg_unused.tm.lz",
     "count": "0x181",
     "addr": {
       "us": "0x658BE0"
@@ -27609,7 +27609,7 @@
     "size": 4
   },
   {
-    "path": "intro/6591e4.pal",
+    "path": "title_intro/samus_sitting_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x6591E4"
@@ -27617,7 +27617,7 @@
     "size": 2
   },
   {
-    "path": "intro/collision_warning_bg.tm.lz",
+    "path": "title_intro/collision_warning_bg.tm.lz",
     "count": "0x170",
     "addr": {
       "us": "0x6593E4"
@@ -27625,7 +27625,7 @@
     "size": 4
   },
   {
-    "path": "intro/collision_warning_bg.pal",
+    "path": "title_intro/collision_warning_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x6599A4"
@@ -27641,7 +27641,7 @@
     "size": 1
   },
   {
-    "path": "intro/collision_warning_obj.pal",
+    "path": "title_intro/collision_warning_obj.pal",
     "count": "0x100",
     "addr": {
       "us": "0x65C268"

@@ -417,8 +417,8 @@ extern const u32 sIntroSamusHelmetCloseupBgGfx3[812];
 extern const u32 sIntroSamusHelmetCloseupBgGfx4[844];
 extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
 
-extern const u32 sIntroTilemap_658be0[385];
-extern const u16 sIntroPal_6591e4[16 * PAL_ROW];
+extern const u32 sTitleIntroSpaceBgTilemap_Unused[385];
+extern const u16 sTitleIntroSamusSittingBgPal[16 * PAL_ROW];
 extern const u32 sTitleIntroCollisionWarningBgTilemap[368];
 extern const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW];
 

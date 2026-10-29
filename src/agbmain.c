@@ -41,7 +41,7 @@ void AgbMain(void)
                 }
                 else if (gSubGameMode2 == 1)
                 {
-                    if (IntroHandler())
+                    if (TitleIntroHandler())
                     {
                         gSubGameMode1 = 0;
                         gSubGameMode2 = 4;

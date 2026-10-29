@@ -1,6 +1,6 @@
-#include "intro.h"
-#include "globals.h"
+#include "title_intro.h"
 #include "new_file_intro.h"
+#include "globals.h"
 
 #include "data/audio.h"
 #include "data/generic_data.h"
@@ -10,7 +10,7 @@
 // V-blank callbacks
 void unk_93884(void);
 void unk_99940(void);
-void IntroShipAlertAndDraftingVblank(void);
+void TitleIntroShipAlertAndDraftingVblank(void);
 
 u8 SpecialCutsceneGetRandomNumber(void);
 
@@ -36,10 +36,10 @@ void unk_9209c(void)
     for (i = 0; i < 5; i++)
         LZ77UncompVram(sIntroSamusSittingBgGfxPointers[i], VRAM_BASE + 0x8000 + i * 0x1000);
 
-    LZ77UncompVram(sIntroTilemap_658be0, VRAM_BASE + 0xE800);
+    LZ77UncompVram(sTitleIntroSpaceBgTilemap_Unused, VRAM_BASE + 0xE800);
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
 
-    DMA3_COPY_32(sIntroPal_6591e4, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sTitleIntroSamusSittingBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
 
     WRITE_16(REG_BG0HOFS, 0);
     WRITE_16(REG_BG0VOFS, 0);
@@ -74,7 +74,7 @@ void unk_9209c(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
 
-    gNonGameplayRam.intro.pText = sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
 
@@ -87,7 +87,7 @@ void unk_9209c(void)
  * @brief 9223c | 294 | Processes the title intro Samus in ship cutscene
  * 
  */
-boolu32 IntroSamusInShipProcess(void)
+boolu32 TitleIntroSamusInShipProcess(void)
 {
     boolu32 finished;
 
@@ -104,8 +104,8 @@ boolu32 IntroSamusInShipProcess(void)
             }
             else if (INTRO_DATA.timer == 6 * DELTA_TIME)
             {
-                LZ77UncompVram(sIntroTilemap_658be0, VRAM_BASE + 0xE800);
-                DMA3_COPY_32(sIntroPal_6591e4, PALRAM_BASE, 8 * PAL_ROW_SIZE / sizeof(u32));
+                LZ77UncompVram(sTitleIntroSpaceBgTilemap_Unused, VRAM_BASE + 0xE800);
+                DMA3_COPY_32(sTitleIntroSamusSittingBgPal, PALRAM_BASE, 8 * PAL_ROW_SIZE / sizeof(u32));
                 gWrittenToBldalpha_Eva = 0;
                 gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
                 WRITE_16(REG_BG1HOFS, 0);
@@ -231,7 +231,7 @@ boolu32 IntroSamusInShipProcess(void)
  * @brief 924d0 | 270 | Setup for the title intro ship collision alert cutscene
  * 
  */
-void IntroShipAlertInit(void)
+void TitleIntroShipAlertInit(void)
 {
     u16 i;
 
@@ -281,11 +281,11 @@ void IntroShipAlertInit(void)
     gWrittenToBldalpha_Eva = gWrittenToBldalpha_Evb = 0;
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
     
-    IntroSetupOam(19, 96, 128, FALSE);
-    IntroSetupOam(20, 128, 96, FALSE);
-    IntroSetupOam(21, 128, 128, FALSE);
-    IntroSetupOam(22, 200, 38, FALSE);
-    IntroSetupOam(23, 210, 88, FALSE);
+    TitleIntroSetupOam(19, 96, 128, FALSE);
+    TitleIntroSetupOam(20, 128, 96, FALSE);
+    TitleIntroSetupOam(21, 128, 128, FALSE);
+    TitleIntroSetupOam(22, 200, 38, FALSE);
+    TitleIntroSetupOam(23, 210, 88, FALSE);
     
     IntroSetupBigNumberOam(24, 210, 88, 210);
     IntroSetupBigNumberOam(25, 67, 151, 200);
@@ -303,14 +303,14 @@ void IntroShipAlertInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_OBJ);
     
-    CallbackSetVBlank(IntroShipAlertAndDraftingVblank);
+    CallbackSetVBlank(TitleIntroShipAlertAndDraftingVblank);
 }
 
 /**
  * @brief 92740 | f0 | Processes the title intro ship collision alert cutscene
  * 
  */
-boolu32 IntroShipAlertProcess(void)
+boolu32 TitleIntroShipAlertProcess(void)
 {
     boolu32 finished;
 
@@ -321,7 +321,7 @@ boolu32 IntroShipAlertProcess(void)
     switch (INTRO_DATA.subStage)
     {
         case 0:
-            IntroShipAlertInit();
+            TitleIntroShipAlertInit();
             INTRO_DATA.subStage = 1;
             INTRO_DATA.timer = 0;
         
@@ -389,7 +389,7 @@ boolu32 IntroShipAlertProcess(void)
  * @brief 92830 | 1d0 | Setup for the title intro Samus drifting out cutscene
  * 
  */
-void IntroSamusDriftingOutInit(void)
+void TitleIntroSamusDriftingOutInit(void)
 {
     WRITE_16(REG_IME, FALSE);
     WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
@@ -434,9 +434,9 @@ void IntroSamusDriftingOutInit(void)
     WRITE_16(REG_BLDY, BLDY_MAX_VALUE);
     gWrittenToBldalpha_Eva = gWrittenToBldalpha_Evb = 0;
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
-    
-    IntroSetupOam(10, 145, 140, FALSE);
-    IntroSetupOam(11, 140, 80, FALSE);
+
+    TitleIntroSetupOam(10, 145, 140, FALSE);
+    TitleIntroSetupOam(11, 140, 80, FALSE);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -447,14 +447,14 @@ void IntroSamusDriftingOutInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(IntroShipAlertAndDraftingVblank);
+    CallbackSetVBlank(TitleIntroShipAlertAndDraftingVblank);
 }
 
 /**
  * @brief 92a00 | 1f4 | Processes the title intro Samus drifting out cutscene
  * 
  */
-boolu32 IntroSamusDriftingOutProcess(void)
+boolu32 TitleIntroSamusDriftingOutProcess(void)
 {
     boolu32 finished;
     s16 x;
@@ -467,7 +467,7 @@ boolu32 IntroSamusDriftingOutProcess(void)
     switch (INTRO_DATA.subStage)
     {
 	    case 0:
-	        IntroSamusDriftingOutInit();
+	        TitleIntroSamusDriftingOutInit();
 	        INTRO_DATA.subStage = 1;
 	        INTRO_DATA.timer = 0;
 	
@@ -496,7 +496,7 @@ boolu32 IntroSamusDriftingOutProcess(void)
 	        {
 	            x = SpecialCutsceneGetRandomNumber();
 	            y = SpecialCutsceneGetRandomNumber();
-	            IntroSetupOam(16, x, y, TRUE);
+	            TitleIntroSetupOam(16, x, y, TRUE);
 	        }
 	
 	        SpecialCutsceneProcessOam();
@@ -505,13 +505,13 @@ boolu32 IntroSamusDriftingOutProcess(void)
 	
 	    case 2:
 	        if (INTRO_DATA.timer == CONVERT_SECONDS(2 + 1.f / 3))
-	            PlayMusic(0x49, 15);
+	            PlayMusic(MUSIC_PRE_TITLE_END, 15);
 	
 	        if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 10)
 	        {
 	            x = SpecialCutsceneGetRandomNumber();
 	            y = SpecialCutsceneGetRandomNumber();
-	            IntroSetupOam(16, x, y, TRUE);
+	            TitleIntroSetupOam(16, x, y, TRUE);
 	        }
 	
 	        SpecialCutsceneProcessOam();
@@ -523,7 +523,7 @@ boolu32 IntroSamusDriftingOutProcess(void)
 	        {
 	            x = SpecialCutsceneGetRandomNumber();
 	            y = SpecialCutsceneGetRandomNumber();
-	            IntroSetupOam(16, x, y, TRUE);
+	            TitleIntroSetupOam(16, x, y, TRUE);
 	        }
 	
 	        if (INTRO_DATA.timer == DELTA_TIME)
@@ -570,7 +570,7 @@ boolu32 IntroSamusDriftingOutProcess(void)
  * @brief 92bf4 | 118 | Main handler for the title intro Samus crashing cutscenes
  * 
  */
-boolu32 IntroSamusShipCrashing(void)
+boolu32 TitleIntroSamusShipCrashing(void)
 {
     boolu32 finished;
 
@@ -596,7 +596,7 @@ boolu32 IntroSamusShipCrashing(void)
             break;
             
         case 2:
-            if (IntroSamusInShipProcess())
+            if (TitleIntroSamusInShipProcess())
             {
                 INTRO_DATA.subStage = 0;
                 INTRO_DATA.unk_213 = 0;
@@ -605,7 +605,7 @@ boolu32 IntroSamusShipCrashing(void)
             break;
             
         case 3:
-            if (IntroShipAlertProcess())
+            if (TitleIntroShipAlertProcess())
             {
                 INTRO_DATA.subStage = 0;
                 INTRO_DATA.unk_213 = 0;
@@ -614,7 +614,7 @@ boolu32 IntroSamusShipCrashing(void)
             break;
             
         case 4:
-            if (IntroSamusDriftingOutProcess())
+            if (TitleIntroSamusDriftingOutProcess())
             {
                 INTRO_DATA.subStage = 0;
                 INTRO_DATA.unk_213 = 0;
@@ -746,7 +746,7 @@ void unk_92d0c(struct SpecialCutsceneOam* pOam)
  * @brief 92e54 | 26c | Processes Samus' ship drifting into asteroids
  * 
  */
-void IntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
+void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
 {
     const struct FrameData* frame;
 
