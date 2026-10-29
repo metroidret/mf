@@ -27233,7 +27233,7 @@
     "size": 1
   },
   {
-    "path": "new_file_intro/609020.pal",
+    "path": "new_file_intro/drifting_into_asteroids_bg.pal",
     "count": "0x80",
     "addr": {
       "us": "0x609020"
@@ -27257,8 +27257,8 @@
     "size": 4
   },
   {
-    "path": "Blob_6094d0_60b148.bin",
-    "count": "0x1C78",
+    "path": "Blob_6094d0_6098a8.bin",
+    "count": "0x3D8",
     "addr": {
       "us": "0x6094D0"
     },
@@ -27289,12 +27289,12 @@
     "size": 4
   },
   {
-    "path": "Blob_6101b8_612e48.bin",
-    "count": "0x2C90",
+    "path": "title_intro/bsl_obj.gfx.lz",
+    "count": "0xB24",
     "addr": {
       "us": "0x6101B8"
     },
-    "size": 1
+    "size": 4
   },
   {
     "path": "new_file_intro/bsl_space_bg.pal",
@@ -27305,7 +27305,7 @@
     "size": 2
   },
   {
-    "path": "new_file_intro/612f48.pal",
+    "path": "new_file_intro/drifting_into_asteroids_obj.pal",
     "count": "0x100",
     "addr": {
       "us": "0x612F48"
@@ -27593,10 +27593,66 @@
     "size": 4
   },
   {
-    "path": "Blob_64e470_662804.bin",
-    "count": "0x14394",
+    "path": "Blob_64e470_658be0.bin",
+    "count": "0xA770",
     "addr": {
       "us": "0x64E470"
+    },
+    "size": 1
+  },
+  {
+    "path": "title_intro/space_bg_unused.tm.lz",
+    "count": "0x181",
+    "addr": {
+      "us": "0x658BE0"
+    },
+    "size": 4
+  },
+  {
+    "path": "title_intro/samus_sitting_bg.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x6591E4"
+    },
+    "size": 2
+  },
+  {
+    "path": "title_intro/collision_warning_bg.tm.lz",
+    "count": "0x170",
+    "addr": {
+      "us": "0x6593E4"
+    },
+    "size": 4
+  },
+  {
+    "path": "title_intro/collision_warning_bg.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x6599A4"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_659ba4_65c268.bin",
+    "count": "0x26C4",
+    "addr": {
+      "us": "0x659BA4"
+    },
+    "size": 1
+  },
+  {
+    "path": "title_intro/collision_warning_obj.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x65C268"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_65c468_662804.bin",
+    "count": "0x639C",
+    "addr": {
+      "us": "0x65C468"
     },
     "size": 1
   },
@@ -28289,10 +28345,10 @@
     "size": 1
   },
   {
-    "path": "Blob_79c448_79c5a4.bin",
-    "count": "0x15C",
+    "path": "Blob_79c474_79c5a4.bin",
+    "count": "0x130",
     "addr": {
-      "us": "0x79C448"
+      "us": "0x79C474"
     },
     "size": 1
   },

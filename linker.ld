@@ -494,8 +494,9 @@ SECTIONS {
         src/projectile.o(.text);
         src/menus/title_screen.o(.text);
         src/new_file_intro.o(.text);
+        src/title_intro.o(.text);
 
-        asm/disasm_0x0808F5C4.o(.text);
+        asm/disasm_0x080930C0.o(.text);
 
         src/sa_x_close_up.o(.text);
 
@@ -1076,7 +1077,7 @@ SECTIONS {
         src/data/sram_pointers.o(.rodata);
         src/data/projectile_data.o(.rodata);
         src/data/menus/title_screen.o(.rodata);
-        src/data/new_file_intro_data.o(.rodata);
+        src/data/intro_data.o(.rodata);
         src/data/text_data.o(.rodata);
         src/data/sa_x_close_up.o(.rodata);
         src/data/ending_data.o(.rodata);

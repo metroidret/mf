@@ -1,7 +1,9 @@
-#ifndef NEW_FILE_INTRO_DATA_H
-#define NEW_FILE_INTRO_DATA_H
+#ifndef INTRO_DATA_H
+#define INTRO_DATA_H
 
 #include "types.h"
+
+#include "gba/memory.h"
 
 extern const struct FrameData sOam_597ec0[2];
 extern const struct FrameData sOam_597ed0[2];
@@ -334,18 +336,43 @@ extern const u32 sIntroSamusSittingTilemap[171];
 
 extern const u32 sTitleScreenSpaceBackgroundGfx[830];
 
-extern const u16 sPal_609020[8 * PAL_ROW];
+extern const u16 sIntroSamusDriftingIntoAsteroidsBgPal[8 * PAL_ROW];
 extern const u16 sTitleScreenSpaceBackgroundPal[8 * PAL_ROW];
 
 extern const u32 sTitleScreenSpaceBackgroundTilemap[172];
+
+extern const struct FrameData sOam_60ac08[2];
+extern const struct FrameData sOam_60ac18[2];
+extern const struct FrameData sOam_60ac28[2];
+extern const struct FrameData sOam_60ac38[2];
+extern const struct FrameData sOam_60ac48[2];
+extern const struct FrameData sOam_60ac58[2];
+extern const struct FrameData sOam_60ac68[2];
+extern const struct FrameData sOam_60ac78[2];
+extern const struct FrameData sOam_60ac88[2];
+extern const struct FrameData sOam_60ac98[7];
+extern const struct FrameData sOam_60acd0[5];
+extern const struct FrameData sOam_60acf8[2];
+extern const struct FrameData sOam_60ad08[2];
+extern const struct FrameData sOam_60ad18[2];
+extern const struct FrameData sOam_60ad28[2];
+extern const struct FrameData sOam_60ad38[2];
+extern const struct FrameData sOam_60ad48[12];
+extern const struct FrameData sOam_60ada8[5];
+extern const struct FrameData sOam_60add0[5];
+extern const struct FrameData sOam_60adf8[4];
+extern const struct FrameData sOam_60ae18[31];
+extern const struct FrameData sOam_60af10[26];
+extern const struct FrameData sOam_60afe0[45];
 
 extern const u8 sIntroSpaceTilemap[1320];
 extern const u8 sIntroBslTilemap[1586];
 
 extern const u32 sIntroBslSpaceBgGfx[4421];
+extern const u32 sTitleIntroBslObjGfx[2852];
 extern const u16 sIntroBslSpaceBgPal[8 * PAL_ROW];
 
-extern const u16 sPal_612f48[16 * PAL_ROW];
+extern const u16 sIntroSamusDriftingIntoAsteroidsObjPal[16 * PAL_ROW];
 
 extern const u32 sNextPageArrowGfx[8];
 
@@ -392,8 +419,15 @@ extern const u32 sIntroSamusHelmetCloseupBgGfx3[812];
 extern const u32 sIntroSamusHelmetCloseupBgGfx4[844];
 extern const u32 sIntroSamusHelmetCloseupBgGfx5[403];
 
+extern const u32 sTitleIntroSpaceBgTilemap_Unused[385];
+extern const u16 sTitleIntroSamusSittingBgPal[16 * PAL_ROW];
+extern const u32 sTitleIntroCollisionWarningBgTilemap[368];
+extern const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW];
+
+extern const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW];
+
 extern const u32 sIntroTilemap_662804[318];
 
 extern const u16 sIntroPal_663820[4 * PAL_ROW];
 
-#endif /* NEW_FILE_INTRO_DATA_H */
+#endif /* INTRO_DATA_H */

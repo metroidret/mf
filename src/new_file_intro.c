@@ -9,7 +9,7 @@
 
 #include "structs/cutscene.h"
 
-#include "data/new_file_intro_data.h"
+#include "data/intro_data.h"
 #include "data/generic_data.h"
 #include "data/menus/title_screen.h"
 #include "data/sprite_data.h"
@@ -126,7 +126,7 @@ static const u32* sIntroBslObjectGfxPointers[8] = {
     sIntroBslObjectGfx7
 };
 
-static const u32* sIntroSamusSittingBgGfxPointers[5] = {
+const u32* sIntroSamusSittingBgGfxPointers[5] = {
     sIntroSamusSittingBgGfx0,
     sIntroSamusSittingBgGfx1,
     sIntroSamusSittingBgGfx2,
@@ -143,7 +143,24 @@ static const u32* sIntroSamusHelmetCloseupBgGfxPointers[6] = {
     sIntroSamusHelmetCloseupBgGfx5
 };
 
-static u8 sBlob_79c448_79c5a4[] = INCBIN_U8("data/Blob_79c448_79c5a4.bin");
+const u32* sTitleIntroCollisionWarningBgGfxPointers[5] = {
+    (const u32*)0x0864e470,
+    (const u32*)0x0864eba8,
+    (const u32*)0x0864f48c,
+    (const u32*)0x0864fff0,
+    (const u32*)0x08650874
+};
+
+const u32* sTitleIntroCollisionWarningObjGfxPointers[6] = {
+    (const u32*)0x086510fc,
+    (const u32*)0x086517c0,
+    (const u32*)0x08651eec,
+    (const u32*)0x08652208,
+    (const u32*)0x08652594,
+    (const u32*)0x08652994
+};
+
+static u8 sBlob_79c474_79c5a4[] = INCBIN_U8("data/Blob_79c474_79c5a4.bin");
 
 static u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,
@@ -314,10 +331,10 @@ static u16* sMonologueTextPointersSpanish[19] = {
 static u8 sBlob_79e868_79eca0[] = INCBIN_U8("data/Blob_79e868_79eca0.bin");
 
 /**
- * @brief 87610 | f8 | Handler for intro
+ * @brief 87610 | f8 | Handler for the title intro
  * 
  */
-boolu32 IntroHandler(void) 
+boolu32 TitleIntroHandler(void) 
 {
     boolu32 result;
 
@@ -355,7 +372,7 @@ boolu32 IntroHandler(void)
             break;
         
         case 2:
-            if (IntroSamusShipCrashing())
+            if (TitleIntroSamusShipCrashing())
                 gSubGameMode1 = 3;
             break;
         
@@ -518,7 +535,7 @@ boolu32 unk_87920(void)
             break;
 
         case 1:
-            done = IntroHandler();
+            done = TitleIntroHandler();
             break;
 
         case 2:
@@ -574,7 +591,7 @@ void NewFileIntroSamusShipFlyingInit(void)
     
     DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroBslObjectGfxPointers); i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
     DMA3_COPY_32(sIntroSamusShipPal, PALRAM_OBJ, 5 * PAL_ROW_SIZE / 4);
@@ -949,10 +966,10 @@ void NewFileIntroSamusDriftingInit(void)
     u16 i;
 
     CallbackSetVBlank(unk_99940);
-    
+
     DMA3_FILL_32(0, &gNonGameplayRam, sizeof(gNonGameplayRam));
     
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroBslObjectGfxPointers); i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
     DMA3_COPY_32(sIntroSamusShipPal, PALRAM_OBJ, 5 * PAL_ROW_SIZE / 4);
@@ -1057,7 +1074,7 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroSamusHelmetCloseupBgGfxPointers); i++)
         LZ77UncompVram(sIntroSamusHelmetCloseupBgGfxPointers[i], VRAM_BASE + i * 0x1000);
     
     LZ77UncompVram(sIntroSamusHelmetCloseupTilemap, VRAM_BASE + 0xF000);
@@ -1128,10 +1145,10 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     
     DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
     
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_SIZE(sIntroBslObjectGfxPointers); i++)
         LZ77UncompVram(sIntroBslObjectGfxPointers[i], VRAM_OBJ + i * 0x1000);
     
-    DMA3_COPY_32(sPal_612f48, PALRAM_OBJ, 16 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sIntroSamusDriftingIntoAsteroidsObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sPal_598150, PALRAM_OBJ + 0x100, 2 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sNextPageArrowGfx, VRAM_OBJ + 0x7FE0, 8);
     DMA3_COPY_32(sNextPageArrowPal, PALRAM_OBJ + 0x1E0, PAL_ROW_SIZE / 4);
@@ -1140,7 +1157,7 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     LZ77UncompVram(sTitleScreenSpaceBackgroundTilemap, VRAM_BASE + 0xF800);
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
     
-    DMA3_COPY_32(sPal_609020, PALRAM_BASE, 16 * PAL_ROW_SIZE / 4);
+    DMA3_COPY_32(sIntroSamusDriftingIntoAsteroidsBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / 4);
     DMA3_COPY_32(sPal_598a8c, PALRAM_BASE + 0x1E0, PAL_ROW_SIZE / 4);
     
     SET_BACKDROP_COLOR(COLOR_BLACK);
@@ -5083,7 +5100,7 @@ boolu32 NewFileIntroSamusGettingCuredNervousSystemProcess(void)
             {
                 INTRO_DATA.timer = 0;
                 INTRO_DATA.subStage = 0;
-                finished = 1;
+                finished = TRUE;
             }
 
             SpecialCutsceneProcessOam();
@@ -7203,7 +7220,7 @@ boolu32 NewFileIntroArrivingAtBslProcess(void)
         case 5:
             if (INTRO_DATA.timer == DELTA_TIME)
             {
-                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[580].trackGroupNumber].pTrack, 0);
+                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_244].trackGroupNumber].pTrack, 0);
             }
             else if (INTRO_DATA.timer > CONVERT_SECONDS(.5f))
             {
