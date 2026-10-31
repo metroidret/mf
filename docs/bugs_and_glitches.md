@@ -425,6 +425,7 @@ To trigger the first BOX fight, the game calls `EventCheckRoomEventTrigger` to c
 - SA-X boss can become invulnerable if frozen the same frame it's killed ([video](https://clips.twitch.tv/WealthyOpenFriseeAllenHuhu-jjY1Gm9_VoWQO928))
 - SA-X monster can become invulnerable if killed while turning ([video](https://www.youtube.com/watch?v=2jdfxKUpugE))
 - SA-X monster can jump out of bounds
+- SA-X during the ARC encounter does not check Samus' projectiles while it is stopped at the pillar, making it possible to shoot it or detonate a power bomb without alerting it ([video](https://www.youtube.com/watch?v=vMbOI5SFJUA&t=2139s))
 - BOX 2's missiles can be kept alive until the core-X spawns, which changes their palette ([video](https://www.youtube.com/watch?v=_n4L5rAxI7s))
 - BOX 2's music sometimes continues after the fight is over ([video](https://clips.twitch.tv/RefinedMushyPidgeonTinyFace-sKOop5aGrK66NnNo))
 - Sidehoppers and Dessgeegas don't initialize the delay for their first jump
