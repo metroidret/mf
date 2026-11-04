@@ -922,3 +922,83 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
     }
 }
 
+/**
+ * @brief 930c0 | 64 | Processes the BSL ship spawning in the title intro
+ * 
+ * @param pOam Special cutscene OAM pointer
+ */
+void IntroProcessBslShipSpawning(struct SpecialCutsceneOam* pOam)
+{
+    u8 stage = pOam->stage;
+
+    if (stage == 0)
+    {
+        TitleIntroSetupOam(0xC, pOam->xPosition + 0x7A, pOam->yPosition, FALSE);
+        TitleIntroSetupOam(0xD, pOam->xPosition + 0x32, pOam->yPosition + 1, FALSE);
+        TitleIntroSetupOam(0xE, pOam->xPosition + 0x24, pOam->yPosition, FALSE);
+        TitleIntroSetupOam(0xF, pOam->xPosition, pOam->yPosition, FALSE);
+        pOam->type = stage;
+    }
+}
+
+/**
+ * @brief 93124 | d0 | Processes the BSL ship back in the title intro
+ * 
+ * @param pOam Special cutscene OAM pointer
+ */
+void IntroProcessBslShipBack(struct SpecialCutsceneOam* pOam)
+{
+    s32 x;
+    s32 y;
+
+    if (pOam->stage == 0)
+    {
+        pOam->timer++;
+        if (pOam->timer == 20)
+        {
+            pOam->spawnX++;
+            pOam->timer = 0;
+            if (pOam->unk_A == 4)
+                pOam->unk_A = 0;
+            if (pOam->unk_A <= 1)
+                pOam->yPosition++;
+            else if (pOam->unk_A <= 3)
+                pOam->yPosition--;
+            if (pOam->spawnX == 30)
+            {
+                pOam->stage = 1;
+                pOam->timer = 0;
+            }
+            pOam->unk_A++;
+        }
+    }
+    else if (pOam->stage == 1)
+    {
+        pOam->spawnX = pOam->xPosition;
+        pOam->spawnY = pOam->yPosition;
+        pOam->unk_A = 0;
+        pOam->stage = 2;
+    }
+    else if (pOam->stage == 2)
+    {
+        pOam->timer++;
+        if (pOam->timer == 2)
+        {
+            pOam->unk_A++;
+            pOam->timer = 0;
+        }
+        x = (0x384 - pOam->spawnX) * pOam->unk_A >> 12;
+        pOam->xPosition = pOam->spawnX + x;
+        y = (pOam->unk_4 - pOam->spawnY) * pOam->unk_A >> 11;
+        pOam->yPosition = pOam->spawnY + y;
+        if (pOam->xPosition > 0x140)
+        {
+            pOam->unk_A = 0;
+            pOam->spawnX = pOam->xPosition;
+            pOam->spawnY = pOam->yPosition;
+            pOam->stage = 3;
+        }
+    }
+}
+
+
