@@ -27329,10 +27329,146 @@
     "size": 2
   },
   {
-    "path": "Blob_6131c8_63a19c.bin",
-    "count": "0x26FD4",
+    "path": "Blob_6131c8_6238f4.bin",
+    "count": "0x1072C",
     "addr": {
       "us": "0x6131C8"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending_cutscene/bsl_crashing_obj.gfx.lz",
+    "count": "0xB91",
+    "addr": {
+      "us": "0x6238F4"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/ship_front_view_bg.gfx.lz",
+    "count": "0x13AF",
+    "addr": {
+      "us": "0x626738"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/bsl_crashing_bg.gfx.lz",
+    "count": "0x124B",
+    "addr": {
+      "us": "0x62B5F4"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_62ff20_633f54.bin",
+    "count": "0x4034",
+    "addr": {
+      "us": "0x62FF20"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending_cutscene/636438.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x636438"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending_cutscene/636638.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x636638"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending_cutscene/636838.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x636838"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending_cutscene/636a38.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x636A38"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending_cutscene/bsl_crashing_obj.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x636C38"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending_cutscene/ship_front_view_bg.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x636E38"
+    },
+    "size": 2
+  },
+  {
+    "path": "ending_cutscene/bsl_crashing_bg.pal",
+    "count": "0x100",
+    "addr": {
+      "us": "0x637038"
+    },
+    "size": 2
+  },
+  {
+    "path": "Blob_637238_638c14.bin",
+    "count": "0x19DC",
+    "addr": {
+      "us": "0x637238"
+    },
+    "size": 1
+  },
+  {
+    "path": "ending_cutscene/bsl_exploding.tm.lz",
+    "count": "0x1A2",
+    "addr": {
+      "us": "0x638C14"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/ship_front.tm.lz",
+    "count": "0xC7",
+    "addr": {
+      "us": "0x63929C"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/space_explosion.tm.lz",
+    "count": "0x183",
+    "addr": {
+      "us": "0x6395B8"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/sr388.tm.lz",
+    "count": "0x170",
+    "addr": {
+      "us": "0x639BC4"
+    },
+    "size": 4
+  },
+  {
+    "path": "Blob_63a184_63a19c.bin",
+    "count": "0x18",
+    "addr": {
+      "us": "0x63A184"
     },
     "size": 1
   },
