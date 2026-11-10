@@ -26406,7 +26406,7 @@ static const u16 sOamFrame_63600c[OAM_DATA_SIZE(3)] = {
 	0x5f4, 0xc3cc, 0x2010,
 };
 
-const struct FrameData sOam_636020[3] = {
+const struct FrameData sEndingBslFallingOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_635a20,
 		.timer = 100
@@ -26418,7 +26418,7 @@ const struct FrameData sOam_636020[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_636038[3] = {
+const struct FrameData sEndingBslReentryPlasmaOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_633f54,
 		.timer = 100
@@ -26430,7 +26430,7 @@ const struct FrameData sOam_636038[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_636050[71] = {
+const struct FrameData sEndingBslReentryDebrisOam[71] = {
 	[0] = {
 		.pFrame = sOamFrame_633f54,
 		.timer = 131
@@ -26714,7 +26714,7 @@ const struct FrameData sOam_636050[71] = {
 	[70] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_636288[3] = {
+const struct FrameData sEndingLeavingSmallShipOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_635a3e,
 		.timer = 2
@@ -26726,7 +26726,7 @@ const struct FrameData sOam_636288[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6362a0[3] = {
+const struct FrameData sEndingLeavingBigShipOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_635a5a,
 		.timer = 2
@@ -26738,7 +26738,7 @@ const struct FrameData sOam_6362a0[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6362b8[12] = {
+const struct FrameData sEndingBslExplosionOam_Small[12] = {
 	[0] = {
 		.pFrame = sOamFrame_635bfc,
 		.timer = 4
@@ -26854,7 +26854,7 @@ const struct FrameData sOam_636378[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6363a0[3] = {
+const struct FrameData sEndingBslExplosionAfterglowOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_635f0a,
 		.timer = 3
@@ -26866,7 +26866,7 @@ const struct FrameData sOam_6363a0[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6363b8[4] = {
+const struct FrameData sEndingFrontFacingShipThrustersOam[4] = {
 	[0] = {
 		.pFrame = sOamFrame_635fc2,
 		.timer = 1

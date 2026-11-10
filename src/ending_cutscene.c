@@ -1,14 +1,16 @@
 #include "ending_cutscene.h"
 #include "globals.h"
 
+#include "constants/audio.h"
+#include "constants/ending_cutscene.h"
+
 #include "data/intro_data.h"
 #include "data/generic_data.h"
 
 void unk_99940(void); // For V-blank callback
 
 /**
- * @brief 94e84 | f0 | To document
- * 
+ * @brief 94e84 | f0 | Main handler for the ending cutscenes
  */
 boolu32 EndingHandler(void)
 {
@@ -77,7 +79,7 @@ boolu32 EndingHandler(void)
 }
 
 /**
- * @brief 94f74 | 204 | To document
+ * @brief 94f74 | 204 | Setup for the ending BSL crashing cutscene
  * 
  */
 void EndingBslCrashingInit(void)
@@ -127,11 +129,11 @@ void EndingBslCrashingInit(void)
     gWrittenToBldalpha_Eva = 8;
     gWrittenToBldalpha_Evb = 14;
 
-    EndingBslCrashingSetupOam(5, -40, 200, FALSE);
-    EndingBslCrashingSetupOam(4, 128, 72, TRUE);
-    EndingBslCrashingSetupOam(2, 164, 40, TRUE);
-    EndingBslCrashingSetupOam(1, 164, 40, TRUE);
-    EndingBslCrashingSetupOam(3, 134, 60, TRUE);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_SHIP_BIG, -40, 200, FALSE);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_SHIP_SMALL, 128, 72, TRUE);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_REENTRY_PLASMA, 164, 40, TRUE);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_FALLING_BSL, 164, 40, TRUE);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_REENTRY_DEBRIS, 134, 60, TRUE);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -146,7 +148,7 @@ void EndingBslCrashingInit(void)
 }
 
 /**
- * @brief 95178 | 200 | To document
+ * @brief 95178 | 200 | Setup for the ending ship front view
  * 
  */
 void EndingShipFrontViewInit(void)
@@ -195,14 +197,14 @@ void EndingShipFrontViewInit(void)
     gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
 
-    EndingBslCrashingSetupOam(12, 0, gBg2YPosition, FALSE);
-    EndingBslCrashingSetupOam(10, SCREEN_X_MIDDLE, 106, 1);
-    EndingBslCrashingSetupOam(11, SCREEN_X_MIDDLE, 64, 0);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_FRONT_FACING_SHIP, 0, gBg2YPosition, FALSE);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_EXPLOSION_AFTERGLOW, SCREEN_X_MIDDLE, 106, 1);
+    EndingBslCrashingSetupOam(ENDING_BSL_CRASHING_OAM_TYPE_FRONT_FACING_SHIP_THRUSTERS, SCREEN_X_MIDDLE, 64, 0);
 
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
 
-    gNonGameplayRam.intro.pText = sCutsceneTextNone;
+    INTRO_DATA.pText = sCutsceneTextNone;
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
 
@@ -212,7 +214,7 @@ void EndingShipFrontViewInit(void)
 }
 
 /**
- * @brief 95378 | 2c4 | To document
+ * @brief 95378 | 2c4 | Processes the ending BSL crashing cutscene
  * 
  */
 boolu32 EndingBslCrashingProcess(void)
@@ -229,7 +231,7 @@ boolu32 EndingBslCrashingProcess(void)
             if (gWrittenToBldy)
             {
                 if (gWrittenToBldy == BLDY_MAX_VALUE)
-                    SoundPlay_3b1c(0x24B);
+                    SoundPlay_3b1c(SOUND_24B);
     
                 gWrittenToBldy--;
             }
@@ -352,7 +354,7 @@ boolu32 EndingBslCrashingProcess(void)
                 {
                     gWrittenToBldalpha_Eva--;
                     if (!gWrittenToBldalpha_Eva)
-                        SpecialCutsceneDestroyOamOfType(10);
+                        SpecialCutsceneDestroyOamOfType(ENDING_BSL_CRASHING_OAM_TYPE_EXPLOSION_AFTERGLOW);
                 }
                 else
                 {
@@ -390,7 +392,7 @@ boolu32 EndingBslCrashingProcess(void)
 }
 
 /**
- * @brief 9563c | 88 | To document
+ * @brief 9563c | 88 | Handler for the ending BSL crashing cutscene
  * 
  */
 boolu32 EndingBslCrashing(void)
@@ -441,7 +443,7 @@ boolu32 EndingBslCrashing(void)
 }
 
 /**
- * @brief 956c4 | d8 | To document
+ * @brief 956c4 | d8 | Processes the falling BSL in the ending cutscene
  * 
  */
 void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
@@ -472,7 +474,7 @@ void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
             pOam->stage = 2;
         }
 
-        if (pOam->type == 1)
+        if (pOam->type == ENDING_BSL_CRASHING_OAM_TYPE_FALLING_BSL)
             pOam->scaling--;
         else 
             pOam->scaling -= 2;
@@ -481,9 +483,9 @@ void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
     {
         pOam->stage = 3;
 
-        if (pOam->type == 1)
+        if (pOam->type == ENDING_BSL_CRASHING_OAM_TYPE_FALLING_BSL)
         {
-            pOam->pOam = sOam_6362b8;
+            pOam->pOam = sEndingBslExplosionOam_Small; // Barely visible ingame because the scaling doesn't get reset
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
             INTRO_DATA.subStage = 2;
@@ -506,10 +508,10 @@ void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief 9579c | 30 | To document
+ * @brief 9579c | 30 | Processes the BSL debris in the ending cutscene
  * 
  */
-void unk_9579c(struct SpecialCutsceneOam* pOam)
+void EndingProcessReentryDebris(struct SpecialCutsceneOam* pOam)
 {
     const struct FrameData* frame;
 
@@ -525,7 +527,7 @@ void unk_9579c(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 957cc | 64 | Processes Samus's ship leaving the BSL in the ending cutscene (far away)
  * 
  */
 void EndingProcessLeavingSmallShip(struct SpecialCutsceneOam* pOam)
@@ -558,7 +560,7 @@ void EndingProcessLeavingSmallShip(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 95830 | 64 | Processes Samus's ship leaving the BSL in the ending cutscene (close up)
  * 
  */
 void EndingProcessLeavingBigShip(struct SpecialCutsceneOam* pOam)
@@ -591,7 +593,7 @@ void EndingProcessLeavingBigShip(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 95894 | 34 | Processes the thrusters of the front facing ship in the ending cutscene
  * 
  */
 void EndingProcessFrontFacingShipThrusters(struct SpecialCutsceneOam* pOam)
@@ -605,12 +607,12 @@ void EndingProcessFrontFacingShipThrusters(struct SpecialCutsceneOam* pOam)
         pOam->stage = 1;
     }
     
-    EndingGetPositionAndSlotOfOamByType(12, &x, &y);
+    EndingGetPositionAndSlotOfOamByType(ENDING_BSL_CRASHING_OAM_TYPE_FRONT_FACING_SHIP, &x, &y);
     pOam->yPosition = pOam->spawnY - y;
 }
 
 /**
- * @brief  |  | To document
+ * @brief 958c8 | 90 | Processes the front facing ship in the ending cutscene
  * 
  */
 void EndingProcessFrontFacingShip(struct SpecialCutsceneOam* pOam)
@@ -649,10 +651,10 @@ void EndingProcessFrontFacingShip(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 95958 | 2fc | Spawns an OAM for the ending BSL crashing cutscene
  * 
  */
-u8 EndingBslCrashingSetupOam(u8 type, s16 xPosition, s16 yPosition, u8 descendingSearch)
+u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 yPosition, u8 descendingSearch)
 {
     s8 slot;
 
@@ -686,59 +688,59 @@ u8 EndingBslCrashingSetupOam(u8 type, s16 xPosition, s16 yPosition, u8 descendin
     INTRO_DATA.oam[slot].type = type;
     INTRO_DATA.oam[slot].unk_18_0 = 1;
 
-    if (type == 1)
+    if (type == ENDING_BSL_CRASHING_OAM_TYPE_FALLING_BSL)
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(1);
         INTRO_DATA.oam[slot].priority = 2;
         INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_AFFINE;
-        INTRO_DATA.oam[slot].pOam = sOam_636020;
+        INTRO_DATA.oam[slot].pOam = sEndingBslFallingOam;
         INTRO_DATA.oam[slot].pFunction = EndingProcessFallingBsl;
     }
-    else if (type == 2)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_REENTRY_PLASMA)
     {
         INTRO_DATA.oam[slot].scaling = Q_8_8(2);
         INTRO_DATA.oam[slot].unk_18_3 = 1;
         INTRO_DATA.oam[slot].priority = 2;
         INTRO_DATA.oam[slot].affineMode = OAM_AFFINE_MODE_AFFINE;
-        INTRO_DATA.oam[slot].pOam = sOam_636038;
+        INTRO_DATA.oam[slot].pOam = sEndingBslReentryPlasmaOam;
         INTRO_DATA.oam[slot].pFunction = EndingProcessFallingBsl;
     }
-    else if (type == 3)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_REENTRY_DEBRIS)
     {
         INTRO_DATA.oam[slot].priority = 2;
-        INTRO_DATA.oam[slot].pOam = sOam_636050;
-        INTRO_DATA.oam[slot].pFunction = unk_9579c;
+        INTRO_DATA.oam[slot].pOam = sEndingBslReentryDebrisOam;
+        INTRO_DATA.oam[slot].pFunction = EndingProcessReentryDebris;
     }
-    else if (type == 4)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_SHIP_SMALL)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
         INTRO_DATA.oam[slot].priority = 2;
-        INTRO_DATA.oam[slot].pOam = sOam_636288;
+        INTRO_DATA.oam[slot].pOam = sEndingLeavingSmallShipOam;
         INTRO_DATA.oam[slot].pFunction = EndingProcessLeavingSmallShip;
     }
-    else if (type == 5)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_SHIP_BIG)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
-        INTRO_DATA.oam[slot].pOam = sOam_6362a0;
+        INTRO_DATA.oam[slot].pOam = sEndingLeavingBigShipOam;
         INTRO_DATA.oam[slot].pFunction = EndingProcessLeavingBigShip;
     }
-    else if (type == 10)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_EXPLOSION_AFTERGLOW)
     {
         INTRO_DATA.oam[slot].unk_18_3 = 1;
         INTRO_DATA.oam[slot].priority = 3;
-        INTRO_DATA.oam[slot].pOam = sOam_6363a0;
-        INTRO_DATA.oam[slot].pFunction = unk_95e20;
+        INTRO_DATA.oam[slot].pOam = sEndingBslExplosionAfterglowOam;
+        INTRO_DATA.oam[slot].pFunction = EndingProcessOam_Empty;
     }
-    else if (type == 11)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_FRONT_FACING_SHIP_THRUSTERS)
     {
         INTRO_DATA.oam[slot].priority = 3;
-        INTRO_DATA.oam[slot].pOam = sOam_6363b8;
+        INTRO_DATA.oam[slot].pOam = sEndingFrontFacingShipThrustersOam;
         INTRO_DATA.oam[slot].pFunction = EndingProcessFrontFacingShipThrusters;
     }
-    else if (type == 12)
+    else if (type == ENDING_BSL_CRASHING_OAM_TYPE_FRONT_FACING_SHIP)
     {
         INTRO_DATA.oam[slot].unk_18_0 = 0;
-        INTRO_DATA.oam[slot].pOam = sOam_6363a0;
+        INTRO_DATA.oam[slot].pOam = sEndingBslExplosionAfterglowOam;
         INTRO_DATA.oam[slot].pFunction = EndingProcessFrontFacingShip;
     }
     
@@ -746,7 +748,7 @@ u8 EndingBslCrashingSetupOam(u8 type, s16 xPosition, s16 yPosition, u8 descendin
 }
 
 /**
- * @brief  |  | To document
+ * @brief 95c54 | d8 | V-blank for the ending BSL crashing cutscene
  * 
  */
 void EndingBslCrashingVblank(void)
@@ -771,7 +773,7 @@ void EndingBslCrashingVblank(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 95d2c | 94 | V-blank for the ending ship front view cutscene
  * 
  */
 void EndingShipFrontViewVblank(void)
@@ -790,10 +792,10 @@ void EndingShipFrontViewVblank(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 95dc0 | 60 | Returns slot, X and Y position of an ending OAM
  * 
  */
-u8 EndingGetPositionAndSlotOfOamByType(u8 type, s16* pXPosition, s16* pYPosition)
+u8 EndingGetPositionAndSlotOfOamByType(EndingBslCrashingOamType type, s16* pXPosition, s16* pYPosition)
 {
     u8 slot;
 
@@ -819,32 +821,12 @@ u8 EndingGetPositionAndSlotOfOamByType(u8 type, s16* pXPosition, s16* pYPosition
  * @brief 95e20 | 4 | Empty OAM handler
  * 
  */
-void unk_95e20(struct SpecialCutsceneOam* pOam)
+void EndingProcessOam_Empty(struct SpecialCutsceneOam* pOam)
 {
     return;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * @brief  |  | To document
- * 
- */
 
 /**
  * @brief  |  | To document
