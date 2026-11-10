@@ -4,7 +4,7 @@
 
 #include "data/audio.h"
 #include "data/generic_data.h"
-#include "data/intro_data.h"
+#include "data/cutscene_data.h"
 #include "data/sprite_data.h"
 
 // V-blank callbacks
@@ -74,7 +74,7 @@ void unk_9209c(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
 
-    INTRO_DATA.pText = sCutsceneTextNone;
+    CUTSCENE_DATA.pText = sCutsceneTextNone;
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
 
@@ -93,16 +93,16 @@ boolu32 TitleIntroSamusInShipProcess(void)
 
     finished = FALSE;
 
-    APPLY_DELTA_TIME_INC(INTRO_DATA.timer);
+    APPLY_DELTA_TIME_INC(CUTSCENE_DATA.timer);
 
-    switch (INTRO_DATA.subStage)
+    switch (CUTSCENE_DATA.subStage)
     {
         case 0:
-            if (INTRO_DATA.timer <= 5 * DELTA_TIME)
+            if (CUTSCENE_DATA.timer <= 5 * DELTA_TIME)
             {
-                LZ77UncompVram(sIntroSamusSittingBgGfxPointers[INTRO_DATA.timer - 1], VRAM_BASE + 0x8000 + (INTRO_DATA.timer - 1) * 0x1000);
+                LZ77UncompVram(sIntroSamusSittingBgGfxPointers[CUTSCENE_DATA.timer - 1], VRAM_BASE + 0x8000 + (CUTSCENE_DATA.timer - 1) * 0x1000);
             }
-            else if (INTRO_DATA.timer == 6 * DELTA_TIME)
+            else if (CUTSCENE_DATA.timer == 6 * DELTA_TIME)
             {
                 LZ77UncompVram(sTitleIntroSpaceBgTilemap_Unused, VRAM_BASE + 0xE800);
                 DMA3_COPY_32(sTitleIntroSamusSittingBgPal, PALRAM_BASE, 8 * PAL_ROW_SIZE / sizeof(u32));
@@ -112,13 +112,13 @@ boolu32 TitleIntroSamusInShipProcess(void)
                 WRITE_16(REG_BG1VOFS, 0);
                 WRITE_16(REG_BG1CNT, CREATE_BGCNT(2, 29, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
             }
-            else if (INTRO_DATA.timer == 7 * DELTA_TIME)
+            else if (CUTSCENE_DATA.timer == 7 * DELTA_TIME)
             {
                 WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG3_SECOND_TARGET_PIXEL 
                          | BLDCNT_OBJ_SECOND_TARGET_PIXEL | BLDCNT_BACKDROP_SECOND_TARGET_PIXEL);
                 WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG1);
-                INTRO_DATA.timer = 0;
-                INTRO_DATA.subStage = 1;
+                CUTSCENE_DATA.timer = 0;
+                CUTSCENE_DATA.subStage = 1;
             }
 
             SpecialCutsceneProcessOam();
@@ -126,9 +126,9 @@ boolu32 TitleIntroSamusInShipProcess(void)
             break;
 
         case 1:
-            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 60))
+            if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 60))
             {
-                INTRO_DATA.timer = 0;
+                CUTSCENE_DATA.timer = 0;
 
                 if (gWrittenToBldalpha_Evb)
                 {
@@ -142,8 +142,8 @@ boolu32 TitleIntroSamusInShipProcess(void)
                 }
                 else
                 {
-                    DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
-                    INTRO_DATA.subStage = 2;
+                    DMA3_FILL_32(0, &CUTSCENE_DATA.oam, sizeof(CUTSCENE_DATA.oam));
+                    CUTSCENE_DATA.subStage = 2;
                 }
             }
 
@@ -152,9 +152,9 @@ boolu32 TitleIntroSamusInShipProcess(void)
             break;
 
         case 2:
-            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 60))
+            if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 60))
             {
-                INTRO_DATA.timer = 0;
+                CUTSCENE_DATA.timer = 0;
 
                 if (gWrittenToBldalpha_Eva < BLDALPHA_MAX_VALUE)
                 {
@@ -165,7 +165,7 @@ boolu32 TitleIntroSamusInShipProcess(void)
                 }
                 else
                 {
-                    INTRO_DATA.subStage = 3;
+                    CUTSCENE_DATA.subStage = 3;
                 }
             }
 
@@ -174,10 +174,10 @@ boolu32 TitleIntroSamusInShipProcess(void)
             break;
 
         case 3:
-            if (INTRO_DATA.timer == TWO_THIRD_SECOND)
+            if (CUTSCENE_DATA.timer == TWO_THIRD_SECOND)
 			{
-                INTRO_DATA.timer = 0;
-                INTRO_DATA.subStage = 4;
+                CUTSCENE_DATA.timer = 0;
+                CUTSCENE_DATA.subStage = 4;
                 gWrittenToBldy = 0;
             }
     
@@ -186,19 +186,19 @@ boolu32 TitleIntroSamusInShipProcess(void)
             break;
             
         case 4:
-            INTRO_DATA.timer = 0;
-            INTRO_DATA.subStage = 5;
+            CUTSCENE_DATA.timer = 0;
+            CUTSCENE_DATA.subStage = 5;
             
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
             break;
             
         case 5:
-            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 60))
+            if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 60))
             {
-                INTRO_DATA.timer = 0;
+                CUTSCENE_DATA.timer = 0;
                 WRITE_16(REG_BLDCNT, BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_SCREEN_FIRST_TARGET);
-                INTRO_DATA.subStage = 6;
+                CUTSCENE_DATA.subStage = 6;
             }
     
             SpecialCutsceneProcessOam();
@@ -212,8 +212,8 @@ boolu32 TitleIntroSamusInShipProcess(void)
             }
             else
             {
-                INTRO_DATA.timer = 0;
-                INTRO_DATA.subStage = 0;
+                CUTSCENE_DATA.timer = 0;
+                CUTSCENE_DATA.subStage = 0;
                 finished = TRUE;
             }
     
@@ -242,7 +242,7 @@ void TitleIntroShipAlertInit(void)
     
     CallbackSetVBlank(unk_99940);
     
-    DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
+    DMA3_FILL_32(0, &CUTSCENE_DATA.oam, sizeof(CUTSCENE_DATA.oam));
     
     for (i = 0; i < ARRAY_SIZE(sTitleIntroCollisionWarningObjGfxPointers); i++)
         LZ77UncompVram(sTitleIntroCollisionWarningObjGfxPointers[i], VRAM_OBJ + i * 0x1000);
@@ -297,7 +297,7 @@ void TitleIntroShipAlertInit(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
     
-    INTRO_DATA.pText = sCutsceneTextNone;
+    CUTSCENE_DATA.pText = sCutsceneTextNone;
 
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
     
@@ -316,14 +316,14 @@ boolu32 TitleIntroShipAlertProcess(void)
 
     finished = FALSE;
 
-    APPLY_DELTA_TIME_INC(INTRO_DATA.timer);
+    APPLY_DELTA_TIME_INC(CUTSCENE_DATA.timer);
     
-    switch (INTRO_DATA.subStage)
+    switch (CUTSCENE_DATA.subStage)
     {
         case 0:
             TitleIntroShipAlertInit();
-            INTRO_DATA.subStage = 1;
-            INTRO_DATA.timer = 0;
+            CUTSCENE_DATA.subStage = 1;
+            CUTSCENE_DATA.timer = 0;
         
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
@@ -336,8 +336,8 @@ boolu32 TitleIntroShipAlertProcess(void)
             }
             else
             {
-                INTRO_DATA.subStage = 2;
-                INTRO_DATA.timer = 0;
+                CUTSCENE_DATA.subStage = 2;
+                CUTSCENE_DATA.timer = 0;
             }
         
             SpecialCutsceneProcessOam();
@@ -345,15 +345,15 @@ boolu32 TitleIntroShipAlertProcess(void)
             break;
         
         case 2:
-            if (INTRO_DATA.timer == CONVERT_SECONDS(6 + 2.f / 3) - DELTA_TIME)
+            if (CUTSCENE_DATA.timer == CONVERT_SECONDS(6 + 2.f / 3) - DELTA_TIME)
             {
                 gWrittenToBldy = 0;
             }
-            else if (INTRO_DATA.timer == CONVERT_SECONDS(6 + 2.f / 3))
+            else if (CUTSCENE_DATA.timer == CONVERT_SECONDS(6 + 2.f / 3))
             {
-                INTRO_DATA.timer = 0;
+                CUTSCENE_DATA.timer = 0;
                 WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
-                INTRO_DATA.subStage = 3;
+                CUTSCENE_DATA.subStage = 3;
             }
     
             SpecialCutsceneProcessOam();
@@ -370,8 +370,8 @@ boolu32 TitleIntroShipAlertProcess(void)
             }
             else
             {
-                INTRO_DATA.subStage = 0;
-                INTRO_DATA.timer = 0;
+                CUTSCENE_DATA.subStage = 0;
+                CUTSCENE_DATA.timer = 0;
                 finished = TRUE;
             }
         
@@ -398,7 +398,7 @@ void TitleIntroSamusDriftingOutInit(void)
     
     CallbackSetVBlank(unk_99940);
     
-    DMA3_FILL_32(0, &INTRO_DATA.oam, sizeof(INTRO_DATA.oam));
+    DMA3_FILL_32(0, &CUTSCENE_DATA.oam, sizeof(CUTSCENE_DATA.oam));
     
     LZ77UncompVram(sTitleIntroBslObjGfx, VRAM_OBJ);
 
@@ -441,7 +441,7 @@ void TitleIntroSamusDriftingOutInit(void)
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
     
-    INTRO_DATA.pText = sCutsceneTextNone;
+    CUTSCENE_DATA.pText = sCutsceneTextNone;
     
     DMA3_FILL_32(0, VRAM_BASE + 0xD000, (VRAM_SIZE / 6) / sizeof(u32));
     
@@ -462,14 +462,14 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 
     finished = FALSE;
     
-    APPLY_DELTA_TIME_INC(INTRO_DATA.timer);
+    APPLY_DELTA_TIME_INC(CUTSCENE_DATA.timer);
     
-    switch (INTRO_DATA.subStage)
+    switch (CUTSCENE_DATA.subStage)
     {
 	    case 0:
 	        TitleIntroSamusDriftingOutInit();
-	        INTRO_DATA.subStage = 1;
-	        INTRO_DATA.timer = 0;
+	        CUTSCENE_DATA.subStage = 1;
+	        CUTSCENE_DATA.timer = 0;
 	
 	        SpecialCutsceneProcessOam();
 	        SpecialCutsceneDrawAllOam();
@@ -488,11 +488,11 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	        }
 	        else
 	        {
-	            INTRO_DATA.subStage = 2;
-	            INTRO_DATA.timer = 0;
+	            CUTSCENE_DATA.subStage = 2;
+	            CUTSCENE_DATA.timer = 0;
 	        }
 	
-	        if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 10)
+	        if (SpecialCutsceneGetRandomNumber() < 128 && CUTSCENE_DATA.unk_215 < 10)
 	        {
 	            x = SpecialCutsceneGetRandomNumber();
 	            y = SpecialCutsceneGetRandomNumber();
@@ -504,10 +504,10 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	        break;
 	
 	    case 2:
-	        if (INTRO_DATA.timer == CONVERT_SECONDS(2 + 1.f / 3))
+	        if (CUTSCENE_DATA.timer == CONVERT_SECONDS(2 + 1.f / 3))
 	            PlayMusic(MUSIC_PRE_TITLE_END, 15);
 	
-	        if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 10)
+	        if (SpecialCutsceneGetRandomNumber() < 128 && CUTSCENE_DATA.unk_215 < 10)
 	        {
 	            x = SpecialCutsceneGetRandomNumber();
 	            y = SpecialCutsceneGetRandomNumber();
@@ -519,18 +519,18 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	        break;
 	
 	    case 3:
-	        if (SpecialCutsceneGetRandomNumber() < 128 && INTRO_DATA.unk_215 < 10)
+	        if (SpecialCutsceneGetRandomNumber() < 128 && CUTSCENE_DATA.unk_215 < 10)
 	        {
 	            x = SpecialCutsceneGetRandomNumber();
 	            y = SpecialCutsceneGetRandomNumber();
 	            TitleIntroSetupOam(16, x, y, TRUE);
 	        }
 	
-	        if (INTRO_DATA.timer == DELTA_TIME)
+	        if (CUTSCENE_DATA.timer == DELTA_TIME)
 	        {
 	            WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_INCREASE_EFFECT);
-	            INTRO_DATA.timer = 0;
-	            INTRO_DATA.subStage = 4;
+	            CUTSCENE_DATA.timer = 0;
+	            CUTSCENE_DATA.subStage = 4;
 	        }
 	
 	        SpecialCutsceneProcessOam();
@@ -540,9 +540,9 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	    case 4:
 	        if (gWrittenToBldy < BLDY_MAX_VALUE)
 	        {
-	            if (INTRO_DATA.timer == CONVERT_SECONDS(1.f / 20))
+	            if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 20))
 	            {
-	                INTRO_DATA.timer = 0;
+	                CUTSCENE_DATA.timer = 0;
 	
 	                if (!gWrittenToBldy)
 	                    ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_1EC].trackGroupNumber].pTrack, 30);
@@ -550,9 +550,9 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	                gWrittenToBldy++;
 	            }
 	        }
-	        else if (INTRO_DATA.timer == CONVERT_SECONDS(2.f / 15))
+	        else if (CUTSCENE_DATA.timer == CONVERT_SECONDS(2.f / 15))
 	        {
-	            INTRO_DATA.timer = 0;
+	            CUTSCENE_DATA.timer = 0;
 	            finished = TRUE;
 	        }
 	
@@ -576,20 +576,20 @@ boolu32 TitleIntroSamusShipCrashing(void)
 
     finished = FALSE;
     
-    switch (INTRO_DATA.stage)
+    switch (CUTSCENE_DATA.stage)
     {
         case 0:
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
 
-            INTRO_DATA.stage = 2;
+            CUTSCENE_DATA.stage = 2;
             break;
 
         case 1:
             if (gWrittenToBldy)
                 gWrittenToBldy--;
             else
-                INTRO_DATA.stage = 2;
+                CUTSCENE_DATA.stage = 2;
 
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
@@ -598,27 +598,27 @@ boolu32 TitleIntroSamusShipCrashing(void)
         case 2:
             if (TitleIntroSamusInShipProcess())
             {
-                INTRO_DATA.subStage = 0;
-                INTRO_DATA.unk_213 = 0;
-                INTRO_DATA.stage = 3;
+                CUTSCENE_DATA.subStage = 0;
+                CUTSCENE_DATA.unk_213 = 0;
+                CUTSCENE_DATA.stage = 3;
             }
             break;
             
         case 3:
             if (TitleIntroShipAlertProcess())
             {
-                INTRO_DATA.subStage = 0;
-                INTRO_DATA.unk_213 = 0;
-                INTRO_DATA.stage = 4;
+                CUTSCENE_DATA.subStage = 0;
+                CUTSCENE_DATA.unk_213 = 0;
+                CUTSCENE_DATA.stage = 4;
             }
             break;
             
         case 4:
             if (TitleIntroSamusDriftingOutProcess())
             {
-                INTRO_DATA.subStage = 0;
-                INTRO_DATA.unk_213 = 0;
-                INTRO_DATA.stage = 5;
+                CUTSCENE_DATA.subStage = 0;
+                CUTSCENE_DATA.unk_213 = 0;
+                CUTSCENE_DATA.stage = 5;
             }
             break;
     
@@ -629,7 +629,7 @@ boolu32 TitleIntroSamusShipCrashing(void)
             }
             else
             {
-                INTRO_DATA.stage = 0;
+                CUTSCENE_DATA.stage = 0;
                 finished = TRUE;
             }
 
@@ -726,7 +726,7 @@ void unk_92d0c(struct SpecialCutsceneOam* pOam)
     gBg2XPosition = pOam->xPosition;
     gBg2YPosition = pOam->yPosition;
 
-    if (INTRO_DATA.subStage == 4)
+    if (CUTSCENE_DATA.subStage == 4)
     {
         pOam->rotation++;
         if (pOam->rotation == Q_8_8(1.f / 128))
@@ -908,8 +908,8 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
         pOam->pOam = sOam_60ad48;
         pOam->stage = 6;
         SoundPlay_3b1c(SOUND_1F3);
-        INTRO_DATA.timer = 0;
-        INTRO_DATA.subStage = 3;
+        CUTSCENE_DATA.timer = 0;
+        CUTSCENE_DATA.subStage = 3;
     }
     else if (pOam->stage == 6)
     {

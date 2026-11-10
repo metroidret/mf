@@ -1,5 +1,5 @@
-#ifndef INTRO_DATA_H
-#define INTRO_DATA_H
+#ifndef CUTSCENE_DATA_H
+#define CUTSCENE_DATA_H
 
 #include "types.h"
 
@@ -380,6 +380,41 @@ extern const struct FrameData sIntroNextPageArrowOam[5];
 
 extern const u16 sNextPageArrowPal[1 * PAL_ROW];
 
+extern const u32 sEndingBslCrashingObjGfx[2961];
+extern const u32 sEndingShipFrontViewBgGfx[5039];
+extern const u32 sEndingBslCrashingBgGfx[4683];
+
+extern const struct FrameData sEndingBslFallingOam[3];
+extern const struct FrameData sEndingBslReentryPlasmaOam[3];
+extern const struct FrameData sEndingBslReentryDebrisOam[71];
+extern const struct FrameData sEndingLeavingSmallShipOam[3];
+extern const struct FrameData sEndingLeavingBigShipOam[3];
+extern const struct FrameData sEndingBslExplosionOam_Small[12];
+extern const struct FrameData sOam_636318[7];
+extern const struct FrameData sOam_636350[5];
+extern const struct FrameData sOam_636378[5];
+extern const struct FrameData sEndingBslExplosionAfterglowOam[3];
+extern const struct FrameData sEndingFrontFacingShipThrustersOam[4];
+extern const struct FrameData sOam_6363d8[2];
+extern const struct FrameData sOam_6363e8[2];
+extern const struct FrameData sOam_6363f8[2];
+extern const struct FrameData sOam_636408[2];
+extern const struct FrameData sOam_636418[2];
+extern const struct FrameData sOam_636428[2];
+
+extern const u16 sEndingPal_636438[16 * PAL_ROW];
+extern const u16 sEndingPal_636638[16 * PAL_ROW];
+extern const u16 sEndingPal_636838[16 * PAL_ROW];
+extern const u16 sEndingPal_636a38[16 * PAL_ROW];
+extern const u16 sEndingBslCrashingObjPal[16 * PAL_ROW];
+extern const u16 sEndingShipFrontViewBgPal[16 * PAL_ROW];
+extern const u16 sEndingBslCrashingBgPal[16 * PAL_ROW];
+
+extern const u32 sEndingBslExplodingTilemap[418];
+extern const u32 sEndingShipFrontTilemap[199];
+extern const u32 sEndingSpaceExplosionTilemap[387];
+extern const u32 sEndingSr388Tilemap[368];
+
 extern const u16 sCutsceneTextNone[2];
 
 extern const u32 sIntroSr388SurfaceBgGfx0[686];
@@ -430,4 +465,4 @@ extern const u32 sIntroTilemap_662804[318];
 
 extern const u16 sIntroPal_663820[4 * PAL_ROW];
 
-#endif /* INTRO_DATA_H */
+#endif /* CUTSCENE_DATA_H */

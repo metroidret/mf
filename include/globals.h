@@ -7,7 +7,7 @@
 #include "structs/menus/title_screen.h"
 #include "structs/sa_x_close_up.h"
 #include "structs/ending.h"
-#include "structs/intro.h"
+#include "structs/cutscene.h"
 
 struct InGameData {
     u8 clipdataCode[640];
@@ -19,7 +19,7 @@ union NonGameplayRam {
     struct InGameData inGame;
     struct TitleScreenData titleScreen;
     struct SaXCloseUpData saXCloseUp;
-    struct IntroData intro;
+    struct CutsceneData cutscene;
     struct EndingData ending;
     u8 size[1344];
 };

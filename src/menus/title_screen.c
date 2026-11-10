@@ -6,7 +6,7 @@
 
 #include "data/menus/title_screen.h"
 #include "data/menus/internal_title_screen_data.h"
-#include "data/intro_data.h"
+#include "data/cutscene_data.h"
 
 #include "constants/audio.h"
 #include "constants/menus/title_screen.h"
