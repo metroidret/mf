@@ -1,5 +1,5 @@
-#ifndef INTRO_DATA_H
-#define INTRO_DATA_H
+#ifndef CUTSCENE_DATA_H
+#define CUTSCENE_DATA_H
 
 #include "types.h"
 
@@ -415,7 +415,6 @@ extern const u32 sEndingShipFrontTilemap[199];
 extern const u32 sEndingSpaceExplosionTilemap[387];
 extern const u32 sEndingSr388Tilemap[368];
 
-
 extern const u16 sCutsceneTextNone[2];
 
 extern const u32 sIntroSr388SurfaceBgGfx0[686];
@@ -466,4 +465,4 @@ extern const u32 sIntroTilemap_662804[318];
 
 extern const u16 sIntroPal_663820[4 * PAL_ROW];
 
-#endif /* INTRO_DATA_H */
+#endif /* CUTSCENE_DATA_H */
