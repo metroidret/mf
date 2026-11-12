@@ -27393,7 +27393,7 @@
     "size": 4
   },
   {
-    "path": "ending_cutscene/636438.pal",
+    "path": "ending_cutscene/monologue_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636438"
@@ -27401,7 +27401,7 @@
     "size": 2
   },
   {
-    "path": "ending_cutscene/636638.pal",
+    "path": "ending_cutscene/monologue_obj.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636638"
@@ -27409,7 +27409,7 @@
     "size": 2
   },
   {
-    "path": "ending_cutscene/636838.pal",
+    "path": "ending_cutscene/animals_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636838"
@@ -27417,7 +27417,7 @@
     "size": 2
   },
   {
-    "path": "ending_cutscene/636a38.pal",
+    "path": "ending_cutscene/bsl_explosion_flash.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636A38"

@@ -27492,7 +27492,7 @@ static const u16 sOamFrame_6331e4[OAM_DATA_SIZE(1)] = {
 	OAM_ENTRY(0, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 351, 4, 0),
 };
 
-const struct FrameData sOam_6331ec[11] = {
+const struct FrameData sEndingBslExplosionPopupOam_Opening[11] = {
 	[0] = {
 		.pFrame = sOamFrame_630a2e,
 		.timer = 30
@@ -27536,7 +27536,7 @@ const struct FrameData sOam_6331ec[11] = {
 	[10] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633244[10] = {
+const struct FrameData sEndingBslExplosionPopupOam_Closing[10] = {
 	[0] = {
 		.pFrame = sOamFrame_630098,
 		.timer = 2
@@ -27576,7 +27576,7 @@ const struct FrameData sOam_633244[10] = {
 	[9] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633294[13] = {
+const struct FrameData sEndingAdamPanelFrameOam_Opening[13] = {
 	[0] = {
 		.pFrame = sOamFrame_6300ee,
 		.timer = 1
@@ -27628,7 +27628,7 @@ const struct FrameData sOam_633294[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6332fc[13] = {
+const struct FrameData sEndingAdamPanelFrameOam_Closing[13] = {
 	[0] = {
 		.pFrame = sOamFrame_630506,
 		.timer = 2
@@ -27680,7 +27680,7 @@ const struct FrameData sOam_6332fc[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633364[13] = {
+const struct FrameData sEndingAdamPanelBackgroundOam_Opening[13] = {
 	[0] = {
 		.pFrame = sOamFrame_63058c,
 		.timer = 1
@@ -27732,7 +27732,7 @@ const struct FrameData sOam_633364[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6333cc[13] = {
+const struct FrameData sEndingAdamPanelBackgroundOam_Closing[13] = {
 	[0] = {
 		.pFrame = sOamFrame_630998,
 		.timer = 2
@@ -27784,7 +27784,7 @@ const struct FrameData sOam_6333cc[13] = {
 	[12] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633434[5] = {
+const struct FrameData sEndingAdamLensOam_Opening[5] = {
 	[0] = {
 		.pFrame = sOamFrame_6309d0,
 		.timer = 8
@@ -27804,7 +27804,7 @@ const struct FrameData sOam_633434[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_63345c[5] = {
+const struct FrameData sEndingAdamLensOam_Closing[5] = {
 	[0] = {
 		.pFrame = sOamFrame_630a0c,
 		.timer = 8
@@ -28352,7 +28352,7 @@ const struct FrameData sOam_633864[8] = {
 	[7] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6338a4[6] = {
+const struct FrameData sEndingAdamLensOam_Idle[6] = {
 	[0] = {
 		.pFrame = sOamFrame_630a0c,
 		.timer = 8
@@ -28376,7 +28376,7 @@ const struct FrameData sOam_6338a4[6] = {
 	[5] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6338d4[32] = {
+const struct FrameData sEndingRadarShipTrajectoryOam[32] = {
 	[0] = {
 		.pFrame = sOamFrame_632c4c,
 		.timer = 3
@@ -28504,7 +28504,7 @@ const struct FrameData sOam_6338d4[32] = {
 	[31] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_6339d4[79] = {
+const struct FrameData sEndingRadarPlanetsOam[79] = {
 	[0] = {
 		.pFrame = sOamFrame_6313e0,
 		.timer = 2
@@ -28820,7 +28820,7 @@ const struct FrameData sOam_6339d4[79] = {
 	[78] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633c4c[14] = {
+const struct FrameData sEndingRadarShipOam[14] = {
 	[0] = {
 		.pFrame = sOamFrame_632faa,
 		.timer = 81
@@ -29088,7 +29088,7 @@ const struct FrameData sOam_633cbc[53] = {
 	[52] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633e64[5] = {
+const struct FrameData sEndingMonologueCursorOam[5] = {
 	[0] = {
 		.pFrame = sOamFrame_633060,
 		.timer = 8
@@ -29108,7 +29108,7 @@ const struct FrameData sOam_633e64[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633e8c[2] = {
+const struct FrameData sEndingAdamTextCursorOam[2] = {
 	[0] = {
 		.pFrame = sOamFrame_633058,
 		.timer = 30
@@ -29136,7 +29136,7 @@ const struct FrameData sOam_633e9c[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633ec4[9] = {
+const struct FrameData sEndingRadarPlanetsOam_2[9] = {
 	[0] = {
 		.pFrame = sOamFrame_6328d4,
 		.timer = 2
@@ -29172,7 +29172,7 @@ const struct FrameData sOam_633ec4[9] = {
 	[8] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633f0c[3] = {
+const struct FrameData sEndingRadarShipOam_2[3] = {
 	[0] = {
 		.pFrame = sOamFrame_633050,
 		.timer = 40
@@ -29184,7 +29184,7 @@ const struct FrameData sOam_633f0c[3] = {
 	[2] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_633f24[3] = {
+const struct FrameData sEndingScreenGlareOam[3] = {
 	[0] = {
 		.pFrame = sOamFrame_633090,
 		.timer = 3
@@ -31555,10 +31555,10 @@ const struct FrameData sOam_636428[2] = {
 	[1] = FRAME_DATA_TERMINATOR
 };
 
-const u16 sEndingPal_636438[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/636438.pal");
-const u16 sEndingPal_636638[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/636638.pal");
-const u16 sEndingPal_636838[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/636838.pal");
-const u16 sEndingPal_636a38[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/636a38.pal");
+const u16 sEndingMonologueBgPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/monologue_bg.pal");
+const u16 sEndingMonologueObjPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/monologue_obj.pal");
+const u16 sEndingAnimalsBgPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/animals_bg.pal");
+const u16 sEndingBslExplosionFlashPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/bsl_explosion_flash.pal");
 const u16 sEndingBslCrashingObjPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/bsl_crashing_obj.pal");
 const u16 sEndingShipFrontViewBgPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/ship_front_view_bg.pal");
 const u16 sEndingBslCrashingBgPal[16 * PAL_ROW] = INCBIN_U16("data/ending_cutscene/bsl_crashing_bg.pal");

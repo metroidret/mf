@@ -657,7 +657,7 @@ void EndingProcessFrontFacingShip(struct SpecialCutsceneOam* pOam)
  * @brief 95958 | 2fc | Spawns an OAM for the ending BSL crashing cutscene
  * 
  */
-u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 yPosition, u8 descendingSearch)
+u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 yPosition, boolu8 descendingSearch)
 {
     s8 slot;
 
@@ -771,7 +771,7 @@ void EndingBslCrashingVblank(void)
     if (CUTSCENE_DATA.unk_110 == 1)
     {
         CUTSCENE_DATA.unk_110 = 0;
-        DMA3_COPY_32(&sEndingPal_636a38[CUTSCENE_DATA.unk_111 * PAL_ROW], PALRAM_BASE + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));   
+        DMA3_COPY_32(&sEndingBslExplosionFlashPal[CUTSCENE_DATA.unk_111 * PAL_ROW], PALRAM_BASE + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));   
     }
 }
 
@@ -846,12 +846,12 @@ void EndingMonologueInit(void)
     
     LZ77UncompVram(sEndingMonologueObjGfx, VRAM_OBJ);
 
-    DMA3_COPY_32(sEndingPal_636638, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sEndingMonologueObjPal, PALRAM_OBJ, 16 * PAL_ROW_SIZE / sizeof(u32));
     
     LZ77UncompVram(sEndingMonologueBgGfx, VRAM_BASE + 0x8000);
     LZ77UncompVram(sEndingSamusSittingTilemap, VRAM_BASE + 0xF800);
     
-    DMA3_COPY_32(sEndingPal_636438, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sEndingMonologueBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
     
     LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
     
@@ -887,7 +887,7 @@ void EndingMonologueInit(void)
     gWrittenToBldalpha_Eva = 0;
     gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
     
-    EndingDialogueSetupOam(1, 260, 180, FALSE);
+    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_MONOLOGUE_CURSOR, 260, 180, FALSE);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -919,7 +919,7 @@ void EndingAdamConversationInit(void)
     LZ77UncompVram(sEndingSpaceMapTilemap, VRAM_BASE + 0xF800);
     LZ77UncompVram(sIntroSamusShipFlyingTextTilemap, VRAM_BASE + 0xE000);
 
-    DMA3_COPY_32(sEndingPal_636438, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sEndingMonologueBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
     
     gBg0XPosition = -8;
     gBg0YPosition = 8;
@@ -949,9 +949,9 @@ void EndingAdamConversationInit(void)
     gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
     
-    EndingDialogueSetupOam(2, 112, SCREEN_Y_MIDDLE, TRUE);
-    EndingDialogueSetupOam(3, 112, SCREEN_Y_MIDDLE, TRUE);
-    EndingDialogueSetupOam(4, 112, SCREEN_Y_MIDDLE, TRUE);
+    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_SHIP_TRAJECTORY, 112, SCREEN_Y_MIDDLE, TRUE);
+    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_PLANETS, 112, SCREEN_Y_MIDDLE, TRUE);
+    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_SHIP, 112, SCREEN_Y_MIDDLE, TRUE);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -987,7 +987,7 @@ void EndingAnimalsInit(void)
     LZ77UncompVram(sEndingAnimalsTilemap_Bottom, VRAM_BASE + 0xF000);
     LZ77UncompVram(sEndingAnimalsTilemap_Top, VRAM_BASE + 0xF800);
     
-    DMA3_COPY_32(sEndingPal_636838, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sEndingAnimalsBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
     DMA3_FILL_16(0x2FF, VRAM_BASE + 0xF500, 0x300);
 
     gBg0XPosition = 0;
@@ -1018,7 +1018,7 @@ void EndingAnimalsInit(void)
     gWrittenToBldalpha_Evb = BLDALPHA_MAX_VALUE;
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
     
-    EndingDialogueSetupOam(20, 0, 0, FALSE);
+    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_ANIMAL_SCROLLING, 0, 0, FALSE);
     
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -1057,7 +1057,7 @@ boolu32 EndingInShipProcess(void)
                 }
                 else
                 {
-                    PlayMusic(0x56, 14);
+                    PlayMusic(MUSIC_EPILOGUE, 14);
                     CUTSCENE_DATA.subStage = 1;
                 }
             }
@@ -1162,7 +1162,7 @@ boolu32 EndingInShipProcess(void)
         case 5:
             if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 6))
             {
-                EndingDialogueSetupOam(30, SCREEN_X_MIDDLE, SCREEN_Y_MIDDLE, TRUE);
+                EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_SCREEN_GLARE, SCREEN_X_MIDDLE, SCREEN_Y_MIDDLE, TRUE);
             }
             else if (CUTSCENE_DATA.timer == TWO_THIRD_SECOND - DELTA_TIME)
             {
@@ -1199,7 +1199,7 @@ boolu32 EndingInShipProcess(void)
         case 8:
             gWrittenToBldy = 0;
             CUTSCENE_DATA.timer = 0;
-            SoundPlay(0x24C);
+            SoundPlay(SOUND_24C);
             CUTSCENE_DATA.subStage = 9;
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
@@ -1210,10 +1210,10 @@ boolu32 EndingInShipProcess(void)
             {
                 if (CUTSCENE_DATA.timer == TWO_THIRD_SECOND)
                 {
-                    EndingDialogueSetupOam(255, 0, 0, FALSE);
-                    EndingDialogueSetupOam(6, 20, 192, FALSE);
-                    EndingDialogueSetupOam(7, 128, 192, FALSE);
-                    EndingDialogueSetupOam(9, 128, 192, FALSE);
+                    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_BSL_EXPLOSION_POPUP_2, 0, 0, FALSE);
+                    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_ADAM_TEXT_CURSOR, 20, 192, FALSE);
+                    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME, 128, 192, FALSE);
+                    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_BACKGROUND, 128, 192, FALSE);
                     CUTSCENE_DATA.timer = 0;
                     CUTSCENE_DATA.subStage = 10;
                 }
@@ -1233,13 +1233,13 @@ boolu32 EndingInShipProcess(void)
             if (CUTSCENE_DATA.unk_218 == 2)
             {
                 CUTSCENE_DATA.unk_218 = 0;
-                SoundPlay(0x203);
+                SoundPlay(SOUND_203);
             }
             else if (CUTSCENE_DATA.unk_218 == 3)
             {
                 WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) & ~DCNT_BG0);
                 CUTSCENE_DATA.unk_218 = 0;
-                SoundPlay(0x203);
+                SoundPlay(SOUND_203);
                 FadeMusic(10);
                 CUTSCENE_DATA.subStage = 11;
             }
@@ -1259,7 +1259,7 @@ boolu32 EndingInShipProcess(void)
         case 12:
             if (CUTSCENE_DATA.timer == DELTA_TIME)
             {
-                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[0x24C].trackGroupNumber].pTrack, 0);
+                ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_24C].trackGroupNumber].pTrack, 0);
             }
             else if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 6))
             {
@@ -1282,7 +1282,7 @@ boolu32 EndingInShipProcess(void)
         case 14:
             if (CUTSCENE_DATA.timer == DELTA_TIME)
             {
-                PlayMusic(0x53, 14);
+                PlayMusic(MUSIC_EPILOGUE_END, 14);
             }
             else if (CUTSCENE_DATA.timer == CONVERT_SECONDS(10 + 2.f / 3))
             {
@@ -1320,7 +1320,7 @@ boolu32 EndingInShipProcess(void)
 }
 
 /**
- * @brief 96928 | 88 | To document
+ * @brief 96928 | 88 | Handler for the ending in ship cutscene
  * 
  */
 boolu32 EndingInShip(void)
@@ -1371,7 +1371,7 @@ boolu32 EndingInShip(void)
 }
 
 /**
- * @brief 969b0 | 30 | To document
+ * @brief 969b0 | 30 | Processes the monologue cursor in the ending cutscene
  * 
  */
 void EndingProcessMonologueCursor(struct SpecialCutsceneOam* pOam)
@@ -1388,10 +1388,10 @@ void EndingProcessMonologueCursor(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief 969e0 | 28 | To document
+ * @brief 969e0 | 28 | Processes the ship trajectory in the ending Adam dialogue cutscene
  * 
  */
-void unk_969e0(struct SpecialCutsceneOam* pOam)
+void EndingProcessShipTrajectory(struct SpecialCutsceneOam* pOam)
 {
     const struct FrameData* frame;
 
@@ -1404,7 +1404,7 @@ void unk_969e0(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief 96a08 | 34 | To document
+ * @brief 96a08 | 34 | Processes the planets in the ending Adam dialogue cutscene
  * 
  */
 void EndingProcessSr388RadarView(struct SpecialCutsceneOam* pOam)
@@ -1418,14 +1418,14 @@ void EndingProcessSr388RadarView(struct SpecialCutsceneOam* pOam)
         {
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sOam_633ec4;
+            pOam->pOam = sEndingRadarPlanetsOam_2;
             pOam->stage = 1;
         }
     }
 }
 
 /**
- * @brief 96a3c | 34 | To document
+ * @brief 96a3c | 34 | Processes Samus' ship in the ending Adam dialogue cutscene
  * 
  */
 void EndingProcessSamusViewRadarView(struct SpecialCutsceneOam* pOam)
@@ -1439,17 +1439,17 @@ void EndingProcessSamusViewRadarView(struct SpecialCutsceneOam* pOam)
         {
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sOam_633f0c;
+            pOam->pOam = sEndingRadarShipOam_2;
             pOam->stage = 1;
         }
     }
 }
 
 /**
- * @brief 96a70 | 9c | To document
+ * @brief 96a70 | 9c | Processes the BSL explosion popup in the ending Adam dialogue cutscene (unused)
  * 
  */
-void unk_96a70(struct SpecialCutsceneOam* pOam)
+void EndingProcessBslExplosionPopup(struct SpecialCutsceneOam* pOam)
 {
     const struct FrameData* frame;
 
@@ -1458,7 +1458,7 @@ void unk_96a70(struct SpecialCutsceneOam* pOam)
     if (pOam->stage == 0)
     {
         if (pOam->currentAnimationFrame == 1 && pOam->animationDurationCounter == 1)
-            SoundPlay(0x11C);
+            SoundPlay(SOUND_11C);
         
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
@@ -1473,8 +1473,8 @@ void unk_96a70(struct SpecialCutsceneOam* pOam)
         if (CUTSCENE_DATA.subStage == 11)
         {
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sOam_633244;
-            SoundPlay(0x11D);
+            pOam->pOam = sEndingBslExplosionPopupOam_Closing;
+            SoundPlay(SOUND_11D);
             pOam->stage = 2;
         }
     }
@@ -1510,13 +1510,13 @@ void EndingProcessAdamTextCursor(struct SpecialCutsceneOam* pOam)
         pOam->xPosition = 290;
         pOam->animationDurationCounter = 0;
         pOam->currentAnimationFrame = 0;
-        pOam->pOam = sOam_633e8c;
+        pOam->pOam = sEndingAdamTextCursorOam;
     }
     else if (*CUTSCENE_DATA.pText == CHAR_NEXT_PAGE_ARROW)
     {
         pOam->xPosition = SCREEN_X_MIDDLE;
         pOam->yPosition = 154;
-        pOam->pOam = sOam_633e64;
+        pOam->pOam = sEndingMonologueCursorOam;
     }
     else
     {
@@ -1548,8 +1548,8 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
         {
             pOam->yPosition = 128;
 
-            if (pOam->type == 7)
-                SoundPlay(0x20A);
+            if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
+                SoundPlay(SOUND_20A);
 
             pOam->stage = 1;
         }
@@ -1565,14 +1565,14 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
                 pOam->stage = 2;
             }
             
-            if (pOam->type == 7)
+            if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
             {
                 if (pOam->currentAnimationFrame == 10)
-                    EndingDialogueSetupOam(8, pOam->xPosition, pOam->yPosition, 0);
+                    EndingDialogueSetupOam(ENDING_DIALOGUE_OAM_TYPE_ADAM_LENS, pOam->xPosition, pOam->yPosition, FALSE);
             }
         }
 
-        if (pOam->type == 7)
+        if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
         {
             if (pOam->currentAnimationFrame == 11)
             {
@@ -1605,14 +1605,14 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
         {
             pOam->currentAnimationFrame = 0;
             
-            if (pOam->type == 7)
+            if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
             {
-                pOam->pOam = sOam_6332fc;
-                SoundPlay(0x20B);
+                pOam->pOam = sEndingAdamPanelFrameOam_Closing;
+                SoundPlay(SOUND_20B);
             }
-            else if (pOam->type == 9)
+            else if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_BACKGROUND)
             {
-                pOam->pOam = sOam_6333cc;
+                pOam->pOam = sEndingAdamPanelBackgroundOam_Closing;
             }
 
             pOam->stage = 4;
@@ -1622,8 +1622,8 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
     {
         if (pOam->currentAnimationFrame == 11 && pOam->animationDurationCounter == 3)
         {
-            if (pOam->type == 7)
-                SpecialCutsceneDestroyOamOfType(8);
+            if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
+                SpecialCutsceneDestroyOamOfType(ENDING_DIALOGUE_OAM_TYPE_ADAM_LENS);
 
             pOam->animationDurationCounter = 0;
             pOam->stage = 5;
@@ -1639,7 +1639,7 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
         }
         else
         {
-            if (pOam->type == 7)
+            if (pOam->type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
                 CUTSCENE_DATA.subStage = 12;
 
             pOam->type = 0;
@@ -1649,7 +1649,7 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
 }
 
 /**
- * @brief 96d40 | 88 | Processes the Adam icon during the ending cutscene
+ * @brief 96d40 | 88 | Processes Adam's lens in the ending cutscene
  * 
  */
 void EndingProcessAdamIcon(struct SpecialCutsceneOam* pOam)
@@ -1664,7 +1664,7 @@ void EndingProcessAdamIcon(struct SpecialCutsceneOam* pOam)
         {
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sOam_6338a4;
+            pOam->pOam = sEndingAdamLensOam_Idle;
             pOam->stage = 1;
         }
         
@@ -1672,7 +1672,7 @@ void EndingProcessAdamIcon(struct SpecialCutsceneOam* pOam)
         {
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sOam_63345c;
+            pOam->pOam = sEndingAdamLensOam_Closing;
             pOam->stage = 2;
         }
     }
@@ -1682,7 +1682,7 @@ void EndingProcessAdamIcon(struct SpecialCutsceneOam* pOam)
         {
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            pOam->pOam = sOam_63345c;
+            pOam->pOam = sEndingAdamLensOam_Closing;
             pOam->stage = 2;
         }
     }
@@ -1778,7 +1778,7 @@ void unk_96f00(struct SpecialCutsceneOam* pOam)
  * @brief 96f08 | 380 | Spawn a new OAM for the ending dialogue
  * 
  */
-u8 EndingDialogueSetupOam(u8 type, s16 xPosition, s16 yPosition, u8 descendingSearch)
+u8 EndingDialogueSetupOam(EndingDialogueOamType type, s16 xPosition, s16 yPosition, boolu8 descendingSearch)
 {
     s8 slot;
 
@@ -1812,74 +1812,74 @@ u8 EndingDialogueSetupOam(u8 type, s16 xPosition, s16 yPosition, u8 descendingSe
     CUTSCENE_DATA.oam[slot].type = type;
     CUTSCENE_DATA.oam[slot].unk_18_0 = 1;
     
-    if (type == 1)
+    if (type == ENDING_DIALOGUE_OAM_TYPE_MONOLOGUE_CURSOR)
     {
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633e64;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingMonologueCursorOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessMonologueCursor;
     }
-    else if (type == 2)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_SHIP_TRAJECTORY)
     {
         CUTSCENE_DATA.oam[slot].priority = 2;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_6338d4;
-        CUTSCENE_DATA.oam[slot].pFunction = unk_969e0;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingRadarShipTrajectoryOam;
+        CUTSCENE_DATA.oam[slot].pFunction = EndingProcessShipTrajectory;
     }
-    else if (type == 3)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_PLANETS)
     {
         CUTSCENE_DATA.oam[slot].priority = 2;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_6339d4;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingRadarPlanetsOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessSr388RadarView;
     }
-    else if (type == 4)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_SHIP)
     {
         CUTSCENE_DATA.oam[slot].priority = 2;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633c4c;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingRadarShipOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessSamusViewRadarView;
     }
-    else if (type == 5)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_BSL_EXPLOSION_POPUP)
     {
         CUTSCENE_DATA.oam[slot].priority = 2;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_6331ec;
-        CUTSCENE_DATA.oam[slot].pFunction = unk_96a70;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingBslExplosionPopupOam_Opening;
+        CUTSCENE_DATA.oam[slot].pFunction = EndingProcessBslExplosionPopup;
     }
-    else if (type == 6)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_ADAM_TEXT_CURSOR)
     {
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633e8c;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingAdamTextCursorOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessAdamTextCursor;
     }
-    else if (type == 7)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_FRAME)
     {
         CUTSCENE_DATA.oam[slot].priority = 1;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633294;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingAdamPanelFrameOam_Opening;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessAdamPanel;
     }
-    else if (type == 8)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_ADAM_LENS)
     {
         CUTSCENE_DATA.oam[slot].priority = 1;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633434;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingAdamLensOam_Opening;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessAdamIcon;
     }
-    else if (type == 9)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_ADAM_PANEL_BACKGROUND)
     {
         CUTSCENE_DATA.oam[slot].priority = 1;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633364;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingAdamPanelBackgroundOam_Opening;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessAdamPanel;
     }
-    else if (type == 20)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_ANIMAL_SCROLLING)
     {
         CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessAnimalsScrolling;
     }
-    else if (type == 30)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_SCREEN_GLARE)
     {
-        SoundPlay(0x12D);
+        SoundPlay(SOUND_12D);
         CUTSCENE_DATA.oam[slot].priority = 1;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_633f24;
-        CUTSCENE_DATA.oam[slot].pFunction = unk_97418;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingScreenGlareOam;
+        CUTSCENE_DATA.oam[slot].pFunction = EndingProcessOam_Empty2;
     }
-    else if (type == 255)
+    else if (type == ENDING_DIALOGUE_OAM_TYPE_BSL_EXPLOSION_POPUP_2)
     {
         CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
-        CUTSCENE_DATA.oam[slot].pOam = sOam_6331ec;
+        CUTSCENE_DATA.oam[slot].pOam = sEndingBslExplosionPopupOam_Opening;
         CUTSCENE_DATA.oam[slot].pFunction = unk_96f00;
     }
 
@@ -1930,7 +1930,7 @@ void EndingConversationAndAnimalsVblank(void)
  * @brief 973b8 | 60 | Returns slot, X and Y position of an OAM
  * 
  */
-u8 EndingGetPositionAndSlotOfOamByType_2(u8 type, s16* pXPosition, s16* pYPosition)
+u8 EndingGetPositionAndSlotOfOamByType_2(EndingDialogueOamType type, s16* pXPosition, s16* pYPosition)
 {
     u8 slot;
 
@@ -1956,7 +1956,7 @@ u8 EndingGetPositionAndSlotOfOamByType_2(u8 type, s16* pXPosition, s16* pYPositi
  * @brief 97418 | 4 | Empty OAM handler
  * 
  */
-void unk_97418(struct SpecialCutsceneOam* pOam)
+void EndingProcessOam_Empty2(struct SpecialCutsceneOam* pOam)
 {
     return;
 }
