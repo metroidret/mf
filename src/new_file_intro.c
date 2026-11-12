@@ -21,12 +21,12 @@
 void unk_99940(void); // For V-blank callback
 u8 SpecialCutsceneGetRandomNumber(void);
 
-static u16* sMonologueTextPointersJapanese[19];
-static u16* sMonologueTextPointersEnglish[19];
-static u16* sMonologueTextPointersGerman[19];
-static u16* sMonologueTextPointersFrench[19];
-static u16* sMonologueTextPointersItalian[19];
-static u16* sMonologueTextPointersSpanish[19];
+static const u16* sMonologueTextPointersJapanese[19];
+static const u16* sMonologueTextPointersEnglish[19];
+static const u16* sMonologueTextPointersGerman[19];
+static const u16* sMonologueTextPointersFrench[19];
+static const u16* sMonologueTextPointersItalian[19];
+static const u16* sMonologueTextPointersSpanish[19];
 
 const u8* sTitleScreenDebugTextPointer = {
     sTitleScreenDebugText,
@@ -94,7 +94,17 @@ static const u16* sPalPointers_79c354[16] = {
 	(const u16*)0x85f7110
 };
 
-static u8 sBlob_79c394_79c3c8[] = INCBIN_U8("data/Blob_79c394_79c3c8.bin");
+static u8 sBlob_79c394_79c3ac[] = INCBIN_U8("data/Blob_79c394_79c3ac.bin");
+
+const u16** sNavigationTextPointers[LANGUAGE_COUNT] = {
+	(const u16**)0x879ce10,
+	(const u16**)0x879d194,
+	(const u16**)0x879d50c,
+	(const u16**)0x879d890,
+	(const u16**)0x879dc14,
+	(const u16**)0x879df98,
+	(const u16**)0x879e31c
+};
 
 static const u32* sIntroSr388SurfaceBgGfxPointers[8] = {
     sIntroSr388SurfaceBgGfx0,
@@ -162,7 +172,7 @@ const u32* sTitleIntroCollisionWarningObjGfxPointers[6] = {
 
 static u8 sBlob_79c474_79c5a4[] = INCBIN_U8("data/Blob_79c474_79c5a4.bin");
 
-static u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
+const u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,
     sMonologueTextPointersJapanese,
     sMonologueTextPointersEnglish,
@@ -196,136 +206,136 @@ u16** sMessageTextPointers[LANGUAGE_COUNT] = {
 
 static u8 sBlob_79ce10_79e6a0[] = INCBIN_U8("data/Blob_79ce10_79e6a0.bin");
 
-static u16* sMonologueTextPointersJapanese[19] = {
-	(u16*)0x871e20c,
-	(u16*)0x871e4e4,
-	(u16*)0x871e67e,
-	(u16*)0x871e814,
-	(u16*)0x871e9b6,
-	(u16*)0x871eb34,
-	(u16*)0x871ecac,
-	(u16*)0x871efc2,
-	(u16*)0x871f498,
-	(u16*)0x871f52c,
-	(u16*)0x871f56c,
-	(u16*)0x871f5fc,
-	(u16*)0x871f656,
-	(u16*)0x871f71a,
-	(u16*)0x871f7cc,
-	(u16*)0x871f896,
-	(u16*)0x871f98a,
-	(u16*)0x871fa32,
-	(u16*)0x871fa92
+static const u16* sMonologueTextPointersJapanese[19] = {
+	(const u16*)0x871e20c,
+	(const u16*)0x871e4e4,
+	(const u16*)0x871e67e,
+	(const u16*)0x871e814,
+	(const u16*)0x871e9b6,
+	(const u16*)0x871eb34,
+	(const u16*)0x871ecac,
+	(const u16*)0x871efc2,
+	(const u16*)0x871f498,
+	(const u16*)0x871f52c,
+	(const u16*)0x871f56c,
+	(const u16*)0x871f5fc,
+	(const u16*)0x871f656,
+	(const u16*)0x871f71a,
+	(const u16*)0x871f7cc,
+	(const u16*)0x871f896,
+	(const u16*)0x871f98a,
+	(const u16*)0x871fa32,
+	(const u16*)0x871fa92
 };
 
-static u16* sMonologueTextPointersEnglish[19] = {
-	(u16*)0x871fad4,
-	(u16*)0x87200ee,
-	(u16*)0x8720310,
-	(u16*)0x8720528,
-	(u16*)0x8720748,
-	(u16*)0x872094a,
-	(u16*)0x8720b4a,
-	(u16*)0x8721116,
-	(u16*)0x872192e,
-	(u16*)0x8721a12,
-	(u16*)0x8721ab6,
-	(u16*)0x8721c28,
-	(u16*)0x8721d12,
-	(u16*)0x8721f20,
-	(u16*)0x8722068,
-	(u16*)0x8722238,
-	(u16*)0x8722438,
-	(u16*)0x8722550,
-	(u16*)0x87225f8
+static const u16* sMonologueTextPointersEnglish[19] = {
+	(const u16*)0x871fad4,
+	(const u16*)0x87200ee,
+	(const u16*)0x8720310,
+	(const u16*)0x8720528,
+	(const u16*)0x8720748,
+	(const u16*)0x872094a,
+	(const u16*)0x8720b4a,
+	(const u16*)0x8721116,
+	(const u16*)0x872192e,
+	(const u16*)0x8721a12,
+	(const u16*)0x8721ab6,
+	(const u16*)0x8721c28,
+	(const u16*)0x8721d12,
+	(const u16*)0x8721f20,
+	(const u16*)0x8722068,
+	(const u16*)0x8722238,
+	(const u16*)0x8722438,
+	(const u16*)0x8722550,
+	(const u16*)0x87225f8
 };
 
-static u16* sMonologueTextPointersGerman[19] = {
-	(u16*)0x87226a0,
-	(u16*)0x8723016,
-	(u16*)0x8723324,
-	(u16*)0x8723624,
-	(u16*)0x8723958,
-	(u16*)0x8723be2,
-	(u16*)0x8723e44,
-	(u16*)0x872475e,
-	(u16*)0x87252c6,
-	(u16*)0x8725412,
-	(u16*)0x87254ea,
-	(u16*)0x87256d8,
-	(u16*)0x872581e,
-	(u16*)0x8725a60,
-	(u16*)0x8725b94,
-	(u16*)0x8725dac,
-	(u16*)0x872603c,
-	(u16*)0x87261c6,
-	(u16*)0x87262aa
+static const u16* sMonologueTextPointersGerman[19] = {
+	(const u16*)0x87226a0,
+	(const u16*)0x8723016,
+	(const u16*)0x8723324,
+	(const u16*)0x8723624,
+	(const u16*)0x8723958,
+	(const u16*)0x8723be2,
+	(const u16*)0x8723e44,
+	(const u16*)0x872475e,
+	(const u16*)0x87252c6,
+	(const u16*)0x8725412,
+	(const u16*)0x87254ea,
+	(const u16*)0x87256d8,
+	(const u16*)0x872581e,
+	(const u16*)0x8725a60,
+	(const u16*)0x8725b94,
+	(const u16*)0x8725dac,
+	(const u16*)0x872603c,
+	(const u16*)0x87261c6,
+	(const u16*)0x87262aa
 };
 
-static u16* sMonologueTextPointersFrench[19] = {
-	(u16*)0x872638c,
-	(u16*)0x8726aa6,
-	(u16*)0x8726cfe,
-	(u16*)0x8726f04,
-	(u16*)0x8727106,
-	(u16*)0x8727314,
-	(u16*)0x8727522,
-	(u16*)0x8727b08,
-	(u16*)0x87282bc,
-	(u16*)0x87283a6,
-	(u16*)0x8728466,
-	(u16*)0x8728608,
-	(u16*)0x87286e8,
-	(u16*)0x87288ba,
-	(u16*)0x8728a12,
-	(u16*)0x8728bfc,
-	(u16*)0x8728e4a,
-	(u16*)0x8728f96,
-	(u16*)0x872904e
+static const u16* sMonologueTextPointersFrench[19] = {
+	(const u16*)0x872638c,
+	(const u16*)0x8726aa6,
+	(const u16*)0x8726cfe,
+	(const u16*)0x8726f04,
+	(const u16*)0x8727106,
+	(const u16*)0x8727314,
+	(const u16*)0x8727522,
+	(const u16*)0x8727b08,
+	(const u16*)0x87282bc,
+	(const u16*)0x87283a6,
+	(const u16*)0x8728466,
+	(const u16*)0x8728608,
+	(const u16*)0x87286e8,
+	(const u16*)0x87288ba,
+	(const u16*)0x8728a12,
+	(const u16*)0x8728bfc,
+	(const u16*)0x8728e4a,
+	(const u16*)0x8728f96,
+	(const u16*)0x872904e
 };
 
-static u16* sMonologueTextPointersItalian[19] = {
-	(u16*)0x87290fc,
-	(u16*)0x8729792,
-	(u16*)0x8729a6e,
-	(u16*)0x8729c84,
-	(u16*)0x8729f24,
-	(u16*)0x872a124,
-	(u16*)0x872a330,
-	(u16*)0x872a8f6,
-	(u16*)0x872b142,
-	(u16*)0x872b254,
-	(u16*)0x872b2c8,
-	(u16*)0x872b446,
-	(u16*)0x872b56e,
-	(u16*)0x872b7a6,
-	(u16*)0x872b8e6,
-	(u16*)0x872bab4,
-	(u16*)0x872bcc2,
-	(u16*)0x872bdb8,
-	(u16*)0x872be4a
+static const u16* sMonologueTextPointersItalian[19] = {
+	(const u16*)0x87290fc,
+	(const u16*)0x8729792,
+	(const u16*)0x8729a6e,
+	(const u16*)0x8729c84,
+	(const u16*)0x8729f24,
+	(const u16*)0x872a124,
+	(const u16*)0x872a330,
+	(const u16*)0x872a8f6,
+	(const u16*)0x872b142,
+	(const u16*)0x872b254,
+	(const u16*)0x872b2c8,
+	(const u16*)0x872b446,
+	(const u16*)0x872b56e,
+	(const u16*)0x872b7a6,
+	(const u16*)0x872b8e6,
+	(const u16*)0x872bab4,
+	(const u16*)0x872bcc2,
+	(const u16*)0x872bdb8,
+	(const u16*)0x872be4a
 };
 
-static u16* sMonologueTextPointersSpanish[19] = {
-	(u16*)0x872bef8,
-	(u16*)0x872c69c,
-	(u16*)0x872c8f2,
-	(u16*)0x872cb02,
-	(u16*)0x872cd92,
-	(u16*)0x872d002,
-	(u16*)0x872d212,
-	(u16*)0x872d81e,
-	(u16*)0x872e0b8,
-	(u16*)0x872e1b6,
-	(u16*)0x872e220,
-	(u16*)0x872e3d2,
-	(u16*)0x872e4ea,
-	(u16*)0x872e70a,
-	(u16*)0x872e848,
-	(u16*)0x872ea20,
-	(u16*)0x872ebf6,
-	(u16*)0x872ed50,
-	(u16*)0x872ee1c
+static const u16* sMonologueTextPointersSpanish[19] = {
+	(const u16*)0x872bef8,
+	(const u16*)0x872c69c,
+	(const u16*)0x872c8f2,
+	(const u16*)0x872cb02,
+	(const u16*)0x872cd92,
+	(const u16*)0x872d002,
+	(const u16*)0x872d212,
+	(const u16*)0x872d81e,
+	(const u16*)0x872e0b8,
+	(const u16*)0x872e1b6,
+	(const u16*)0x872e220,
+	(const u16*)0x872e3d2,
+	(const u16*)0x872e4ea,
+	(const u16*)0x872e70a,
+	(const u16*)0x872e848,
+	(const u16*)0x872ea20,
+	(const u16*)0x872ebf6,
+	(const u16*)0x872ed50,
+	(const u16*)0x872ee1c
 };
 
 static u8 sBlob_79e868_79eca0[] = INCBIN_U8("data/Blob_79e868_79eca0.bin");

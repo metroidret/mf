@@ -380,9 +380,53 @@ extern const struct FrameData sIntroNextPageArrowOam[5];
 
 extern const u16 sNextPageArrowPal[1 * PAL_ROW];
 
+extern const u32 sEndingSpaceMapGfx[1992];
+extern const u32 sEndingMonologueObjGfx[3439];
+extern const u32 sEndingMonologueBgGfx[3198];
+extern const u32 sEndingAnimalsGfx_Top[6083];
+extern const u32 sEndingAnimalsGfx_Bottom[2131];
 extern const u32 sEndingBslCrashingObjGfx[2961];
 extern const u32 sEndingShipFrontViewBgGfx[5039];
 extern const u32 sEndingBslCrashingBgGfx[4683];
+
+extern const struct FrameData sOam_6331ec[11];
+extern const struct FrameData sOam_633244[10];
+extern const struct FrameData sOam_633294[13];
+extern const struct FrameData sOam_6332fc[13];
+extern const struct FrameData sOam_633364[13];
+extern const struct FrameData sOam_6333cc[13];
+extern const struct FrameData sOam_633434[5];
+extern const struct FrameData sOam_63345c[5];
+extern const struct FrameData sOam_633484[2];
+extern const struct FrameData sOam_633494[11];
+extern const struct FrameData sOam_6334ec[11];
+extern const struct FrameData sOam_633544[11];
+extern const struct FrameData sOam_63359c[11];
+extern const struct FrameData sOam_6335f4[11];
+extern const struct FrameData sOam_63364c[11];
+extern const struct FrameData sOam_6336a4[11];
+extern const struct FrameData sOam_6336fc[11];
+extern const struct FrameData sOam_633754[2];
+extern const struct FrameData sOam_633764[3];
+extern const struct FrameData sOam_63377c[2];
+extern const struct FrameData sOam_63378c[3];
+extern const struct FrameData sOam_6337a4[8];
+extern const struct FrameData sOam_6337e4[8];
+extern const struct FrameData sOam_633824[8];
+extern const struct FrameData sOam_633864[8];
+extern const struct FrameData sOam_6338a4[6];
+extern const struct FrameData sOam_6338d4[32];
+extern const struct FrameData sOam_6339d4[79];
+extern const struct FrameData sOam_633c4c[14];
+extern const struct FrameData sOam_633cbc[53];
+extern const struct FrameData sOam_633e64[5];
+extern const struct FrameData sOam_633e8c[2];
+extern const struct FrameData sOam_633e9c[5];
+extern const struct FrameData sOam_633ec4[9];
+extern const struct FrameData sOam_633f0c[3];
+extern const struct FrameData sOam_633f24[3];
+extern const struct FrameData sOam_633f3c[3];
+
 
 extern const struct FrameData sEndingBslFallingOam[3];
 extern const struct FrameData sEndingBslReentryPlasmaOam[3];
@@ -410,6 +454,10 @@ extern const u16 sEndingBslCrashingObjPal[16 * PAL_ROW];
 extern const u16 sEndingShipFrontViewBgPal[16 * PAL_ROW];
 extern const u16 sEndingBslCrashingBgPal[16 * PAL_ROW];
 
+extern const u32 sEndingSpaceMapTilemap[368];
+extern const u32 sEndingSamusSittingTilemap[368];
+extern const u32 sEndingAnimalsTilemap_Top[551];
+extern const u32 sEndingAnimalsTilemap_Bottom[368];
 extern const u32 sEndingBslExplodingTilemap[418];
 extern const u32 sEndingShipFrontTilemap[199];
 extern const u32 sEndingSpaceExplosionTilemap[387];

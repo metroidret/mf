@@ -500,7 +500,7 @@ SECTIONS {
 
         src/ending_cutscene.o(.text);
 
-        asm/disasm_0x08095e24.o(.text);
+        asm/disasm_0x0809741c.o(.text);
 
         src/sa_x_close_up.o(.text);
 
