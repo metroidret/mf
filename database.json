@@ -27329,12 +27329,44 @@
     "size": 2
   },
   {
-    "path": "Blob_6131c8_6238f4.bin",
-    "count": "0x1072C",
+    "path": "ending_cutscene/space_map.gfx.lz",
+    "count": "0x7C8",
     "addr": {
       "us": "0x6131C8"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/monologue_obj.gfx.lz",
+    "count": "0xD6F",
+    "addr": {
+      "us": "0x6150E8"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/monologue_bg.gfx.lz",
+    "count": "0xC7E",
+    "addr": {
+      "us": "0x6186A4"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/animals_top.gfx.lz",
+    "count": "0x17C3",
+    "addr": {
+      "us": "0x61B89C"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/animals_bottom.gfx.lz",
+    "count": "0x853",
+    "addr": {
+      "us": "0x6217A8"
+    },
+    "size": 4
   },
   {
     "path": "ending_cutscene/bsl_crashing_obj.gfx.lz",
@@ -27361,15 +27393,7 @@
     "size": 4
   },
   {
-    "path": "Blob_62ff20_633f54.bin",
-    "count": "0x4034",
-    "addr": {
-      "us": "0x62FF20"
-    },
-    "size": 1
-  },
-  {
-    "path": "ending_cutscene/636438.pal",
+    "path": "ending_cutscene/monologue_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636438"
@@ -27377,7 +27401,7 @@
     "size": 2
   },
   {
-    "path": "ending_cutscene/636638.pal",
+    "path": "ending_cutscene/monologue_obj.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636638"
@@ -27385,7 +27409,7 @@
     "size": 2
   },
   {
-    "path": "ending_cutscene/636838.pal",
+    "path": "ending_cutscene/animals_bg.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636838"
@@ -27393,7 +27417,7 @@
     "size": 2
   },
   {
-    "path": "ending_cutscene/636a38.pal",
+    "path": "ending_cutscene/bsl_explosion_flash.pal",
     "count": "0x100",
     "addr": {
       "us": "0x636A38"
@@ -27425,12 +27449,36 @@
     "size": 2
   },
   {
-    "path": "Blob_637238_638c14.bin",
-    "count": "0x19DC",
+    "path": "ending_cutscene/space_map.tm.lz",
+    "count": "0x170",
     "addr": {
       "us": "0x637238"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/samus_sitting.tm.lz",
+    "count": "0x170",
+    "addr": {
+      "us": "0x6377F8"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/animals_top.tm.lz",
+    "count": "0x227",
+    "addr": {
+      "us": "0x637DB8"
+    },
+    "size": 4
+  },
+  {
+    "path": "ending_cutscene/animals_bottom.tm.lz",
+    "count": "0x170",
+    "addr": {
+      "us": "0x638654"
+    },
+    "size": 4
   },
   {
     "path": "ending_cutscene/bsl_exploding.tm.lz",
@@ -28473,8 +28521,8 @@
     "size": 1
   },
   {
-    "path": "Blob_79c394_79c3c8.bin",
-    "count": "0x34",
+    "path": "Blob_79c394_79c3ac.bin",
+    "count": "0x18",
     "addr": {
       "us": "0x79C394"
     },
