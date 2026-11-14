@@ -557,7 +557,7 @@ boolu32 unk_87920(void)
             break;
 
         case 4:
-            done = DiedFromSr388CollisionHandler();
+            done = DiedOnSr388CollisionHandler();
     }
 
     if (done)
