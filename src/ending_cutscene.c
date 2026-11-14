@@ -165,7 +165,7 @@ void EndingShipFrontViewInit(void)
 
     DMA3_FILL_32(0, &CUTSCENE_DATA.oam, sizeof(CUTSCENE_DATA.oam));
     DMA3_FILL_16(0, &CUTSCENE_DATA.unk_14, sizeof(CUTSCENE_DATA.unk_14));
-    DMA3_FILL_16(0, &CUTSCENE_DATA.unk_110, 0xFC);
+    DMA3_FILL_16(0, &CUTSCENE_DATA.paletteTransferFlag, 0xFC);
 
     LZ77UncompVram(sEndingShipFrontViewBgGfx, VRAM_BASE);
     LZ77UncompVram(sEndingShipFrontTilemap, VRAM_BASE + 0xF000);
@@ -225,13 +225,13 @@ boolu32 EndingBslCrashingProcess(void)
     boolu32 finished;
 
     finished = FALSE;
-    
+
     APPLY_DELTA_TIME_INC(CUTSCENE_DATA.timer);
-    
+
     switch (CUTSCENE_DATA.subStage)
     {
         case 0:
-            if (gWrittenToBldy)
+            if (gWrittenToBldy != 0)
             {
                 if (gWrittenToBldy == BLDY_MAX_VALUE)
                     SoundPlay_3b1c(SOUND_24B);
@@ -261,8 +261,8 @@ boolu32 EndingBslCrashingProcess(void)
             {
                 gWrittenToBldalpha_Eva = 10;
                 gWrittenToBldalpha_Evb = 10;
-                CUTSCENE_DATA.unk_110 = 1;
-                CUTSCENE_DATA.unk_111 = 0;
+                CUTSCENE_DATA.paletteTransferFlag = TRUE;
+                CUTSCENE_DATA.paletteTransferRow = 0;
             }
             else if (CUTSCENE_DATA.timer == 2 * DELTA_TIME)
             {
@@ -277,13 +277,13 @@ boolu32 EndingBslCrashingProcess(void)
             break;
             
         case 3:
-            if (CUTSCENE_DATA.unk_111 < 15)
+            if (CUTSCENE_DATA.paletteTransferRow < ARRAY_SIZE(sEndingBslExplosionFlashPal) / PAL_ROW - 1)
             {
                 if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 15))
                 {
                     CUTSCENE_DATA.timer = 0;
-                    CUTSCENE_DATA.unk_110 = 1;
-                    CUTSCENE_DATA.unk_111++;
+                    CUTSCENE_DATA.paletteTransferFlag = TRUE;
+                    CUTSCENE_DATA.paletteTransferRow++;
                 }
             }
             else if (CUTSCENE_DATA.timer == ONE_THIRD_SECOND)
@@ -413,7 +413,7 @@ boolu32 EndingBslCrashing(void)
             
         case 1:
             SpecialCutsceneFadeIn();
-            if (!gWrittenToBldy)
+            if (gWrittenToBldy == 0)
                 CUTSCENE_DATA.stage = 2;
             break;
             
@@ -478,9 +478,9 @@ void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
         }
 
         if (pOam->type == ENDING_BSL_CRASHING_OAM_TYPE_FALLING_BSL)
-            pOam->scaling--;
+            pOam->scaling -= Q_8_8(0.005);
         else 
-            pOam->scaling -= 2;
+            pOam->scaling -= Q_8_8(0.01);
     }
     else if (pOam->stage == 2)
     {
@@ -496,7 +496,7 @@ void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
         else
         {
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
     else if (pOam->stage == 3)
@@ -505,7 +505,7 @@ void EndingProcessFallingBsl(struct SpecialCutsceneOam* pOam)
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -524,7 +524,7 @@ void EndingProcessReentryDebris(struct SpecialCutsceneOam* pOam)
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -545,7 +545,7 @@ void EndingProcessLeavingSmallShip(struct SpecialCutsceneOam* pOam)
         if (pOam->unk_A == CONVERT_SECONDS(2.5f))
         {
             pOam->unk_A = 0;
-            pOam->unk_18_0 = 1;
+            pOam->isDrawn = TRUE;
             pOam->stage = 1;
         }
     }
@@ -557,7 +557,7 @@ void EndingProcessLeavingSmallShip(struct SpecialCutsceneOam* pOam)
         if (pOam->xPosition < 0)
         {
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -578,7 +578,7 @@ void EndingProcessLeavingBigShip(struct SpecialCutsceneOam* pOam)
         if (pOam->unk_A == 240)
         {
             pOam->unk_A = 0;
-            pOam->unk_18_0 = 1;
+            pOam->isDrawn = TRUE;
             pOam->stage = 1;
         }
     }
@@ -590,7 +590,7 @@ void EndingProcessLeavingBigShip(struct SpecialCutsceneOam* pOam)
         if (pOam->xPosition > 280)
         {
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -689,7 +689,7 @@ u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 y
     CUTSCENE_DATA.oam[slot].xPosition = xPosition;
     CUTSCENE_DATA.oam[slot].yPosition = yPosition;
     CUTSCENE_DATA.oam[slot].type = type;
-    CUTSCENE_DATA.oam[slot].unk_18_0 = 1;
+    CUTSCENE_DATA.oam[slot].isDrawn = TRUE;
 
     if (type == ENDING_BSL_CRASHING_OAM_TYPE_FALLING_BSL)
     {
@@ -716,14 +716,14 @@ u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 y
     }
     else if (type == ENDING_BSL_CRASHING_OAM_TYPE_SHIP_SMALL)
     {
-        CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
+        CUTSCENE_DATA.oam[slot].isDrawn = FALSE;
         CUTSCENE_DATA.oam[slot].priority = 2;
         CUTSCENE_DATA.oam[slot].pOam = sEndingLeavingSmallShipOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessLeavingSmallShip;
     }
     else if (type == ENDING_BSL_CRASHING_OAM_TYPE_SHIP_BIG)
     {
-        CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
+        CUTSCENE_DATA.oam[slot].isDrawn = FALSE;
         CUTSCENE_DATA.oam[slot].pOam = sEndingLeavingBigShipOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessLeavingBigShip;
     }
@@ -742,7 +742,7 @@ u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 y
     }
     else if (type == ENDING_BSL_CRASHING_OAM_TYPE_FRONT_FACING_SHIP)
     {
-        CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
+        CUTSCENE_DATA.oam[slot].isDrawn = FALSE;
         CUTSCENE_DATA.oam[slot].pOam = sEndingBslExplosionAfterglowOam;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessFrontFacingShip;
     }
@@ -768,10 +768,10 @@ void EndingBslCrashingVblank(void)
     WRITE_16(REG_BG3HOFS, gBg3XPosition);
     WRITE_16(REG_BG3VOFS, gBg3YPosition);
 
-    if (CUTSCENE_DATA.unk_110 == 1)
+    if (CUTSCENE_DATA.paletteTransferFlag == TRUE)
     {
-        CUTSCENE_DATA.unk_110 = 0;
-        DMA3_COPY_32(&sEndingBslExplosionFlashPal[CUTSCENE_DATA.unk_111 * PAL_ROW], PALRAM_BASE + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));   
+        CUTSCENE_DATA.paletteTransferFlag = FALSE;
+        DMA3_COPY_32(&sEndingBslExplosionFlashPal[CUTSCENE_DATA.paletteTransferRow * PAL_ROW], PALRAM_BASE + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));   
     }
 }
 
@@ -913,7 +913,7 @@ void EndingAdamConversationInit(void)
     
     DMA3_FILL_32(0, &CUTSCENE_DATA.oam, sizeof(CUTSCENE_DATA.oam));
     DMA3_FILL_16(0, &CUTSCENE_DATA.unk_14, sizeof(CUTSCENE_DATA.unk_14));
-    DMA3_FILL_16(0, &CUTSCENE_DATA.unk_110, 0xFC);
+    DMA3_FILL_16(0, &CUTSCENE_DATA.paletteTransferFlag, 0xFC);
     
     LZ77UncompVram(sEndingSpaceMapGfx, VRAM_BASE + 0x8000);
     LZ77UncompVram(sEndingSpaceMapTilemap, VRAM_BASE + 0xF800);
@@ -980,7 +980,7 @@ void EndingAnimalsInit(void)
 
     DMA3_FILL_32(0, &CUTSCENE_DATA.oam, sizeof(CUTSCENE_DATA.oam));
     DMA3_FILL_16(0, &CUTSCENE_DATA.unk_14, sizeof(CUTSCENE_DATA.unk_14));
-    DMA3_FILL_16(0, &CUTSCENE_DATA.unk_110, 0xFC);
+    DMA3_FILL_16(0, &CUTSCENE_DATA.paletteTransferFlag, 0xFC);
     
     LZ77UncompVram(sEndingAnimalsGfx_Top, VRAM_BASE);
     LZ77UncompVram(sEndingAnimalsGfx_Bottom, VRAM_BASE + 0x8000);
@@ -1051,7 +1051,7 @@ boolu32 EndingInShipProcess(void)
             {
                 CUTSCENE_DATA.timer = 0;
                 
-                if (gWrittenToBldy)
+                if (gWrittenToBldy != 0)
                 {
                     gWrittenToBldy--;
                 }
@@ -1338,7 +1338,7 @@ boolu32 EndingInShip(void)
     
         case 1:
             SpecialCutsceneFadeIn();
-            if (!gWrittenToBldy)
+            if (gWrittenToBldy == 0)
                 CUTSCENE_DATA.stage = 2;
             break;
     
@@ -1483,7 +1483,7 @@ void EndingProcessBslExplosionPopup(struct SpecialCutsceneOam* pOam)
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
                 pOam->type = 0;
-                pOam->unk_18_0 = 0;
+                pOam->isDrawn = FALSE;
         }
     }
 }
@@ -1643,7 +1643,7 @@ void EndingProcessAdamPanel(struct SpecialCutsceneOam* pOam)
                 CUTSCENE_DATA.subStage = 12;
 
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -1810,7 +1810,7 @@ u8 EndingDialogueSetupOam(EndingDialogueOamType type, s16 xPosition, s16 yPositi
     CUTSCENE_DATA.oam[slot].xPosition = xPosition;
     CUTSCENE_DATA.oam[slot].yPosition = yPosition;
     CUTSCENE_DATA.oam[slot].type = type;
-    CUTSCENE_DATA.oam[slot].unk_18_0 = 1;
+    CUTSCENE_DATA.oam[slot].isDrawn = TRUE;
     
     if (type == ENDING_DIALOGUE_OAM_TYPE_MONOLOGUE_CURSOR)
     {
@@ -1866,7 +1866,7 @@ u8 EndingDialogueSetupOam(EndingDialogueOamType type, s16 xPosition, s16 yPositi
     }
     else if (type == ENDING_DIALOGUE_OAM_TYPE_ANIMAL_SCROLLING)
     {
-        CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
+        CUTSCENE_DATA.oam[slot].isDrawn = FALSE;
         CUTSCENE_DATA.oam[slot].pFunction = EndingProcessAnimalsScrolling;
     }
     else if (type == ENDING_DIALOGUE_OAM_TYPE_SCREEN_GLARE)
@@ -1878,7 +1878,7 @@ u8 EndingDialogueSetupOam(EndingDialogueOamType type, s16 xPosition, s16 yPositi
     }
     else if (type == ENDING_DIALOGUE_OAM_TYPE_BSL_EXPLOSION_POPUP_2)
     {
-        CUTSCENE_DATA.oam[slot].unk_18_0 = 0;
+        CUTSCENE_DATA.oam[slot].isDrawn = FALSE;
         CUTSCENE_DATA.oam[slot].pOam = sEndingBslExplosionPopupOam_Opening;
         CUTSCENE_DATA.oam[slot].pFunction = unk_96f00;
     }

@@ -33,7 +33,7 @@ boolu32 DiedOnSr388CollisionHandler(void)
             break;
 
         case 2:
-            if (!CUTSCENE_DATA.unk_20E)
+            if (CUTSCENE_DATA.unk_20E == 0)
             {
                 if (gWrittenToBldy < BLDY_MAX_VALUE)
                     gWrittenToBldy++;
@@ -105,9 +105,9 @@ void DiedOnSr388CollisionInit(void)
 
     SoundPlay_3b1c(SOUND_24D);
 
-    DiedOnSr388CollisionSetupOam(DIED_ON_BSL_COLLISION_OAM_TYPE_REENTRY_PLASMA, 164, 40, TRUE);
-    DiedOnSr388CollisionSetupOam(DIED_ON_BSL_COLLISION_OAM_TYPE_FALLING_BSL, 164, 40, TRUE);
-    DiedOnSr388CollisionSetupOam(DIED_ON_BSL_COLLISION_OAM_TYPE_REENTRY_DEBRIS, 134, 60, TRUE);
+    DiedOnSr388CollisionSetupOam(DIED_ON_SR388_COLLISION_OAM_TYPE_REENTRY_PLASMA, 164, 40, TRUE);
+    DiedOnSr388CollisionSetupOam(DIED_ON_SR388_COLLISION_OAM_TYPE_FALLING_BSL, 164, 40, TRUE);
+    DiedOnSr388CollisionSetupOam(DIED_ON_SR388_COLLISION_OAM_TYPE_REENTRY_DEBRIS, 134, 60, TRUE);
 
     SpecialCutsceneProcessOam();
     SpecialCutsceneDrawAllOam();
@@ -135,8 +135,8 @@ boolu32 DiedOnSr388CollisionProcess(void)
     
     switch (CUTSCENE_DATA.subStage)
     {
-        case 0:
-            if (gWrittenToBldy)
+        case DIED_ON_SR388_COLLISION_SUBSTAGE_FADE_IN:
+            if (gWrittenToBldy != 0)
             {
                 gWrittenToBldy--;
             }
@@ -144,62 +144,62 @@ boolu32 DiedOnSr388CollisionProcess(void)
             {
                 WRITE_16(REG_BLDCNT, BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG2_SECOND_TARGET_PIXEL | BLDCNT_BG3_SECOND_TARGET_PIXEL);
                 CUTSCENE_DATA.timer = 0;
-                CUTSCENE_DATA.subStage = 1;
+                CUTSCENE_DATA.subStage = DIED_ON_SR388_COLLISION_SUBSTAGE_BSL_FALLING;
             }
-    
+
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
             break;
-            
-        case 1:
+
+        case DIED_ON_SR388_COLLISION_SUBSTAGE_BSL_FALLING:
             CUTSCENE_DATA.timer = 0;
             
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
             break;
             
-        case 2:
+        case DIED_ON_SR388_COLLISION_SUBSTAGE_EXPLOSION_INIT:
             if (CUTSCENE_DATA.timer == DELTA_TIME)
             {
                 gWrittenToBldalpha_Eva = 10;
                 gWrittenToBldalpha_Evb = 10;
-                CUTSCENE_DATA.unk_110 = 1;
-                CUTSCENE_DATA.unk_111 = 0;
+                CUTSCENE_DATA.paletteTransferFlag = TRUE;
+                CUTSCENE_DATA.paletteTransferRow = 0;
             }
             else if (CUTSCENE_DATA.timer == 2 * DELTA_TIME)
             {
                 WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_BG3_SECOND_TARGET_PIXEL);
                 WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_BG1);
                 CUTSCENE_DATA.timer = 0;
-                CUTSCENE_DATA.subStage = 3;
+                CUTSCENE_DATA.subStage = DIED_ON_SR388_COLLISION_SUBSTAGE_EXPLOSION;
             }
     
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
             break;
-    
-        case 3:
-            if (CUTSCENE_DATA.unk_111 < 15)
+
+        case DIED_ON_SR388_COLLISION_SUBSTAGE_EXPLOSION:
+            if (CUTSCENE_DATA.paletteTransferRow < ARRAY_SIZE(sEndingBslExplosionFlashPal) / PAL_ROW - 1)
             {
                 if (CUTSCENE_DATA.timer == CONVERT_SECONDS(1.f / 15))
                 {
                     CUTSCENE_DATA.timer = 0;
-                    CUTSCENE_DATA.unk_110 = 1;
-                    CUTSCENE_DATA.unk_111++;
+                    CUTSCENE_DATA.paletteTransferFlag = TRUE;
+                    CUTSCENE_DATA.paletteTransferRow++;
                 }
             }
             else if (CUTSCENE_DATA.timer == CONVERT_SECONDS(.25f))
             {
                 CUTSCENE_DATA.timer = 0;
                 gWrittenToBldy = BLDY_MAX_VALUE;
-                CUTSCENE_DATA.subStage = 4;
+                CUTSCENE_DATA.subStage = DIED_ON_SR388_COLLISION_SUBSTAGE_FADE_OUT;
             }
             
             SpecialCutsceneProcessOam();
             SpecialCutsceneDrawAllOam();
             break;
             
-        case 4:
+        case DIED_ON_SR388_COLLISION_SUBSTAGE_FADE_OUT:
             if (gWrittenToBldalpha_Eva < BLDALPHA_MAX_VALUE)
             {
                 if (CUTSCENE_DATA.timer == CONVERT_SECONDS(.1f))
@@ -216,7 +216,7 @@ boolu32 DiedOnSr388CollisionProcess(void)
                 if (CUTSCENE_DATA.timer == CONVERT_SECONDS(.25f)) 
                 {
                     CUTSCENE_DATA.timer = 0;
-                    CUTSCENE_DATA.subStage = 0;
+                    CUTSCENE_DATA.subStage = DIED_ON_SR388_COLLISION_SUBSTAGE_FADE_IN;
                     finished = TRUE;
                 }
             }
@@ -241,34 +241,34 @@ boolu32 DiedOnSr388Collision(void)
 
     switch (CUTSCENE_DATA.stage)
     {
-        case 0:
+        case DIED_ON_SR388_COLLISION_STAGE_INIT:
             DiedOnSr388CollisionInit();
-            CUTSCENE_DATA.stage = 2;
+            CUTSCENE_DATA.stage = DIED_ON_SR388_COLLISION_STAGE_PROCESS;
             break;
             
-        case 1:
+        case DIED_ON_SR388_COLLISION_STAGE_FADE_IN:
             SpecialCutsceneFadeIn();
-            if (!gWrittenToBldy)
-                CUTSCENE_DATA.stage = 2;
+            if (gWrittenToBldy == 0)
+                CUTSCENE_DATA.stage = DIED_ON_SR388_COLLISION_STAGE_PROCESS;
             break;
             
-        case 2:
+        case DIED_ON_SR388_COLLISION_STAGE_PROCESS:
             if (DiedOnSr388CollisionProcess())
             {
-                CUTSCENE_DATA.subStage = 0;
+                CUTSCENE_DATA.subStage = DIED_ON_SR388_COLLISION_SUBSTAGE_FADE_IN;
                 CUTSCENE_DATA.unk_213 = 0;
-                CUTSCENE_DATA.stage = 3;
+                CUTSCENE_DATA.stage = DIED_ON_SR388_COLLISION_STAGE_FADE_OUT;
             }
             break;
     
-        case 3:
+        case DIED_ON_SR388_COLLISION_STAGE_FADE_OUT:
             if (gWrittenToBldy < BLDY_MAX_VALUE)
             {
                 gWrittenToBldy++;
             }
             else
             {
-                CUTSCENE_DATA.stage = 0;
+                CUTSCENE_DATA.stage = DIED_ON_SR388_COLLISION_STAGE_INIT;
                 finished = TRUE;
             }
             
@@ -312,26 +312,26 @@ void DiedOnSr388CollisionProcessFallingBsl(struct SpecialCutsceneOam* pOam)
             pOam->stage = 2;
         }
 
-        if (pOam->type == DIED_ON_BSL_COLLISION_OAM_TYPE_FALLING_BSL)
-            pOam->scaling--;
+        if (pOam->type == DIED_ON_SR388_COLLISION_OAM_TYPE_FALLING_BSL)
+            pOam->scaling -= Q_8_8(0.005);
         else 
-            pOam->scaling -= 2;
+            pOam->scaling -= Q_8_8(0.01);
     }
     else if (pOam->stage == 2)
     {
         pOam->stage = 3;
 
-        if (pOam->type == DIED_ON_BSL_COLLISION_OAM_TYPE_FALLING_BSL)
+        if (pOam->type == DIED_ON_SR388_COLLISION_OAM_TYPE_FALLING_BSL)
         {
             pOam->pOam = sEndingBslExplosionOam_Small;
             pOam->animationDurationCounter = 0;
             pOam->currentAnimationFrame = 0;
-            CUTSCENE_DATA.subStage = 2;
+            CUTSCENE_DATA.subStage = DIED_ON_SR388_COLLISION_SUBSTAGE_EXPLOSION_INIT;
         }
         else
         {
-            pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->type = DIED_ON_SR388_COLLISION_OAM_TYPE_NONE;
+            pOam->isDrawn = FALSE;
         }
     }
     else if (pOam->stage == 3)
@@ -339,8 +339,8 @@ void DiedOnSr388CollisionProcessFallingBsl(struct SpecialCutsceneOam* pOam)
         frame = &pOam->pOam[pOam->currentAnimationFrame];
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
-            pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->type = DIED_ON_SR388_COLLISION_OAM_TYPE_NONE;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -358,8 +358,8 @@ void DiedOnSr388CollisionProcessReentryDebris(struct SpecialCutsceneOam* pOam)
         frame = &pOam->pOam[pOam->currentAnimationFrame];
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
-            pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->type = DIED_ON_SR388_COLLISION_OAM_TYPE_NONE;
+            pOam->isDrawn = FALSE;
         }
     }
 }
@@ -376,7 +376,7 @@ u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition,
     {
         for (slot = 0; slot < ARRAY_SIZE(CUTSCENE_DATA.oam); slot++)
         {
-            if (CUTSCENE_DATA.oam[slot].type == 0)
+            if (CUTSCENE_DATA.oam[slot].type == DIED_ON_SR388_COLLISION_OAM_TYPE_NONE)
                 break;
         }
 
@@ -387,7 +387,7 @@ u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition,
     {
         for (slot = ARRAY_SIZE(CUTSCENE_DATA.oam) - 1; slot >= 0; slot--)
         {
-            if (CUTSCENE_DATA.oam[slot].type == 0)
+            if (CUTSCENE_DATA.oam[slot].type == DIED_ON_SR388_COLLISION_OAM_TYPE_NONE)
                 break;
         }
 
@@ -400,9 +400,9 @@ u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition,
     CUTSCENE_DATA.oam[slot].xPosition = xPosition;
     CUTSCENE_DATA.oam[slot].yPosition = yPosition;
     CUTSCENE_DATA.oam[slot].type = type;
-    CUTSCENE_DATA.oam[slot].unk_18_0 = 1;
+    CUTSCENE_DATA.oam[slot].isDrawn = TRUE;
 
-    if (type == DIED_ON_BSL_COLLISION_OAM_TYPE_FALLING_BSL)
+    if (type == DIED_ON_SR388_COLLISION_OAM_TYPE_FALLING_BSL)
     {
         CUTSCENE_DATA.oam[slot].scaling = Q_8_8(1);
         CUTSCENE_DATA.oam[slot].priority = 2;
@@ -410,7 +410,7 @@ u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition,
         CUTSCENE_DATA.oam[slot].pOam = sEndingBslFallingOam;
         CUTSCENE_DATA.oam[slot].pFunction = DiedOnSr388CollisionProcessFallingBsl;
     }
-    else if (type == DIED_ON_BSL_COLLISION_OAM_TYPE_REENTRY_PLASMA)
+    else if (type == DIED_ON_SR388_COLLISION_OAM_TYPE_REENTRY_PLASMA)
     {
         CUTSCENE_DATA.oam[slot].scaling = Q_8_8(2);
         CUTSCENE_DATA.oam[slot].unk_18_3 = 1;
@@ -419,7 +419,7 @@ u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition,
         CUTSCENE_DATA.oam[slot].pOam = sEndingBslReentryPlasmaOam;
         CUTSCENE_DATA.oam[slot].pFunction = DiedOnSr388CollisionProcessFallingBsl;
     }
-    else if (type == DIED_ON_BSL_COLLISION_OAM_TYPE_REENTRY_DEBRIS)
+    else if (type == DIED_ON_SR388_COLLISION_OAM_TYPE_REENTRY_DEBRIS)
     {
         CUTSCENE_DATA.oam[slot].priority = 2;
         CUTSCENE_DATA.oam[slot].pOam = sEndingBslReentryDebrisOam;
@@ -447,10 +447,10 @@ void DiedOnSr388CollisionVblank(void)
     WRITE_16(REG_BG3HOFS, gBg3XPosition);
     WRITE_16(REG_BG3VOFS, gBg3YPosition);
 
-    if (CUTSCENE_DATA.unk_110 == 1)
+    if (CUTSCENE_DATA.paletteTransferFlag == TRUE)
     {
-        CUTSCENE_DATA.unk_110 = 0;
-        DMA3_COPY_32(&sEndingBslExplosionFlashPal[CUTSCENE_DATA.unk_111 * PAL_ROW], PALRAM_BASE + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));   
+        CUTSCENE_DATA.paletteTransferFlag = FALSE;
+        DMA3_COPY_32(&sEndingBslExplosionFlashPal[CUTSCENE_DATA.paletteTransferRow * PAL_ROW], PALRAM_BASE + 9 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));   
     }
 }
 

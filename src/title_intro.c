@@ -330,7 +330,7 @@ boolu32 TitleIntroShipAlertProcess(void)
             break;
         
         case 1:
-            if (gWrittenToBldy)
+            if (gWrittenToBldy != 0)
             {
                 gWrittenToBldy -= 2;
             }
@@ -363,7 +363,7 @@ boolu32 TitleIntroShipAlertProcess(void)
         case 3:
             if (gWrittenToBldy < BLDY_MAX_VALUE)
             {
-                if (!gWrittenToBldy)
+                if (gWrittenToBldy == 0)
                     ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_1EB].trackGroupNumber].pTrack, 10);
 
                 gWrittenToBldy += 2;
@@ -476,7 +476,7 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	        break;
 	
 	    case 1:
-	        if (gWrittenToBldy)
+	        if (gWrittenToBldy != 0)
 	        {
 	            if (gWrittenToBldy == BLDY_MAX_VALUE)
 	            {
@@ -544,7 +544,7 @@ boolu32 TitleIntroSamusDriftingOutProcess(void)
 	            {
 	                CUTSCENE_DATA.timer = 0;
 	
-	                if (!gWrittenToBldy)
+	                if (gWrittenToBldy == 0)
 	                    ApplyMusicSoundFading(sMusicTrackDataRom[sSoundDataEntries[SOUND_1EC].trackGroupNumber].pTrack, 30);
 	
 	                gWrittenToBldy++;
@@ -586,7 +586,7 @@ boolu32 TitleIntroSamusShipCrashing(void)
             break;
 
         case 1:
-            if (gWrittenToBldy)
+            if (gWrittenToBldy != 0)
                 gWrittenToBldy--;
             else
                 CUTSCENE_DATA.stage = 2;
@@ -778,7 +778,7 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
             if (pOam->unk_8 == 10)
             {
                 pOam->unk_8 = 0;
-                pOam->scaling--;
+                pOam->scaling -= Q_8_8(0.005);
             }
         }
 
@@ -811,7 +811,7 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
         if (pOam->unk_8 == 2)
         {
             pOam->unk_8 = 0;
-            pOam->scaling--;
+            pOam->scaling -= Q_8_8(0.005);
         }
         
         if (pOam->timer == 0)
@@ -842,7 +842,7 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
         if (pOam->unk_8 == 1)
         {
             pOam->unk_8 = 0;
-            pOam->scaling--;
+            pOam->scaling -= Q_8_8(0.005);
         }
         
         if (pOam->timer == 0)
@@ -884,7 +884,7 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
         if (pOam->unk_8 == 1)
         {
             pOam->unk_8 = 0;
-            pOam->scaling--;
+            pOam->scaling -= Q_8_8(0.005);
         }
 
         if (pOam->scaling < 3)
@@ -917,7 +917,7 @@ void TitleIntroProcessDriftingShip(struct SpecialCutsceneOam* pOam)
         if (frame[0].timer == pOam->animationDurationCounter && frame[1].timer == 0)
         {
             pOam->type = 0;
-            pOam->unk_18_0 = 0;
+            pOam->isDrawn = FALSE;
         }
     }
 }
