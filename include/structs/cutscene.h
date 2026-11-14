@@ -22,7 +22,7 @@ struct SpecialCutsceneOam {
     u8 rotation;
     u8 unk_16;
     u8 unk_17;
-    u8 unk_18_0 : 1;
+    boolu32 isDrawn : 1;
     u32 affineMode : 2;         // Can't be u8
     u8 unk_18_3 : 2;
     u8 unk_18_5 : 1;
@@ -45,8 +45,8 @@ struct CutsceneData {
     u16 unk_10;
     u16 unk_12;
     u8 unk_14[252];
-    u8 unk_110;
-    u8 unk_111;
+    boolu8 paletteTransferFlag;
+    u8 paletteTransferRow;
     u8 unk_112[26];
     u8 unk_12C;
     u8 unk_12D;

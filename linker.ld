@@ -499,8 +499,9 @@ SECTIONS {
         asm/disasm_0x080930C0.o(.text);
 
         src/ending_cutscene.o(.text);
+        src/cutscenes/died_from_sr388_collision.o(.text);
 
-        asm/disasm_0x0809741c.o(.text);
+        asm/disasm_0x08097dd0.o(.text);
 
         src/sa_x_close_up.o(.text);
 

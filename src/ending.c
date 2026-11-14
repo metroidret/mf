@@ -60,7 +60,7 @@ boolu32 CreditsHandler(void)
             break;
 
         case 1:
-            if (gWrittenToBldy)
+            if (gWrittenToBldy != 0)
             {
                 gWrittenToBldy--;
             }
@@ -591,7 +591,7 @@ boolu32 EndingSamusPosingInit(void)
  */
 boolu32 EndingFadeIn(void)
 {
-    if (gWrittenToBldy)
+    if (gWrittenToBldy != 0)
     {
         if (ENDING_DATA.unk_97 & 1)
             gWrittenToBldy--;
