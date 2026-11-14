@@ -302,7 +302,7 @@ void AgbMain(void)
                 break;
 
             case GAME_MODE_DIED_FROM_SR388_COLLISION:
-                if (DiedFromSr388CollisionHandler())
+                if (DiedOnSr388CollisionHandler())
                 {
                     gMainGameMode = GAME_MODE_GAME_OVER;
                     gSubGameMode1 = 0;
