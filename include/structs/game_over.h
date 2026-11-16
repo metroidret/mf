@@ -3,8 +3,6 @@
 
 #include "types.h"
 
-#define GAME_OVER_DATA gNonGameplayRam.gameOver
-
 struct GameOverOam;
 typedef void (*GameOverOamFunc_T)(struct GameOverOam*);
 
@@ -16,7 +14,7 @@ struct GameOverOam {
     u8 currentAnimationFrame;
     u8 timer;
     u8 unk_C;
-    u8 unk_D;
+    boolu8 ignoreInput;
     u8 objMode;
     u8 priority;
     boolu8 xFlip;
@@ -30,7 +28,7 @@ struct GameOverData {
     u8 unk_0;
     u8 stage;
     u8 timer;
-    u8 unk_3;
+    u8 chosenOption;
     struct GameOverOam oam[3];
 };
 

@@ -5,13 +5,18 @@
 
 #include "gba/memory.h"
 
-extern const u8 sData_734220[12];
+extern const u8 sGameOverOamXFlipOffsets[12];
 
 extern const u32 sGameOverBgGfx[5651];
 extern const u32 sGameOverObjGfx[184];
+extern const u32 sGameOverTextGfx_English[438];
+extern const u32 sGameOverTextGfx_German[446];
+extern const u32 sGameOverTextGfx_French[504];
+extern const u32 sGameOverTextGfx_Italian[489];
+extern const u32 sGameOverTextGfx_Spanish[475];
 
-extern const struct FrameData sOam_73c274[5];
-extern const struct FrameData sOam_73c29c[9];
+extern const struct FrameData sGameOverSamusHelmetOam_Idle[5];
+extern const struct FrameData sGameOverSamusHelmetOam_Turning[9];
 
 extern const u16 sGameOverBgPal[16 * PAL_ROW];
 extern const u16 sGameOverObjPal[16 * PAL_ROW];

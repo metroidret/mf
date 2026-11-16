@@ -5,8 +5,7 @@
 
 #include "gba/memory.h"
 
-// Offsets for X flipped OAMs
-const u8 sData_734220[12] = {
+const u8 sGameOverOamXFlipOffsets[12] = {
 	1, 2, 4, 8,
 	2, 4, 4, 8,
 	1, 1, 2, 4
@@ -15,7 +14,11 @@ const u8 sData_734220[12] = {
 const u32 sGameOverBgGfx[5651] = INCBIN_U32("data/game_over/background.gfx.lz");
 const u32 sGameOverObjGfx[184] = INCBIN_U32("data/game_over/object.gfx.lz");
 
-static const u8 sBlob_739d58_73c218[] = INCBIN_U8("data/Blob_739d58_73c218.bin");
+const u32 sGameOverTextGfx_English[438] = INCBIN_U32("data/game_over/text_english.gfx.lz");
+const u32 sGameOverTextGfx_German[446] = INCBIN_U32("data/game_over/text_german.gfx.lz");
+const u32 sGameOverTextGfx_French[504] = INCBIN_U32("data/game_over/text_french.gfx.lz");
+const u32 sGameOverTextGfx_Italian[489] = INCBIN_U32("data/game_over/text_italian.gfx.lz");
+const u32 sGameOverTextGfx_Spanish[475] = INCBIN_U32("data/game_over/text_spanish.gfx.lz");
 
 static const u16 sOamFrame_73c218[OAM_DATA_SIZE(1)] = {
 	1,
@@ -65,7 +68,7 @@ static const u16 sOamFrame_73c26a[OAM_DATA_SIZE(1)] = {
 	OAM_ENTRY(-8, -8, OAM_DIMS_16x16, OAM_NO_FLIP, 2, 6, 0),
 };
 
-const struct FrameData sOam_73c274[5] = {
+const struct FrameData sGameOverSamusHelmetOam_Idle[5] = {
 	[0] = {
 		.pFrame = sOamFrame_73c218,
 		.timer = 14
@@ -85,7 +88,7 @@ const struct FrameData sOam_73c274[5] = {
 	[4] = FRAME_DATA_TERMINATOR
 };
 
-const struct FrameData sOam_73c29c[9] = {
+const struct FrameData sGameOverSamusHelmetOam_Turning[9] = {
 	[0] = {
 		.pFrame = sOamFrame_73c218,
 		.timer = 8

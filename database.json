@@ -27945,12 +27945,44 @@
     "size": 4
   },
   {
-    "path": "Blob_739d58_73c218.bin",
-    "count": "0x24C0",
+    "path": "game_over/text_english.gfx.lz",
+    "count": "0x1B6",
     "addr": {
       "us": "0x739D58"
     },
-    "size": 1
+    "size": 4
+  },
+  {
+    "path": "game_over/text_german.gfx.lz",
+    "count": "0x1BE",
+    "addr": {
+      "us": "0x73A430"
+    },
+    "size": 4
+  },
+  {
+    "path": "game_over/text_french.gfx.lz",
+    "count": "0x1F8",
+    "addr": {
+      "us": "0x73AB28"
+    },
+    "size": 4
+  },
+  {
+    "path": "game_over/text_italian.gfx.lz",
+    "count": "0x1E9",
+    "addr": {
+      "us": "0x73B308"
+    },
+    "size": 4
+  },
+  {
+    "path": "game_over/text_spanish.gfx.lz",
+    "count": "0x1DB",
+    "addr": {
+      "us": "0x73BAAC"
+    },
+    "size": 4
   },
   {
     "path": "game_over/background.pal",
