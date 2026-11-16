@@ -8,6 +8,7 @@
 #include "structs/sa_x_close_up.h"
 #include "structs/ending.h"
 #include "structs/cutscene.h"
+#include "structs/game_over.h"
 
 struct InGameData {
     u8 clipdataCode[640];
@@ -21,6 +22,7 @@ union NonGameplayRam {
     struct SaXCloseUpData saXCloseUp;
     struct CutsceneData cutscene;
     struct EndingData ending;
+    struct GameOverData gameOver;
     u8 size[1344];
 };
 
