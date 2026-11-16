@@ -8,6 +8,7 @@
 #include "structs/sa_x_close_up.h"
 #include "structs/ending.h"
 #include "structs/cutscene.h"
+#include "structs/game_over.h"
 
 struct InGameData {
     u8 clipdataCode[640];
@@ -21,6 +22,7 @@ union NonGameplayRam {
     struct SaXCloseUpData saXCloseUp;
     struct CutsceneData cutscene;
     struct EndingData ending;
+    struct GameOverData gameOver;
     u8 size[1344];
 };
 
@@ -30,7 +32,9 @@ extern union NonGameplayRam gNonGameplayRam;
 #define IN_GAME_DATA gNonGameplayRam.inGame
 #define TITLE_SCREEN_DATA gNonGameplayRam.titleScreen
 #define SA_X_CLOSE_UP_DATA gNonGameplayRam.saXCloseUp
+#define CUTSCENE_DATA gNonGameplayRam.cutscene
 #define ENDING_DATA gNonGameplayRam.ending
+#define GAME_OVER_DATA gNonGameplayRam.gameOver
 
 extern u8 gSpriteGfxBackup[0x8000];
 

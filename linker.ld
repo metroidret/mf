@@ -504,8 +504,9 @@ SECTIONS {
         asm/disasm_0x08097dd0.o(.text);
 
         src/sa_x_close_up.o(.text);
+        src/menus/game_over.o(.text);
 
-        asm/disasm_0x0809deb4.o(.text);
+        asm/disasm_0x0809e598.o(.text);
 
         src/ending.o(.text);
 
@@ -1085,6 +1086,7 @@ SECTIONS {
         src/data/cutscene_data.o(.rodata);
         src/data/text_data.o(.rodata);
         src/data/sa_x_close_up.o(.rodata);
+        src/data/menus/game_over_data.o(.rodata);
         src/data/ending_data.o(.rodata);
         src/data/sprite_pointers.o(.rodata);
         src/data/frame_data_pointers.o(.rodata);
@@ -1103,6 +1105,7 @@ SECTIONS {
         src/text.o(.data);
         src/projectile.o(.data);
         src/new_file_intro.o(.data);
+        src/menus/game_over.o(.data);
         src/ending.o(.data);
     } >rom
 }

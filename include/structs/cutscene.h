@@ -3,8 +3,6 @@
 
 #include "types.h"
 
-#define CUTSCENE_DATA gNonGameplayRam.cutscene
-
 struct SpecialCutsceneOam {
     s16 spawnX;
     s16 spawnY;
