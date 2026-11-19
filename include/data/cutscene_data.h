@@ -508,8 +508,43 @@ extern const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW];
 
 extern const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW];
 
+extern const u32 sMonologueTilemap_65fb5c[50];
+
 extern const u32 sIntroTilemap_662804[318];
 
+extern const u32 sMonologueTilemap_663598[66];
+extern const u16 sMonologuePal_6636a0[12 * PAL_ROW];
 extern const u16 sIntroPal_663820[4 * PAL_ROW];
+extern const u16 sMonologuePal_6638A0[1 * PAL_ROW];
+extern const u16 sMonologuePal_6638c0[11 * PAL_ROW];
+extern const u16 sMonologuePal_663a20[6 * PAL_ROW];
+
+extern const struct FrameData sOam_663dd0[5];
+extern const struct FrameData sOam_663df8[2];
+
+extern const struct FrameData sOam_663e5c[3];
+extern const struct FrameData sOam_663e74[7];
+
+extern const u32 sMonologueGfx_663eac[3931];
+extern const u32 sMonologueGfx_667c18[2771];
+
+extern const u16 sMonologuePal_66aa68[11 * PAL_ROW];
+extern const u16 sMonologuePal_66abc8[6 * PAL_ROW];
+
+extern const u32 sMonologueTilemap_66ac88[551];
+
+extern const u32 sMonologueGfx_66b524[3517];
+extern const u32 sMonologueGfx_66ec18[2770];
+
+extern const u16 sMonologuePal_671a04[11 * PAL_ROW];
+extern const u16 sMonologuePal_671b64[6 * PAL_ROW];
+
+extern const u32 sMonologueTilemap_671c24[551];
+
+extern const u32 sMonologueGfx_6724c0[2342];
+
+extern const u16 sMonologuePal_674958[12 * PAL_ROW];
+
+extern const u32 sMonologueTilemap_674ad8[368];
 
 #endif /* CUTSCENE_DATA_H */

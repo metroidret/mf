@@ -10,6 +10,14 @@ extern const u16** sNavigationTextPointers[LANGUAGE_COUNT];
 extern const u32* sIntroSamusSittingBgGfxPointers[5];
 extern const u32* sTitleIntroCollisionWarningBgGfxPointers[5];
 extern const u32* sTitleIntroCollisionWarningObjGfxPointers[6];
+
+extern const u16* sMonologueBgPalPointers[9];
+extern const u16* sMonologueObjPalPointers[9];
+extern const u32* sMonologueBgGfxPointers[9];
+extern const u32* sMonologueObjGfxPointers[9];
+extern const u32* sMonologueTilemapPointers[9];
+extern const struct FrameData* sMonologueOamPointers[9][2];
+
 extern const u16** sLocationTextPointers[LANGUAGE_COUNT];
 extern const u16** sMonologueTextPointers[LANGUAGE_COUNT];
 extern u16** sMessageTextPointers[LANGUAGE_COUNT];

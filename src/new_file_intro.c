@@ -170,7 +170,88 @@ const u32* sTitleIntroCollisionWarningObjGfxPointers[6] = {
     (const u32*)0x08652994
 };
 
-static u8 sBlob_79c474_79c5a4[] = INCBIN_U8("data/Blob_79c474_79c5a4.bin");
+static u8 sBlob_79c474_79c4a8[] = INCBIN_U8("data/Blob_79c474_79c4a8.bin");
+
+const u16* sMonologueBgPalPointers[9] = {
+	(const u16*)0x86638c0,
+	(const u16*)0x866aa68,
+	(const u16*)0x86638c0,
+	(const u16*)0x86638c0,
+	(const u16*)0x866aa68,
+	(const u16*)0x8671a04,
+	(const u16*)0x86638c0,
+	(const u16*)0x86638c0,
+	(const u16*)0x86638c0
+};
+
+const u16* sMonologueObjPalPointers[9] = {
+	(const u16*)0x8663a20,
+	(const u16*)0x8663a20,
+	(const u16*)0x8663a20,
+	(const u16*)0x8663a20,
+	(const u16*)0x866abc8,
+	(const u16*)0x8671b64,
+	(const u16*)0x8663a20,
+	(const u16*)0x8663a20,
+	(const u16*)0x8663a20
+};
+
+const u32* sMonologueBgGfxPointers[9] = {
+	(const u32*)0x865c468,
+	(const u32*)0x8663eac,
+	(const u32*)0x865c468,
+	(const u32*)0x865c468,
+	(const u32*)0x8663eac,
+	(const u32*)0x866b524,
+	(const u32*)0x865c468,
+	(const u32*)0x865c468,
+	(const u32*)0x865c468
+};
+
+const u32* sMonologueObjGfxPointers[9] = {
+	(const u32*)0x865fc24,
+	(const u32*)0x865fc24,
+	(const u32*)0x865fc24,
+	(const u32*)0x865fc24,
+	(const u32*)0x8667c18,
+	(const u32*)0x866ec18,
+	(const u32*)0x865fc24,
+	(const u32*)0x865fc24,
+	(const u32*)0x865fc24
+};
+
+const u32* sMonologueTilemapPointers[9] = {
+	(const u32*)0x8662cfc,
+	(const u32*)0x866ac88,
+	(const u32*)0x8662cfc,
+	(const u32*)0x8662cfc,
+	(const u32*)0x866ac88,
+	(const u32*)0x8671c24,
+	(const u32*)0x8662cfc,
+	(const u32*)0x8662cfc,
+	(const u32*)0x8662cfc
+};
+
+const struct FrameData* sMonologueOamPointers[9][2] = {
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8,
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8,
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8,
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8,
+	(const struct FrameData*)0x866aa30,
+	(const struct FrameData*)0x866aa58,
+	(const struct FrameData*)0x86719cc,
+	(const struct FrameData*)0x86719f4,
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8,
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8,
+	(const struct FrameData*)0x8663dd0,
+	(const struct FrameData*)0x8663df8
+};
 
 const u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,

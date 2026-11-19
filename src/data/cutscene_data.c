@@ -31626,12 +31626,313 @@ static const u8 sBlob_659ba4_65c268[] = INCBIN_U8("data/Blob_659ba4_65c268.bin")
 
 const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW] = INCBIN_U16("data/title_intro/collision_warning_obj.pal");
 
-static const u8 sBlob_65c468_662804[] = INCBIN_U8("data/Blob_65c468_662804.bin");
+static const u8 sBlob_65c468_65fb5c[] = INCBIN_U8("data/Blob_65c468_65fb5c.bin");
+
+// sData_65FB5C
+const u32 sMonologueTilemap_65fb5c[50] = INCBIN_U32("data/monologue/65fb5c.tm.lz");
+
+static const u8 sBlob_65fc24_662804[] = INCBIN_U8("data/Blob_65fc24_662804.bin");
 
 const u32 sIntroTilemap_662804[318] = INCBIN_U32("data/new_file_intro/662804.tm.lz");
 
-static const u8 sBlob_662cfc_663820[] = INCBIN_U8("data/Blob_662cfc_663820.bin");
+static const u8 sBlob_662cfc_663598[] = INCBIN_U8("data/Blob_662cfc_663598.bin");
+
+// sData_663598
+const u32 sMonologueTilemap_663598[66] = INCBIN_U32("data/monologue/663598.tm.lz");
+// sData_6636A0
+const u16 sMonologuePal_6636a0[12 * PAL_ROW] = INCBIN_U16("data/monologue/6636a0.pal");
 
 const u16 sIntroPal_663820[4 * PAL_ROW] = INCBIN_U16("data/new_file_intro/663820.pal");
+// sData_6638A0
+const u16 sMonologuePal_6638A0[1 * PAL_ROW] = INCBIN_U16("data/monologue/6638a0.pal");
 
-static const u8 sBlob_6638a0_682fac[] = INCBIN_U8("data/Blob_6638a0_682fac.bin");
+
+// sData_663E5C (oam)
+
+// sData_6724C0
+// sData_674958
+// sData_674AD8
+
+const u16 sMonologuePal_6638c0[11 * PAL_ROW] = INCBIN_U16("data/monologue/6638c0.pal");
+const u16 sMonologuePal_663a20[6 * PAL_ROW] = INCBIN_U16("data/monologue/663a20.pal");
+
+static const u16 sOamFrame_663ae0[OAM_DATA_SIZE(56)] = {
+	56,
+	OAM_ENTRY(-37, -114, OAM_DIMS_16x16, OAM_NO_FLIP, 606, 1, 0),
+	OAM_ENTRY(-21, -114, OAM_DIMS_32x32, OAM_NO_FLIP, 280, 0, 0),
+	OAM_ENTRY(11, -114, OAM_DIMS_16x32, OAM_NO_FLIP, 410, 0, 0),
+	OAM_ENTRY(-37, -98, OAM_DIMS_16x32, OAM_NO_FLIP, 408, 0, 0),
+	OAM_ENTRY(27, -98, OAM_DIMS_16x32, OAM_NO_FLIP, 512, 0, 0),
+	OAM_ENTRY(-53, -82, OAM_DIMS_16x32, OAM_NO_FLIP, 414, 0, 0),
+	OAM_ENTRY(-21, -82, OAM_DIMS_32x32, OAM_NO_FLIP, 268, 2, 0),
+	OAM_ENTRY(11, -82, OAM_DIMS_16x16, OAM_NO_FLIP, 640, 0, 0),
+	OAM_ENTRY(-101, -66, OAM_DIMS_32x32, OAM_NO_FLIP, 276, 1, 0),
+	OAM_ENTRY(-69, -66, OAM_DIMS_16x32, OAM_NO_FLIP, 514, 1, 0),
+	OAM_ENTRY(-37, -66, OAM_DIMS_16x16, OAM_NO_FLIP, 642, 0, 0),
+	OAM_ENTRY(11, -66, OAM_DIMS_16x16, OAM_NO_FLIP, 600, 2, 0),
+	OAM_ENTRY(27, -66, OAM_DIMS_16x32, OAM_NO_FLIP, 412, 3, 0),
+	OAM_ENTRY(43, -66, OAM_DIMS_32x16, OAM_NO_FLIP, 522, 1, 0),
+	OAM_ENTRY(75, -66, OAM_DIMS_16x32, OAM_NO_FLIP, 520, 1, 0),
+	OAM_ENTRY(-53, -50, OAM_DIMS_16x32, OAM_NO_FLIP, 516, 2, 0),
+	OAM_ENTRY(-37, -50, OAM_DIMS_64x32, OAM_NO_FLIP, 256, 3, 0),
+	OAM_ENTRY(43, -50, OAM_DIMS_16x32, OAM_NO_FLIP, 518, 4, 0),
+	OAM_ENTRY(59, -50, OAM_DIMS_16x16, OAM_NO_FLIP, 602, 1, 0),
+	OAM_ENTRY(91, -50, OAM_DIMS_16x32, OAM_NO_FLIP, 386, 1, 0),
+	OAM_ENTRY(-101, -34, OAM_DIMS_16x16, OAM_NO_FLIP, 604, 1, 0),
+	OAM_ENTRY(-85, -34, OAM_DIMS_16x32, OAM_NO_FLIP, 392, 4, 0),
+	OAM_ENTRY(-69, -34, OAM_DIMS_16x16, OAM_NO_FLIP, 644, 1, 0),
+	OAM_ENTRY(27, -34, OAM_DIMS_16x32, OAM_NO_FLIP, 390, 2, 0),
+	OAM_ENTRY(59, -34, OAM_DIMS_16x32, OAM_NO_FLIP, 388, 4, 0),
+	OAM_ENTRY(75, -34, OAM_DIMS_16x16, OAM_NO_FLIP, 652, 1, 0),
+	OAM_ENTRY(-101, -18, OAM_DIMS_16x32, OAM_NO_FLIP, 394, 4, 0),
+	OAM_ENTRY(-69, -18, OAM_DIMS_16x16, OAM_NO_FLIP, 654, 4, 0),
+	OAM_ENTRY(-37, -18, OAM_DIMS_32x16, OAM_NO_FLIP, 538, 2, 0),
+	OAM_ENTRY(-5, -18, OAM_DIMS_16x16, OAM_NO_FLIP, 656, 3, 0),
+	OAM_ENTRY(11, -18, OAM_DIMS_16x16, OAM_NO_FLIP, 646, 2, 0),
+	OAM_ENTRY(43, -18, OAM_DIMS_16x32, OAM_NO_FLIP, 404, 4, 0),
+	OAM_ENTRY(75, -18, OAM_DIMS_16x32, OAM_NO_FLIP, 406, 4, 0),
+	OAM_ENTRY(91, -18, OAM_DIMS_16x16, OAM_NO_FLIP, 648, 1, 0),
+	OAM_ENTRY(-85, -2, OAM_DIMS_32x32, OAM_NO_FLIP, 264, 4, 0),
+	OAM_ENTRY(-53, -2, OAM_DIMS_32x16, OAM_NO_FLIP, 526, 1, 0),
+	OAM_ENTRY(-21, -2, OAM_DIMS_32x32, OAM_NO_FLIP, 284, 4, 0),
+	OAM_ENTRY(11, -2, OAM_DIMS_16x32, OAM_NO_FLIP, 396, 4, 0),
+	OAM_ENTRY(27, -2, OAM_DIMS_16x16, OAM_NO_FLIP, 650, 1, 0),
+	OAM_ENTRY(59, -2, OAM_DIMS_16x32, OAM_NO_FLIP, 400, 4, 0),
+	OAM_ENTRY(91, -2, OAM_DIMS_16x32, OAM_NO_FLIP, 398, 4, 0),
+	OAM_ENTRY(-101, 14, OAM_DIMS_16x16, OAM_NO_FLIP, 596, 4, 0),
+	OAM_ENTRY(-53, 14, OAM_DIMS_16x16, OAM_NO_FLIP, 594, 1, 0),
+	OAM_ENTRY(-37, 14, OAM_DIMS_16x32, OAM_NO_FLIP, 402, 4, 0),
+	OAM_ENTRY(27, 14, OAM_DIMS_32x32, OAM_NO_FLIP, 272, 4, 0),
+	OAM_ENTRY(75, 14, OAM_DIMS_16x32, OAM_NO_FLIP, 384, 4, 0),
+	OAM_ENTRY(-117, 30, OAM_DIMS_16x16, OAM_NO_FLIP, 592, 1, 0),
+	OAM_ENTRY(-101, 30, OAM_DIMS_32x16, OAM_NO_FLIP, 530, 3, 0),
+	OAM_ENTRY(-69, 30, OAM_DIMS_32x16, OAM_NO_FLIP, 586, 3, 0),
+	OAM_ENTRY(-21, 30, OAM_DIMS_32x16, OAM_NO_FLIP, 534, 4, 0),
+	OAM_ENTRY(11, 30, OAM_DIMS_16x16, OAM_NO_FLIP, 590, 4, 0),
+	OAM_ENTRY(59, 30, OAM_DIMS_16x16, OAM_NO_FLIP, 598, 1, 0),
+	OAM_ENTRY(91, 30, OAM_DIMS_16x16, OAM_NO_FLIP, 542, 4, 0),
+	OAM_ENTRY(-53, -18, OAM_DIMS_16x8, OAM_NO_FLIP, 658, 4, 0),
+	OAM_ENTRY(-53, -10, OAM_DIMS_8x8, OAM_NO_FLIP, 661, 4, 0),
+	OAM_ENTRY(-45, -10, OAM_DIMS_8x8, OAM_NO_FLIP, 660, 1, 0),
+};
+
+static const u16 sOamFrame_663c32[OAM_DATA_SIZE(56)] = {
+	56,
+	OAM_ENTRY(-37, -113, OAM_DIMS_16x16, OAM_NO_FLIP, 606, 1, 0),
+	OAM_ENTRY(-21, -113, OAM_DIMS_32x32, OAM_NO_FLIP, 280, 0, 0),
+	OAM_ENTRY(11, -113, OAM_DIMS_16x32, OAM_NO_FLIP, 410, 0, 0),
+	OAM_ENTRY(-37, -97, OAM_DIMS_16x32, OAM_NO_FLIP, 408, 0, 0),
+	OAM_ENTRY(27, -97, OAM_DIMS_16x32, OAM_NO_FLIP, 512, 0, 0),
+	OAM_ENTRY(-53, -81, OAM_DIMS_16x32, OAM_NO_FLIP, 414, 0, 0),
+	OAM_ENTRY(-21, -81, OAM_DIMS_32x32, OAM_NO_FLIP, 268, 2, 0),
+	OAM_ENTRY(11, -81, OAM_DIMS_16x16, OAM_NO_FLIP, 640, 0, 0),
+	OAM_ENTRY(-101, -65, OAM_DIMS_32x32, OAM_NO_FLIP, 276, 1, 0),
+	OAM_ENTRY(-69, -65, OAM_DIMS_16x32, OAM_NO_FLIP, 514, 1, 0),
+	OAM_ENTRY(-37, -65, OAM_DIMS_16x16, OAM_NO_FLIP, 642, 0, 0),
+	OAM_ENTRY(11, -65, OAM_DIMS_16x16, OAM_NO_FLIP, 600, 2, 0),
+	OAM_ENTRY(27, -65, OAM_DIMS_16x32, OAM_NO_FLIP, 412, 3, 0),
+	OAM_ENTRY(43, -65, OAM_DIMS_32x16, OAM_NO_FLIP, 522, 1, 0),
+	OAM_ENTRY(75, -65, OAM_DIMS_16x32, OAM_NO_FLIP, 520, 1, 0),
+	OAM_ENTRY(-53, -49, OAM_DIMS_16x32, OAM_NO_FLIP, 516, 2, 0),
+	OAM_ENTRY(-37, -49, OAM_DIMS_64x32, OAM_NO_FLIP, 256, 3, 0),
+	OAM_ENTRY(43, -49, OAM_DIMS_16x32, OAM_NO_FLIP, 518, 4, 0),
+	OAM_ENTRY(59, -49, OAM_DIMS_16x16, OAM_NO_FLIP, 602, 1, 0),
+	OAM_ENTRY(91, -49, OAM_DIMS_16x32, OAM_NO_FLIP, 386, 1, 0),
+	OAM_ENTRY(-101, -33, OAM_DIMS_16x16, OAM_NO_FLIP, 604, 1, 0),
+	OAM_ENTRY(-85, -33, OAM_DIMS_16x32, OAM_NO_FLIP, 392, 4, 0),
+	OAM_ENTRY(-69, -33, OAM_DIMS_16x16, OAM_NO_FLIP, 644, 1, 0),
+	OAM_ENTRY(27, -33, OAM_DIMS_16x32, OAM_NO_FLIP, 390, 2, 0),
+	OAM_ENTRY(59, -33, OAM_DIMS_16x32, OAM_NO_FLIP, 388, 4, 0),
+	OAM_ENTRY(75, -33, OAM_DIMS_16x16, OAM_NO_FLIP, 652, 1, 0),
+	OAM_ENTRY(-101, -17, OAM_DIMS_16x32, OAM_NO_FLIP, 394, 4, 0),
+	OAM_ENTRY(-69, -17, OAM_DIMS_16x16, OAM_NO_FLIP, 654, 4, 0),
+	OAM_ENTRY(-37, -17, OAM_DIMS_32x16, OAM_NO_FLIP, 538, 2, 0),
+	OAM_ENTRY(-5, -17, OAM_DIMS_16x16, OAM_NO_FLIP, 656, 3, 0),
+	OAM_ENTRY(11, -17, OAM_DIMS_16x16, OAM_NO_FLIP, 646, 2, 0),
+	OAM_ENTRY(43, -17, OAM_DIMS_16x32, OAM_NO_FLIP, 404, 4, 0),
+	OAM_ENTRY(75, -17, OAM_DIMS_16x32, OAM_NO_FLIP, 406, 4, 0),
+	OAM_ENTRY(91, -17, OAM_DIMS_16x16, OAM_NO_FLIP, 648, 1, 0),
+	OAM_ENTRY(-85, -1, OAM_DIMS_32x32, OAM_NO_FLIP, 264, 4, 0),
+	OAM_ENTRY(-53, -1, OAM_DIMS_32x16, OAM_NO_FLIP, 526, 1, 0),
+	OAM_ENTRY(-21, -1, OAM_DIMS_32x32, OAM_NO_FLIP, 284, 4, 0),
+	OAM_ENTRY(11, -1, OAM_DIMS_16x32, OAM_NO_FLIP, 396, 4, 0),
+	OAM_ENTRY(27, -1, OAM_DIMS_16x16, OAM_NO_FLIP, 650, 1, 0),
+	OAM_ENTRY(59, -1, OAM_DIMS_16x32, OAM_NO_FLIP, 400, 4, 0),
+	OAM_ENTRY(91, -1, OAM_DIMS_16x32, OAM_NO_FLIP, 398, 4, 0),
+	OAM_ENTRY(-101, 15, OAM_DIMS_16x16, OAM_NO_FLIP, 596, 4, 0),
+	OAM_ENTRY(-53, 15, OAM_DIMS_16x16, OAM_NO_FLIP, 594, 1, 0),
+	OAM_ENTRY(-37, 15, OAM_DIMS_16x32, OAM_NO_FLIP, 402, 4, 0),
+	OAM_ENTRY(27, 15, OAM_DIMS_32x32, OAM_NO_FLIP, 272, 4, 0),
+	OAM_ENTRY(75, 15, OAM_DIMS_16x32, OAM_NO_FLIP, 384, 4, 0),
+	OAM_ENTRY(-117, 31, OAM_DIMS_16x16, OAM_NO_FLIP, 592, 1, 0),
+	OAM_ENTRY(-101, 31, OAM_DIMS_32x16, OAM_NO_FLIP, 530, 3, 0),
+	OAM_ENTRY(-69, 31, OAM_DIMS_32x16, OAM_NO_FLIP, 586, 3, 0),
+	OAM_ENTRY(-21, 31, OAM_DIMS_32x16, OAM_NO_FLIP, 534, 4, 0),
+	OAM_ENTRY(11, 31, OAM_DIMS_16x16, OAM_NO_FLIP, 590, 4, 0),
+	OAM_ENTRY(59, 31, OAM_DIMS_16x16, OAM_NO_FLIP, 598, 1, 0),
+	OAM_ENTRY(91, 31, OAM_DIMS_16x16, OAM_NO_FLIP, 542, 4, 0),
+	OAM_ENTRY(-53, -17, OAM_DIMS_16x8, OAM_NO_FLIP, 658, 4, 0),
+	OAM_ENTRY(-53, -9, OAM_DIMS_8x8, OAM_NO_FLIP, 661, 4, 0),
+	OAM_ENTRY(-45, -9, OAM_DIMS_8x8, OAM_NO_FLIP, 660, 1, 0),
+};
+
+static const u16 sOamFrame_663d84[OAM_DATA_SIZE(12)] = {
+	12,
+	OAM_ENTRY(-128, -24, OAM_DIMS_64x32, OAM_NO_FLIP, 704, 5, 0),
+	OAM_ENTRY(-64, -24, OAM_DIMS_64x32, OAM_NO_FLIP, 712, 5, 0),
+	OAM_ENTRY(-128, 8, OAM_DIMS_32x16, OAM_NO_FLIP, 832, 5, 0),
+	OAM_ENTRY(-96, 8, OAM_DIMS_32x16, OAM_NO_FLIP, 836, 5, 0),
+	OAM_ENTRY(-64, 8, OAM_DIMS_32x16, OAM_NO_FLIP, 840, 5, 0),
+	OAM_ENTRY(-32, 8, OAM_DIMS_32x16, OAM_NO_FLIP, 844, 5, 0),
+	OAM_ENTRY(64, -24, OAM_DIMS_64x32, OAM_X_FLIP, 704, 5, 0),
+	OAM_ENTRY(0, -24, OAM_DIMS_64x32, OAM_X_FLIP, 712, 5, 0),
+	OAM_ENTRY(96, 8, OAM_DIMS_32x16, OAM_X_FLIP, 832, 5, 0),
+	OAM_ENTRY(64, 8, OAM_DIMS_32x16, OAM_X_FLIP, 836, 5, 0),
+	OAM_ENTRY(32, 8, OAM_DIMS_32x16, OAM_X_FLIP, 840, 5, 0),
+	OAM_ENTRY(0, 8, OAM_DIMS_32x16, OAM_X_FLIP, 844, 5, 0),
+};
+
+const struct FrameData sOam_663dd0[5] = {
+	[0] = {
+		.pFrame = sOamFrame_663ae0,
+		.timer = 120
+	},
+	[1] = {
+		.pFrame = sOamFrame_663c32,
+		.timer = 4
+	},
+	[2] = {
+		.pFrame = sOamFrame_663ae0,
+		.timer = 4
+	},
+	[3] = {
+		.pFrame = sOamFrame_663c32,
+		.timer = 4
+	},
+	[4] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_663df8[2] = {
+	[0] = {
+		.pFrame = sOamFrame_663d84,
+		.timer = 255
+	},
+	[1] = FRAME_DATA_TERMINATOR
+};
+
+static const u16 sOamFrame_663e08[OAM_DATA_SIZE(2)] = {
+	2,
+	OAM_ENTRY(-4, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 0, 0, 0),
+	OAM_ENTRY(-4, 0, OAM_DIMS_8x8, OAM_Y_FLIP, 0, 0, 0),
+};
+
+static const u16 sOamFrame_663e16[OAM_DATA_SIZE(2)] = {
+	2,
+	OAM_ENTRY(-4, -8, OAM_DIMS_8x8, OAM_NO_FLIP, 1, 0, 0),
+	OAM_ENTRY(-4, 0, OAM_DIMS_8x8, OAM_Y_FLIP, 1, 0, 0),
+};
+
+static const u16 sOamFrame_663e24[OAM_DATA_SIZE(2)] = {
+	2,
+	OAM_ENTRY(-8, -4, OAM_DIMS_8x8, OAM_NO_FLIP, 2, 0, 0),
+	OAM_ENTRY(0, -4, OAM_DIMS_8x8, OAM_X_FLIP, 2, 0, 0),
+};
+
+static const u16 sOamFrame_663e32[OAM_DATA_SIZE(2)] = {
+	2,
+	OAM_ENTRY(-8, -3, OAM_DIMS_8x8, OAM_NO_FLIP, 3, 0, 0),
+	OAM_ENTRY(0, -3, OAM_DIMS_8x8, OAM_X_FLIP, 3, 0, 0),
+};
+
+static const u16 sOamFrame_663e40[OAM_DATA_SIZE(2)] = {
+	2,
+	OAM_ENTRY(-8, -2, OAM_DIMS_8x8, OAM_NO_FLIP, 2, 0, 0),
+	OAM_ENTRY(0, -2, OAM_DIMS_8x8, OAM_X_FLIP, 2, 0, 0),
+};
+
+static const u16 sOamFrame_663e4e[OAM_DATA_SIZE(2)] = {
+	2,
+	OAM_ENTRY(-8, -1, OAM_DIMS_8x8, OAM_NO_FLIP, 3, 0, 0),
+	OAM_ENTRY(0, -1, OAM_DIMS_8x8, OAM_X_FLIP, 3, 0, 0),
+};
+
+const struct FrameData sOam_663e5c[3] = {
+	[0] = {
+		.pFrame = sOamFrame_663e08,
+		.timer = 4
+	},
+	[1] = {
+		.pFrame = sOamFrame_663e16,
+		.timer = 4
+	},
+	[2] = FRAME_DATA_TERMINATOR
+};
+
+const struct FrameData sOam_663e74[7] = {
+	[0] = {
+		.pFrame = sOamFrame_663e24,
+		.timer = 6
+	},
+	[1] = {
+		.pFrame = sOamFrame_663e32,
+		.timer = 6
+	},
+	[2] = {
+		.pFrame = sOamFrame_663e40,
+		.timer = 6
+	},
+	[3] = {
+		.pFrame = sOamFrame_663e4e,
+		.timer = 6
+	},
+	[4] = {
+		.pFrame = sOamFrame_663e40,
+		.timer = 6
+	},
+	[5] = {
+		.pFrame = sOamFrame_663e32,
+		.timer = 6
+	},
+	[6] = FRAME_DATA_TERMINATOR
+};
+
+const u32 sMonologueGfx_663eac[3931] = INCBIN_U32("data/monologue/663eac.gfx.lz");
+const u32 sMonologueGfx_667c18[2771] = INCBIN_U32("data/monologue/667c18.gfx.lz");
+
+static const u8 sBlob_66a764_66aa68[] = INCBIN_U8("data/Blob_66a764_66aa68.bin");
+
+const u16 sMonologuePal_66aa68[11 * PAL_ROW] = INCBIN_U16("data/monologue/66aa68.pal");
+const u16 sMonologuePal_66abc8[6 * PAL_ROW] = INCBIN_U16("data/monologue/66abc8.pal");
+
+const u32 sMonologueTilemap_66ac88[551] = INCBIN_U32("data/monologue/66ac88.tm.lz");
+
+const u32 sMonologueGfx_66b524[3517] = INCBIN_U32("data/monologue/66b524.gfx.lz");
+const u32 sMonologueGfx_66ec18[2770] = INCBIN_U32("data/monologue/66ec18.gfx.lz");
+
+static const u8 sBlob_671760_671a04[] = INCBIN_U8("data/Blob_671760_671a04.bin");
+
+const u16 sMonologuePal_671a04[11 * PAL_ROW] = INCBIN_U16("data/monologue/671a04.pal");
+const u16 sMonologuePal_671b64[6 * PAL_ROW] = INCBIN_U16("data/monologue/671b64.pal");
+
+const u32 sMonologueTilemap_671c24[551] = INCBIN_U32("data/monologue/671c24.tm.lz");
+
+const u32 sMonologueGfx_6724c0[2342] = INCBIN_U32("data/monologue/6724c0.gfx.lz");
+
+const u16 sMonologuePal_674958[12 * PAL_ROW] = INCBIN_U16("data/monologue/674958.pal");
+
+const u32 sMonologueTilemap_674ad8[368] = INCBIN_U32("data/monologue/674ad8.tm.lz");
+
+static const u8 sBlob_675098_682fac[] = INCBIN_U8("data/Blob_675098_682fac.bin");
+
+
+
+/*
+
+sData_79C4A8[9] bg pal
+sData_79C4CC[9] obj pal
+sData_79C4F0[9] bg gfx
+sData_79C514[9] obj gfx
+sData_79C538[9] tm
+sData_79C55C[?] oam
+
+*/
