@@ -503,6 +503,10 @@ SECTIONS {
 
         asm/disasm_0x08097dd0.o(.text);
 
+        src/cutscenes/monologue.o(.text);
+
+        asm/disasm_0x0809994c.o(.text);
+
         src/sa_x_close_up.o(.text);
         src/menus/game_over.o(.text);
 

@@ -170,7 +170,97 @@ const u32* sTitleIntroCollisionWarningObjGfxPointers[6] = {
     (const u32*)0x08652994
 };
 
-static u8 sBlob_79c474_79c5a4[] = INCBIN_U8("data/Blob_79c474_79c5a4.bin");
+static u8 sBlob_79c474_79c4a8[] = INCBIN_U8("data/Blob_79c474_79c4a8.bin");
+
+const u16* sMonologueBgPalPointers[9] = {
+	sMonologueElevatorBgPal_Sectors,
+	sMonologueElevatorBgPal_MainDeck,
+	sMonologueElevatorBgPal_Sectors,
+	sMonologueElevatorBgPal_Sectors,
+	sMonologueElevatorBgPal_MainDeck,
+	sMonologueElevatorBgPal_RestrictedLab,
+	sMonologueElevatorBgPal_Sectors,
+	sMonologueElevatorBgPal_Sectors,
+	sMonologueElevatorBgPal_Sectors
+};
+
+const u16* sMonologueObjPalPointers[9] = {
+	sMonologueElevatorObjPal_PowerSuit,
+	sMonologueElevatorObjPal_PowerSuit,
+	sMonologueElevatorObjPal_PowerSuit,
+	sMonologueElevatorObjPal_PowerSuit,
+	sMonologueElevatorObjPal_VariaSuit,
+	sMonologueElevatorObjPal_GravitySuit,
+	sMonologueElevatorObjPal_PowerSuit,
+	sMonologueElevatorObjPal_PowerSuit,
+	sMonologueElevatorObjPal_PowerSuit
+};
+
+const u32* sMonologueBgGfxPointers[9] = {
+	sMonologueElevatorBgGfx_Sectors,
+	sMonologueElevatorBgGfx_MainDeck,
+	sMonologueElevatorBgGfx_Sectors,
+	sMonologueElevatorBgGfx_Sectors,
+	sMonologueElevatorBgGfx_MainDeck,
+	sMonologueElevatorBgGfx_RestrictedLab,
+	sMonologueElevatorBgGfx_Sectors,
+	sMonologueElevatorBgGfx_Sectors,
+	sMonologueElevatorBgGfx_Sectors
+};
+
+const u32* sMonologueObjGfxPointers[9] = {
+	sMonologueElevatorObjGfx_PowerSuit,
+	sMonologueElevatorObjGfx_PowerSuit,
+	sMonologueElevatorObjGfx_PowerSuit,
+	sMonologueElevatorObjGfx_PowerSuit,
+	sMonologueElevatorObjGfx_VariaSuit,
+	sMonologueElevatorObjGfx_GravitySuit,
+	sMonologueElevatorObjGfx_PowerSuit,
+	sMonologueElevatorObjGfx_PowerSuit,
+	sMonologueElevatorObjGfx_PowerSuit
+};
+
+const u32* sMonologueTilemapPointers[9] = {
+	sMonologueElevatorTilemap_Sectors,
+	sMonologueElevatorTilemap_MainDeck,
+	sMonologueElevatorTilemap_Sectors,
+	sMonologueElevatorTilemap_Sectors,
+	sMonologueElevatorTilemap_MainDeck,
+	sMonologueElevatorTilemap_RestrictedLab,
+	sMonologueElevatorTilemap_Sectors,
+	sMonologueElevatorTilemap_Sectors,
+	sMonologueElevatorTilemap_Sectors
+};
+
+const struct FrameData* sMonologueOamPointers[9][2] = {
+    [0] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    },
+	[1] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    },
+    [2] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    },
+    [3] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    },
+	[4] = {
+        sMonologueElevatorSamusOam_VariaSuit, sMonologueElevatorCrossmemberOam_2
+    },
+    [5] = {
+        sMonologueElevatorSamusOam_GravitySuit, sMonologueElevatorCrossmemberOam_3
+    },
+	[6] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    },
+    [7] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    },
+    [8] = {
+        sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
+    }
+};
 
 const u16** sMonologueTextPointers[LANGUAGE_COUNT] = {
     sMonologueTextPointersJapanese,
@@ -7080,7 +7170,7 @@ void NewFileIntroArrivingAtBslInit(void)
 
     SET_BACKDROP_COLOR(COLOR_BLACK);
 
-    LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
+    LZ77UncompWram(sCutsceneTextTilemap, EWRAM_BASE);
     LZ77UncompWram(sIntroFlyingToBslObjGfx, EWRAM_BASE + 0x1000);
     LZ77UncompWram(sIntroFlyingToBslBgGfx, EWRAM_BASE + 0x9000);
 
@@ -7268,7 +7358,7 @@ boolu32 NewFileIntroArrivingAtBslProcess(void)
             else if (CUTSCENE_DATA.timer == 2 * DELTA_TIME)
             {
                 DMA3_COPY_32(EWRAM_BASE, VRAM_BASE + 0x4800, 0x800 / sizeof(u32));
-                DMA3_COPY_32(sIntroPal_663820, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
+                DMA3_COPY_32(sCutsceneTextPal, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
                 gBg0XPosition = 0;
                 gBg0YPosition = 4;
             }
