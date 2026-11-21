@@ -24,7 +24,7 @@ u32 InGameHandler(void)
 {
     u32 leaving;
 
-    InGameSetVblank();
+    InGameSetVBlank();
 
     leaving = FALSE;
 
@@ -165,7 +165,7 @@ u32 InGameHandler(void)
  * @brief df58 | 3c | Sets the correct in game v-blank code
  * 
  */
-void InGameSetVblank(void)
+void InGameSetVBlank(void)
 {
     switch (gSubGameMode1)
     {

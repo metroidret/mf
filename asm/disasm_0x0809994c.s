@@ -160,7 +160,7 @@ CutsceneSecretConversationInit: @ 0x0809AA2C
 	subs r0, #1
 	strh r0, [r1]
 	bl CutsceneDrawAllOam
-	ldr r0, _0809AB60 @ =CutsceneSecretConversationVblank
+	ldr r0, _0809AB60 @ =CutsceneSecretConversationVBlank
 	bl CallbackSetVBlank
 	pop {r4, r5}
 	pop {r0}
@@ -193,7 +193,7 @@ _0809AB50: .4byte 0x0400000A
 _0809AB54: .4byte 0x00001802
 _0809AB58: .4byte 0x00001903
 _0809AB5C: .4byte gWrittenToBldy
-_0809AB60: .4byte CutsceneSecretConversationVblank
+_0809AB60: .4byte CutsceneSecretConversationVBlank
 
 	thumb_func_start CutsceneSecretConversationProcess
 CutsceneSecretConversationProcess: @ 0x0809AB64
@@ -465,8 +465,8 @@ _0809AD5A:
 	.align 2, 0
 _0809AD60: .4byte gNonGameplayRam
 
-	thumb_func_start CutsceneSecretConversationVblank
-CutsceneSecretConversationVblank: @ 0x0809AD64
+	thumb_func_start CutsceneSecretConversationVBlank
+CutsceneSecretConversationVBlank: @ 0x0809AD64
 	push {lr}
 	ldr r2, _0809AD98 @ =0x040000D4
 	ldr r0, _0809AD9C @ =gOamData
@@ -734,7 +734,7 @@ CutsceneRestrictedLabDetachingInit: @ 0x0809AEA4
 	ldr r0, _0809AFF8 @ =0x84000008
 	str r0, [r4, #8]
 	ldr r0, [r4, #8]
-	ldr r0, _0809AFFC @ =CutsceneRestrictedLabDetachingVblank
+	ldr r0, _0809AFFC @ =CutsceneRestrictedLabDetachingVBlank
 	bl CallbackSetVBlank
 	pop {r3}
 	mov r8, r3
@@ -766,7 +766,7 @@ _0809AFEC: .4byte gNonGameplayRam
 _0809AFF0: .4byte 0x0868101C
 _0809AFF4: .4byte 0x05000120
 _0809AFF8: .4byte 0x84000008
-_0809AFFC: .4byte CutsceneRestrictedLabDetachingVblank
+_0809AFFC: .4byte CutsceneRestrictedLabDetachingVBlank
 
 	thumb_func_start CutsceneRestrictedLabDetachingProcess
 CutsceneRestrictedLabDetachingProcess: @ 0x0809B000
@@ -3065,8 +3065,8 @@ _0809C130:
 	pop {r0}
 	bx r0
 
-	thumb_func_start CutsceneRestrictedLabDetachingVblank
-CutsceneRestrictedLabDetachingVblank: @ 0x0809C138
+	thumb_func_start CutsceneRestrictedLabDetachingVBlank
+CutsceneRestrictedLabDetachingVBlank: @ 0x0809C138
 	push {lr}
 	ldr r3, _0809C18C @ =0x040000D4
 	ldr r0, _0809C190 @ =gOamData
@@ -3321,7 +3321,7 @@ CutsceneBslExplodingInit: @ 0x0809C254
 	str r0, [r4, #8]
 	ldr r0, [r4, #8]
 	bl CutsceneDrawAllOam
-	ldr r0, _0809C3E0 @ =CutsceneBslExplodingVblank
+	ldr r0, _0809C3E0 @ =CutsceneBslExplodingVBlank
 	bl CallbackSetVBlank
 	pop {r3}
 	mov r8, r3
@@ -3361,7 +3361,7 @@ _0809C3D0: .4byte gNonGameplayRam
 _0809C3D4: .4byte 0x0868101C
 _0809C3D8: .4byte 0x05000120
 _0809C3DC: .4byte 0x84000008
-_0809C3E0: .4byte CutsceneBslExplodingVblank
+_0809C3E0: .4byte CutsceneBslExplodingVBlank
 
 	thumb_func_start CutsceneBslExplodingProcess
 CutsceneBslExplodingProcess: @ 0x0809C3E4
@@ -3995,8 +3995,8 @@ _0809C8A2:
 	pop {r1}
 	bx r1
 
-	thumb_func_start CutsceneBslExplodingVblank
-CutsceneBslExplodingVblank: @ 0x0809C8A8
+	thumb_func_start CutsceneBslExplodingVBlank
+CutsceneBslExplodingVBlank: @ 0x0809C8A8
 	push {lr}
 	ldr r3, _0809C8FC @ =0x040000D4
 	ldr r0, _0809C900 @ =gOamData

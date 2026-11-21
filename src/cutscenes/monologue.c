@@ -96,14 +96,14 @@ void CutsceneInit(void)
 
     WRITE_16(REG_DISPCNT, 0);
 
-    CallbackSetVBlank(CutsceneVblank);
+    CallbackSetVBlank(CutsceneVBlank);
 }
 
 /**
  * @brief 99ae4 | 14 | V-blank for a cutscene
  * 
  */
-void CutsceneVblank(void)
+void CutsceneVBlank(void)
 {
     WRITE_16(REG_BLDY, gWrittenToBldy);
 }
@@ -286,7 +286,7 @@ void CutsceneElevatorMonologueInit(boolu8 movingDown)
 
     CutsceneMonologueDrawAllOam();
 
-    CallbackSetVBlank(CutsceneElevatorMonologueVblank);
+    CallbackSetVBlank(CutsceneElevatorMonologueVBlank);
 }
 
 /**
@@ -521,7 +521,7 @@ void CutsceneProcessElevatorScrollingDown(struct MonologueOam* pOam)
  * @brief 9a2c8 | 54 | V-blank for an elevator monologue
  * 
  */
-void CutsceneElevatorMonologueVblank(void)
+void CutsceneElevatorMonologueVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     
@@ -621,7 +621,7 @@ void CutsceneInternalMonologueInit(u8 arg0)
     
     CutsceneMonologueDrawAllOam();
     
-    CallbackSetVBlank(CutsceneInternalMonologueVblank);
+    CallbackSetVBlank(CutsceneInternalMonologueVBlank);
 }
 
 /**
@@ -692,7 +692,7 @@ u8 CutsceneInternalMonologueSetupOam(InternalMonologueOamType type, s16 xPositio
  * @brief 9a604 | 38 | V-blank for an internal monologue cutscene
  * 
  */
-void CutsceneInternalMonologueVblank(void)
+void CutsceneInternalMonologueVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     
@@ -796,7 +796,7 @@ void CutsceneFederationMonologueInit(u8 arg0)
     
     CutsceneMonologueDrawAllOam();
     
-    CallbackSetVBlank(CutsceneFederationMonologueVblank);
+    CallbackSetVBlank(CutsceneFederationMonologueVBlank);
 }
 
 /**
@@ -867,7 +867,7 @@ u8 CutsceneFederationMonologueSetupOam(FederationMonologueOamType type, s16 xPos
  * @brief 9a964 | 38 | V-blank for the federation monologue cutscene
  * 
  */
-void CutsceneFederationMonologueVblank(void)
+void CutsceneFederationMonologueVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     

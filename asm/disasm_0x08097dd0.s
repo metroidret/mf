@@ -3480,7 +3480,7 @@ NewFileIntroInit: @ 0x080997A4
 	strh r2, [r0]
 	subs r0, #0x1e
 	strh r2, [r0]
-	ldr r0, _080998A8 @ =NewFileIntroVblank
+	ldr r0, _080998A8 @ =NewFileIntroVBlank
 	bl CallbackSetVBlank
 	add sp, #4
 	pop {r4}
@@ -3504,7 +3504,7 @@ _08099898: .4byte 0x00007FFF
 _0809989C: .4byte 0x85000080
 _080998A0: .4byte 0x85004000
 _080998A4: .4byte 0x0400000E
-_080998A8: .4byte NewFileIntroVblank
+_080998A8: .4byte NewFileIntroVBlank
 
 	thumb_func_start SpecialCutsceneGetRandomNumber
 SpecialCutsceneGetRandomNumber: @ 0x080998AC
@@ -3541,8 +3541,8 @@ _080998E8: .4byte 0x00003573
 _080998EC: .4byte sRandomNumberTable
 _080998F0: .4byte gFrameCounter16Bit
 
-	thumb_func_start NewFileIntroVblank
-NewFileIntroVblank: @ 0x080998F4
+	thumb_func_start NewFileIntroVBlank
+NewFileIntroVBlank: @ 0x080998F4
 	ldr r1, _08099920 @ =0x040000D4
 	ldr r0, _08099924 @ =gOamData
 	str r0, [r1]

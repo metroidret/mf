@@ -61,7 +61,7 @@ void SaXCloseUpInit(void)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
 
-    CallbackSetVBlank(SaXCloseUpLoadingVblank);
+    CallbackSetVBlank(SaXCloseUpLoadingVBlank);
 
     WRITE_16(REG_BLDCNT,
         BLDCNT_BRIGHTNESS_DECREASE_EFFECT | BLDCNT_BACKDROP_FIRST_TARGET_PIXEL | BLDCNT_OBJ_FIRST_TARGET_PIXEL |
@@ -102,13 +102,13 @@ void SaXCloseUpInit(void)
     WRITE_16(REG_BG0CNT, CREATE_BGCNT(0, 0x18, BGCNT_HIGH_PRIORITY, BGCNT_SIZE_256x256));
     WRITE_16(REG_BG1CNT, CREATE_BGCNT(0, 0x1a, BGCNT_HIGH_MID_PRIORITY, BGCNT_SIZE_256x256));
 
-    CallbackSetVBlank(SaXCloseUpVblank);
-    SaXCloseUpVblank();
+    CallbackSetVBlank(SaXCloseUpVBlank);
+    SaXCloseUpVBlank();
 
     gWrittenToDispcnt = DCNT_BG1 | DCNT_BG0;
 }
 
-void SaXCloseUpVblank(void)
+void SaXCloseUpVBlank(void)
 {
     WRITE_16(REG_BLDY, gWrittenToBldy);
     WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
@@ -120,7 +120,7 @@ void SaXCloseUpVblank(void)
     }
 }
 
-void SaXCloseUpLoadingVblank(void)
+void SaXCloseUpLoadingVBlank(void)
 {
     UpdateAudio();
 }

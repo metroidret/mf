@@ -172,7 +172,7 @@ const u32* sTitleIntroCollisionWarningObjGfxPointers[6] = {
 
 static u8 sBlob_79c474_79c4a8[] = INCBIN_U8("data/Blob_79c474_79c4a8.bin");
 
-const u16* sMonologueBgPalPointers[9] = {
+const u16* sMonologueBgPalPointers[CUTSCENE_MONOLOGUE_COUNT] = {
 	sMonologueElevatorBgPal_Sectors,
 	sMonologueElevatorBgPal_MainDeck,
 	sMonologueElevatorBgPal_Sectors,
@@ -184,7 +184,7 @@ const u16* sMonologueBgPalPointers[9] = {
 	sMonologueElevatorBgPal_Sectors
 };
 
-const u16* sMonologueObjPalPointers[9] = {
+const u16* sMonologueObjPalPointers[CUTSCENE_MONOLOGUE_COUNT] = {
 	sMonologueElevatorObjPal_PowerSuit,
 	sMonologueElevatorObjPal_PowerSuit,
 	sMonologueElevatorObjPal_PowerSuit,
@@ -196,7 +196,7 @@ const u16* sMonologueObjPalPointers[9] = {
 	sMonologueElevatorObjPal_PowerSuit
 };
 
-const u32* sMonologueBgGfxPointers[9] = {
+const u32* sMonologueBgGfxPointers[CUTSCENE_MONOLOGUE_COUNT] = {
 	sMonologueElevatorBgGfx_Sectors,
 	sMonologueElevatorBgGfx_MainDeck,
 	sMonologueElevatorBgGfx_Sectors,
@@ -208,7 +208,7 @@ const u32* sMonologueBgGfxPointers[9] = {
 	sMonologueElevatorBgGfx_Sectors
 };
 
-const u32* sMonologueObjGfxPointers[9] = {
+const u32* sMonologueObjGfxPointers[CUTSCENE_MONOLOGUE_COUNT] = {
 	sMonologueElevatorObjGfx_PowerSuit,
 	sMonologueElevatorObjGfx_PowerSuit,
 	sMonologueElevatorObjGfx_PowerSuit,
@@ -220,7 +220,7 @@ const u32* sMonologueObjGfxPointers[9] = {
 	sMonologueElevatorObjGfx_PowerSuit
 };
 
-const u32* sMonologueTilemapPointers[9] = {
+const u32* sMonologueTilemapPointers[CUTSCENE_MONOLOGUE_COUNT] = {
 	sMonologueElevatorTilemap_Sectors,
 	sMonologueElevatorTilemap_MainDeck,
 	sMonologueElevatorTilemap_Sectors,
@@ -232,7 +232,7 @@ const u32* sMonologueTilemapPointers[9] = {
 	sMonologueElevatorTilemap_Sectors
 };
 
-const struct FrameData* sMonologueOamPointers[9][2] = {
+const struct FrameData* sMonologueOamPointers[CUTSCENE_MONOLOGUE_COUNT][2] = {
     [0] = {
         sMonologueElevatorSamusOam_PowerSuit, sMonologueElevatorCrossmemberOam_1
     },
@@ -661,7 +661,7 @@ boolu32 unk_87920(void)
  * @brief 87970 | 94 | V-blank for the new file intro Samus ship flying cutscene
  * 
  */
-void NewFileIntroSamusShipFlyingVblank(void) 
+void NewFileIntroSamusShipFlyingVBlank(void) 
 {
     DMA3_COPY_32(gOamData, OAM_BASE, 256);
 
@@ -747,7 +747,7 @@ void NewFileIntroSamusShipFlyingInit(void)
     CUTSCENE_DATA.pText = sCutsceneTextNone;
     WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
 
-    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVBlank);
 }
 
  /**
@@ -925,7 +925,7 @@ void NewFileIntroSamusFaintingInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_OBJ | DCNT_BG3 | DCNT_BG2);
 
-    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVBlank);
     
     gWrittenToBldy = 0;
     gWrittenToBldalpha_Eva = 12;
@@ -1126,7 +1126,7 @@ void NewFileIntroSamusDriftingInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVBlank);
     
     gWrittenToBldy = 0;
 }
@@ -1135,7 +1135,7 @@ void NewFileIntroSamusDriftingInit(void)
  * @brief 884ac | c8 | V-blank for the 'Samus losing conciousness' cutscene
  * 
  */
-void NewFileIntroSamusLosingConsciousnessVblank(void)
+void NewFileIntroSamusLosingConsciousnessVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
@@ -1217,7 +1217,7 @@ void NewFileIntroSamusLosingConsciousnessInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(NewFileIntroSamusLosingConsciousnessVblank);
+    CallbackSetVBlank(NewFileIntroSamusLosingConsciousnessVBlank);
     
     gWrittenToBldy = 0;
     gWrittenToBldalpha_Eva = 12;
@@ -1300,7 +1300,7 @@ void NewFileIntroSamusDriftingIntoAsteroidsInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(NewFileIntroSamusShipFlyingVblank);
+    CallbackSetVBlank(NewFileIntroSamusShipFlyingVBlank);
     
     gWrittenToBldy = 0;
 }
@@ -2392,7 +2392,7 @@ void NewFileIntroSr388PreviewInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(NewFileIntroSr388PreviewVblank);
+    CallbackSetVBlank(NewFileIntroSr388PreviewVBlank);
 }
 
  /**
@@ -2898,7 +2898,7 @@ void NewFileIntroSetupSr388PreviewAsteroid(u8 type, s16 xPosition, s16 yPosition
  * @brief 8a5a4 | 94 | V-blank for the SR388 preview cutscene
  * 
  */
-void NewFileIntroSr388PreviewVblank(void)
+void NewFileIntroSr388PreviewVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -2982,7 +2982,7 @@ void NewFileIntroInSr388Init(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(NewFileIntroInSr388Vblank);
+    CallbackSetVBlank(NewFileIntroInSr388VBlank);
 }
 
  /**
@@ -4756,7 +4756,7 @@ void NewFileIntroGetPositionOfOamByType(IntroInSr388OamType type, s16* pXPositio
  * @brief 8c594 | dc | V-blank for the 'hornoad encounter in SR388' cutscene
  * 
  */
-void NewFileIntroInSr388Vblank(void)
+void NewFileIntroInSr388VBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -4846,7 +4846,7 @@ void NewFileIntroSamusGettingCuredInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(NewFileIntroSamusGettingCuredVblank);
+    CallbackSetVBlank(NewFileIntroSamusGettingCuredVBlank);
 }
 
  /**
@@ -5054,7 +5054,7 @@ void NewFileIntroSamusGettingCuredNervousSystemInit(void)
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | DCNT_WIN0);
     
-    CallbackSetVBlank(NewFileIntroSamusGettingCuredNervousSystemVblank);
+    CallbackSetVBlank(NewFileIntroSamusGettingCuredNervousSystemVBlank);
 }
 
  /**
@@ -5926,7 +5926,7 @@ u8 NewFileIntroFindOamByType(IntroSamusGettingCuredOamType type)
  * @brief 8de38 | 4c | V-blank code for the new file intro Metroid vaccine cutscene
  * 
  */
-void NewFileIntroSamusGettingCuredVblank(void)
+void NewFileIntroSamusGettingCuredVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -5938,7 +5938,7 @@ void NewFileIntroSamusGettingCuredVblank(void)
  * @brief 8de84 | a8 | V-blank code for the new file intro Samus nervous system cutscene
  * 
  */
-void NewFileIntroSamusGettingCuredNervousSystemVblank(void)
+void NewFileIntroSamusGettingCuredNervousSystemVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -6027,7 +6027,7 @@ void NewFileIntroSamusFoundInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
 
-    CallbackSetVBlank(NewFileIntroSamusFoundVblank);
+    CallbackSetVBlank(NewFileIntroSamusFoundVBlank);
 }
 
  /**
@@ -6599,7 +6599,7 @@ u8 NewFileIntroSamusFoundSetupOam(IntroSamusFoundOamType type, s16 xPosition, s1
  * @brief 8eb00 | 7c | V-blank for the intro Samus found cutscene
  * 
  */
-void NewFileIntroSamusFoundVblank(void)
+void NewFileIntroSamusFoundVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -6693,7 +6693,7 @@ void NewFileIntroSamusCuredInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(NewFileIntroSamusCuredVblank);
+    CallbackSetVBlank(NewFileIntroSamusCuredVBlank);
 }
 
  /**
@@ -7108,7 +7108,7 @@ u8 NewFileIntroSamusCuredSetupOam(IntroSamusCuredOamType type, s16 xPosition, s1
  * @brief 8f4c4 | fc | V-blank for the Samus cured cutscene
  * 
  */
-void NewFileIntroSamusCuredVblank(void)
+void NewFileIntroSamusCuredVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -7212,7 +7212,7 @@ void NewFileIntroArrivingAtBslInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
 
-    CallbackSetVBlank(NewFileIntroArrivingAtBslVblank);
+    CallbackSetVBlank(NewFileIntroArrivingAtBslVBlank);
 }
 
  /**
@@ -8409,7 +8409,7 @@ u8 NewFileIntroArrivingAtBslSetupOam(IntroArrivingAtBslOamType type, s16 xPositi
  * @brief 90c60 | 9c | V-blank for the arriving at BSL cutscene
  * 
  */
-void NewFileIntroArrivingAtBslVblank(void)
+void NewFileIntroArrivingAtBslVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     
@@ -8521,7 +8521,7 @@ void NewFileIntroLandingOnBslInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(NewFileIntroLandingOnBslVblank);
+    CallbackSetVBlank(NewFileIntroLandingOnBslVBlank);
 }
 
  /**
@@ -9536,7 +9536,7 @@ u8 NewFileIntroLandingOnBslSetupOam(IntroLandingOnBslOamType type, s16 xPosition
  * @brief 91efc | 13c | V-blank for the landing on BSL cutscene
  * 
  */
-void NewFileIntroLandingOnBslVblank(void)
+void NewFileIntroLandingOnBslVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     

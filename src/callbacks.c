@@ -8,7 +8,7 @@
  * @brief b5c | 2c | Calls the v-blank callback
  * 
  */
-void CallbackCallVblank(void)
+void CallbackCallVBlank(void)
 {
     if (gVBlankCallback)
         gVBlankCallback();

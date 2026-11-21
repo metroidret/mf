@@ -10,7 +10,7 @@
 // V-blank callbacks
 void unk_93884(void);
 void unk_99940(void);
-void TitleIntroShipAlertAndDraftingVblank(void);
+void TitleIntroShipAlertAndDraftingVBlank(void);
 
 u8 SpecialCutsceneGetRandomNumber(void);
 
@@ -303,7 +303,7 @@ void TitleIntroShipAlertInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG1 | DCNT_OBJ);
     
-    CallbackSetVBlank(TitleIntroShipAlertAndDraftingVblank);
+    CallbackSetVBlank(TitleIntroShipAlertAndDraftingVBlank);
 }
 
 /**
@@ -447,7 +447,7 @@ void TitleIntroSamusDriftingOutInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(TitleIntroShipAlertAndDraftingVblank);
+    CallbackSetVBlank(TitleIntroShipAlertAndDraftingVBlank);
 }
 
 /**

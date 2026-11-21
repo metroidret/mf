@@ -26,16 +26,16 @@ struct MonologueOam {
 
 struct MonologueData {
     u8 unk_0[0x8];
-    u16 stage;			// 0x8
+    u16 stage;
     u16 monologueId;
-    const u16* pText;	// 0xC
+    const u16* pText;
     u8 unk_10[2];
     u16 unk_12;
     u16 unk_14;
     u8 unk_16;
     u8 unk_17;
     u8 unk_18[0x1FC];
-    struct MonologueOam oam[5]; // 0x214
+    struct MonologueOam oam[5];
 };
 
 #endif /* MONOLOGUE_STRUCT_H */

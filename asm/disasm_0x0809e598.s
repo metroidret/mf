@@ -422,7 +422,7 @@ _0809E86A:
 	lsls r2, r2, #5
 	adds r0, r2, #0
 	strh r0, [r1]
-	ldr r0, _0809E9DC @ =FileSelectVblank
+	ldr r0, _0809E9DC @ =FileSelectVBlank
 	bl CallbackSetVBlank
 	add sp, #4
 	pop {r3}
@@ -478,10 +478,10 @@ _0809E9CC: .4byte 0x03000011
 _0809E9D0: .4byte 0x03000B8D
 _0809E9D4: .4byte 0x00001F03
 _0809E9D8: .4byte 0x00001C0A
-_0809E9DC: .4byte FileSelectVblank
+_0809E9DC: .4byte FileSelectVBlank
 
-	thumb_func_start FileSelectVblank
-FileSelectVblank: @ 0x0809E9E0
+	thumb_func_start FileSelectVBlank
+FileSelectVBlank: @ 0x0809E9E0
 	push {r4, lr}
 	ldr r1, _0809EA10 @ =0x040000D4
 	ldr r0, _0809EA14 @ =gOamData
