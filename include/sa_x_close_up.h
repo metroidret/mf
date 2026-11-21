@@ -5,8 +5,8 @@
 
 boolu32 SaXCloseUpHandler(void);
 void SaXCloseUpInit(void);
-void SaXCloseUpVblank(void);
-void SaXCloseUpLoadingVblank(void);
+void SaXCloseUpVBlank(void);
+void SaXCloseUpLoadingVBlank(void);
 boolu32 SaXCloseUp(void);
 boolu32 SaXCloseUpProcess(void);
 

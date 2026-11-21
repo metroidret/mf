@@ -20,7 +20,7 @@
  * @brief 716f8 | c | Demo, empty v-blank
  * 
  */
-void DemoVblank_Empty(void)
+void DemoVBlank_Empty(void)
 {
     vu8 c = 0;
 }
@@ -29,7 +29,7 @@ void DemoVblank_Empty(void)
  * @brief 71704 | c | Demo v-blank
  * 
  */
-void DemoVblank(void)
+void DemoVBlank(void)
 {
     UpdateAudio();
 }
@@ -42,7 +42,7 @@ void DemoLoadInputs(void)
 {
     u8 demoId;
 
-    CallbackSetVBlank(DemoVblank);
+    CallbackSetVBlank(DemoVBlank);
 
     if (gCurrentDemo >= DEMO_ID_END)
         gCurrentDemo = 0;
@@ -64,7 +64,7 @@ void DemoLoadInputs(void)
     gDemoInputCounter = 0;
     gCurrentDemo |= DEMO_ID_HALF_LOADED_FLAG;
 
-    CallbackSetVBlank(DemoVblank_Empty);
+    CallbackSetVBlank(DemoVBlank_Empty);
 }
 
 /**

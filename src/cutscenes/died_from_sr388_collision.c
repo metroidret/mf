@@ -118,7 +118,7 @@ void DiedOnSr388CollisionInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(DiedOnSr388CollisionVblank);
+    CallbackSetVBlank(DiedOnSr388CollisionVBlank);
 }
 
 /**
@@ -433,7 +433,7 @@ u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition,
  * @brief 97c00 | d8 | V-blank for the died on SR388 collision cutscene
  * 
  */
-void DiedOnSr388CollisionVblank(void)
+void DiedOnSr388CollisionVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -458,7 +458,7 @@ void DiedOnSr388CollisionVblank(void)
  * @brief 97cd8 | 94 | Unused V-blank for the died on SR388 collision cutscene
  * 
  */
-void DiedOnSr388CollisionVblank_Unused(void)
+void DiedOnSr388CollisionVBlank_Unused(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 

@@ -4323,8 +4323,8 @@ _0808093A:
 _08080948: .4byte 0x03000B94
 _0808094C: .4byte 0x0858225C
 
-	thumb_func_start Sram_LoadingfileVblank
-Sram_LoadingfileVblank: @ 0x08080950
+	thumb_func_start Sram_LoadingfileVBlank
+Sram_LoadingfileVBlank: @ 0x08080950
 	sub sp, #4
 	mov r1, sp
 	movs r0, #0
@@ -4332,8 +4332,8 @@ Sram_LoadingfileVblank: @ 0x08080950
 	add sp, #4
 	bx lr
 
-	thumb_func_start Sram_AfterLoadingFileVblank
-Sram_AfterLoadingFileVblank: @ 0x0808095C
+	thumb_func_start Sram_AfterLoadingFileVBlank
+Sram_AfterLoadingFileVBlank: @ 0x0808095C
 	push {lr}
 	bl UpdateAudio
 	pop {r0}
@@ -4343,10 +4343,10 @@ Sram_AfterLoadingFileVblank: @ 0x0808095C
 	thumb_func_start Sram_ChecLoadSaveFileWithBlank
 Sram_ChecLoadSaveFileWithBlank: @ 0x08080968
 	push {lr}
-	ldr r0, _08080988 @ =Sram_AfterLoadingFileVblank
+	ldr r0, _08080988 @ =Sram_AfterLoadingFileVBlank
 	bl CallbackSetVBlank
 	bl Sram_CheckLoadSaveFile
-	ldr r0, _0808098C @ =Sram_LoadingfileVblank
+	ldr r0, _0808098C @ =Sram_LoadingfileVBlank
 	bl CallbackSetVBlank
 	ldr r0, _08080990 @ =gIsLoadingFile
 	ldrb r0, [r0]
@@ -4355,8 +4355,8 @@ Sram_ChecLoadSaveFileWithBlank: @ 0x08080968
 	pop {r1}
 	bx r1
 	.align 2, 0
-_08080988: .4byte Sram_AfterLoadingFileVblank
-_0808098C: .4byte Sram_LoadingfileVblank
+_08080988: .4byte Sram_AfterLoadingFileVBlank
+_0808098C: .4byte Sram_LoadingfileVBlank
 _08080990: .4byte gIsLoadingFile
 
 	thumb_func_start Sram_SetCurrentFile

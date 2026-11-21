@@ -4,7 +4,7 @@
 #include "types.h"
 
 u32 InGameHandler(void);
-void InGameSetVblank(void);
+void InGameSetVBlank(void);
 void TransferSamusGraphics(s32 updatePalette);
 void VBlankCodeInGameLoad(void);
 void unk_e26c(void);

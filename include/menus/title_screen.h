@@ -6,8 +6,8 @@
 
 s32 unk_86854(void);
 void unk_8690c(void);
-void TitleScreenVblank(void);
-void TitleScreenVblank_Empty(void);
+void TitleScreenVBlank(void);
+void TitleScreenVBlank_Empty(void);
 s32 unk_86b58(void);
 u8 TitleScreenSetupObject(u8 section, u16 xPosition, u16 yPosition);
 void unk_86cf0(struct TitleScreenObject* pObject);

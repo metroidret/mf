@@ -35,8 +35,8 @@ boolu32 DiedOnSr388Collision(void);
 void DiedOnSr388CollisionProcessFallingBsl(struct SpecialCutsceneOam* pOam);
 void DiedOnSr388CollisionProcessReentryDebris(struct SpecialCutsceneOam* pOam);
 u8 DiedOnSr388CollisionSetupOam(DiedOnSr388CollisionOamType type, s16 xPosition, s16 yPosition, u8 descendingSearch);
-void DiedOnSr388CollisionVblank(void);
-void DiedOnSr388CollisionVblank_Unused(void);
+void DiedOnSr388CollisionVBlank(void);
+void DiedOnSr388CollisionVBlank_Unused(void);
 u8 DiedOnSr388CollisionGetPositionAndSlotOfOamByType(DiedOnSr388CollisionOamType type, s16* pXPosition, s16* pYPosition);
 void unk_97dcc(void);
 

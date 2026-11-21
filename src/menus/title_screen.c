@@ -95,7 +95,7 @@ void unk_8690c(void)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
 
-    CallbackSetVBlank(TitleScreenVblank_Empty);
+    CallbackSetVBlank(TitleScreenVBlank_Empty);
 
     WRITE_16(REG_DISPCNT, 0);
 
@@ -155,7 +155,7 @@ void unk_8690c(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG1 | DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(TitleScreenVblank);
+    CallbackSetVBlank(TitleScreenVBlank);
 
     TitleScreenSetupObject(TITLE_SCREEN_SECTION_COPYRIGHT, SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 8), SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 9 + HALF_BLOCK_SIZE + EIGHTH_BLOCK_SIZE));
     TitleScreenSetupObject(TITLE_SCREEN_SECTION_PRESS_START, SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 7 + HALF_BLOCK_SIZE), SUB_PIXEL_TO_PIXEL(BLOCK_SIZE * 8 + HALF_BLOCK_SIZE));
@@ -169,7 +169,7 @@ void unk_8690c(void)
  * @brief 86b00 | 4c | V-blank for the title screen
  * 
  */
-void TitleScreenVblank(void)
+void TitleScreenVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / 4);
 
@@ -181,7 +181,7 @@ void TitleScreenVblank(void)
  * @brief 86b4c | c | Title screen, empty v-blank
  * 
  */
-void TitleScreenVblank_Empty(void)
+void TitleScreenVBlank_Empty(void)
 {
     UpdateAudio();
 }
@@ -577,7 +577,7 @@ void TitleScreenInit(void)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
 
-    CallbackSetVBlank(TitleScreenVblank_Empty);
+    CallbackSetVBlank(TitleScreenVBlank_Empty);
 
     WRITE_16(REG_DISPCNT, 0);
 
@@ -638,7 +638,7 @@ void TitleScreenInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG3);
 
-    CallbackSetVBlank(TitleScreenVblank);
+    CallbackSetVBlank(TitleScreenVBlank);
 
     TitleScreenDrawAllObjects();
 }

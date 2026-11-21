@@ -147,7 +147,7 @@ void EndingBslCrashingInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(EndingBslCrashingVblank);
+    CallbackSetVBlank(EndingBslCrashingVBlank);
 }
 
 /**
@@ -213,7 +213,7 @@ void EndingShipFrontViewInit(void)
 
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
 
-    CallbackSetVBlank(EndingShipFrontViewVblank);
+    CallbackSetVBlank(EndingShipFrontViewVBlank);
 }
 
 /**
@@ -754,7 +754,7 @@ u8 EndingBslCrashingSetupOam(EndingBslCrashingOamType type, s16 xPosition, s16 y
  * @brief 95c54 | d8 | V-blank for the ending BSL crashing cutscene
  * 
  */
-void EndingBslCrashingVblank(void)
+void EndingBslCrashingVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -779,7 +779,7 @@ void EndingBslCrashingVblank(void)
  * @brief 95d2c | 94 | V-blank for the ending ship front view cutscene
  * 
  */
-void EndingShipFrontViewVblank(void)
+void EndingShipFrontViewVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
 
@@ -853,13 +853,13 @@ void EndingMonologueInit(void)
     
     DMA3_COPY_32(sEndingMonologueBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
     
-    LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
+    LZ77UncompWram(sCutsceneTextTilemap, EWRAM_BASE);
     
     DMA3_COPY_32(EWRAM_BASE, VRAM_BASE + 0x4800, 0x800 / sizeof(u32));
     
     DMA3_FILL_32(0, VRAM_BASE, 0x4800);
     
-    DMA3_COPY_32(sIntroPal_663820, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sCutsceneTextPal, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
     
     gBg1XPosition = 0;
     gBg1YPosition = 0;
@@ -896,7 +896,7 @@ void EndingMonologueInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(EndingMonologueVblank);
+    CallbackSetVBlank(EndingMonologueVBlank);
 }
 
 /**
@@ -962,7 +962,7 @@ void EndingAdamConversationInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG0 | DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(EndingConversationAndAnimalsVblank);
+    CallbackSetVBlank(EndingConversationAndAnimalsVBlank);
 }
 
 /**
@@ -1029,7 +1029,7 @@ void EndingAnimalsInit(void)
     
     WRITE_16(REG_DISPCNT, DCNT_BG2 | DCNT_BG3 | DCNT_OBJ);
     
-    CallbackSetVBlank(EndingConversationAndAnimalsVblank);
+    CallbackSetVBlank(EndingConversationAndAnimalsVBlank);
 }
 
 /**
@@ -1890,7 +1890,7 @@ u8 EndingDialogueSetupOam(EndingDialogueOamType type, s16 xPosition, s16 yPositi
  * @brief 97288 | 9c | V-blank for the ending monologue
  * 
  */
-void EndingMonologueVblank(void)
+void EndingMonologueVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     
@@ -1911,7 +1911,7 @@ void EndingMonologueVblank(void)
  * @brief 97324 | 94 | V-blank for the ending conversation and animals cutscenes
  * 
  */
-void EndingConversationAndAnimalsVblank(void)
+void EndingConversationAndAnimalsVBlank(void)
 {
     DMA3_COPY_32(gOamData, OAM_BASE, OAM_SIZE / sizeof(u32));
     

@@ -9,6 +9,7 @@
 #include "structs/ending.h"
 #include "structs/cutscene.h"
 #include "structs/game_over.h"
+#include "structs/monologue.h"
 
 struct InGameData {
     u8 clipdataCode[640];
@@ -23,6 +24,7 @@ union NonGameplayRam {
     struct CutsceneData cutscene;
     struct EndingData ending;
     struct GameOverData gameOver;
+    struct MonologueData monologue;
     u8 size[1344];
 };
 
@@ -35,6 +37,7 @@ extern union NonGameplayRam gNonGameplayRam;
 #define CUTSCENE_DATA gNonGameplayRam.cutscene
 #define ENDING_DATA gNonGameplayRam.ending
 #define GAME_OVER_DATA gNonGameplayRam.gameOver
+#define MONOLOGUE_DATA gNonGameplayRam.monologue
 
 extern u8 gSpriteGfxBackup[0x8000];
 
@@ -184,7 +187,8 @@ enum Cutscene {
     CUTSCENE_ELEVATOR_MONOLOGUE_INCIDENT,
     CUTSCENE_MONOLOGUE_FEDERATION,
     CUTSCENE_MONOLOGUE_END,
-    CUTSCENE_SECRET_CONVERSATION,
+    CUTSCENE_MONOLOGUE_COUNT,
+    CUTSCENE_SECRET_CONVERSATION = CUTSCENE_MONOLOGUE_COUNT,
     CUTSCENE_RESTRICTED_LAB_DETACHING,
     CUTSCENE_RESTRICTED_LAB_DETACHING_DYING,
     CUTSCENE_BSL_EXPLODING,

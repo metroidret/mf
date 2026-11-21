@@ -1089,8 +1089,8 @@ _080938F4: .4byte 0x0300122E
 _080938F8: .4byte 0x03001230
 _080938FC: .4byte 0x03001232
 
-	thumb_func_start TitleIntroShipAlertAndDraftingVblank
-TitleIntroShipAlertAndDraftingVblank: @ 0x08093900
+	thumb_func_start TitleIntroShipAlertAndDraftingVBlank
+TitleIntroShipAlertAndDraftingVBlank: @ 0x08093900
 	ldr r1, _0809394C @ =0x040000D4
 	ldr r0, _08093950 @ =gOamData
 	str r0, [r1]
@@ -1324,7 +1324,7 @@ _08093AA4:
 	lsls r2, r2, #5
 	adds r0, r2, #0
 	strh r0, [r1]
-	ldr r0, _08093BBC @ =IntroSpaceViewVblank
+	ldr r0, _08093BBC @ =IntroSpaceViewVBlank
 	bl CallbackSetVBlank
 	movs r0, #0x60
 	movs r1, #0xf
@@ -1377,7 +1377,7 @@ _08093BAC: .4byte 0x00001F03
 _08093BB0: .4byte 0x0863A19C
 _08093BB4: .4byte 0x0600D000
 _08093BB8: .4byte 0x85000400
-_08093BBC: .4byte IntroSpaceViewVblank
+_08093BBC: .4byte IntroSpaceViewVBlank
 
 	thumb_func_start IntroSpaceViewPartProcess
 IntroSpaceViewPartProcess: @ 0x08093BC0
@@ -1946,7 +1946,7 @@ IntroFlyingViewInit: @ 0x08093F4C
 	lsls r2, r2, #5
 	adds r0, r2, #0
 	strh r0, [r1]
-	ldr r0, _08094110 @ =IntroSpaceViewVblank
+	ldr r0, _08094110 @ =IntroSpaceViewVBlank
 	bl CallbackSetVBlank
 	add sp, #4
 	pop {r3}
@@ -1992,7 +1992,7 @@ _08094100: .4byte 0xFFFFFDE4
 _08094104: .4byte 0x0863A19C
 _08094108: .4byte 0x0600D000
 _0809410C: .4byte 0x85000400
-_08094110: .4byte IntroSpaceViewVblank
+_08094110: .4byte IntroSpaceViewVBlank
 
 	thumb_func_start IntroFlyingViewProcess
 IntroFlyingViewProcess: @ 0x08094114
@@ -3673,8 +3673,8 @@ _08094DE0: .4byte 0x00000236
 _08094DE4: .4byte 0x0860AC08
 _08094DE8: .4byte IntroProcessIdleDepthParticle
 
-	thumb_func_start IntroSpaceViewVblank
-IntroSpaceViewVblank: @ 0x08094DEC
+	thumb_func_start IntroSpaceViewVBlank
+IntroSpaceViewVBlank: @ 0x08094DEC
 	ldr r1, _08094E48 @ =0x040000D4
 	ldr r0, _08094E4C @ =gOamData
 	str r0, [r1]

@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-void DemoVblank_Empty(void);
-void DemoVblank(void);
+void DemoVBlank_Empty(void);
+void DemoVBlank(void);
 void DemoLoadInputs(void);
 void DemoLoadRam(u8 group);
 void DemoInit(void);

@@ -11,7 +11,7 @@ extern Func_T gVCountCallback;
 
 // Functions
 
-void CallbackCallVblank(void);
+void CallbackCallVBlank(void);
 void CallbackSetVBlank(Func_T callback);
 void CallbackCallHBlank(void);
 void CallbackSetHBlank(Func_T callback);

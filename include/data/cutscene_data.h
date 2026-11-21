@@ -508,8 +508,54 @@ extern const u16 sTitleIntroCollisionWarningBgPal[16 * PAL_ROW];
 
 extern const u16 sTitleIntroCollisionWarningObjPal[16 * PAL_ROW];
 
-extern const u32 sIntroTilemap_662804[318];
+extern const u32 sMonologueElevatorBgGfx_Sectors[3517];
 
-extern const u16 sIntroPal_663820[4 * PAL_ROW];
+extern const u32 sMonologueTextCursorGfx[50];
+
+extern const u32 sMonologueElevatorObjGfx_PowerSuit[2808];
+
+extern const u32 sCutsceneTextTilemap[318];
+extern const u32 sMonologueElevatorTilemap_Sectors[551];
+
+extern const u32 sMonologueElevatorLightBeamTilemap[66];
+
+extern const u16 sMonologueBgPal[12 * PAL_ROW];
+extern const u16 sCutsceneTextPal[4 * PAL_ROW];
+extern const u16 sMonologueTextCursorPal[1 * PAL_ROW];
+extern const u16 sMonologueElevatorBgPal_Sectors[11 * PAL_ROW];
+extern const u16 sMonologueElevatorObjPal_PowerSuit[6 * PAL_ROW];
+
+extern const struct FrameData sMonologueElevatorSamusOam_PowerSuit[5];
+extern const struct FrameData sMonologueElevatorCrossmemberOam_1[2];
+extern const struct FrameData sMonologueCursorOam[3];
+extern const struct FrameData sOam_663e74[7];
+
+extern const u32 sMonologueElevatorBgGfx_MainDeck[3931];
+extern const u32 sMonologueElevatorObjGfx_VariaSuit[2771];
+
+extern const struct FrameData sMonologueElevatorSamusOam_VariaSuit[5];
+extern const struct FrameData sMonologueElevatorCrossmemberOam_2[2];
+
+extern const u16 sMonologueElevatorBgPal_MainDeck[11 * PAL_ROW];
+extern const u16 sMonologueElevatorObjPal_VariaSuit[6 * PAL_ROW];
+
+extern const u32 sMonologueElevatorTilemap_MainDeck[551];
+
+extern const u32 sMonologueElevatorBgGfx_RestrictedLab[3517];
+extern const u32 sMonologueElevatorObjGfx_GravitySuit[2770];
+
+extern const struct FrameData sMonologueElevatorSamusOam_GravitySuit[5];
+extern const struct FrameData sMonologueElevatorCrossmemberOam_3[2];
+
+extern const u16 sMonologueElevatorBgPal_RestrictedLab[11 * PAL_ROW];
+extern const u16 sMonologueElevatorObjPal_GravitySuit[6 * PAL_ROW];
+
+extern const u32 sMonologueElevatorTilemap_RestrictedLab[551];
+
+extern const u32 sFederationMonologueBgGfx[2342];
+
+extern const u16 sFederationMonologueBgPal[12 * PAL_ROW];
+
+extern const u32 sFederationMonologueBgTilemap[368];
 
 #endif /* CUTSCENE_DATA_H */
