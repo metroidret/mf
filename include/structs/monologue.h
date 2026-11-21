@@ -11,13 +11,13 @@ struct MonologueOam {
     s16 yPosition;
     u8 type;
     boolu8 isDrawn;
-    u8 currentAnimationFrame;
+    u8 unk_6;
+    u8 unk_7;
     u8 timer;
-    u8 unk_8;
-    u8 unk_9;
+    u8 stage;
     u8 objMode;
     u8 priority;
-    boolu8 xFlip;
+    u8 unk_C;
     u8 palette;
     u16 tile;
     const struct FrameData* pOam;
@@ -27,7 +27,7 @@ struct MonologueOam {
 struct MonologueData {
     u8 unk_0[0x8];
     u16 stage;			// 0x8
-    u16 unk_A;
+    u16 monologueId;
     const u16* pText;	// 0xC
     u8 unk_10[2];
     u16 unk_12;

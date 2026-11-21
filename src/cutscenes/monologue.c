@@ -9,7 +9,7 @@ void CutsceneMonologueProcessCursor(struct MonologueOam* pOam);
 void unk_9d09c(struct MonologueOam* pOam);
 
 /**
- * @brief  |  | To document
+ * @brief 9994c | 78 | Main handler for a cutscene
  * 
  */
 boolu32 CutsceneHandler(void)
@@ -54,7 +54,7 @@ boolu32 CutsceneHandler(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 999c4 | 120 | Setup for a cutscene
  * 
  */
 void CutsceneInit(void)
@@ -64,7 +64,7 @@ void CutsceneInit(void)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
 
-    CallbackSetVBlank(unk_99af8);
+    CallbackSetVBlank(CutsceneInitVBlank);
 
     WRITE_16(REG_BLDCNT, BLDCNT_SCREEN_FIRST_TARGET | BLDCNT_BRIGHTNESS_DECREASE_EFFECT);
     gWrittenToBldy = BLDY_MAX_VALUE;
@@ -100,7 +100,7 @@ void CutsceneInit(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 99ae4 | 14 | V-blank for a cutscene
  * 
  */
 void CutsceneVblank(void)
@@ -109,16 +109,16 @@ void CutsceneVblank(void)
 }
 
 /**
- * @brief 99af8 | c | To document
+ * @brief 99af8 | c | V-blank for the cutscene setup
  * 
  */
-void unk_99af8(void)
+void CutsceneInitVBlank(void)
 {
     UpdateAudio();
 }
 
 /**
- * @brief  |  | To document
+ * @brief 99b04 | a8 | Processes a cutscene
  * 
  */
 boolu32 CutsceneProcess(void)
@@ -129,54 +129,54 @@ boolu32 CutsceneProcess(void)
 
     switch (gCurrentCutscene - 1)
     {
-        case 0:
-        case 7:
+        case CUTSCENE_MONOLOGUE_INTRO - 1:
+        case CUTSCENE_MONOLOGUE_END - 1:
             if (CutsceneInternalMonologue(0))
                 finished = TRUE;
             break;
 
-        case 1:
-            if (CutsceneElevatorMonologue(0))
+        case CUTSCENE_ELEVATOR_MONOLOGUE_REMIND - 1:
+            if (CutsceneElevatorMonologue(FALSE))
                 finished = TRUE;
             break;
     
-        case 2:
-            if (CutsceneElevatorMonologue(0))
+        case CUTSCENE_ELEVATOR_MONOLOGUE_TRUST - 1:
+            if (CutsceneElevatorMonologue(FALSE))
                 finished = TRUE;
             break;
     
-        case 3:
-            if (CutsceneElevatorMonologue(0))
+        case CUTSCENE_ELEVATOR_MONOLOGUE_SA_X - 1:
+            if (CutsceneElevatorMonologue(FALSE))
                 finished = TRUE;
             break;
     
-        case 4:
-            if (CutsceneElevatorMonologue(1))
+        case CUTSCENE_ELEVATOR_MONOLOGUE_ANIMALS - 1:
+            if (CutsceneElevatorMonologue(TRUE))
                 finished = TRUE;
             break;
     
-        case 5:
-            if (CutsceneElevatorMonologue(0))
+        case CUTSCENE_ELEVATOR_MONOLOGUE_INCIDENT - 1:
+            if (CutsceneElevatorMonologue(FALSE))
                 finished = TRUE;
             break;
     
-        case 6:
+        case CUTSCENE_MONOLOGUE_FEDERATION - 1:
             if (CutsceneFederationMonologue(0))
                 finished = TRUE;
             break;
     
-        case 8:
+        case CUTSCENE_SECRET_CONVERSATION - 1:
             if (CutsceneSecretConversation())
                 finished = TRUE;
             break;
     
-        case 9:
-        case 10:
+        case CUTSCENE_RESTRICTED_LAB_DETACHING - 1:
+        case CUTSCENE_RESTRICTED_LAB_DETACHING_DYING - 1:
             if (CutsceneRestrictedLabDetaching())
                 finished = TRUE;
             break;
     
-        case 11:
+        case CUTSCENE_BSL_EXPLODING - 1:
             if (CutsceneBslExploding())
                 finished = TRUE;
             break;
@@ -191,10 +191,10 @@ boolu32 CutsceneProcess(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 99bac | 8c | Processes an elevator monologue cutscene
  * 
  */
-boolu32 CutsceneElevatorMonologue(u8 arg0)
+boolu32 CutsceneElevatorMonologue(boolu8 movingDown)
 {
     boolu32 finished;
 
@@ -204,7 +204,7 @@ boolu32 CutsceneElevatorMonologue(u8 arg0)
     {
         case 0:
             MONOLOGUE_DATA.stage = 1;
-            CutsceneElevatorMonologueInit(arg0);
+            CutsceneElevatorMonologueInit(movingDown);
             break;
         
         case 1:
@@ -233,33 +233,33 @@ boolu32 CutsceneElevatorMonologue(u8 arg0)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 99c38 | 22c | Setup for an elevator monologue cutscene
  * 
  */
-void CutsceneElevatorMonologueInit(u8 arg0)
+void CutsceneElevatorMonologueInit(boolu8 movingDown)
 {
     WRITE_16(REG_IME, FALSE);
     WRITE_16(REG_DISPSTAT, READ_16(REG_DISPSTAT) & ~DSTAT_IF_HBLANK);
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
-    
-    CallbackSetVBlank(unk_9a31c);
-    
-    WRITE_16(REG_DISPCNT, 0);
-    
-    LZ77UncompVram(sMonologueObjGfxPointers[gCurrentCutscene - 1], VRAM_OBJ + 0x2000);
-    LZ77UncompVram(sMonologueTilemap_65fb5c, VRAM_OBJ + 0x7C00);
 
-    DMA3_COPY_32(sMonologuePal_6638A0, PALRAM_OBJ + 15 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+    CallbackSetVBlank(CutsceneElevatorMonologueInitVBlank);
+
+    WRITE_16(REG_DISPCNT, 0);
+
+    LZ77UncompVram(sMonologueObjGfxPointers[gCurrentCutscene - 1], VRAM_OBJ + 0x2000);
+    LZ77UncompVram(sMonologueTextCursorGfx, VRAM_OBJ + 0x7C00);
+
+    DMA3_COPY_32(sMonologueTextCursorPal, PALRAM_OBJ + 15 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
     DMA3_COPY_32(sMonologueObjPalPointers[gCurrentCutscene - 1], PALRAM_OBJ, 6 * PAL_ROW_SIZE / sizeof(u32));
 
     LZ77UncompVram(sMonologueBgGfxPointers[gCurrentCutscene - 1], VRAM_BASE);
     LZ77UncompVram(sMonologueTilemapPointers[gCurrentCutscene - 1], VRAM_BASE + 0xD000);
-    LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
-    LZ77UncompVram(sMonologueTilemap_663598, VRAM_BASE + 0xD800);
+    LZ77UncompWram(sCutsceneTextTilemap, EWRAM_BASE);
+    LZ77UncompVram(sMonologueElevatorLightBeamTilemap, VRAM_BASE + 0xD800);
 
     DMA3_COPY_32(EWRAM_BASE, VRAM_BASE + 0xC800, 0x800 / sizeof(u32));
-    DMA3_COPY_32(sMonologuePal_6636a0, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sMonologueBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
     DMA3_COPY_32(sMonologueBgPalPointers[gCurrentCutscene - 1], PALRAM_BASE, 11 * PAL_ROW_SIZE / sizeof(u32));
 
     WRITE_16(REG_BG0VOFS, 4);
@@ -272,17 +272,17 @@ void CutsceneElevatorMonologueInit(u8 arg0)
 
     gWrittenToBldy--;
 
-    CutsceneElevatorMonologueSetupOam(1, 12, 16);
-    CutsceneElevatorMonologueSetupOam(2, SCREEN_X_MIDDLE, 120);
-    CutsceneElevatorMonologueSetupOam(3, SCREEN_X_MIDDLE, 120);
+    CutsceneElevatorMonologueSetupOam(ELEVATOR_MONOLOGUE_OAM_TYPE_CURSOR, 12, 16);
+    CutsceneElevatorMonologueSetupOam(ELEVATOR_MONOLOGUE_OAM_TYPE_SAMUS, SCREEN_X_MIDDLE, 120);
+    CutsceneElevatorMonologueSetupOam(ELEVATOR_MONOLOGUE_OAM_TYPE_SAMUS_OBJ_WINDOW, SCREEN_X_MIDDLE, 120);
 
-    if (arg0 == 0)
-        CutsceneElevatorMonologueSetupOam(4, SCREEN_X_MIDDLE, 104);
+    if (!movingDown)
+        CutsceneElevatorMonologueSetupOam(ELEVATOR_MONOLOGUE_OAM_TYPE_SCROLLER_UP, SCREEN_X_MIDDLE, 104);
     else
-        CutsceneElevatorMonologueSetupOam(5, SCREEN_X_MIDDLE, 104);
+        CutsceneElevatorMonologueSetupOam(ELEVATOR_MONOLOGUE_OAM_TYPE_SCROLLER_DOWN, SCREEN_X_MIDDLE, 104);
 
-    MONOLOGUE_DATA.unk_A = gCurrentCutscene - 1;
-    MONOLOGUE_DATA.pText = sMonologueTextPointers[gLanguage][MONOLOGUE_DATA.unk_A];
+    MONOLOGUE_DATA.monologueId = gCurrentCutscene - 1;
+    MONOLOGUE_DATA.pText = sMonologueTextPointers[gLanguage][MONOLOGUE_DATA.monologueId];
 
     CutsceneMonologueDrawAllOam();
 
@@ -290,7 +290,7 @@ void CutsceneElevatorMonologueInit(u8 arg0)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 99e64 | 3c | Processes an elevator monologue cutscene
  * 
  */
 boolu32 CutsceneElevatorMonologueProcess(void)
@@ -318,16 +318,16 @@ boolu32 CutsceneElevatorMonologueProcess(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 99ea0 | 1e8 | Spawns a new OAM for an elevator monologue cutscene
  * 
  */
-u8 CutsceneElevatorMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
+u8 CutsceneElevatorMonologueSetupOam(ElevatorMonologueOamType type, s16 xPosition, s16 yPosition)
 {
     u8 slot;
 
     for (slot = 0; slot < ARRAY_SIZE(MONOLOGUE_DATA.oam); slot++)
     {
-        if (MONOLOGUE_DATA.oam[slot].type == 0)
+        if (MONOLOGUE_DATA.oam[slot].type == ELEVATOR_MONOLOGUE_OAM_TYPE_NONE)
             break;
     }
 
@@ -341,52 +341,52 @@ u8 CutsceneElevatorMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
     MONOLOGUE_DATA.oam[slot].type = type;
     MONOLOGUE_DATA.oam[slot].isDrawn = TRUE;
 
-    if (type == 1)
+    if (type == ELEVATOR_MONOLOGUE_OAM_TYPE_CURSOR)
     {
         MONOLOGUE_DATA.oam[slot].palette = 15;
         MONOLOGUE_DATA.oam[slot].tile = 0x3E0;
-        MONOLOGUE_DATA.oam[slot].pOam = sOam_663e5c;
+        MONOLOGUE_DATA.oam[slot].pOam = sMonologueCursorOam;
         MONOLOGUE_DATA.oam[slot].pFunction = CutsceneMonologueProcessCursor;
     }
-    else if (type == 2)
+    else if (type == ELEVATOR_MONOLOGUE_OAM_TYPE_SAMUS)
     {
         MONOLOGUE_DATA.oam[slot].priority = 3;
         MONOLOGUE_DATA.oam[slot].pOam = sMonologueOamPointers[gCurrentCutscene - 1][0];
         MONOLOGUE_DATA.oam[slot].pFunction = unk_9d09c;
     }
-    else if (type == 3)
+    else if (type == ELEVATOR_MONOLOGUE_OAM_TYPE_SAMUS_OBJ_WINDOW)
     {
         MONOLOGUE_DATA.oam[slot].objMode = OAM_OBJ_MODE_WINDOW;
         MONOLOGUE_DATA.oam[slot].priority = 3;
         MONOLOGUE_DATA.oam[slot].pOam = sMonologueOamPointers[gCurrentCutscene - 1][0];
         MONOLOGUE_DATA.oam[slot].pFunction = unk_9d09c;
     }
-    else if (type == 4)
+    else if (type == ELEVATOR_MONOLOGUE_OAM_TYPE_SCROLLER_UP)
     {
         MONOLOGUE_DATA.oam[slot].priority = 3;
         MONOLOGUE_DATA.oam[slot].pOam = sMonologueOamPointers[gCurrentCutscene - 1][1];
-        MONOLOGUE_DATA.oam[slot].pFunction = CutsceneProcessElevatorScrolling;
+        MONOLOGUE_DATA.oam[slot].pFunction = CutsceneProcessElevatorScrollingUp;
     }
-    else if (type == 5)
+    else if (type == ELEVATOR_MONOLOGUE_OAM_TYPE_SCROLLER_DOWN)
     {
         MONOLOGUE_DATA.oam[slot].priority = 3;
         MONOLOGUE_DATA.oam[slot].pOam = sMonologueOamPointers[gCurrentCutscene - 1][1];
-        MONOLOGUE_DATA.oam[slot].pFunction = unk_9a1a8;
+        MONOLOGUE_DATA.oam[slot].pFunction = CutsceneProcessElevatorScrollingDown;
     }
     
     return slot;
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a088 | 120 | Processes the scrolling in an elevator monologue (going up)
  * 
  */
-void CutsceneProcessElevatorScrolling(struct MonologueOam* pOam)
+void CutsceneProcessElevatorScrollingUp(struct MonologueOam* pOam)
 {
     pOam->yPosition += 2;
     WRITE_16(REG_BG2VOFS, --MONOLOGUE_DATA.unk_12);
 
-    if (pOam->unk_9 == 0)
+    if (pOam->stage == 0)
     {
         if (gWrittenToBldy == 0)
         {
@@ -398,26 +398,26 @@ void CutsceneProcessElevatorScrolling(struct MonologueOam* pOam)
             WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
             WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
             WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | (DCNT_BG1 | DCNT_WINOBJ));
-            pOam->unk_9 = 1;
+            pOam->stage = 1;
         }
     }
-    else if (pOam->unk_9 == 1)
+    else if (pOam->stage == 1)
     {
         if (gWrittenToBldalpha_Eva == 10)
         {
-            pOam->unk_9 = 2;
-            pOam->unk_8 = 0;
+            pOam->stage = 2;
+            pOam->timer = 0;
         }
         else
         {
-            if (pOam->unk_8 > 3)
+            if (pOam->timer > 3)
             {
-                pOam->unk_8 = 0;
+                pOam->timer = 0;
                 gWrittenToBldalpha_Eva++;
             }
             else
             {
-                pOam->unk_8++;
+                pOam->timer++;
             }
         }
 
@@ -427,19 +427,19 @@ void CutsceneProcessElevatorScrolling(struct MonologueOam* pOam)
     {
         if (gWrittenToBldalpha_Eva == 4)
         {
-            pOam->unk_9 = 1;
-            pOam->unk_8 = 0;
+            pOam->stage = 1;
+            pOam->timer = 0;
         }
         else
         {
-            if (pOam->unk_8 > 3)
+            if (pOam->timer > 3)
             {
-                pOam->unk_8 = 0;
+                pOam->timer = 0;
                 gWrittenToBldalpha_Eva--;
             }
             else
             {
-                pOam->unk_8++;
+                pOam->timer++;
             }
         }
 
@@ -448,15 +448,15 @@ void CutsceneProcessElevatorScrolling(struct MonologueOam* pOam)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a1a8 | 120 | Processes the scrolling in an elevator monologue (going down)
  * 
  */
-void unk_9a1a8(struct MonologueOam* pOam)
+void CutsceneProcessElevatorScrollingDown(struct MonologueOam* pOam)
 {
     pOam->yPosition -= 2;
     WRITE_16(REG_BG2VOFS, ++MONOLOGUE_DATA.unk_12);
 
-    if (pOam->unk_9 == 0)
+    if (pOam->stage == 0)
     {
         if (gWrittenToBldy == 0)
         {
@@ -468,26 +468,26 @@ void unk_9a1a8(struct MonologueOam* pOam)
             WRITE_16(REG_BLDALPHA, C_16_2_8(gWrittenToBldalpha_Evb, gWrittenToBldalpha_Eva));
             WRITE_16(REG_BLDCNT, BLDCNT_BG1_FIRST_TARGET_PIXEL | BLDCNT_ALPHA_BLENDING_EFFECT | BLDCNT_OBJ_SECOND_TARGET_PIXEL);
             WRITE_16(REG_DISPCNT, READ_16(REG_DISPCNT) | (DCNT_BG1 | DCNT_WINOBJ));
-            pOam->unk_9 = 1;
+            pOam->stage = 1;
         }
     }
-    else if (pOam->unk_9 == 1)
+    else if (pOam->stage == 1)
     {
         if (gWrittenToBldalpha_Eva == 10)
         {
-            pOam->unk_9 = 2;
-            pOam->unk_8 = 0;
+            pOam->stage = 2;
+            pOam->timer = 0;
         }
         else
         {
-            if (pOam->unk_8 > 3)
+            if (pOam->timer > 3)
             {
-                pOam->unk_8 = 0;
+                pOam->timer = 0;
                 gWrittenToBldalpha_Eva++;
             }
             else
             {
-                pOam->unk_8++;
+                pOam->timer++;
             }
         }
 
@@ -497,19 +497,19 @@ void unk_9a1a8(struct MonologueOam* pOam)
     {
         if (gWrittenToBldalpha_Eva == 4)
         {
-            pOam->unk_9 = 1;
-            pOam->unk_8 = 0;
+            pOam->stage = 1;
+            pOam->timer = 0;
         }
         else
         {
-            if (pOam->unk_8 > 3)
+            if (pOam->timer > 3)
             {
-                pOam->unk_8 = 0;
+                pOam->timer = 0;
                 gWrittenToBldalpha_Eva--;
             }
             else
             {
-                pOam->unk_8++;
+                pOam->timer++;
             }
         }
 
@@ -518,7 +518,7 @@ void unk_9a1a8(struct MonologueOam* pOam)
 }
  
 /**
- * @brief  |  | To document
+ * @brief 9a2c8 | 54 | V-blank for an elevator monologue
  * 
  */
 void CutsceneElevatorMonologueVblank(void)
@@ -532,16 +532,16 @@ void CutsceneElevatorMonologueVblank(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a31c | c | V-blank for the elevator monologue setup
  * 
  */
-void unk_9a31c(void)
+void CutsceneElevatorMonologueInitVBlank(void)
 {
     UpdateAudio();
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a328 | 84 | Handler for an internal monologue
  * 
  */
 boolu32 CutsceneInternalMonologue(u8 arg0)
@@ -582,7 +582,7 @@ boolu32 CutsceneInternalMonologue(u8 arg0)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a3ac | 13c | Setup for an internal monologue cutscene
  * 
  */
 void CutsceneInternalMonologueInit(u8 arg0)
@@ -596,14 +596,14 @@ void CutsceneInternalMonologueInit(u8 arg0)
     
     WRITE_16(REG_DISPCNT, 0);
     
-    LZ77UncompVram(sMonologueTilemap_65fb5c, VRAM_OBJ + 0x7C00);
+    LZ77UncompVram(sMonologueTextCursorGfx, VRAM_OBJ + 0x7C00);
     
-    DMA3_COPY_32(sMonologuePal_6638A0, PALRAM_OBJ + 15 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sMonologueTextCursorPal, PALRAM_OBJ + 15 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
     
-    LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
+    LZ77UncompWram(sCutsceneTextTilemap, EWRAM_BASE);
     
     DMA3_COPY_32(EWRAM_BASE, VRAM_BASE + 0xC800, 0x800 / sizeof(u32));
-    DMA3_COPY_32(sMonologuePal_6636a0, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sMonologueBgPal, PALRAM_BASE, 16 * PAL_ROW_SIZE / sizeof(u32));
 
     SET_BACKDROP_COLOR(COLOR_BLACK);
     
@@ -614,10 +614,10 @@ void CutsceneInternalMonologueInit(u8 arg0)
     
     gWrittenToBldy--;
 
-    CutsceneInternalMonologueSetupOam(1, 12, 16);
+    CutsceneInternalMonologueSetupOam(INTERNAL_MONOLOGUE_OAM_TYPE_CURSOR, 12, 16);
     
-    MONOLOGUE_DATA.unk_A = gCurrentCutscene - 1;
-    MONOLOGUE_DATA.pText = sMonologueTextPointers[gLanguage][MONOLOGUE_DATA.unk_A];
+    MONOLOGUE_DATA.monologueId = gCurrentCutscene - 1;
+    MONOLOGUE_DATA.pText = sMonologueTextPointers[gLanguage][MONOLOGUE_DATA.monologueId];
     
     CutsceneMonologueDrawAllOam();
     
@@ -625,7 +625,7 @@ void CutsceneInternalMonologueInit(u8 arg0)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a4e8 | 3c | Processes an internal monologue cutscene
  * 
  */
 boolu32 CutsceneInternalMonologueProcess(void)
@@ -653,16 +653,16 @@ boolu32 CutsceneInternalMonologueProcess(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a524 | e0 | Spawns an OAM for an internal monologue cutscene
  * 
  */
-u8 CutsceneInternalMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
+u8 CutsceneInternalMonologueSetupOam(InternalMonologueOamType type, s16 xPosition, s16 yPosition)
 {
     u8 slot;
 
     for (slot = 0; slot < ARRAY_SIZE(MONOLOGUE_DATA.oam); slot++)
     {
-        if (MONOLOGUE_DATA.oam[slot].type == 0)
+        if (MONOLOGUE_DATA.oam[slot].type == INTERNAL_MONOLOGUE_OAM_TYPE_NONE)
             break;
     }
 
@@ -676,12 +676,12 @@ u8 CutsceneInternalMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
     MONOLOGUE_DATA.oam[slot].type = type;
     MONOLOGUE_DATA.oam[slot].isDrawn = TRUE;
     
-    if (type == 1)
+    if (type == INTERNAL_MONOLOGUE_OAM_TYPE_CURSOR)
     {
         MONOLOGUE_DATA.oam[slot].priority = 2;
         MONOLOGUE_DATA.oam[slot].palette = 15;
         MONOLOGUE_DATA.oam[slot].tile = 0x3E0;
-        MONOLOGUE_DATA.oam[slot].pOam = sOam_663e5c;
+        MONOLOGUE_DATA.oam[slot].pOam = sMonologueCursorOam;
         MONOLOGUE_DATA.oam[slot].pFunction = CutsceneMonologueProcessCursor;
     }
     
@@ -689,7 +689,7 @@ u8 CutsceneInternalMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a604 | 38 | V-blank for an internal monologue cutscene
  * 
  */
 void CutsceneInternalMonologueVblank(void)
@@ -702,7 +702,7 @@ void CutsceneInternalMonologueVblank(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a63c | c | V-blank for an internal monologue setup
  * 
  */
 void unk_9a63c(void)
@@ -711,7 +711,7 @@ void unk_9a63c(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a648 | 84 | Handler for the federation monologue cutscene
  * 
  */
 boolu32 CutsceneFederationMonologue(u8 arg0)
@@ -752,7 +752,7 @@ boolu32 CutsceneFederationMonologue(u8 arg0)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a6cc | 17c | Setup for the federation monologue cutscene
  * 
  */
 void CutsceneFederationMonologueInit(u8 arg0)
@@ -762,21 +762,21 @@ void CutsceneFederationMonologueInit(u8 arg0)
     WRITE_16(REG_IE, READ_16(REG_IE) & ~IF_HBLANK);
     WRITE_16(REG_IME, TRUE);
 
-    CallbackSetVBlank(unk_9a99c);
+    CallbackSetVBlank(CutsceneFederationMonologueInitVBlank);
     
     WRITE_16(REG_DISPCNT, 0);
     
-    LZ77UncompVram(sMonologueTilemap_65fb5c, VRAM_OBJ + 0x7C00);
+    LZ77UncompVram(sMonologueTextCursorGfx, VRAM_OBJ + 0x7C00);
     
-    DMA3_COPY_32(sMonologuePal_6638A0, PALRAM_OBJ + 15 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sMonologueTextCursorPal, PALRAM_OBJ + 15 * PAL_ROW_SIZE, PAL_ROW_SIZE / sizeof(u32));
     
-    LZ77UncompVram(sMonologueGfx_6724c0, VRAM_BASE);
-    LZ77UncompVram(sMonologueTilemap_674ad8, VRAM_BASE + 0xD000);
-    LZ77UncompWram(sIntroTilemap_662804, EWRAM_BASE);
+    LZ77UncompVram(sFederationMonologueBgGfx, VRAM_BASE);
+    LZ77UncompVram(sFederationMonologueBgTilemap, VRAM_BASE + 0xD000);
+    LZ77UncompWram(sCutsceneTextTilemap, EWRAM_BASE);
     
     DMA3_COPY_32(EWRAM_BASE, VRAM_BASE + 0xC800, 0x800 / sizeof(u32));
-    DMA3_COPY_32(sMonologuePal_674958, PALRAM_BASE, 12 * PAL_ROW_SIZE / sizeof(u32));
-    DMA3_COPY_32(sIntroPal_663820, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sFederationMonologueBgPal, PALRAM_BASE, 12 * PAL_ROW_SIZE / sizeof(u32));
+    DMA3_COPY_32(sCutsceneTextPal, PALRAM_BASE + 12 * PAL_ROW_SIZE, 4 * PAL_ROW_SIZE / sizeof(u32));
     
     SET_BACKDROP_COLOR(COLOR_BLACK);
     
@@ -789,10 +789,10 @@ void CutsceneFederationMonologueInit(u8 arg0)
     
     gWrittenToBldy--;
     
-    CutsceneFederationMonologueSetupOam(1, 12, 16);
+    CutsceneFederationMonologueSetupOam(FEDERATION_MONOLOGUE_OAM_TYPE_CURSOR, 12, 16);
     
-    gNonGameplayRam.monologue.unk_A = gCurrentCutscene - 1;
-    gNonGameplayRam.monologue.pText = sMonologueTextPointers[gLanguage][gNonGameplayRam.monologue.unk_A];
+    MONOLOGUE_DATA.monologueId = gCurrentCutscene - 1;
+    MONOLOGUE_DATA.pText = sMonologueTextPointers[gLanguage][MONOLOGUE_DATA.monologueId];
     
     CutsceneMonologueDrawAllOam();
     
@@ -800,7 +800,7 @@ void CutsceneFederationMonologueInit(u8 arg0)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a848 | 3c | Processes the federation monologue cutscene
  * 
  */
 boolu32 CutsceneFederationMonologueProcess(void)
@@ -828,16 +828,16 @@ boolu32 CutsceneFederationMonologueProcess(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a884 | e0 | Spawns an OAM for the federation monologue cutscene
  * 
  */
-u8 CutsceneFederationMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
+u8 CutsceneFederationMonologueSetupOam(FederationMonologueOamType type, s16 xPosition, s16 yPosition)
 {
     u8 slot;
 
     for (slot = 0; slot < ARRAY_SIZE(MONOLOGUE_DATA.oam); slot++)
     {
-        if (MONOLOGUE_DATA.oam[slot].type == 0)
+        if (MONOLOGUE_DATA.oam[slot].type == FEDERATION_MONOLOGUE_OAM_TYPE_NONE)
             break;
     }
 
@@ -851,12 +851,12 @@ u8 CutsceneFederationMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
     MONOLOGUE_DATA.oam[slot].type = type;
     MONOLOGUE_DATA.oam[slot].isDrawn = TRUE;
     
-    if (type == 1)
+    if (type == FEDERATION_MONOLOGUE_OAM_TYPE_CURSOR)
     {
         MONOLOGUE_DATA.oam[slot].priority = 0;
         MONOLOGUE_DATA.oam[slot].palette = 15;
         MONOLOGUE_DATA.oam[slot].tile = 0x3E0;
-        MONOLOGUE_DATA.oam[slot].pOam = sOam_663e5c;
+        MONOLOGUE_DATA.oam[slot].pOam = sMonologueCursorOam;
         MONOLOGUE_DATA.oam[slot].pFunction = CutsceneMonologueProcessCursor;
     }
     
@@ -864,7 +864,7 @@ u8 CutsceneFederationMonologueSetupOam(u8 type, s16 xPosition, s16 yPosition)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a964 | 38 | V-blank for the federation monologue cutscene
  * 
  */
 void CutsceneFederationMonologueVblank(void)
@@ -877,10 +877,10 @@ void CutsceneFederationMonologueVblank(void)
 }
 
 /**
- * @brief  |  | To document
+ * @brief 9a99c | c | V-blank for the federation monologue setup
  * 
  */
-void unk_9a99c(void)
+void CutsceneFederationMonologueInitVBlank(void)
 {
     UpdateAudio();
 }
